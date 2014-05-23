@@ -2,6 +2,9 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using System;
+using System.IO;
+
 namespace MarcelJoachimKloubert.CLRToolbox
 {
     /// <summary>
@@ -27,5 +30,14 @@ namespace MarcelJoachimKloubert.CLRToolbox
         object Tag { get; set; }
 
         #endregion Data members (3)
+
+        #region Events (1)
+
+        /// <summary>
+        /// Is invoked after one or more errors have been received.
+        /// </summary>
+        event EventHandler<ErrorEventArgs> ErrorsReceived;
+
+        #endregion Events (1)
     }
 }

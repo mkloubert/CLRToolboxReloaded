@@ -3,6 +3,7 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using System;
+using System.IO;
 
 namespace MarcelJoachimKloubert.CLRToolbox
 {
@@ -83,6 +84,13 @@ namespace MarcelJoachimKloubert.CLRToolbox
 
         #endregion Constrcutors (4)
 
+        #region Events (1)
+
+        /// <inheriteddoc />
+        public event EventHandler<ErrorEventArgs> ErrorsReceived;
+
+        #endregion Events (1)
+
         #region Properties (3)
 
         /// <inheriteddoc />
@@ -106,7 +114,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
 
         #endregion Properties (3)
 
-        #region Methods (8)
+        #region Methods (9)
         
         /// <summary>
         /// Invokes an action thread safe.
@@ -250,6 +258,20 @@ namespace MarcelJoachimKloubert.CLRToolbox
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Raises the <see cref="ObjectBase.ErrorsReceived" /> event.
+        /// </summary>
+        /// <param name="ex">The underlying exception.</param>
+        /// <returns>Event was raised or not.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="ex" /> is <see langword="null" />.
+        /// </exception>
+        protected bool RaiseErrorsReceived(Exception ex)
+        {
+            return this.RaiseEventHandler(this.ErrorsReceived,
+                                          new ErrorEventArgs(ex));
         }
 
         /// <summary>
