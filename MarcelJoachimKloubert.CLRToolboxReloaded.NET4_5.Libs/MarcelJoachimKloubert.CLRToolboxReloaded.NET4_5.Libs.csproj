@@ -24,6 +24,7 @@
     <DocumentationFile>bin\Debug\MarcelJoachimKloubert.CLRToolboxReloaded.Libs.XML</DocumentationFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>3021 1591 1699 1616</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -616,6 +617,498 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Json.NET\WriteState.cs">
       <Link>Json.NET\WriteState.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\ActionTargets.cs">
+      <Link>NUnit\Framework\ActionTargets.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\AssemblyInfo.cs">
+      <Link>NUnit\Framework\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Assert.cs">
+      <Link>NUnit\Framework\Assert.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\AssertionHelper.cs">
+      <Link>NUnit\Framework\AssertionHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Assume.cs">
+      <Link>NUnit\Framework\Assume.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\AsyncInvocationRegion.cs">
+      <Link>NUnit\Framework\AsyncInvocationRegion.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\AsyncSynchronizationContext.cs">
+      <Link>NUnit\Framework\AsyncSynchronizationContext.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\CategoryAttribute.cs">
+      <Link>NUnit\Framework\Attributes\CategoryAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\DatapointAttributes.cs">
+      <Link>NUnit\Framework\Attributes\DatapointAttributes.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\DescriptionAttribute.cs">
+      <Link>NUnit\Framework\Attributes\DescriptionAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\ExpectedExceptionAttribute.cs">
+      <Link>NUnit\Framework\Attributes\ExpectedExceptionAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\ExplicitAttribute.cs">
+      <Link>NUnit\Framework\Attributes\ExplicitAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\IgnoreAttribute.cs">
+      <Link>NUnit\Framework\Attributes\IgnoreAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\IncludeExcludeAttributes.cs">
+      <Link>NUnit\Framework\Attributes\IncludeExcludeAttributes.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\JoinTypeAttributes.cs">
+      <Link>NUnit\Framework\Attributes\JoinTypeAttributes.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\MaxTimeAttribute.cs">
+      <Link>NUnit\Framework\Attributes\MaxTimeAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\PropertyAttribute.cs">
+      <Link>NUnit\Framework\Attributes\PropertyAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\RandomAttribute.cs">
+      <Link>NUnit\Framework\Attributes\RandomAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\RangeAttribute.cs">
+      <Link>NUnit\Framework\Attributes\RangeAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\RepeatAttribute.cs">
+      <Link>NUnit\Framework\Attributes\RepeatAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\RequiredAddinAttribute.cs">
+      <Link>NUnit\Framework\Attributes\RequiredAddinAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\SetCultureAttribute.cs">
+      <Link>NUnit\Framework\Attributes\SetCultureAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\SetUICultureAttribute.cs">
+      <Link>NUnit\Framework\Attributes\SetUICultureAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\SetUpAttribute.cs">
+      <Link>NUnit\Framework\Attributes\SetUpAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\SetUpFixtureAttribute.cs">
+      <Link>NUnit\Framework\Attributes\SetUpFixtureAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\SuiteAttribute.cs">
+      <Link>NUnit\Framework\Attributes\SuiteAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\TearDownAttribute.cs">
+      <Link>NUnit\Framework\Attributes\TearDownAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\TestActionAttribute.cs">
+      <Link>NUnit\Framework\Attributes\TestActionAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\TestAttribute.cs">
+      <Link>NUnit\Framework\Attributes\TestAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\TestCaseAttribute.cs">
+      <Link>NUnit\Framework\Attributes\TestCaseAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\TestCaseSourceAttribute.cs">
+      <Link>NUnit\Framework\Attributes\TestCaseSourceAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\TestFixtureAttribute.cs">
+      <Link>NUnit\Framework\Attributes\TestFixtureAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\TestFixtureSetUpAttribute.cs">
+      <Link>NUnit\Framework\Attributes\TestFixtureSetUpAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\TestFixtureTearDownAttribute.cs">
+      <Link>NUnit\Framework\Attributes\TestFixtureTearDownAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\TheoryAttribute.cs">
+      <Link>NUnit\Framework\Attributes\TheoryAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\ThreadingAttributes.cs">
+      <Link>NUnit\Framework\Attributes\ThreadingAttributes.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\ValuesAttribute.cs">
+      <Link>NUnit\Framework\Attributes\ValuesAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Attributes\ValueSourceAttribute.cs">
+      <Link>NUnit\Framework\Attributes\ValueSourceAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\CollectionAssert.cs">
+      <Link>NUnit\Framework\CollectionAssert.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\AllItemsConstraint.cs">
+      <Link>NUnit\Framework\Constraints\AllItemsConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\AndConstraint.cs">
+      <Link>NUnit\Framework\Constraints\AndConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\AssignableFromConstraint.cs">
+      <Link>NUnit\Framework\Constraints\AssignableFromConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\AssignableToConstraint.cs">
+      <Link>NUnit\Framework\Constraints\AssignableToConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\AttributeConstraint.cs">
+      <Link>NUnit\Framework\Constraints\AttributeConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\AttributeExistsConstraint.cs">
+      <Link>NUnit\Framework\Constraints\AttributeExistsConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\BasicConstraint.cs">
+      <Link>NUnit\Framework\Constraints\BasicConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\BinaryConstraint.cs">
+      <Link>NUnit\Framework\Constraints\BinaryConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\BinarySerializableConstraint.cs">
+      <Link>NUnit\Framework\Constraints\BinarySerializableConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\CollectionConstraint.cs">
+      <Link>NUnit\Framework\Constraints\CollectionConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\CollectionContainsConstraint.cs">
+      <Link>NUnit\Framework\Constraints\CollectionContainsConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\CollectionEquivalentConstraint.cs">
+      <Link>NUnit\Framework\Constraints\CollectionEquivalentConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\CollectionItemsEqualConstraint.cs">
+      <Link>NUnit\Framework\Constraints\CollectionItemsEqualConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\CollectionOrderedConstraint.cs">
+      <Link>NUnit\Framework\Constraints\CollectionOrderedConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\CollectionSubsetConstraint.cs">
+      <Link>NUnit\Framework\Constraints\CollectionSubsetConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\CollectionTally.cs">
+      <Link>NUnit\Framework\Constraints\CollectionTally.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ComparisonAdapter.cs">
+      <Link>NUnit\Framework\Constraints\ComparisonAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ComparisonConstraint.cs">
+      <Link>NUnit\Framework\Constraints\ComparisonConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Constraint.cs">
+      <Link>NUnit\Framework\Constraints\Constraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ConstraintBuilder.cs">
+      <Link>NUnit\Framework\Constraints\ConstraintBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ConstraintExpression.cs">
+      <Link>NUnit\Framework\Constraints\ConstraintExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ConstraintExpressionBase.cs">
+      <Link>NUnit\Framework\Constraints\ConstraintExpressionBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ConstraintFactory.cs">
+      <Link>NUnit\Framework\Constraints\ConstraintFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ContainsConstraint.cs">
+      <Link>NUnit\Framework\Constraints\ContainsConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\DelayedConstraint.cs">
+      <Link>NUnit\Framework\Constraints\DelayedConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\EmptyCollectionConstraint.cs">
+      <Link>NUnit\Framework\Constraints\EmptyCollectionConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\EmptyConstraint.cs">
+      <Link>NUnit\Framework\Constraints\EmptyConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\EmptyDirectoryConstraint.cs">
+      <Link>NUnit\Framework\Constraints\EmptyDirectoryConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\EmptyStringConstraint.cs">
+      <Link>NUnit\Framework\Constraints\EmptyStringConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\EndsWithConstraint.cs">
+      <Link>NUnit\Framework\Constraints\EndsWithConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\EqualConstraint.cs">
+      <Link>NUnit\Framework\Constraints\EqualConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\EqualityAdapter.cs">
+      <Link>NUnit\Framework\Constraints\EqualityAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ExactCountConstraint.cs">
+      <Link>NUnit\Framework\Constraints\ExactCountConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ExactTypeConstraint.cs">
+      <Link>NUnit\Framework\Constraints\ExactTypeConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ExceptionTypeConstraint.cs">
+      <Link>NUnit\Framework\Constraints\ExceptionTypeConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\FailurePoint.cs">
+      <Link>NUnit\Framework\Constraints\FailurePoint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\FalseConstraint.cs">
+      <Link>NUnit\Framework\Constraints\FalseConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\FloatingPointNumerics.cs">
+      <Link>NUnit\Framework\Constraints\FloatingPointNumerics.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\GreaterThanConstraint.cs">
+      <Link>NUnit\Framework\Constraints\GreaterThanConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\GreaterThanOrEqualConstraint.cs">
+      <Link>NUnit\Framework\Constraints\GreaterThanOrEqualConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\InstanceOfTypeConstraint.cs">
+      <Link>NUnit\Framework\Constraints\InstanceOfTypeConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\IResolveConstraint.cs">
+      <Link>NUnit\Framework\Constraints\IResolveConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\LessThanConstraint.cs">
+      <Link>NUnit\Framework\Constraints\LessThanConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\LessThanOrEqualConstraint.cs">
+      <Link>NUnit\Framework\Constraints\LessThanOrEqualConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\MessageWriter.cs">
+      <Link>NUnit\Framework\Constraints\MessageWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\MsgUtils.cs">
+      <Link>NUnit\Framework\Constraints\MsgUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\NaNConstraint.cs">
+      <Link>NUnit\Framework\Constraints\NaNConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\NoItemConstraint.cs">
+      <Link>NUnit\Framework\Constraints\NoItemConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\NotConstraint.cs">
+      <Link>NUnit\Framework\Constraints\NotConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\NullConstraint.cs">
+      <Link>NUnit\Framework\Constraints\NullConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\NullOrEmptyStringConstraint.cs">
+      <Link>NUnit\Framework\Constraints\NullOrEmptyStringConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Numerics.cs">
+      <Link>NUnit\Framework\Constraints\Numerics.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\NUnitComparer.cs">
+      <Link>NUnit\Framework\Constraints\NUnitComparer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\NUnitEqualityComparer.cs">
+      <Link>NUnit\Framework\Constraints\NUnitEqualityComparer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\AllOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\AllOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\AndOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\AndOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\AttributeOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\AttributeOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\BinaryOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\BinaryOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\CollectionOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\CollectionOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\ConstraintOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\ConstraintOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\ExactCountOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\ExactCountOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\NoneOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\NoneOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\NotOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\NotOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\OrOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\OrOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\PrefixOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\PrefixOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\PropOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\PropOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\SelfResolvingOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\SelfResolvingOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\SomeOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\SomeOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\ThrowsOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\ThrowsOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Operators\WithOperator.cs">
+      <Link>NUnit\Framework\Constraints\Operators\WithOperator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\OrConstraint.cs">
+      <Link>NUnit\Framework\Constraints\OrConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\PathConstraint.cs">
+      <Link>NUnit\Framework\Constraints\PathConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\PredicateConstraint.cs">
+      <Link>NUnit\Framework\Constraints\PredicateConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\PrefixConstraint.cs">
+      <Link>NUnit\Framework\Constraints\PrefixConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\PropertyConstraint.cs">
+      <Link>NUnit\Framework\Constraints\PropertyConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\PropertyExistsConstraint.cs">
+      <Link>NUnit\Framework\Constraints\PropertyExistsConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\RangeConstraint.cs">
+      <Link>NUnit\Framework\Constraints\RangeConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\RegexConstraint.cs">
+      <Link>NUnit\Framework\Constraints\RegexConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ResolvableConstraintExpression.cs">
+      <Link>NUnit\Framework\Constraints\ResolvableConstraintExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ReusableConstraint.cs">
+      <Link>NUnit\Framework\Constraints\ReusableConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\SameAsConstraint.cs">
+      <Link>NUnit\Framework\Constraints\SameAsConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\SamePathConstraint.cs">
+      <Link>NUnit\Framework\Constraints\SamePathConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\SamePathOrUnderConstraint.cs">
+      <Link>NUnit\Framework\Constraints\SamePathOrUnderConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\SomeItemsConstraint.cs">
+      <Link>NUnit\Framework\Constraints\SomeItemsConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\StartsWithConstraint.cs">
+      <Link>NUnit\Framework\Constraints\StartsWithConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\StringConstraint.cs">
+      <Link>NUnit\Framework\Constraints\StringConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\SubPathConstraint.cs">
+      <Link>NUnit\Framework\Constraints\SubPathConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\SubstringConstraint.cs">
+      <Link>NUnit\Framework\Constraints\SubstringConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ThrowsConstraint.cs">
+      <Link>NUnit\Framework\Constraints\ThrowsConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ThrowsNothingConstraint.cs">
+      <Link>NUnit\Framework\Constraints\ThrowsNothingConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\Tolerance.cs">
+      <Link>NUnit\Framework\Constraints\Tolerance.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\ToleranceMode.cs">
+      <Link>NUnit\Framework\Constraints\ToleranceMode.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\TrueConstraint.cs">
+      <Link>NUnit\Framework\Constraints\TrueConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\TypeConstraint.cs">
+      <Link>NUnit\Framework\Constraints\TypeConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\UniqueItemsConstraint.cs">
+      <Link>NUnit\Framework\Constraints\UniqueItemsConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Constraints\XmlSerializableConstraint.cs">
+      <Link>NUnit\Framework\Constraints\XmlSerializableConstraint.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Contains.cs">
+      <Link>NUnit\Framework\Contains.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\DirectoryAssert.cs">
+      <Link>NUnit\Framework\DirectoryAssert.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Exceptions\AssertionException.cs">
+      <Link>NUnit\Framework\Exceptions\AssertionException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Exceptions\IgnoreException.cs">
+      <Link>NUnit\Framework\Exceptions\IgnoreException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Exceptions\InconclusiveException.cs">
+      <Link>NUnit\Framework\Exceptions\InconclusiveException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Exceptions\SuccessException.cs">
+      <Link>NUnit\Framework\Exceptions\SuccessException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\FileAssert.cs">
+      <Link>NUnit\Framework\FileAssert.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\GlobalSettings.cs">
+      <Link>NUnit\Framework\GlobalSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Guard.cs">
+      <Link>NUnit\Framework\Guard.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Has.cs">
+      <Link>NUnit\Framework\Has.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\IExpectException.cs">
+      <Link>NUnit\Framework\IExpectException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Interfaces\INUnitEqualityComparer.cs">
+      <Link>NUnit\Framework\Interfaces\INUnitEqualityComparer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Interfaces\ITestAction.cs">
+      <Link>NUnit\Framework\Interfaces\ITestAction.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Is.cs">
+      <Link>NUnit\Framework\Is.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\ITestCaseData.cs">
+      <Link>NUnit\Framework\ITestCaseData.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Iz.cs">
+      <Link>NUnit\Framework\Iz.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\List.cs">
+      <Link>NUnit\Framework\List.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\ListMapper.cs">
+      <Link>NUnit\Framework\ListMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Randomizer.cs">
+      <Link>NUnit\Framework\Randomizer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\SpecialValue.cs">
+      <Link>NUnit\Framework\SpecialValue.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\StringAssert.cs">
+      <Link>NUnit\Framework\StringAssert.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\TestCaseData.cs">
+      <Link>NUnit\Framework\TestCaseData.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\TestContext.cs">
+      <Link>NUnit\Framework\TestContext.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\TestDetails.cs">
+      <Link>NUnit\Framework\TestDetails.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\TestState.cs">
+      <Link>NUnit\Framework\TestState.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\TestStatus.cs">
+      <Link>NUnit\Framework\TestStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Text.cs">
+      <Link>NUnit\Framework\Text.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\TextMessageWriter.cs">
+      <Link>NUnit\Framework\TextMessageWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Throws.cs">
+      <Link>NUnit\Framework\Throws.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -630,6 +1123,11 @@
     <EmbeddedResource Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Json.NET\readme.txt">
       <Link>Json.NET\readme.txt</Link>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\license.txt">
+      <Link>NUnit\license.txt</Link>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

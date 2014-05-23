@@ -94,4 +94,10 @@
     <Folder Include="__Compatibility\" />
     <Folder Include="Collections\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs.csproj">
+      <Project>{4D6C4613-C470-4F5B-B348-545EABE20E73}</Project>
+      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
