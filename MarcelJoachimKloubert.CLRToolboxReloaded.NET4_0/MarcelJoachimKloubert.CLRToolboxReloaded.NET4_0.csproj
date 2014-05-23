@@ -77,6 +77,12 @@
     </EmbeddedResource>
     <None Include="MarcelJoachimKloubert.CLRToolboxReloaded.snk" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs.csproj">
+      <Project>{a34446fc-8852-4a48-be16-bf9337825aae}</Project>
+      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

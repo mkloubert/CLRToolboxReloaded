@@ -97,4 +97,10 @@
     <Folder Include="__Compatiblity\System\Collections\" />
     <Folder Include="Collections\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs.csproj">
+      <Project>{C9390E48-3EBF-4C46-B4D2-92F0ADB2FF77}</Project>
+      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

@@ -105,6 +105,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="__Compatibility\System\IO\ErrorEventArgs.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0.Libs.csproj">
+      <Project>{e2d1ad58-b249-459e-9f89-9fe05628b0d2}</Project>
+      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0.Libs</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

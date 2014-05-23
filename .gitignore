@@ -13,3 +13,13 @@
 *.userprefs
 /MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable/obj
 /MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable/bin
+/MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs/obj
+/MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs/bin
+/MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs/obj
+/MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs/bin
+/MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0.Libs/obj
+/MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0.Libs/bin
+/MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5.Libs/obj
+/MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5.Libs/bin
+/MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs/obj
+/MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs/bin
