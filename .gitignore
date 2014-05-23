@@ -34,3 +34,11 @@
 /MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Tests/obj
 /MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Tests/bin
 /MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0/MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Tests/bin
+/MarcelJoachimKloubert.CLRToolboxReloaded.Silverlight/obj
+/MarcelJoachimKloubert.CLRToolboxReloaded.Silverlight/Bin
+/MarcelJoachimKloubert.CLRToolboxReloaded.Silverlight/*.user
+/MarcelJoachimKloubert.CLRToolboxReloaded.WindowsStore/obj
+/MarcelJoachimKloubert.CLRToolboxReloaded.WindowsStore/bin
+/MarcelJoachimKloubert.CLRToolboxReloaded.WindowsPhone/obj
+/MarcelJoachimKloubert.CLRToolboxReloaded.WindowsPhone/Bin
+/MarcelJoachimKloubert.CLRToolboxReloaded.WindowsPhone/*.user

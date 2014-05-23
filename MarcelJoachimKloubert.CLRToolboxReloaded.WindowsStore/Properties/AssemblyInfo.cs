@@ -4,13 +4,13 @@
 
 using System.Reflection;
 
-[assembly: AssemblyTitle("CLR Toolbox Reloaded (Portable)")]
-[assembly: AssemblyDescription("Portable class library for CLR based environments (.NET 4.0 and above)")]
+[assembly: AssemblyTitle("CLR Toolbox Reloaded (Windows Store)")]
+[assembly: AssemblyDescription("Class library for Windows Store based environments (Windows 8 and above)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Marcel Joachim Kloubert")]
-[assembly: AssemblyProduct("MarcelJoachimKloubert.CLRToolboxReloaded")]
+[assembly: AssemblyProduct("MarcelJoachimKloubert.CLRToolboxReloaded.WindowsStore")]
 [assembly: AssemblyCopyright("Copyright © 2014 Marcel Joachim Kloubert <marcel.kloubert@gmx.net>")]
 [assembly: AssemblyTrademark("")]
 
-[assembly: AssemblyVersion("4.0.0.0")]
-[assembly: AssemblyFileVersion("4.0.0.0")]
+[assembly: AssemblyVersion("4.5.0.0")]
+[assembly: AssemblyFileVersion("4.5.0.0")]
