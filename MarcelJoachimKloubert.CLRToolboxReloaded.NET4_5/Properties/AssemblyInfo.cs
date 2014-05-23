@@ -1,4 +1,8 @@
-﻿using System.Reflection;
+﻿// LICENSE: LGPL 3 - https://www.gnu.org/licenses/lgpl-3.0.txt
+
+// s. https://github.com/mkloubert/CLRToolboxReloaded
+
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("CLR Toolbox Reloaded")]
@@ -9,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright © 2014 Marcel Joachim Kloubert <marcel.kloubert@gmx.net>")]
 [assembly: AssemblyTrademark("")]
 
-[assembly: ComVisible(false)]
+[assembly: ComVisible(true)]
 
 [assembly: Guid("029CCC16-4814-4313-9A6B-6EDBC5B74FB5")]
 

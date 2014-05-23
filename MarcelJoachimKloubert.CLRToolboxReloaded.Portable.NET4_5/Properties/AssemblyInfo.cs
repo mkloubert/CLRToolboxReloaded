@@ -1,4 +1,8 @@
-﻿using System.Reflection;
+﻿// LICENSE: LGPL 3 - https://www.gnu.org/licenses/lgpl-3.0.txt
+
+// s. https://github.com/mkloubert/CLRToolboxReloaded
+
+using System.Reflection;
 
 [assembly: AssemblyTitle("CLR Toolbox Reloaded (Portable)")]
 [assembly: AssemblyDescription("Portable class library for CLR based environments (.NET 4.5 and above)")]

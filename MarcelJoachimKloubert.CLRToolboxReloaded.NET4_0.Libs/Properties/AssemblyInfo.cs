@@ -1,36 +1,21 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿// LICENSE: LGPL 3 - https://www.gnu.org/licenses/lgpl-3.0.txt
+
+// s. https://github.com/mkloubert/CLRToolboxReloaded
+
+using System.Reflection;
 using System.Runtime.InteropServices;
 
-// Allgemeine Informationen über eine Assembly werden über die folgenden 
-// Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
-// die mit einer Assembly verknüpft sind.
-[assembly: AssemblyTitle("MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("CLR Toolbox Reloaded Embedded Libraries")]
+[assembly: AssemblyDescription("Collection of embedded 3rd party libraries that are used by CLR Toolbox Reloaded (.NET 4.0 and above)")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCompany("Marcel Joachim Kloubert")]
+[assembly: AssemblyProduct("MarcelJoachimKloubert.CLRToolboxReloaded.Libs")]
+[assembly: AssemblyCopyright("Copyright © 2014 Marcel Joachim Kloubert <marcel.kloubert@gmx.net>")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
-// Durch Festlegen von ComVisible auf "false" werden die Typen in dieser Assembly unsichtbar 
-// für COM-Komponenten.  Wenn Sie auf einen Typ in dieser Assembly von 
-// COM zugreifen müssen, legen Sie das ComVisible-Attribut für diesen Typ auf "true" fest.
-[assembly: ComVisible(false)]
+[assembly: ComVisible(true)]
 
-// Die folgende GUID bestimmt die ID der Typbibliothek, wenn dieses Projekt für COM verfügbar gemacht wird
-[assembly: Guid("8779f821-c09e-4c8c-b548-70b4257705e9")]
+[assembly: Guid("C96FF644-9DE7-4554-84CA-CF5D5E5554EE")]
 
-// Versionsinformationen für eine Assembly bestehen aus den folgenden vier Werten:
-//
-//      Hauptversion
-//      Nebenversion 
-//      Buildnummer
-//      Revision
-//
-// Sie können alle Werte angeben oder die standardmäßigen Build- und Revisionsnummern 
-// übernehmen, indem Sie "*" eingeben:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("4.0.0.0")]
+[assembly: AssemblyFileVersion("4.0.0.0")]
