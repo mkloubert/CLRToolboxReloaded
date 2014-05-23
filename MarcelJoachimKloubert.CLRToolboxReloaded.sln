@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30324.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET", ".NET", "{976F2476-B648-4BF6-A06C-05AC61917715}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET 4.0", ".NET 4.0", "{459BA81C-C476-4B85-AD7F-72CA8CD58BF1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET 4.5", ".NET 4.5", "{0343F034-44A7-4473-9A44-2AEBA4F9C756}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portable", "Portable", "{7159A1FB-0D0F-460A-A648-567AFCE45733}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET 4.0", ".NET 4.0", "{597ACEC5-7A26-4344-BE44-79B06A90A8BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET 4.5", ".NET 4.5", "{3DA4AD98-8E82-47A2-9925-77252598E5BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0", "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.csproj", "{BC43D1A1-D8B5-4632-9150-F945AF5390C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5", "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.csproj", "{D15249C7-977D-4A74-B596-BE0E08DC9E7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0", "MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0.csproj", "{9308B602-658B-4BD2-900F-BEA107A50B17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5", "MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5.csproj", "{4E1276F2-8CDF-43C6-98ED-9C89CF66A9EE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC43D1A1-D8B5-4632-9150-F945AF5390C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC43D1A1-D8B5-4632-9150-F945AF5390C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC43D1A1-D8B5-4632-9150-F945AF5390C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC43D1A1-D8B5-4632-9150-F945AF5390C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9308B602-658B-4BD2-900F-BEA107A50B17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9308B602-658B-4BD2-900F-BEA107A50B17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9308B602-658B-4BD2-900F-BEA107A50B17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9308B602-658B-4BD2-900F-BEA107A50B17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E1276F2-8CDF-43C6-98ED-9C89CF66A9EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E1276F2-8CDF-43C6-98ED-9C89CF66A9EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E1276F2-8CDF-43C6-98ED-9C89CF66A9EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E1276F2-8CDF-43C6-98ED-9C89CF66A9EE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{459BA81C-C476-4B85-AD7F-72CA8CD58BF1} = {976F2476-B648-4BF6-A06C-05AC61917715}
+		{0343F034-44A7-4473-9A44-2AEBA4F9C756} = {976F2476-B648-4BF6-A06C-05AC61917715}
+		{597ACEC5-7A26-4344-BE44-79B06A90A8BA} = {7159A1FB-0D0F-460A-A648-567AFCE45733}
+		{3DA4AD98-8E82-47A2-9925-77252598E5BE} = {7159A1FB-0D0F-460A-A648-567AFCE45733}
+		{BC43D1A1-D8B5-4632-9150-F945AF5390C7} = {459BA81C-C476-4B85-AD7F-72CA8CD58BF1}
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B} = {0343F034-44A7-4473-9A44-2AEBA4F9C756}
+		{9308B602-658B-4BD2-900F-BEA107A50B17} = {597ACEC5-7A26-4344-BE44-79B06A90A8BA}
+		{4E1276F2-8CDF-43C6-98ED-9C89CF66A9EE} = {3DA4AD98-8E82-47A2-9925-77252598E5BE}
+	EndGlobalSection
+EndGlobal

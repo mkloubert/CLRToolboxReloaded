@@ -1,0 +1,13 @@
+/MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0/obj
+/MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0/bin
+/MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5/obj
+/MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5/bin
+/MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0/obj
+/MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0/bin
+/MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5/obj
+/MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5/bin
+
+*.suo
+/MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0/obj
+/MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0/bin
+*.userprefs
