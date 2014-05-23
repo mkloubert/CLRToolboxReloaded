@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Generic\DelegateEqualityComparer.cs" />
+    <Compile Include="Collections\Generic\EqualityComparerFactory.cs" />
     <Compile Include="Collections\Generic\ForEachItemContext.cs" />
     <Compile Include="Collections\Generic\IForAllItemContext.cs" />
     <Compile Include="Collections\Generic\IForEachItemContext.cs" />
@@ -58,10 +60,18 @@
     <Compile Include="Collections\Generic\ForAllItemContext.cs" />
     <Compile Include="ComponentModel\INotifiable.cs" />
     <Compile Include="ComponentModel\NotifiableBase.cs" />
+    <Compile Include="Data\Conversion\CommonConverter.cs" />
+    <Compile Include="Data\Conversion\ConverterBase.cs" />
+    <Compile Include="Data\Conversion\GlobalConverter.cs" />
+    <Compile Include="Data\Conversion\IConverter.cs" />
     <Compile Include="DisposableObjectBase.cs" />
     <Compile Include="DisposableObjectBase.DisposeContext.cs">
       <DependentUpon>DisposableObjectBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Execution\Workflows\IWorkflow.cs" />
+    <Compile Include="Execution\Workflows\IWorkflowExecutionContext.cs" />
+    <Compile Include="Execution\Workflows\WorkflowBase.cs" />
+    <Compile Include="Execution\Workflows\WorkflowExecutionContext.cs" />
     <Compile Include="Extensions\ClrToolboxExtensionMethods.cs" />
     <Compile Include="Extensions\Collections.AsArray.cs">
       <DependentUpon>Collections.cs</DependentUpon>
