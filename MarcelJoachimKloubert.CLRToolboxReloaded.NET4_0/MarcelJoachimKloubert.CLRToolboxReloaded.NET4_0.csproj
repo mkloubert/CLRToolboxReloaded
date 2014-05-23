@@ -49,9 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Generic\ForEachItemContext.cs" />
+    <Compile Include="Collections\Generic\IForAllItemContext.cs" />
+    <Compile Include="Collections\Generic\IForEachItemContext.cs" />
     <Compile Include="Collections\Generic\ReadOnlyCollectionWrapper.cs" />
     <Compile Include="Collections\Generic\ReadOnlyDictionaryWrapper.cs" />
     <Compile Include="Collections\Generic\ReadOnlyListWrapper.cs" />
+    <Compile Include="Collections\Generic\ForAllItemContext.cs" />
     <Compile Include="ComponentModel\INotifiable.cs" />
     <Compile Include="ComponentModel\NotifiableBase.cs" />
     <Compile Include="DisposableObjectBase.cs" />
@@ -59,6 +63,22 @@
       <DependentUpon>DisposableObjectBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ClrToolboxExtensionMethods.cs" />
+    <Compile Include="Extensions\Collections.AsArray.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Collections.CreateTasksForAll.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Collections.cs" />
+    <Compile Include="Extensions\Collections.ForAll.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Collections.ForAllAsync.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Collections.ForEach.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Serialization.cs" />
     <Compile Include="Extensions\Serialization.FromJson.cs">
       <DependentUpon>Serialization.cs</DependentUpon>
