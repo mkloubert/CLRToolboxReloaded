@@ -2,7 +2,7 @@
 
 // s. http://blog.marcel-kloubert.de
 
-#if !(PORTABLE)
+#if !(PORTABLE || PORTABLE40)
 #define KNOWS_DBNULL
 #endif
 

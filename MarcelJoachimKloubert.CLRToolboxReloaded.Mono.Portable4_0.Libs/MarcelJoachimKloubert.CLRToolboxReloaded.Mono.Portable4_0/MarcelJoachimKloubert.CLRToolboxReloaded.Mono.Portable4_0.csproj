@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AAD84746-0328-45CB-B727-9F26E29AEDEC}</ProjectGuid>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MarcelJoachimKloubert.CLRToolbox</RootNamespace>
+    <AssemblyName>MarcelJoachimKloubert.CLRToolbox.Libs</AssemblyName>
+    <TargetFrameworkProfile>Profile3</TargetFrameworkProfile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\MarcelJoachimKloubert.CLRToolboxReloaded.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;PORTABLE40</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <DocumentationFile>bin\Debug\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.xml</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\DisposableObjectBase.cs">
+      <Link>DisposableObjectBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\DisposableObjectBase.DisposeContext.cs">
+      <Link>DisposableObjectBase.DisposeContext.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IDisposableObject.cs">
+      <Link>IDisposableObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IObject.cs">
+      <Link>IObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ObjectBase.cs">
+      <Link>ObjectBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\ReadOnlyCollectionWrapper.cs">
+      <Link>Collections\Generic\ReadOnlyCollectionWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\ReadOnlyDictionaryWrapper.cs">
+      <Link>Collections\Generic\ReadOnlyDictionaryWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\ReadOnlyListWrapper.cs">
+      <Link>Collections\Generic\ReadOnlyListWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\INotifiable.cs">
+      <Link>ComponentModel\INotifiable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\NotifiableBase.cs">
+      <Link>ComponentModel\NotifiableBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ClrToolboxExtensionMethods.cs">
+      <Link>Extensions\ClrToolboxExtensionMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Strings.AsString.cs">
+      <Link>Extensions\Strings.AsString.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Strings.cs">
+      <Link>Extensions\Strings.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs">
+      <Link>__Compatibility\System\Collections\IReadOnlyCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Compatibility\System\Collections\Generic\IReadOnlyDictionary.cs">
+      <Link>__Compatibility\System\Collections\IReadOnlyDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Compatibility\System\Collections\Generic\IReadOnlyList.cs">
+      <Link>__Compatibility\System\Collections\IReadOnlyList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0\__Compatibility\System\IO\ErrorEventArgs.cs">
+      <Link>__Compatibility\System\IO\ErrorEventArgs.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs.csproj">
+      <Project>{C9390E48-3EBF-4C46-B4D2-92F0ADB2FF77}</Project>
+      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="__Compatibility\System\Collections\Generic\" />
+    <Folder Include="__Compatibility\System\IO\" />
+  </ItemGroup>
+</Project>

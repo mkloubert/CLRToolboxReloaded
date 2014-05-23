@@ -2,7 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-#if !(PORTABLE)
+#if !(PORTABLE || PORTABLE40)
 #define KNOWS_PROPERTY_CHANGING
 #endif
 

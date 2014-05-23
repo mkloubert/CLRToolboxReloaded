@@ -11,7 +11,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
     /// A basic object.
     /// </summary>
     public abstract class ObjectBase :
-#if !PORTABLE
+#if !(PORTABLE || PORTABLE40)
         global::System.MarshalByRefObject,
 #endif
  IObject
