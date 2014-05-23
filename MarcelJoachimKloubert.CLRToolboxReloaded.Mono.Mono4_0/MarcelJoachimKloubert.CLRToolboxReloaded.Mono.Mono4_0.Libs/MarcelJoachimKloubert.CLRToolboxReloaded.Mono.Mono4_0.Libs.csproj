@@ -19,7 +19,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <NoWarn>3021 1591 1699 1616</NoWarn>
+    <NoWarn>1574 3021 1591 1699 1616 1587 1573 3001 1572 1734 618 1570 3002 3003</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>bin\Debug\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs.xml</DocumentationFile>
   </PropertyGroup>
@@ -1098,11 +1098,441 @@
     <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Json.NET\Utilities\ValidationUtils.cs">
       <Link>Json.NET\Utilities\ValidationUtils.cs</Link>
     </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Binders\Binder.cs">
+      <Link>Jurassic\Compiler\Binders\Binder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Binders\BinderMethod.cs">
+      <Link>Jurassic\Compiler\Binders\BinderMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Binders\BinderUtilities.cs">
+      <Link>Jurassic\Compiler\Binders\BinderUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Binders\ClrBinder.cs">
+      <Link>Jurassic\Compiler\Binders\ClrBinder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Binders\FieldBinders.cs">
+      <Link>Jurassic\Compiler\Binders\FieldBinders.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Binders\JSBinder.cs">
+      <Link>Jurassic\Compiler\Binders\JSBinder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Binders\JSBinderMethod.cs">
+      <Link>Jurassic\Compiler\Binders\JSBinderMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Binders\MethodBinder.cs">
+      <Link>Jurassic\Compiler\Binders\MethodBinder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Debugging\COMHelpers.cs">
+      <Link>Jurassic\Compiler\Debugging\COMHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Debugging\SourceCodePosition.cs">
+      <Link>Jurassic\Compiler\Debugging\SourceCodePosition.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Debugging\SourceCodeSpan.cs">
+      <Link>Jurassic\Compiler\Debugging\SourceCodeSpan.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\EmitConversion.cs">
+      <Link>Jurassic\Compiler\Emit\EmitConversion.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\EmitHelpers.cs">
+      <Link>Jurassic\Compiler\Emit\EmitHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\LongJumpException.cs">
+      <Link>Jurassic\Compiler\Emit\LongJumpException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\MethodOptimizationHints.cs">
+      <Link>Jurassic\Compiler\Emit\MethodOptimizationHints.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\OptimizationInfo.cs">
+      <Link>Jurassic\Compiler\Emit\OptimizationInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\PrimitiveType.cs">
+      <Link>Jurassic\Compiler\Emit\PrimitiveType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\PrimitiveTypeUtilities.cs">
+      <Link>Jurassic\Compiler\Emit\PrimitiveTypeUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\ILGenerator\DynamicILGenerator.cs">
+      <Link>Jurassic\Compiler\Emit\ILGenerator\DynamicILGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\ILGenerator\ILGenerator.cs">
+      <Link>Jurassic\Compiler\Emit\ILGenerator\ILGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\ILGenerator\ILLabel.cs">
+      <Link>Jurassic\Compiler\Emit\ILGenerator\ILLabel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\ILGenerator\ILLocalVariable.cs">
+      <Link>Jurassic\Compiler\Emit\ILGenerator\ILLocalVariable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\ILGenerator\LoggingILGenerator.cs">
+      <Link>Jurassic\Compiler\Emit\ILGenerator\LoggingILGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\ILGenerator\ReflectionEmitILGenerator.cs">
+      <Link>Jurassic\Compiler\Emit\ILGenerator\ReflectionEmitILGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\AssignmentExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\AssignmentExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\BinaryExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\BinaryExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\Expression.cs">
+      <Link>Jurassic\Compiler\Expressions\Expression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\FunctionCallExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\FunctionCallExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\FunctionExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\FunctionExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\GroupingExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\GroupingExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\IReferenceExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\IReferenceExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\ListExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\ListExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\LiteralExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\LiteralExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\MemberAccessExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\MemberAccessExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\NameExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\NameExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\NewExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\NewExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\OperatorExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\OperatorExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\TernaryExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\TernaryExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\ThisExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\ThisExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Expressions\UnaryExpression.cs">
+      <Link>Jurassic\Compiler\Expressions\UnaryExpression.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Lexer\IdentifierToken.cs">
+      <Link>Jurassic\Compiler\Lexer\IdentifierToken.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Lexer\KeywordToken.cs">
+      <Link>Jurassic\Compiler\Lexer\KeywordToken.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Lexer\Lexer.cs">
+      <Link>Jurassic\Compiler\Lexer\Lexer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Lexer\LiteralToken.cs">
+      <Link>Jurassic\Compiler\Lexer\LiteralToken.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Lexer\PunctuatorToken.cs">
+      <Link>Jurassic\Compiler\Lexer\PunctuatorToken.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Lexer\RegularExpressionLiteral.cs">
+      <Link>Jurassic\Compiler\Lexer\RegularExpressionLiteral.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Lexer\Token.cs">
+      <Link>Jurassic\Compiler\Lexer\Token.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\MethodGenerator\CodeContext.cs">
+      <Link>Jurassic\Compiler\MethodGenerator\CodeContext.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\MethodGenerator\CompilerOptions.cs">
+      <Link>Jurassic\Compiler\MethodGenerator\CompilerOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\MethodGenerator\EvalMethodGenerator.cs">
+      <Link>Jurassic\Compiler\MethodGenerator\EvalMethodGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\MethodGenerator\FunctionMethodGenerator.cs">
+      <Link>Jurassic\Compiler\MethodGenerator\FunctionMethodGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\MethodGenerator\GeneratedMethod.cs">
+      <Link>Jurassic\Compiler\MethodGenerator\GeneratedMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\MethodGenerator\GlobalMethodGenerator.cs">
+      <Link>Jurassic\Compiler\MethodGenerator\GlobalMethodGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\MethodGenerator\MethodGenerator.cs">
+      <Link>Jurassic\Compiler\MethodGenerator\MethodGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Parser\AstNode.cs">
+      <Link>Jurassic\Compiler\Parser\AstNode.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Parser\Operator.cs">
+      <Link>Jurassic\Compiler\Parser\Operator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Parser\Parser.cs">
+      <Link>Jurassic\Compiler\Parser\Parser.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Scope\DeclarativeScope.cs">
+      <Link>Jurassic\Compiler\Scope\DeclarativeScope.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Scope\ObjectScope.cs">
+      <Link>Jurassic\Compiler\Scope\ObjectScope.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Scope\Scope.cs">
+      <Link>Jurassic\Compiler\Scope\Scope.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\BlockStatement.cs">
+      <Link>Jurassic\Compiler\Statements\BlockStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\BreakStatement.cs">
+      <Link>Jurassic\Compiler\Statements\BreakStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\ContinueStatement.cs">
+      <Link>Jurassic\Compiler\Statements\ContinueStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\DebuggerStatement.cs">
+      <Link>Jurassic\Compiler\Statements\DebuggerStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\DoWhileStatement.cs">
+      <Link>Jurassic\Compiler\Statements\DoWhileStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\EmptyStatement.cs">
+      <Link>Jurassic\Compiler\Statements\EmptyStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\ExpressionStatement.cs">
+      <Link>Jurassic\Compiler\Statements\ExpressionStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\ForInStatement.cs">
+      <Link>Jurassic\Compiler\Statements\ForInStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\ForStatement.cs">
+      <Link>Jurassic\Compiler\Statements\ForStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\IfStatement.cs">
+      <Link>Jurassic\Compiler\Statements\IfStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\LoopStatement.cs">
+      <Link>Jurassic\Compiler\Statements\LoopStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\ReturnStatement.cs">
+      <Link>Jurassic\Compiler\Statements\ReturnStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\Statement.cs">
+      <Link>Jurassic\Compiler\Statements\Statement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\SwitchStatement.cs">
+      <Link>Jurassic\Compiler\Statements\SwitchStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\ThrowStatement.cs">
+      <Link>Jurassic\Compiler\Statements\ThrowStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\TryCatchFinallyStatement.cs">
+      <Link>Jurassic\Compiler\Statements\TryCatchFinallyStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\VarStatement.cs">
+      <Link>Jurassic\Compiler\Statements\VarStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\WhileStatement.cs">
+      <Link>Jurassic\Compiler\Statements\WhileStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Statements\WithStatement.cs">
+      <Link>Jurassic\Compiler\Statements\WithStatement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\BigInteger.cs">
+      <Link>Jurassic\Core\BigInteger.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\CompatibilityMode.cs">
+      <Link>Jurassic\Core\CompatibilityMode.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\ConcatenatedString.cs">
+      <Link>Jurassic\Core\ConcatenatedString.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\JavaScriptException.cs">
+      <Link>Jurassic\Core\JavaScriptException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\Null.cs">
+      <Link>Jurassic\Core\Null.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\NumberFormatter.cs">
+      <Link>Jurassic\Core\NumberFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\NumberParser.cs">
+      <Link>Jurassic\Core\NumberParser.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\ReflectionHelpers.cs">
+      <Link>Jurassic\Core\ReflectionHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\ScriptEngine.cs">
+      <Link>Jurassic\Core\ScriptEngine.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\Serialization.cs">
+      <Link>Jurassic\Core\Serialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\StringHelpers.cs">
+      <Link>Jurassic\Core\StringHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\TypeComparer.cs">
+      <Link>Jurassic\Core\TypeComparer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\TypeConverter.cs">
+      <Link>Jurassic\Core\TypeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\TypeUtilities.cs">
+      <Link>Jurassic\Core\TypeUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\Undefined.cs">
+      <Link>Jurassic\Core\Undefined.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\ScriptSource\FileScriptSource.cs">
+      <Link>Jurassic\Core\ScriptSource\FileScriptSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\ScriptSource\ScriptSource.cs">
+      <Link>Jurassic\Core\ScriptSource\ScriptSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Core\ScriptSource\StringScriptSource.cs">
+      <Link>Jurassic\Core\ScriptSource\StringScriptSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\GlobalObject.cs">
+      <Link>Jurassic\Library\GlobalObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\MathObject.cs">
+      <Link>Jurassic\Library\MathObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Array\ArrayConstructor.cs">
+      <Link>Jurassic\Library\Array\ArrayConstructor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Array\ArrayInstance.cs">
+      <Link>Jurassic\Library\Array\ArrayInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Array\SparseArray.cs">
+      <Link>Jurassic\Library\Array\SparseArray.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Boolean\BooleanConstructor.cs">
+      <Link>Jurassic\Library\Boolean\BooleanConstructor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Boolean\BooleanInstance.cs">
+      <Link>Jurassic\Library\Boolean\BooleanInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\ClrWrapper\ClrInstanceTypeWrapper.cs">
+      <Link>Jurassic\Library\ClrWrapper\ClrInstanceTypeWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\ClrWrapper\ClrInstanceWrapper.cs">
+      <Link>Jurassic\Library\ClrWrapper\ClrInstanceWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\ClrWrapper\ClrStaticTypeWrapper.cs">
+      <Link>Jurassic\Library\ClrWrapper\ClrStaticTypeWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Date\DateConstructor.cs">
+      <Link>Jurassic\Library\Date\DateConstructor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Date\DateInstance.cs">
+      <Link>Jurassic\Library\Date\DateInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Date\DateParser.cs">
+      <Link>Jurassic\Library\Date\DateParser.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Error\ErrorConstructor.cs">
+      <Link>Jurassic\Library\Error\ErrorConstructor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Error\ErrorInstance.cs">
+      <Link>Jurassic\Library\Error\ErrorInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\FirebugConsole\FirebugConsole.cs">
+      <Link>Jurassic\Library\FirebugConsole\FirebugConsole.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\FirebugConsole\IFirebugConsoleOutput.cs">
+      <Link>Jurassic\Library\FirebugConsole\IFirebugConsoleOutput.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\FirebugConsole\StandardConsoleOutput.cs">
+      <Link>Jurassic\Library\FirebugConsole\StandardConsoleOutput.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Function\ArgumentsInstance.cs">
+      <Link>Jurassic\Library\Function\ArgumentsInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Function\BoundFunction.cs">
+      <Link>Jurassic\Library\Function\BoundFunction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Function\ClrFunction.cs">
+      <Link>Jurassic\Library\Function\ClrFunction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Function\Delegates.cs">
+      <Link>Jurassic\Library\Function\Delegates.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Function\FunctionConstructor.cs">
+      <Link>Jurassic\Library\Function\FunctionConstructor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Function\FunctionInstance.cs">
+      <Link>Jurassic\Library\Function\FunctionInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Function\ThrowTypeErrorFunction.cs">
+      <Link>Jurassic\Library\Function\ThrowTypeErrorFunction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Function\UserDefinedFunction.cs">
+      <Link>Jurassic\Library\Function\UserDefinedFunction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\JSON\JSONLexer.cs">
+      <Link>Jurassic\Library\JSON\JSONLexer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\JSON\JSONObject.cs">
+      <Link>Jurassic\Library\JSON\JSONObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\JSON\JSONParser.cs">
+      <Link>Jurassic\Library\JSON\JSONParser.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\JSON\JSONSerializer.cs">
+      <Link>Jurassic\Library\JSON\JSONSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Number\NumberConstructor.cs">
+      <Link>Jurassic\Library\Number\NumberConstructor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Number\NumberInstance.cs">
+      <Link>Jurassic\Library\Number\NumberInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Object\Attributes.cs">
+      <Link>Jurassic\Library\Object\Attributes.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Object\HiddenClassSchema.cs">
+      <Link>Jurassic\Library\Object\HiddenClassSchema.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Object\JSFunctionFlags.cs">
+      <Link>Jurassic\Library\Object\JSFunctionFlags.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Object\ObjectConstructor.cs">
+      <Link>Jurassic\Library\Object\ObjectConstructor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Object\ObjectInstance.cs">
+      <Link>Jurassic\Library\Object\ObjectInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Object\PropertyAccessorValue.cs">
+      <Link>Jurassic\Library\Object\PropertyAccessorValue.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Object\PropertyAttributes.cs">
+      <Link>Jurassic\Library\Object\PropertyAttributes.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Object\PropertyDescriptor.cs">
+      <Link>Jurassic\Library\Object\PropertyDescriptor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Object\PropertyNameAndValue.cs">
+      <Link>Jurassic\Library\Object\PropertyNameAndValue.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\Object\SchemaProperty.cs">
+      <Link>Jurassic\Library\Object\SchemaProperty.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\RegExp\RegExpConstructor.cs">
+      <Link>Jurassic\Library\RegExp\RegExpConstructor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\RegExp\RegExpInstance.cs">
+      <Link>Jurassic\Library\RegExp\RegExpInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\String\StringConstructor.cs">
+      <Link>Jurassic\Library\String\StringConstructor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Library\String\StringInstance.cs">
+      <Link>Jurassic\Library\String\StringInstance.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="NUnit\" />
     <Folder Include="Json.NET\" />
+    <Folder Include="Jurassic\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\license.txt">
@@ -1114,5 +1544,13 @@
     <EmbeddedResource Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Json.NET\readme.txt">
       <Link>Json.NET\readme.txt</Link>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\License.txt">
+      <Link>Jurassic\License.txt</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\Optimizations.txt">
+      <Link>Jurassic\Compiler\Emit\Optimizations.txt</Link>
+    </None>
   </ItemGroup>
 </Project>
