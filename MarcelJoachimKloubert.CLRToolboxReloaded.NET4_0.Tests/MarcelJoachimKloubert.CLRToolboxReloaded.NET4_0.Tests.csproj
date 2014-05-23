@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BC43D1A1-D8B5-4632-9150-F945AF5390C7}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{D45358C9-BE72-4174-85BF-4687C616C816}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MarcelJoachimKloubert.CLRToolbox</RootNamespace>
-    <AssemblyName>MarcelJoachimKloubert.CLRToolboxReloaded</AssemblyName>
+    <RootNamespace>MarcelJoachimKloubert.CLRToolbox._Tests</RootNamespace>
+    <AssemblyName>MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -20,24 +21,15 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>4</LangVersion>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Debug\MarcelJoachimKloubert.CLRToolboxReloaded.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>MarcelJoachimKloubert.CLRToolboxReloaded.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -49,46 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\Generic\ReadOnlyCollectionWrapper.cs" />
-    <Compile Include="Collections\Generic\ReadOnlyDictionaryWrapper.cs" />
-    <Compile Include="Collections\Generic\ReadOnlyListWrapper.cs" />
-    <Compile Include="ComponentModel\INotifiable.cs" />
-    <Compile Include="ComponentModel\NotifiableBase.cs" />
-    <Compile Include="DisposableObjectBase.cs" />
-    <Compile Include="DisposableObjectBase.DisposeContext.cs">
-      <DependentUpon>DisposableObjectBase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\ClrToolboxExtensionMethods.cs" />
-    <Compile Include="Extensions\Serialization.cs" />
-    <Compile Include="Extensions\Serialization.FromJson.cs">
-      <DependentUpon>Serialization.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\Serialization.ToJson.cs">
-      <DependentUpon>Serialization.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\Strings.AsString.cs">
-      <DependentUpon>Strings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\Strings.cs" />
-    <Compile Include="IDisposableObject.cs" />
-    <Compile Include="IObject.cs" />
-    <Compile Include="ObjectBase.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs" />
-    <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyDictionary.cs" />
-    <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyList.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="..\LICENSE">
-      <Link>LICENSE</Link>
-    </EmbeddedResource>
-    <None Include="MarcelJoachimKloubert.CLRToolboxReloaded.snk" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs.csproj">
       <Project>{a34446fc-8852-4a48-be16-bf9337825aae}</Project>
       <Name>MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.csproj">
+      <Project>{bc43d1a1-d8b5-4632-9150-f945af5390c7}</Project>
+      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="LICENSE" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

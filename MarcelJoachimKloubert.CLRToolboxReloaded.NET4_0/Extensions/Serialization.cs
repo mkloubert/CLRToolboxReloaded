@@ -4,10 +4,8 @@
 
 namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 {
-    /// <summary>
-    /// Common extension methods.
-    /// </summary>
-    public static partial class ClrToolboxExtensionMethods
+    static partial class ClrToolboxExtensionMethods
     {
+        // Serialization
     }
 }

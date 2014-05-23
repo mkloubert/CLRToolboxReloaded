@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRTo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs", "MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs.csproj", "{4D6C4613-C470-4F5B-B348-545EABE20E73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Tests", "MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Tests\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Tests.csproj", "{A09AD07F-0670-4620-AB52-8377E0749BCF}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portable 4.0", "Portable 4.0", "{8EDF5B42-899B-4D69-B080-B2019A639DFC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs", "MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs.csproj", "{C9390E48-3EBF-4C46-B4D2-92F0ADB2FF77}"
@@ -27,6 +29,10 @@ Global
 		{4D6C4613-C470-4F5B-B348-545EABE20E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D6C4613-C470-4F5B-B348-545EABE20E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D6C4613-C470-4F5B-B348-545EABE20E73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A09AD07F-0670-4620-AB52-8377E0749BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A09AD07F-0670-4620-AB52-8377E0749BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A09AD07F-0670-4620-AB52-8377E0749BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A09AD07F-0670-4620-AB52-8377E0749BCF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AAD84746-0328-45CB-B727-9F26E29AEDEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AAD84746-0328-45CB-B727-9F26E29AEDEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAD84746-0328-45CB-B727-9F26E29AEDEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +45,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2CBA1F8A-874F-4D2E-8BBA-F8DDDD233DB3} = {85FD25BC-65F6-4430-B543-35B2AA3197F2}
 		{4D6C4613-C470-4F5B-B348-545EABE20E73} = {85FD25BC-65F6-4430-B543-35B2AA3197F2}
+		{A09AD07F-0670-4620-AB52-8377E0749BCF} = {85FD25BC-65F6-4430-B543-35B2AA3197F2}
 		{C9390E48-3EBF-4C46-B4D2-92F0ADB2FF77} = {8EDF5B42-899B-4D69-B080-B2019A639DFC}
 		{AAD84746-0328-45CB-B727-9F26E29AEDEC} = {8EDF5B42-899B-4D69-B080-B2019A639DFC}
 	EndGlobalSection

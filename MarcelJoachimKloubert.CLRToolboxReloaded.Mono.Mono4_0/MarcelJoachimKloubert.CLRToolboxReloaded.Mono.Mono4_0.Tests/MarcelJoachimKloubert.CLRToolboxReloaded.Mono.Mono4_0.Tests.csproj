@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A09AD07F-0670-4620-AB52-8377E0749BCF}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Tests</RootNamespace>
+    <AssemblyName>MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Tests</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Tests\Program.cs">
+      <Link>Program.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.csproj">
+      <Project>{2CBA1F8A-874F-4D2E-8BBA-F8DDDD233DB3}</Project>
+      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs.csproj">
+      <Project>{4D6C4613-C470-4F5B-B348-545EABE20E73}</Project>
+      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Tests\LICENSE">
+      <Link>LICENSE</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

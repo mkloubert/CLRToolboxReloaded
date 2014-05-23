@@ -86,6 +86,15 @@
     <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0\__Compatibility\System\IO\ErrorEventArgs.cs">
       <Link>__Compatibility\System\IO\ErrorEventArgs.cs</Link>
     </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Serialization.cs">
+      <Link>Extensions\Serialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Serialization.FromJson.cs">
+      <Link>Extensions\Serialization.FromJson.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Serialization.ToJson.cs">
+      <Link>Extensions\Serialization.ToJson.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

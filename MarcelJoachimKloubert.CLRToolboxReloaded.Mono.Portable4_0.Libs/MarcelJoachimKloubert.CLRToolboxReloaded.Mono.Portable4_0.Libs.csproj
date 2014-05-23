@@ -10,6 +10,8 @@
     <AssemblyName>MarcelJoachimKloubert.CLRToolbox.Libs</AssemblyName>
     <TargetFrameworkProfile>Profile14</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Libs.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
