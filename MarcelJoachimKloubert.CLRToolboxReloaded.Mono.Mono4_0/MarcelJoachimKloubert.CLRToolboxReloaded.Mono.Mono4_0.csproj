@@ -21,6 +21,7 @@
     <ConsolePause>false</ConsolePause>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -30,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>4</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -51,6 +53,45 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ObjectBase.cs">
       <Link>ObjectBase.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\INotifiable.cs">
+      <Link>ComponentModel\INotifiable.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\NotifiableBase.cs">
+      <Link>ComponentModel\NotifiableBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ClrToolboxExtensionMethods.cs">
+      <Link>Extensions\ClrToolboxExtensionMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Strings.AsString.cs">
+      <Link>Extensions\Strings.AsString.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Strings.cs">
+      <Link>Extensions\Strings.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs">
+      <Link>__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Compatibility\System\Collections\Generic\IReadOnlyDictionary.cs">
+      <Link>__Compatibility\System\Collections\Generic\IReadOnlyDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Compatibility\System\Collections\Generic\IReadOnlyList.cs">
+      <Link>__Compatibility\System\Collections\Generic\IReadOnlyList.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\ReadOnlyCollectionWrapper.cs">
+      <Link>Collections\Generic\ReadOnlyCollectionWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\ReadOnlyDictionaryWrapper.cs">
+      <Link>Collections\Generic\ReadOnlyDictionaryWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\ReadOnlyListWrapper.cs">
+      <Link>Collections\Generic\ReadOnlyListWrapper.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="ComponentModel\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="__Compatibility\" />
+    <Folder Include="Collections\" />
+  </ItemGroup>
 </Project>

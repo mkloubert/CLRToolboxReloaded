@@ -52,12 +52,37 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\collections\generic\ReadOnlyCollectionWrapper.cs">
+      <Link>Collections\Generic\ReadOnlyCollectionWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\collections\generic\ReadOnlyDictionaryWrapper.cs">
+      <Link>Collections\Generic\ReadOnlyDictionaryWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\collections\generic\ReadOnlyListWrapper.cs">
+      <Link>Collections\Generic\ReadOnlyListWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\componentmodel\INotifiable.cs">
+      <Link>ComponentModel\INotifiable.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\componentmodel\NotifiableBase.cs">
+      <Link>ComponentModel\NotifiableBase.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\DisposableObjectBase.cs">
       <Link>DisposableObjectBase.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\DisposableObjectBase.DisposeContext.cs">
       <Link>DisposableObjectBase.DisposeContext.cs</Link>
       <DependentUpon>DisposableObjectBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\extensions\ClrToolboxExtensionMethods.cs">
+      <Link>Extensions\ClrToolboxExtensionMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\extensions\Strings.AsString.cs">
+      <Link>Extensions\Strings.AsString.cs</Link>
+      <DependentUpon>Strings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\extensions\Strings.cs">
+      <Link>Extensions\Strings.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IDisposableObject.cs">
       <Link>IDisposableObject.cs</Link>
@@ -68,8 +93,17 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ObjectBase.cs">
       <Link>ObjectBase.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs">
+      <Link>__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Compatibility\System\Collections\Generic\IReadOnlyDictionary.cs">
+      <Link>__Compatibility\System\Collections\Generic\IReadOnlyDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Compatibility\System\Collections\Generic\IReadOnlyList.cs">
+      <Link>__Compatibility\System\Collections\Generic\IReadOnlyList.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="__Compatiblity\System\IO\ErrorEventArgs.cs" />
+    <Compile Include="__Compatibility\System\IO\ErrorEventArgs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

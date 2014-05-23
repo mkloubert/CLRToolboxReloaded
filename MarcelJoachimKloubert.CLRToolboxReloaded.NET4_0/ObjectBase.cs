@@ -268,7 +268,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// <exception cref="ArgumentNullException">
         /// <paramref name="ex" /> is <see langword="null" />.
         /// </exception>
-        protected bool RaiseErrorsReceived(Exception ex)
+        protected bool OnErrorsReceived(Exception ex)
         {
             return this.RaiseEventHandler(this.ErrorsReceived,
                                           new ErrorEventArgs(ex));

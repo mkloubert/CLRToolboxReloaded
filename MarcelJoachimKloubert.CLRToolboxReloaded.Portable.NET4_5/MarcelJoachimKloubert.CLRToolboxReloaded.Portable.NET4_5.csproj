@@ -52,12 +52,37 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\collections\generic\ReadOnlyCollectionWrapper.cs">
+      <Link>Collections\Generic\ReadOnlyCollectionWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\collections\generic\ReadOnlyDictionaryWrapper.cs">
+      <Link>Collections\Generic\ReadOnlyDictionaryWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\collections\generic\ReadOnlyListWrapper.cs">
+      <Link>Collections\Generic\ReadOnlyListWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\componentmodel\INotifiable.cs">
+      <Link>ComponentModel\INotifiable.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\componentmodel\NotifiableBase.cs">
+      <Link>ComponentModel\NotifiableBase.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\DisposableObjectBase.cs">
       <Link>DisposableObjectBase.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\DisposableObjectBase.DisposeContext.cs">
       <Link>DisposableObjectBase.DisposeContext.cs</Link>
       <DependentUpon>DisposableObjectBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\extensions\ClrToolboxExtensionMethods.cs">
+      <Link>Extensions\ClrToolboxExtensionMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\extensions\Strings.AsString.cs">
+      <Link>Extensions\Strings.AsString.cs</Link>
+      <DependentUpon>Strings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\extensions\Strings.cs">
+      <Link>Extensions\Strings.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IDisposableObject.cs">
       <Link>IDisposableObject.cs</Link>
