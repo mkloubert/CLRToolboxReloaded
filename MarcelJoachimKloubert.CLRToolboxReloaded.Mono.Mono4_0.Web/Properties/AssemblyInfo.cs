@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright © 2014 Marcel Joachim Kloubert <marcel.kloubert@gmx.net>")]
 [assembly: AssemblyTrademark("")]
 
-[assembly: ComVisible(true)]
+[assembly: ComVisible(false)]
 
 [assembly: Guid("F2877B0C-C313-4F64-89AF-30C042A4C530")]
 
