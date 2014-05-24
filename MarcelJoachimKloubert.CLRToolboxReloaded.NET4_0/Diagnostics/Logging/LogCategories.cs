@@ -14,6 +14,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
     /// List of log categories.
     /// </summary>
 #if CAN_SERIALIZE
+
     [global::System.Runtime.Serialization.DataContract]
 #endif
     [Flags]
@@ -23,6 +24,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// None
         /// </summary>
 #if CAN_SERIALIZE
+
         [global::System.Runtime.Serialization.EnumMember]
 #endif
         None = 0,
@@ -31,6 +33,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Information
         /// </summary>
 #if CAN_SERIALIZE
+
         [global::System.Runtime.Serialization.EnumMember]
 #endif
         Information = 1,
@@ -39,6 +42,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Warnings
         /// </summary>
 #if CAN_SERIALIZE
+
         [global::System.Runtime.Serialization.EnumMember]
 #endif
         Warnings = 2,
@@ -47,6 +51,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Errors
         /// </summary>
 #if CAN_SERIALIZE
+
         [global::System.Runtime.Serialization.EnumMember]
 #endif
         Errors = 4,
@@ -55,6 +60,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Fatal errors
         /// </summary>
 #if CAN_SERIALIZE
+
         [global::System.Runtime.Serialization.EnumMember]
 #endif
         FatalErrors = 8,
@@ -63,6 +69,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Debug
         /// </summary>
 #if CAN_SERIALIZE
+
         [global::System.Runtime.Serialization.EnumMember]
 #endif
         Debug = 16,
@@ -71,6 +78,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Verbose
         /// </summary>
 #if CAN_SERIALIZE
+
         [global::System.Runtime.Serialization.EnumMember]
 #endif
         Verbose = 32,
@@ -79,6 +87,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Trace
         /// </summary>
 #if CAN_SERIALIZE
+
         [global::System.Runtime.Serialization.EnumMember]
 #endif
         Trace = 64,
@@ -87,6 +96,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Tests
         /// </summary>
 #if CAN_SERIALIZE
+
         [global::System.Runtime.Serialization.EnumMember]
 #endif
         Assert = 128,
@@ -95,6 +105,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// TODOs
         /// </summary>
 #if CAN_SERIALIZE
+
         [global::System.Runtime.Serialization.EnumMember]
 #endif
         TODO = 256,

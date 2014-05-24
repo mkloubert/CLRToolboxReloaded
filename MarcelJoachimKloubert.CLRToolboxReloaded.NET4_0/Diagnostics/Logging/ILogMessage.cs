@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Security.Principal;
-using System.Threading;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 {
