@@ -33,7 +33,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         #region Constrcutors (4)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectBase" /> class..
+        /// Initializes a new instance of the <see cref="ObjectBase" /> class.
         /// </summary>
         /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
@@ -52,7 +52,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectBase" /> class..
+        /// Initializes a new instance of the <see cref="ObjectBase" /> class.
         /// </summary>
         /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
         protected ObjectBase(bool synchronized)
@@ -62,7 +62,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectBase" /> class..
+        /// Initializes a new instance of the <see cref="ObjectBase" /> class.
         /// </summary>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
@@ -75,7 +75,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectBase" /> class..
+        /// Initializes a new instance of the <see cref="ObjectBase" /> class.
         /// </summary>
         protected ObjectBase()
             : this(synchronized: false)
