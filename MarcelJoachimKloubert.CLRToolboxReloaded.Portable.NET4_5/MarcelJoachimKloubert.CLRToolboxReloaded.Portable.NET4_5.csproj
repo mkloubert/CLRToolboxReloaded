@@ -97,6 +97,24 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\data\conversion\IConverter.cs">
       <Link>Data\Conversion\IConverter.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\AggregateLogger.cs">
+      <Link>Diagnostics\Logging\AggregateLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\AsyncLogger.cs">
+      <Link>Diagnostics\Logging\AsyncLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\DelegateLogger.cs">
+      <Link>Diagnostics\Logging\DelegateLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\DummyLogger.cs">
+      <Link>Diagnostics\Logging\DummyLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\EventLogger.cs">
+      <Link>Diagnostics\Logging\EventLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\FallbackLogger.cs">
+      <Link>Diagnostics\Logging\FallbackLogger.cs</Link>
+    </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\diagnostics\logging\ILogger.cs">
       <Link>Diagnostics\Logging\ILogger.cs</Link>
     </Compile>
@@ -109,8 +127,17 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\diagnostics\logging\LoggerBase.cs">
       <Link>Diagnostics\Logging\LoggerBase.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\LoggerWrapperBase.cs">
+      <Link>Diagnostics\Logging\LoggerWrapperBase.cs</Link>
+    </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\diagnostics\logging\LogMessage.cs">
       <Link>Diagnostics\Logging\LogMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\LogMessageEventArgs.cs">
+      <Link>Diagnostics\Logging\LogMessageEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\WorkflowLogger.cs">
+      <Link>Diagnostics\Logging\WorkflowLogger.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\DisposableObjectBase.cs">
       <Link>DisposableObjectBase.cs</Link>
@@ -136,6 +163,10 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.AsArray.cs">
       <Link>Extensions\Collections.AsArray.cs</Link>
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.AsSequence.cs">
+      <Link>Extensions\Collections.AsSequence.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.CreateTasksForAll.cs">
@@ -178,6 +209,33 @@
     </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\extensions\Strings.cs">
       <Link>Extensions\Strings.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ValuesAndObjects.cs">
+      <Link>Extensions\ValuesAndObjects.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ValuesAndObjects.IsFalse.cs">
+      <Link>Extensions\ValuesAndObjects.IsFalse.cs</Link>
+      <DependentUpon>ValuesAndObjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ValuesAndObjects.IsNotFalse.cs">
+      <Link>Extensions\ValuesAndObjects.IsNotFalse.cs</Link>
+      <DependentUpon>ValuesAndObjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ValuesAndObjects.IsNotNull.cs">
+      <Link>Extensions\ValuesAndObjects.IsNotNull.cs</Link>
+      <DependentUpon>ValuesAndObjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ValuesAndObjects.IsNotTrue.cs">
+      <Link>Extensions\ValuesAndObjects.IsNotTrue.cs</Link>
+      <DependentUpon>ValuesAndObjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ValuesAndObjects.IsNull.cs">
+      <Link>Extensions\ValuesAndObjects.IsNull.cs</Link>
+      <DependentUpon>ValuesAndObjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ValuesAndObjects.IsTrue.cs">
+      <Link>Extensions\ValuesAndObjects.IsTrue.cs</Link>
+      <DependentUpon>ValuesAndObjects.cs</DependentUpon>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IdentifiableBase.cs">
       <Link>IdentifiableBase.cs</Link>

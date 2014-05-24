@@ -80,7 +80,48 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
         #endregion Constrcutors (4)
 
-        #region Methods (5)
+        #region Methods (6)
+
+        /// <summary>
+        /// Creates a clone of a message.
+        /// </summary>
+        /// <param name="src">The source object.</param>
+        /// <returns>
+        /// The cloned object or <see langword="null" />
+        /// if <paramref name="src" /> is also <see langword="null" />.</returns>
+        protected static LogMessage CloneLogMessage(ILogMessage src)
+        {
+            return CloneLogMessageInner(src);
+        }
+
+        private static LogMessage CloneLogMessageInner(ILogMessage src)
+        {
+            if (src == null)
+            {
+                return null;
+            }
+
+            LogMessage result = new LogMessage(id: src.Id);
+            result.Assembly = src.Assembly;
+            result.Categories = src.Categories;
+            result.LogTag = src.LogTag;
+            result.Member = src.Member;
+            result.Message = src.Message;
+            result.Time = src.Time;
+
+#if CAN_HANDLE_THREADS
+
+            result.Principal = src.Principal;
+            result.Thread = src.Thread;
+
+#if CAN_DO_REMOTING
+            result.Context = src.Context;
+#endif
+
+#endif
+
+            return result;
+        }
 
         /// <inheriteddoc />
         public bool Log(ILogMessage msgObj)
@@ -92,7 +133,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
             try
             {
-                return this._LOG_METHOD(msgObj);
+                return this._LOG_METHOD(CloneLogMessage(msgObj));
             }
             catch
             {
