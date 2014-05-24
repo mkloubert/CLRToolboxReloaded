@@ -1527,6 +1527,192 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\Framework\Interfaces\ITestAction.cs">
       <Link>NUnit\Framework\Interfaces\ITestAction.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Main.cs">
+      <Link>SharpZipLib\Main.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\SharpZipBaseException.cs">
+      <Link>SharpZipLib\SharpZipBaseException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\BZip2\BZip2.cs">
+      <Link>SharpZipLib\BZip2\BZip2.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\BZip2\BZip2Constants.cs">
+      <Link>SharpZipLib\BZip2\BZip2Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\BZip2\BZip2Exception.cs">
+      <Link>SharpZipLib\BZip2\BZip2Exception.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\BZip2\BZip2InputStream.cs">
+      <Link>SharpZipLib\BZip2\BZip2InputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\BZip2\BZip2OutputStream.cs">
+      <Link>SharpZipLib\BZip2\BZip2OutputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Checksums\Adler32.cs">
+      <Link>SharpZipLib\Checksums\Adler32.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Checksums\CRC32.cs">
+      <Link>SharpZipLib\Checksums\CRC32.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Checksums\IChecksum.cs">
+      <Link>SharpZipLib\Checksums\IChecksum.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Checksums\StrangeCRC.cs">
+      <Link>SharpZipLib\Checksums\StrangeCRC.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Core\FileSystemScanner.cs">
+      <Link>SharpZipLib\Core\FileSystemScanner.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Core\INameTransform.cs">
+      <Link>SharpZipLib\Core\INameTransform.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Core\IScanFilter.cs">
+      <Link>SharpZipLib\Core\IScanFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Core\NameFilter.cs">
+      <Link>SharpZipLib\Core\NameFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Core\PathFilter.cs">
+      <Link>SharpZipLib\Core\PathFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Core\StreamUtils.cs">
+      <Link>SharpZipLib\Core\StreamUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Core\WindowsPathUtils.cs">
+      <Link>SharpZipLib\Core\WindowsPathUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Encryption\PkzipClassic.cs">
+      <Link>SharpZipLib\Encryption\PkzipClassic.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Encryption\ZipAESStream.cs">
+      <Link>SharpZipLib\Encryption\ZipAESStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Encryption\ZipAESTransform.cs">
+      <Link>SharpZipLib\Encryption\ZipAESTransform.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\GZip\GZIPConstants.cs">
+      <Link>SharpZipLib\GZip\GZIPConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\GZip\GZipException.cs">
+      <Link>SharpZipLib\GZip\GZipException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\GZip\GzipInputStream.cs">
+      <Link>SharpZipLib\GZip\GzipInputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\GZip\GzipOutputStream.cs">
+      <Link>SharpZipLib\GZip\GzipOutputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Lzw\LzwConstants.cs">
+      <Link>SharpZipLib\Lzw\LzwConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Lzw\LzwException.cs">
+      <Link>SharpZipLib\Lzw\LzwException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Lzw\LzwInputStream.cs">
+      <Link>SharpZipLib\Lzw\LzwInputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Tar\InvalidHeaderException.cs">
+      <Link>SharpZipLib\Tar\InvalidHeaderException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Tar\TarArchive.cs">
+      <Link>SharpZipLib\Tar\TarArchive.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Tar\TarBuffer.cs">
+      <Link>SharpZipLib\Tar\TarBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Tar\TarEntry.cs">
+      <Link>SharpZipLib\Tar\TarEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Tar\TarException.cs">
+      <Link>SharpZipLib\Tar\TarException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Tar\TarHeader.cs">
+      <Link>SharpZipLib\Tar\TarHeader.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Tar\TarInputStream.cs">
+      <Link>SharpZipLib\Tar\TarInputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Tar\TarOutputStream.cs">
+      <Link>SharpZipLib\Tar\TarOutputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\FastZip.cs">
+      <Link>SharpZipLib\Zip\FastZip.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\IEntryFactory.cs">
+      <Link>SharpZipLib\Zip\IEntryFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\WindowsNameTransform.cs">
+      <Link>SharpZipLib\Zip\WindowsNameTransform.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\ZipConstants.cs">
+      <Link>SharpZipLib\Zip\ZipConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\ZipEntry.cs">
+      <Link>SharpZipLib\Zip\ZipEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\ZipEntryFactory.cs">
+      <Link>SharpZipLib\Zip\ZipEntryFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\ZipException.cs">
+      <Link>SharpZipLib\Zip\ZipException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\ZipExtraData.cs">
+      <Link>SharpZipLib\Zip\ZipExtraData.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\ZipFile.cs">
+      <Link>SharpZipLib\Zip\ZipFile.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\ZipHelperStream.cs">
+      <Link>SharpZipLib\Zip\ZipHelperStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\ZipInputStream.cs">
+      <Link>SharpZipLib\Zip\ZipInputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\ZipNameTransform.cs">
+      <Link>SharpZipLib\Zip\ZipNameTransform.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\ZipOutputStream.cs">
+      <Link>SharpZipLib\Zip\ZipOutputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\Compression\Deflater.cs">
+      <Link>SharpZipLib\Zip\Compression\Deflater.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\Compression\DeflaterConstants.cs">
+      <Link>SharpZipLib\Zip\Compression\DeflaterConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\Compression\DeflaterEngine.cs">
+      <Link>SharpZipLib\Zip\Compression\DeflaterEngine.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\Compression\DeflaterHuffman.cs">
+      <Link>SharpZipLib\Zip\Compression\DeflaterHuffman.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\Compression\DeflaterPending.cs">
+      <Link>SharpZipLib\Zip\Compression\DeflaterPending.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\Compression\Inflater.cs">
+      <Link>SharpZipLib\Zip\Compression\Inflater.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\Compression\InflaterDynHeader.cs">
+      <Link>SharpZipLib\Zip\Compression\InflaterDynHeader.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\Compression\InflaterHuffmanTree.cs">
+      <Link>SharpZipLib\Zip\Compression\InflaterHuffmanTree.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\Compression\PendingBuffer.cs">
+      <Link>SharpZipLib\Zip\Compression\PendingBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\Compression\Streams\DeflaterOutputStream.cs">
+      <Link>SharpZipLib\Zip\Compression\Streams\DeflaterOutputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\Compression\Streams\InflaterInputStream.cs">
+      <Link>SharpZipLib\Zip\Compression\Streams\InflaterInputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\Compression\Streams\OutputWindow.cs">
+      <Link>SharpZipLib\Zip\Compression\Streams\OutputWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\Compression\Streams\StreamManipulator.cs">
+      <Link>SharpZipLib\Zip\Compression\Streams\StreamManipulator.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -1547,5 +1733,11 @@
     <EmbeddedResource Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\NUnit\license.txt">
       <Link>NUnit\license.txt</Link>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\COPYING.txt">
+      <Link>SharpZipLib\COPYING.txt</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SharpZipLib\" />
   </ItemGroup>
 </Project>
