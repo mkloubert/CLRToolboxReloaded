@@ -11,16 +11,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
     /// </summary>
     public interface IConverter : IObject
     {
-        #region Operations (4)
-
-        /// <summary>
-        /// Changes a value to a target type if needed.
-        /// </summary>
-        /// <typeparam name="T">The target type.</typeparam>
-        /// <param name="value">The value to cast / convert.</param>
-        /// <returns>The converted / casted version of <paramref name="value" />.</returns>
-        /// <exception cref="InvalidCastException">Cast operation failed.</exception>
-        T ChangeType<T>(object value);
+        #region Operations (2)
 
         /// <summary>
         /// Changes a value to a target type if needed.
@@ -30,19 +21,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
         /// <param name="provider">The format provider to use.</param>
         /// <returns>The converted / casted version of <paramref name="value" />.</returns>
         /// <exception cref="InvalidCastException">Cast operation failed.</exception>
-        T ChangeType<T>(object value, IFormatProvider provider);
-
-        /// <summary>
-        /// Changes a value to a target type if needed.
-        /// </summary>
-        /// <param name="type">The target type.</param>
-        /// <param name="value">The value to cast / convert.</param>
-        /// <returns>The converted / casted version of <paramref name="value" />.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="type" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="InvalidCastException">Cast operation failed.</exception>
-        object ChangeType(Type type, object value);
+        T ChangeType<T>(object value, IFormatProvider provider = null);
 
         /// <summary>
         /// Changes a value to a target type if needed.
@@ -55,7 +34,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
         /// <paramref name="type" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="InvalidCastException">Cast operation failed.</exception>
-        object ChangeType(Type type, object value, IFormatProvider provider);
+        object ChangeType(Type type, object value, IFormatProvider provider = null);
 
         #endregion Operations
     }

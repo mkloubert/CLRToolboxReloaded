@@ -6,7 +6,10 @@
 #define KNOWS_DBNULL
 #endif
 
-using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 {
@@ -43,6 +46,28 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
             }
 
 #endif
+
+            if (obj is IEnumerable<char>)
+            {
+                return new string(AsArray(obj as IEnumerable<char>));
+            }
+
+            if (obj is TextReader)
+            {
+                return ((TextReader)obj).ReadToEnd();
+            }
+
+            if (obj is IEnumerable<byte>)
+            {
+                return AsHexString(obj as IEnumerable<byte>);
+            }
+
+            if ((obj is IEnumerable<string>) ||
+                (obj is IEnumerable<IEnumerable<char>>))
+            {
+                return string.Concat(((IEnumerable)obj).Cast<object>()
+                                                       .Select(o => AsString(o)));
+            }
 
             return obj.ToString();
         }

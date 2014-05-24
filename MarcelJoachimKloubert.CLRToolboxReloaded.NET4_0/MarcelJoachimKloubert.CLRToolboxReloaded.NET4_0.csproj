@@ -96,6 +96,9 @@
     <Compile Include="Extensions\Serialization.ToJson.cs">
       <DependentUpon>Serialization.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Strings.AsHexString.cs">
+      <DependentUpon>Strings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Strings.AsString.cs">
       <DependentUpon>Strings.cs</DependentUpon>
     </Compile>

@@ -150,6 +150,10 @@
       <Link>Extensions\Serialization.ToJson.cs</Link>
       <DependentUpon>Serialization.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Strings.AsHexString.cs">
+      <Link>Extensions\Strings.AsHexString.cs</Link>
+      <DependentUpon>Strings.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Strings.AsString.cs">
       <Link>Extensions\Strings.AsString.cs</Link>
       <DependentUpon>Strings.cs</DependentUpon>

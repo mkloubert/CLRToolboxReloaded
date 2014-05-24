@@ -37,6 +37,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRTo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.Silverlight", "MarcelJoachimKloubert.CLRToolboxReloaded.Silverlight\MarcelJoachimKloubert.CLRToolboxReloaded.Silverlight.csproj", "{58A07CF5-9300-4273-BB0D-36C24719C24D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Web", "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Web\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Web.csproj", "{AA28E758-21CC-47F8-A011-87AE340ED2FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Web", "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Web\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Web.csproj", "{8A636904-F73D-4DC6-8D41-6CED288D2E79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +91,14 @@ Global
 		{58A07CF5-9300-4273-BB0D-36C24719C24D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58A07CF5-9300-4273-BB0D-36C24719C24D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58A07CF5-9300-4273-BB0D-36C24719C24D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA28E758-21CC-47F8-A011-87AE340ED2FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA28E758-21CC-47F8-A011-87AE340ED2FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA28E758-21CC-47F8-A011-87AE340ED2FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA28E758-21CC-47F8-A011-87AE340ED2FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A636904-F73D-4DC6-8D41-6CED288D2E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A636904-F73D-4DC6-8D41-6CED288D2E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A636904-F73D-4DC6-8D41-6CED288D2E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A636904-F73D-4DC6-8D41-6CED288D2E79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,5 +119,7 @@ Global
 		{D45358C9-BE72-4174-85BF-4687C616C816} = {459BA81C-C476-4B85-AD7F-72CA8CD58BF1}
 		{D5F0026C-4EE2-4EB0-A084-02F45414F04B} = {0343F034-44A7-4473-9A44-2AEBA4F9C756}
 		{58A07CF5-9300-4273-BB0D-36C24719C24D} = {597ACEC5-7A26-4344-BE44-79B06A90A8BA}
+		{AA28E758-21CC-47F8-A011-87AE340ED2FE} = {459BA81C-C476-4B85-AD7F-72CA8CD58BF1}
+		{8A636904-F73D-4DC6-8D41-6CED288D2E79} = {0343F034-44A7-4473-9A44-2AEBA4F9C756}
 	EndGlobalSection
 EndGlobal

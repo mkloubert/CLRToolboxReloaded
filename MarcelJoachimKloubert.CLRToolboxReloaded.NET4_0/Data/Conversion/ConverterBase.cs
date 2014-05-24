@@ -58,40 +58,32 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
 
         #endregion Constrcutors (4)
 
-        #region Methods (5)
+        #region Methods (3)
 
-        // Public Methods (4) 
-
-        /// <inheriteddoc />
-        public virtual T ChangeType<T>(object value)
-        {
-            return (T)this.ChangeType(typeof(T), value);
-        }
+        // Public Methods (2) 
 
         /// <inheriteddoc />
-        public T ChangeType<T>(object value, IFormatProvider provider)
+        public T ChangeType<T>(object value, IFormatProvider provider = null)
         {
             return (T)this.ChangeType(typeof(T), value, provider);
         }
 
         /// <inheriteddoc />
-        public object ChangeType(Type type, object value)
-        {
-#if !(PORTABLE || PROTABLE40)
-            return this.ChangeType(type, value, global::System.Threading.Thread.CurrentThread.CurrentCulture);
-#else
-            return this.ChangeType(type, value,
-                                   provider: null);
-#endif
-        }
-
-        /// <inheriteddoc />
-        public object ChangeType(Type type, object value, IFormatProvider provider)
+        public object ChangeType(Type type, object value, IFormatProvider provider = null)
         {
             if (type == null)
             {
                 throw new ArgumentNullException("type");
             }
+
+#if !(PORTABLE || PROTABLE40)
+
+            if (provider == null)
+            {
+                provider = global::System.Threading.Thread.CurrentThread.CurrentCulture;
+            }
+
+#endif
 
             object result = value;
             this.OnChangeType(type, ref result, provider);
