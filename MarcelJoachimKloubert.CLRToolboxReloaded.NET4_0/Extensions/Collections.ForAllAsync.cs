@@ -203,24 +203,47 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
             try
             {
-                using (var e = tasks.GetEnumerator())
+                var startedTasks = new List<Task>();
+
+                try
                 {
-                    try
+                    using (var e = tasks.GetEnumerator())
                     {
-                        e.Current.Start();
-                    }
-                    catch (Exception ex)
-                    {
-                        lock (sync)
+                        while (e.MoveNext())
                         {
-                            errors.Add(ex);
+                            try
+                            {
+                                var t = e.Current;
+
+                                t.Start();
+                                startedTasks.Add(t);
+                            }
+                            catch (Exception ex)
+                            {
+                                lock (sync)
+                                {
+                                    errors.Add(ex);
+                                }
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    lock (sync)
+                    {
+                        errors.Add(ex);
+                    }
+                }
+
+                Task.WaitAll(startedTasks.ToArray());
             }
             catch (Exception ex)
             {
-                errors.Add(ex);
+                lock (sync)
+                {
+                    errors.Add(ex);
+                }
             }
 
             AggregateException result = null;
@@ -230,7 +253,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                 result = new AggregateException(errors);
             }
 
-            if (throwExceptions)
+            if (throwExceptions &&
+                (result != null))
             {
                 throw result;
             }

@@ -217,7 +217,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                 result = new AggregateException(errors);
             }
 
-            if (throwExceptions)
+            if (throwExceptions &&
+                (result != null))
             {
                 throw result;
             }
