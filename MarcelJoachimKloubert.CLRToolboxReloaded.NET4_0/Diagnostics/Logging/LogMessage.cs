@@ -165,11 +165,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <inheriteddoc />
         public bool HasAllCategories(IEnumerable<LoggerFacadeCategories> categories)
         {
-            if (categories == null)
-            {
-                throw new ArgumentNullException("categories");
-            }
-
             return categories.All(c => this.Categories
                                            .HasFlag(c));
         }
