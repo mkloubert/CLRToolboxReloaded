@@ -64,7 +64,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         }
 
         /// <inheriteddoc />
-        public LoggerFacadeCategories Categories
+        public LogCategories Categories
         {
             get;
             set;
@@ -138,10 +138,32 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         #region Methods (5)
 
         /// <inheriteddoc />
-        public IEnumerable<LoggerFacadeCategories> GetCategoryFlags()
+        public IEnumerable<LogCategories> GetCategoryFlags()
         {
-            foreach (LoggerFacadeCategories cat in Enum.GetValues(typeof(LoggerFacadeCategories)))
+            var knownEnumValues = new List<LogCategories>();
+#if !(PORTABLE || PORTABLE40)
+            knownEnumValues.AddRange(global::System.Enum.GetValues(typeof(LogCategories))
+                                                        .Cast<LogCategories>());
+#else
+            knownEnumValues.Add(LogCategories.Assert);
+            knownEnumValues.Add(LogCategories.Debug);
+            knownEnumValues.Add(LogCategories.Errors);
+            knownEnumValues.Add(LogCategories.FatalErrors);
+            knownEnumValues.Add(LogCategories.Information);
+            knownEnumValues.Add(LogCategories.None);
+            knownEnumValues.Add(LogCategories.TODO);
+            knownEnumValues.Add(LogCategories.Trace);
+            knownEnumValues.Add(LogCategories.Verbose);
+            knownEnumValues.Add(LogCategories.Warnings);
+#endif
+
+            foreach (var cat in knownEnumValues)
             {
+                if (cat == LogCategories.None)
+                {
+                    continue;
+                }
+
                 if (this.Categories.HasFlag(cat))
                 {
                     yield return cat;
@@ -175,16 +197,16 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         }
 
         /// <inheriteddoc />
-        public bool HasAllCategories(IEnumerable<LoggerFacadeCategories> categories)
+        public bool HasAllCategories(IEnumerable<LogCategories> categories)
         {
             return categories.All(c => this.Categories
                                            .HasFlag(c));
         }
 
         /// <inheriteddoc />
-        public bool HasAllCategories(params LoggerFacadeCategories[] categories)
+        public bool HasAllCategories(params LogCategories[] categories)
         {
-            return this.HasAllCategories((IEnumerable<LoggerFacadeCategories>)categories);
+            return this.HasAllCategories((IEnumerable<LogCategories>)categories);
         }
 
         /// <summary>

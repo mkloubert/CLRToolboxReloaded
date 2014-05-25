@@ -30,7 +30,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Gets the list of underlying categories.
         /// </summary>
-        LoggerFacadeCategories Categories { get; }
+        LogCategories Categories { get; }
 
 #if CAN_DO_REMOTING
 
@@ -83,7 +83,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Returns all category flags of <see cref="ILogMessage.Categories" />.
         /// </summary>
         /// <returns>The category flags of <see cref="ILogMessage.Categories" />.</returns>
-        IEnumerable<LoggerFacadeCategories> GetCategoryFlags();
+        /// <remarks>
+        /// The default value <see cref="LogCategories.None" /> is NOT returned.
+        /// </remarks>
+        IEnumerable<LogCategories> GetCategoryFlags();
 
         /// <summary>
         /// Returns the value of <see cref="ILogMessage.Message" /> strong typed.
@@ -101,7 +104,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <exception cref="ArgumentNullException">
         /// <paramref name="categories" /> is <see langword="null" />.
         /// </exception>
-        bool HasAllCategories(IEnumerable<LoggerFacadeCategories> categories);
+        bool HasAllCategories(IEnumerable<LogCategories> categories);
 
         /// <summary>
         /// Checks if value of <see cref="ILogMessage.Categories" /> has all
@@ -112,7 +115,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <exception cref="ArgumentNullException">
         /// <paramref name="categories" /> is <see langword="null" />.
         /// </exception>
-        bool HasAllCategories(params LoggerFacadeCategories[] categories);
+        bool HasAllCategories(params LogCategories[] categories);
 
         #endregion Methods (3)
     }

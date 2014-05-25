@@ -18,7 +18,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
     [global::System.Runtime.Serialization.DataContract]
 #endif
     [Flags]
-    public enum LoggerFacadeCategories
+    public enum LogCategories
     {
         /// <summary>
         /// None

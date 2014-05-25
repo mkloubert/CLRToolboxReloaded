@@ -33,7 +33,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <returns>Logging was successful or not.</returns>
         bool Log(object msg,
                  IEnumerable<char> tag = null,
-                 LoggerFacadeCategories categories = LoggerFacadeCategories.None);
+                 LogCategories categories = LogCategories.None);
 
         #endregion Operations (2)
     }

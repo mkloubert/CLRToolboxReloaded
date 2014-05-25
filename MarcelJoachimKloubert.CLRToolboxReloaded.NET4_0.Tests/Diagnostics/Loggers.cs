@@ -12,13 +12,14 @@ using System.Threading;
 using TMAggregateLogger = MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.AggregateLogger;
 using TMAsyncLogger = MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.AsyncLogger;
 using TMDelegateLogger = MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.DelegateLogger;
+using TMLogCategories = MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.LogCategories;
 
 namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
 {
     [TestFixture]
     public class Loggers
     {
-        #region Methods (2)
+        #region Methods (4)
 
         [Test]
         public void AggregateLogger()
@@ -181,6 +182,42 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
             Assert.AreEqual(logMsgs.Count, 1);
         }
 
-        #endregion Methods (2)
+        [Test]
+        public void LogCategories()
+        {
+            ILogMessage lastMsg = null;
+            var logger = TMDelegateLogger.Create((msg) => lastMsg = msg);
+
+            logger.Log(msg: "test",
+                       categories: TMLogCategories.Debug | TMLogCategories.TODO);
+
+            Assert.IsNotNull(lastMsg);
+
+            var categories = new List<TMLogCategories>();
+            categories.AddRange(lastMsg.GetCategoryFlags());
+
+            Assert.AreEqual(categories.Count, 2);
+            
+            Assert.IsTrue(lastMsg.HasAllCategories());
+
+            // both are set
+            Assert.IsTrue(lastMsg.HasAllCategories(TMLogCategories.TODO));
+            Assert.IsTrue(lastMsg.HasAllCategories(TMLogCategories.Debug));
+            
+            // these are not set
+            Assert.IsFalse(lastMsg.HasAllCategories(TMLogCategories.Warnings));
+            Assert.IsFalse(lastMsg.HasAllCategories(TMLogCategories.Errors));
+            
+            // both are set
+            Assert.IsTrue(lastMsg.HasAllCategories(TMLogCategories.TODO,
+                                                   TMLogCategories.Debug));
+
+            // 'Warnings' is not part of 'lastMsg.Categories'
+            Assert.IsFalse(lastMsg.HasAllCategories(TMLogCategories.TODO,
+                                                    TMLogCategories.Debug,
+                                                    TMLogCategories.Warnings));
+        }
+
+        #endregion Methods (4)
     }
 }

@@ -146,7 +146,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <inheriteddoc />
         public bool Log(object msg,
                         IEnumerable<char> tag = null,
-                        LoggerFacadeCategories categories = LoggerFacadeCategories.None)
+                        LogCategories categories = LogCategories.None)
         {
             var msgObj = new LogMessage();
             msgObj.Time = DateTimeOffset.Now;
