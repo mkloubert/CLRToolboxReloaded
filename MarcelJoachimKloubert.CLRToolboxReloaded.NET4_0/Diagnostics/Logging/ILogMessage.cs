@@ -77,7 +77,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
         #endregion Data Members
 
-        #region Methods (3)
+        #region Methods (4)
+
+        /// <summary>
+        /// Returns all category flags of <see cref="ILogMessage.Categories" />.
+        /// </summary>
+        /// <returns>The category flags of <see cref="ILogMessage.Categories" />.</returns>
+        IEnumerable<LoggerFacadeCategories> GetCategoryFlags();
 
         /// <summary>
         /// Returns the value of <see cref="ILogMessage.Message" /> strong typed.

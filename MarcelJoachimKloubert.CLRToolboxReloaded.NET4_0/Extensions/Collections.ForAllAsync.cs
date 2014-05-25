@@ -191,10 +191,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
             long index = -1;
             var tasks = seq.Select(i => new Task((state) =>
                 {
-                    var tuple = (ForAllTuple<T, TState>)state;
+                    var tuple = (ForAllAsyncTuple<T, TState>)state;
 
                     tuple.Invoke();
-                }, state: new ForAllTuple<T, TState>(action: action,
+                }, state: new ForAllAsyncTuple<T, TState>(action: action,
                                                              actionStateProvider: actionStateProvider,
                                                              index: ++index,
                                                              item: i,
@@ -248,9 +248,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
             AggregateException result = null;
 
-            if (errors.Count > 0)
+            lock (sync)
             {
-                result = new AggregateException(errors);
+                if (errors.Count > 0)
+                {
+                    result = new AggregateException(errors);
+                }
             }
 
             if (throwExceptions &&

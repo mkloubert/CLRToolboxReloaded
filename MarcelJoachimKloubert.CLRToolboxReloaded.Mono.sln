@@ -57,6 +57,6 @@ Global
 		{AAD84746-0328-45CB-B727-9F26E29AEDEC} = {8EDF5B42-899B-4D69-B080-B2019A639DFC}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.csproj
+		StartupItem = MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Tests\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Tests.csproj
 	EndGlobalSection
 EndGlobal

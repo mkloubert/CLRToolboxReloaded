@@ -10,9 +10,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 {
     static partial class ClrToolboxExtensionMethods
     {
-        #region CLASS: ForAllTuple<T, TState>
+        #region CLASS: ForAllAsyncTuple<T, TState>
 
-        private sealed class ForAllTuple<T, TState>
+        private sealed class ForAllAsyncTuple<T, TState>
         {
             #region Fields (6)
 
@@ -27,7 +27,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
             #region Constructors (1)
 
-            internal ForAllTuple(Action<IForAllItemContext<T, TState>> action,
+            internal ForAllAsyncTuple(Action<IForAllItemContext<T, TState>> action,
                                  Func<T, long, TState> actionStateProvider,
                                  long index,
                                  T item,
@@ -52,7 +52,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
                 try
                 {
-                    var ctx = new ForAllItemContext<T, TState>()
+                    var ctx = new ForAllItemContext<T, TState>(sync: this.SYNC,
+                                                               synchronized: true)
                     {
                         Index = this.INDEX,
                         Item = this.ITEM,
@@ -77,6 +78,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
             #endregion Methods (1)
         }
 
-        #endregion CLASS: ForAllTuple<T, TState>
+        #endregion CLASS: ForAllAsyncTuple<T, TState>
     }
 }

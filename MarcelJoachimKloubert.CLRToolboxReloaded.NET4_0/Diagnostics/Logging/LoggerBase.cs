@@ -135,8 +135,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
             {
                 return this._LOG_METHOD(CloneLogMessage(msgObj));
             }
-            catch
+            catch (Exception ex)
             {
+                this.OnErrorsReceived(ex);
+
                 return false;
             }
         }

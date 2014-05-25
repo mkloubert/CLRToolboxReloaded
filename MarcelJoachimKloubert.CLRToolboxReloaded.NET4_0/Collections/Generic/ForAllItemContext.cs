@@ -12,6 +12,35 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
     /// <typeparam name="T">Type of the underlying item.</typeparam>
     public class ForAllItemContext<T> : ObjectBase, IForAllItemContext<T>
     {
+        #region Constrcutors (4)
+
+        /// <inheriteddoc />
+        public ForAllItemContext(bool synchronized, object sync)
+            : base(synchronized: synchronized,
+                   sync: sync)
+        {
+        }
+
+        /// <inheriteddoc />
+        public ForAllItemContext(bool synchronized)
+            : base(synchronized: synchronized)
+        {
+        }
+
+        /// <inheriteddoc />
+        public ForAllItemContext(object sync)
+            : base(sync: sync)
+        {
+        }
+
+        /// <inheriteddoc />
+        public ForAllItemContext()
+            : base()
+        {
+        }
+
+        #endregion Constrcutors (4)
+
         #region Properties (2)
 
         /// <inheriteddoc />
@@ -42,6 +71,35 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
     /// <typeparam name="TState">Type of the underlying state object.</typeparam>
     public class ForAllItemContext<T, TState> : ForAllItemContext<T>, IForAllItemContext<T, TState>
     {
+        #region Constrcutors (4)
+
+        /// <inheriteddoc />
+        public ForAllItemContext(bool synchronized, object sync)
+            : base(synchronized: synchronized,
+                   sync: sync)
+        {
+        }
+
+        /// <inheriteddoc />
+        public ForAllItemContext(bool synchronized)
+            : base(synchronized: synchronized)
+        {
+        }
+
+        /// <inheriteddoc />
+        public ForAllItemContext(object sync)
+            : base(sync: sync)
+        {
+        }
+
+        /// <inheriteddoc />
+        public ForAllItemContext()
+            : base()
+        {
+        }
+
+        #endregion Constrcutors (4)
+
         #region Properties (1)
 
         /// <inheriteddoc />

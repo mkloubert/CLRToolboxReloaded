@@ -93,21 +93,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                 throw new ArgumentNullException("actionStateProvider");
             }
 
+            List<Exception> errors = new List<Exception>();
+            object sync = new object();
+
             using (var e = seq.GetEnumerator())
             {
                 long index = -1;
 
                 while (e.MoveNext())
                 {
-                    List<Exception> errors = new List<Exception>();
-                    object sync = new object();
-
                     yield return new Task(action: (state) =>
                         {
-                            var tuple = (ForAllTuple<T, TState>)state;
+                            var tuple = (ForAllAsyncTuple<T, TState>)state;
 
                             tuple.Invoke();
-                        }, state: new ForAllTuple<T, TState>(action: action,
+                        }, state: new ForAllAsyncTuple<T, TState>(action: action,
                                                              actionStateProvider: actionStateProvider,
                                                              index: ++index,
                                                              item: e.Current,

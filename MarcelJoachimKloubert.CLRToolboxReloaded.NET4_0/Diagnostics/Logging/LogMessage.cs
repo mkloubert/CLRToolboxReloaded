@@ -21,6 +21,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
     /// Simple implementation of <see cref="ILogMessage" /> interface.
     /// </summary>
 #if CAN_SERIALIZE
+
     [global::System.Serializable]
 #endif
     public class LogMessage : IdentifiableBase, ILogMessage
@@ -134,7 +135,19 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
         #endregion Properties (10)
 
-        #region Methods (4)
+        #region Methods (5)
+
+        /// <inheriteddoc />
+        public IEnumerable<LoggerFacadeCategories> GetCategoryFlags()
+        {
+            foreach (LoggerFacadeCategories cat in Enum.GetValues(typeof(LoggerFacadeCategories)))
+            {
+                if (this.Categories.HasFlag(cat))
+                {
+                    yield return cat;
+                }
+            }
+        }
 
         /// <inheriteddoc />
         public virtual T GetMessage<T>()
@@ -183,6 +196,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
             this._id = newValue;
         }
 
-        #endregion Methods (4)
+        #endregion Methods (5)
     }
 }
