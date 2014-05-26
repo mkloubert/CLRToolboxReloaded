@@ -102,7 +102,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                 return null;
             }
 
-            LogMessage result = new LogMessage(id: src.Id);
+            var result = new LogMessage(id: src.Id);
             result.Assembly = src.Assembly;
             result.Categories = src.Categories;
             result.LogTag = src.LogTag;
@@ -256,24 +256,25 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                 {
                     checkAgain = false;
 
-                    if (messageToLog == null)
+                    var orgMsgObj = messageToLog;
+                    if (orgMsgObj == null)
                     {
                         break;
                     }
 
-                    if (messageToLog.Message is ILogCommand)
+                    if (orgMsgObj.Message is ILogCommand)
                     {
-                        var cmd = messageToLog.Message as ILogCommand;
+                        var cmd = orgMsgObj.Message as ILogCommand;
 
                         messageToLog = null;
-                        if (cmd.CanExecute(messageToLog))
+                        if (cmd.CanExecute(orgMsgObj))
                         {
-                            var result = cmd.Execute(messageToLog);
+                            var result = cmd.Execute(orgMsgObj);
                             if (result != null)
                             {
                                 if (result.HasFailed)
                                 {
-                                    throw new AggregateException(result.Errors);
+                                    return false;
                                 }
 
                                 if (result.DoLogMessage)
@@ -281,7 +282,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                                     // send 'result.MessageValueToLog'
                                     // to "real" logger logic
 
-                                    messageToLog = CreateCopyOfLogMessage(messageToLog,
+                                    messageToLog = CreateCopyOfLogMessage(orgMsgObj,
                                                                           result.MessageValueToLog);
                                 }
                             }
@@ -292,14 +293,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                     }
                     else
                     {
-                        if (messageToLog.Message is ICommand<ILogMessage>)
+                        if (orgMsgObj.Message is ICommand<ILogMessage>)
                         {
-                            var cmd = messageToLog.Message as ICommand<ILogMessage>;
+                            var cmd = orgMsgObj.Message as ICommand<ILogMessage>;
 
                             messageToLog = null;
-                            if (cmd.CanExecute(messageToLog))
+                            if (cmd.CanExecute(orgMsgObj))
                             {
-                                cmd.Execute(messageToLog);
+                                cmd.Execute(orgMsgObj);
                             }
                         }
                     }
