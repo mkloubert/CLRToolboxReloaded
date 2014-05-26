@@ -174,6 +174,13 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Execution
                     ctx.Next = step2;
                 });
 
+            var step1b = new WorkflowAction(ctx =>
+                {
+                    ctx.Result = 1;
+                    str += "00";
+
+                    ctx.Next = step2;
+                });
 
             var wf1 = DelegateWorkflow.Create(step1);
             var res1 = wf1.Execute();
@@ -181,10 +188,10 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Execution
             Assert.AreEqual(str, "010203");
             Assert.AreEqual(res1, 6);
 
-            var wf2 = new DelegateWorkflow((wf, c) => step1);
+            var wf2 = new DelegateWorkflow((wf, c) => step1b);
             var res2 = wf2.Execute();
 
-            Assert.AreEqual(str, "010203010203");
+            Assert.AreEqual(str, "010203000203");
             Assert.AreEqual(res2, 6);
         }
 
