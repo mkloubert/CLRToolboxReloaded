@@ -9,7 +9,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
     /// <summary>
     /// An extension of <see cref="AttributeWorkflowBase" /> that uses a delegate for the workflow start logic.
     /// </summary>
-    public class DelegateWorkflow : AttributeWorkflowBase
+    public sealed class DelegateWorkflow : AttributeWorkflowBase
     {
         #region Fields (1)
 
@@ -180,12 +180,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
                           synchronized: false);
         }
 
-        /// <summary>
-        /// The entry point for the workflow.
-        /// </summary>
-        /// <param name="ctx">The first workflow context.</param>
         [WorkflowStart]
-        protected virtual void StartWorkflow(IWorkflowExecutionContext ctx)
+        private virtual void StartWorkflow(IWorkflowExecutionContext ctx)
         {
             var action = this._PROVIDER(this, this.ContractName);
             if (action != null)
