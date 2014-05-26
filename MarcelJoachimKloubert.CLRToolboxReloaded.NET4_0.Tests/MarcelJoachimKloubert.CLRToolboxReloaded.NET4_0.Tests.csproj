@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Diagnostics\Loggers.cs" />
+    <Compile Include="Execution\Workflows.cs" />
     <Compile Include="Extensions\Collections.cs" />
     <Compile Include="Extensions\ValuesAndObjects.cs" />
     <Compile Include="Program.cs" />

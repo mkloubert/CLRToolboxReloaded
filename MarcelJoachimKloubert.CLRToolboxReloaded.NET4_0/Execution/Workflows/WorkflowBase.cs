@@ -259,14 +259,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
 
         private object Execute_NonThreadSafe(object[] args)
         {
-            object result = null;
+            IWorkflowExecutionContext result = null;
             this.ForEach(ctx => result = ctx.Item(ctx.State.Arguments),
                 actionState: new
                 {
                     Arguments = args,
                 });
 
-            return result;
+            return result != null ? result.Result : null;
         }
 
         private object Execute_ThreadSafe(object[] args)

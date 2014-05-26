@@ -16,6 +16,36 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
     /// </summary>
     public class WorkflowExecutionContext : ObjectBase, IWorkflowExecutionContext
     {
+        #region Constrcutors (4)
+
+        /// <inheriteddoc />
+        public WorkflowExecutionContext(bool synchronized, object sync)
+            : base(synchronized: synchronized,
+                   sync: sync)
+        {
+        }
+
+        /// <inheriteddoc />
+        public WorkflowExecutionContext(bool synchronized)
+            : base(synchronized: synchronized)
+        {
+        }
+
+        /// <inheriteddoc />
+        public WorkflowExecutionContext(object sync)
+            : base(synchronized: true,
+                   sync: sync)
+        {
+        }
+
+        /// <inheriteddoc />
+        public WorkflowExecutionContext()
+            : base(synchronized: true)
+        {
+        }
+
+        #endregion Constrcutors (5)
+
         #region Properties (15)
 
         /// <inheriteddoc />
@@ -436,6 +466,36 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         private WorkflowAction<TState> _nextWithState;
 
         #endregion Fields
+
+        #region Constrcutors (4)
+
+        /// <inheriteddoc />
+        public WorkflowExecutionContext(bool synchronized, object sync)
+            : base(synchronized: synchronized,
+                   sync: sync)
+        {
+        }
+
+        /// <inheriteddoc />
+        public WorkflowExecutionContext(bool synchronized)
+            : base(synchronized: synchronized)
+        {
+        }
+
+        /// <inheriteddoc />
+        public WorkflowExecutionContext(object sync)
+            : base(synchronized: true,
+                   sync: sync)
+        {
+        }
+
+        /// <inheriteddoc />
+        public WorkflowExecutionContext()
+            : base(synchronized: true)
+        {
+        }
+
+        #endregion Constrcutors (5)
 
         #region Properties (4)
 

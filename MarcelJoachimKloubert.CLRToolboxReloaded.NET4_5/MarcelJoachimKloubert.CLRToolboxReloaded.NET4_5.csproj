@@ -174,17 +174,29 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Workflows\AggregateWorkflow.cs">
       <Link>Execution\Workflows\AggregateWorkflow.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Workflows\AttributeWorkflowBase.cs">
+      <Link>Execution\Workflows\AttributeWorkflowBase.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Workflows\IWorkflow.cs">
       <Link>Execution\Workflows\IWorkflow.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Workflows\IWorkflowExecutionContext.cs">
       <Link>Execution\Workflows\IWorkflowExecutionContext.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Workflows\NextWorkflowStepAttribute.cs">
+      <Link>Execution\Workflows\NextWorkflowStepAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Workflows\WorkflowAttributeBase.cs">
+      <Link>Execution\Workflows\WorkflowAttributeBase.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Workflows\WorkflowBase.cs">
       <Link>Execution\Workflows\WorkflowBase.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Workflows\WorkflowExecutionContext.cs">
       <Link>Execution\Workflows\WorkflowExecutionContext.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Workflows\WorkflowStartAttribute.cs">
+      <Link>Execution\Workflows\WorkflowStartAttribute.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ClrToolboxExtensionMethods.cs">
       <Link>Extensions\ClrToolboxExtensionMethods.cs</Link>

@@ -57,7 +57,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         {
             get { return this._LIST; }
         }
-        
+
         /// <inheriteddoc />
         public T this[int index]
         {

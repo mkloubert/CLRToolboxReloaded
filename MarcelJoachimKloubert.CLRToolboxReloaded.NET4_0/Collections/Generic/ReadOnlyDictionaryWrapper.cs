@@ -48,7 +48,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// <inheriteddoc />
         public int Count
         {
-            get { return this.Count; }
+            get { return this._DICTIONARY.Count; }
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// <inheriteddoc />
         public TValue this[TKey key]
         {
-            get { throw new NotImplementedException(); }
+            get { return this._DICTIONARY[key]; }
         }
 
         #endregion Properties (5)
@@ -84,13 +84,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// <inheriteddoc />
         public bool ContainsKey(TKey key)
         {
-            return this.ContainsKey(key);
+            return this._DICTIONARY
+                       .ContainsKey(key);
         }
 
         /// <inheriteddoc />
         public bool TryGetValue(TKey key, out TValue value)
         {
-            return this.TryGetValue(key, out value);
+            return this._DICTIONARY
+                       .TryGetValue(key, out value);
         }
 
         /// <inheriteddoc />
