@@ -2,9 +2,9 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 {
@@ -14,33 +14,100 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
     /// </summary>
     public sealed class FallbackLogger : LoggerWrapperBase
     {
-        #region Fields (1)
+        #region Fields (1)
 
-        private readonly List<ILogger> _FALLBACK_LOGGERS = new List<ILogger>();
+        private readonly LoggerProvider _PROVIDER;
 
-        #endregion Fields
+        #endregion Fields (1)
 
-        #region Constructors (1)
+        #region Constrcutors (4)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
         /// </summary>
-        /// <param name="mainLogger">The value for the <see cref="FallbackLogger.MainLogger" /> property.</param>
+        /// <param name="mainLogger">The main logger.</param>
+        /// <param name="provider">The value for the <see cref="AggregateLogger.Provider" /> property.</param>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="mainLogger" /> is <see langword="null" />.
+        /// <paramref name="provider" /> and/or <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        /// <remarks>
-        /// Logging is thread safe.
-        /// </remarks>
-        public FallbackLogger(ILogger mainLogger)
+        public FallbackLogger(ILogger mainLogger, LoggerProvider provider, bool synchronized, object sync)
             : base(innerLogger: mainLogger,
-                   synchronized: true)
+                   synchronized: synchronized,
+                   sync: sync)
+        {
+            if (provider == null)
+            {
+                throw new ArgumentNullException("provider");
+            }
+
+            this._PROVIDER = provider;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
+        /// </summary>
+        /// <param name="mainLogger">The main logger.</param>
+        /// <param name="provider">The value for the <see cref="AggregateLogger.Provider" /> property.</param>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="provider" /> is <see langword="null" />.
+        /// </exception>
+        public FallbackLogger(ILogger mainLogger, LoggerProvider provider, bool synchronized)
+            : this(mainLogger: mainLogger,
+                   provider: provider,
+                   synchronized: synchronized,
+                   sync: new object())
         {
         }
 
-        #endregion Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
+        /// </summary>
+        /// <param name="mainLogger">The main logger.</param>
+        /// <param name="provider">The value for the <see cref="AggregateLogger.Provider" /> property.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="provider" /> and/or <paramref name="sync" /> is <see langword="null" />.
+        /// </exception>
+        public FallbackLogger(ILogger mainLogger, LoggerProvider provider, object sync)
+            : this(mainLogger: mainLogger,
+                   provider: provider,
+                   sync: sync,
+                   synchronized: false)
+        {
+        }
 
-        #region Properties (1)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
+        /// </summary>
+        /// <param name="mainLogger">The main logger.</param>
+        /// <param name="provider">The value for the <see cref="FallbackLogger.Provider" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="provider" /> is <see langword="null" />.
+        /// </exception>
+        public FallbackLogger(ILogger mainLogger, LoggerProvider provider)
+            : this(mainLogger: mainLogger,
+                   provider: provider,
+                   sync: new object())
+        {
+        }
+
+        #endregion Constrcutors (4)
+
+        #region Events and delegates (1)
+
+        /// <summary>
+        /// Describes a function / methods that provides the fallback loggers for an instance that class.
+        /// </summary>
+        /// <param name="logger">The underlying instance.</param>
+        /// <returns>The fallback for that class.</returns>
+        public delegate IEnumerable<ILogger> LoggerProvider(FallbackLogger logger);
+
+        #endregion Events and delegates (1)
+
+        #region Properties (2)
 
         /// <summary>
         /// Gets the main logger.
@@ -50,98 +117,161 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
             get { return this._INNER_LOGGER; }
         }
 
-        #endregion Properties
+        /// <summary>
+        /// Gets the underlying provider.
+        /// </summary>
+        public LoggerProvider Provider
+        {
+            get { return this._PROVIDER; }
+        }
+
+        #endregion Properties (2)
 
         #region Methods (8)
 
         /// <summary>
-        /// Adds a fallback logger.
+        /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
         /// </summary>
-        /// <param name="logger">The logger to add.</param>
+        /// <param name="mainLogger">The main logger.</param>
+        /// <param name="loggers">The loggers to use.</param>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="logger" /> is <see langword="null" />.
+        /// <paramref name="mainLogger" />, <paramref name="sync" /> and/or <paramref name="loggers" /> are <see langword="null" />.
         /// </exception>
-        public void Add(ILogger logger)
-        {
-            if (logger == null)
-            {
-                throw new ArgumentNullException("logger");
-            }
-
-            lock (this._SYNC)
-            {
-                this._FALLBACK_LOGGERS.Add(logger);
-            }
-        }
-
-        /// <summary>
-        /// Clears the list of fallback loggers.
-        /// </summary>
-        public void Clear()
-        {
-            lock (this._SYNC)
-            {
-                this._FALLBACK_LOGGERS.Clear();
-            }
-        }
-
-        /// <summary>
-        /// Creates a new instance from an inital list of loggers.
-        /// </summary>
-        /// <param name="mainLogger">The value for the <see cref="FallbackLogger.MainLogger" /> property.</param>
-        /// <param name="loggers">The initial list of loggers to add to the new instance.</param>
-        /// <returns>The new instance.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="mainLogger" /> and/or <paramref name="loggers" /> are <see langword="null" />.
-        /// </exception>
-        public static FallbackLogger Create(ILogger mainLogger, IEnumerable<ILogger> loggers)
+        public static FallbackLogger Create(ILogger mainLogger, IEnumerable<ILogger> loggers, bool synchronized, object sync)
         {
             if (loggers == null)
             {
                 throw new ArgumentNullException("loggers");
             }
 
-            FallbackLogger result = new FallbackLogger(mainLogger);
-
-            loggers.ForEach(ctx => ctx.State
-                                      .Logger.Add(ctx.Item),
-                            actionState: new
-                            {
-                                Logger = result,
-                            });
-
-            return result;
+            return new FallbackLogger(mainLogger: mainLogger,
+                                      provider: (l) => loggers,
+                                      synchronized: synchronized,
+                                      sync: sync);
         }
 
         /// <summary>
-        /// Creates a new instance from an inital list of loggers.
+        /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
         /// </summary>
-        /// <param name="mainLogger">The value for the <see cref="FallbackLogger.MainLogger" /> property.</param>
-        /// <param name="loggers">The initial list of loggers to add to the new instance.</param>
-        /// <returns>The new instance.</returns>
+        /// <param name="mainLogger">The main logger.</param>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
+        /// <param name="loggers">The loggers to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="mainLogger" />, <paramref name="sync" /> and/or <paramref name="loggers" /> are <see langword="null" />.
+        /// </exception>
+        public static FallbackLogger Create(ILogger mainLogger, bool synchronized, object sync, params ILogger[] loggers)
+        {
+            return Create(mainLogger: mainLogger, 
+                          loggers: (IEnumerable<ILogger>)loggers,
+                          synchronized: synchronized,
+                          sync: sync);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
+        /// </summary>
+        /// <param name="mainLogger">The main logger.</param>
+        /// <param name="loggers">The loggers to use.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="mainLogger" />, <paramref name="sync" /> and/or <paramref name="loggers" /> are <see langword="null" />.
+        /// </exception>
+        public static FallbackLogger Create(ILogger mainLogger, IEnumerable<ILogger> loggers, object sync)
+        {
+            return Create(mainLogger: mainLogger,
+                          loggers: loggers,
+                          synchronized: false,
+                          sync: sync);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
+        /// </summary>
+        /// <param name="mainLogger">The main logger.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
+        /// <param name="loggers">The loggers to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="mainLogger" />, <paramref name="sync" /> and/or <paramref name="loggers" /> are <see langword="null" />.
+        /// </exception>
+        public static FallbackLogger Create(ILogger mainLogger, object sync, params ILogger[] loggers)
+        {
+            return Create(mainLogger: mainLogger, 
+                          loggers: (IEnumerable<ILogger>)loggers,
+                          sync: sync);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
+        /// </summary>
+        /// <param name="mainLogger">The main logger.</param>
+        /// <param name="loggers">The loggers to use.</param>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="mainLogger" /> and/or <paramref name="loggers" /> are <see langword="null" />.
+        /// </exception>
+        public static FallbackLogger Create(ILogger mainLogger, IEnumerable<ILogger> loggers, bool synchronized)
+        {
+            return Create(mainLogger: mainLogger,
+                          loggers: loggers,
+                          synchronized: false,
+                          sync: new object());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
+        /// </summary>
+        /// <param name="mainLogger">The main logger.</param>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="loggers">The loggers to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="mainLogger" /> and/or <paramref name="loggers" /> are <see langword="null" />.
+        /// </exception>
+        public static FallbackLogger Create(ILogger mainLogger, bool synchronized, params ILogger[] loggers)
+        {
+            return Create(mainLogger: mainLogger,
+                          loggers: (IEnumerable<ILogger>)loggers,
+                          synchronized: synchronized);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
+        /// </summary>
+        /// <param name="mainLogger">The main logger.</param>
+        /// <param name="loggers">The loggers to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="mainLogger" /> and/or <paramref name="loggers" /> are <see langword="null" />.
+        /// </exception>
+        public static FallbackLogger Create(ILogger mainLogger, IEnumerable<ILogger> loggers)
+        {
+            return Create(mainLogger: mainLogger, 
+                          loggers: loggers,
+                          synchronized: false);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
+        /// </summary>
+        /// <param name="mainLogger">The main logger.</param>
+        /// <param name="loggers">The loggers to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="mainLogger" /> and/or <paramref name="loggers" /> are <see langword="null" />.
         /// </exception>
         public static FallbackLogger Create(ILogger mainLogger, params ILogger[] loggers)
         {
-            return Create(mainLogger,
-                          (IEnumerable<ILogger>)loggers);
+            return Create(mainLogger: mainLogger,
+                          loggers: (IEnumerable<ILogger>)loggers);
         }
 
         /// <summary>
-        /// Gets a new list of current stored fallback loggers.
+        /// Returns a normalized list of fallback loggers that are provides by <see cref="FallbackLogger.Provider" /> property.
         /// </summary>
-        /// <returns>A list of current fallback loggers.</returns>
-        public List<ILogger> GetFallbacks()
+        /// <returns>The list of fallback loggers.</returns>
+        public IEnumerable<ILogger> GetFallbacks()
         {
-            List<ILogger> result;
-
-            lock (this._SYNC)
-            {
-                result = new List<ILogger>(this._FALLBACK_LOGGERS);
-            }
-
-            return result;
+            return (this._PROVIDER(this) ?? Enumerable.Empty<ILogger>()).Where(l => l != null);
         }
 
         /// <inheriteddoc />
@@ -150,7 +280,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
             var failed = false;
             var index = 0;
 
-            using (var e = this._FALLBACK_LOGGERS.GetEnumerator())
+            using (var e = this.GetFallbacks().GetEnumerator())
             {
                 var currentLogger = this._INNER_LOGGER;
                 while (currentLogger != null)
@@ -191,31 +321,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
             {
                 succeeded = false;
             }
-        }
-
-        /// <summary>
-        /// Removes a fallback logger.
-        /// </summary>
-        /// <param name="logger">The logger to remove.</param>
-        /// <returns>Logger was removed or not.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="logger" /> is <see langword="null" />.
-        /// </exception>
-        public bool Remove(ILogger logger)
-        {
-            if (logger == null)
-            {
-                throw new ArgumentNullException("logger");
-            }
-
-            bool result;
-
-            lock (this._SYNC)
-            {
-                result = this._FALLBACK_LOGGERS.Remove(logger);
-            }
-
-            return result;
         }
 
         #endregion Methods

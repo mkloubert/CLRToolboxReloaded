@@ -33,7 +33,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         #region Constrcutors (4)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoggerBase" /> class..
+        /// Initializes a new instance of the <see cref="LoggerBase" /> class.
         /// </summary>
         /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
@@ -49,7 +49,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoggerBase" /> class..
+        /// Initializes a new instance of the <see cref="LoggerBase" /> class.
         /// </summary>
         /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
         protected LoggerBase(bool synchronized)
@@ -59,7 +59,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoggerBase" /> class..
+        /// Initializes a new instance of the <see cref="LoggerBase" /> class.
         /// </summary>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
@@ -72,7 +72,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoggerBase" /> class..
+        /// Initializes a new instance of the <see cref="LoggerBase" /> class.
         /// </summary>
         protected LoggerBase()
             : this(sync: new object())
@@ -291,17 +291,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                         // maybe 'messageToLog' can be a log command again
                         checkAgain = true;
                     }
-                    else
+                    else if (orgMsgObj.Message is ICommand<ILogMessage>)
                     {
-                        if (orgMsgObj.Message is ICommand<ILogMessage>)
-                        {
-                            var cmd = orgMsgObj.Message as ICommand<ILogMessage>;
+                        var cmd = orgMsgObj.Message as ICommand<ILogMessage>;
 
-                            messageToLog = null;
-                            if (cmd.CanExecute(orgMsgObj))
-                            {
-                                cmd.Execute(orgMsgObj);
-                            }
+                        messageToLog = null;
+                        if (cmd.CanExecute(orgMsgObj))
+                        {
+                            cmd.Execute(orgMsgObj);
                         }
                     }
                 }
@@ -310,6 +307,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
             if (messageToLog == null)
             {
+                // dummy log
                 return true;
             }
 

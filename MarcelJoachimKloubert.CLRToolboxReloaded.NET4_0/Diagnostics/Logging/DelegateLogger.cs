@@ -5,6 +5,7 @@
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 {
@@ -13,30 +14,88 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
     /// </summary>
     public sealed class DelegateLogger : LoggerBase
     {
-        #region Fields (1)
+        #region Fields (1)
 
-        private readonly List<LogMessageHandler> _DELEGATES = new List<LogMessageHandler>();
+        private readonly LogMessageHandlerProvider _PROVIDER;
 
-        #endregion Fields
+        #endregion Fields (1)
 
-        #region Constructors (1)
+        #region Constrcutors (4)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
         /// </summary>
-        /// <remarks>
-        /// Logging is thread safe.
-        /// </remarks>
-        public DelegateLogger()
-            : base(true)
+        /// <param name="provider">The value for the <see cref="DelegateLogger.Provider" /> property.</param>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="provider" /> and/or <paramref name="sync" /> is <see langword="null" />.
+        /// </exception>
+        public DelegateLogger(LogMessageHandlerProvider provider, bool synchronized, object sync)
+            : base(synchronized: synchronized,
+                   sync: sync)
+        {
+            if (provider == null)
+            {
+                throw new ArgumentNullException("provider");
+            }
+
+            this._PROVIDER = provider;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
+        /// </summary>
+        /// <param name="provider">The value for the <see cref="DelegateLogger.Provider" /> property.</param>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="provider" /> is <see langword="null" />.
+        /// </exception>
+        public DelegateLogger(LogMessageHandlerProvider provider, bool synchronized)
+            : this(provider: provider,
+                   synchronized: synchronized,
+                   sync: new object())
         {
         }
 
-        #endregion Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
+        /// </summary>
+        /// <param name="provider">The value for the <see cref="DelegateLogger.Provider" /> property.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="provider" /> and/or <paramref name="sync" /> is <see langword="null" />.
+        /// </exception>
+        public DelegateLogger(LogMessageHandlerProvider provider, object sync)
+            : this(provider: provider,
+                   sync: sync,
+                   synchronized: false)
+        {
+        }
 
-        #region Delegates and Events (1)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
+        /// </summary>
+        /// <param name="provider">The value for the <see cref="DelegateLogger.Provider" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="provider" /> is <see langword="null" />.
+        /// </exception>
+        public DelegateLogger(LogMessageHandlerProvider provider)
+            : this(provider: provider,
+                   sync: new object())
+        {
+        }
 
-        // Delegates (1) 
+        #endregion Constrcutors (4)
+
+        #region Delegates and Events (2)
+
+        /// <summary>
+        /// Describes a function / methods that provides the handlers for an instance that class.
+        /// </summary>
+        /// <param name="logger">The underlying instance.</param>
+        /// <returns>The handlers for that class.</returns>
+        public delegate IEnumerable<LogMessageHandler> LogMessageHandlerProvider(DelegateLogger logger);
 
         /// <summary>
         /// Describes a function or method that handles a log message.
@@ -46,145 +105,171 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
         #endregion Delegates and Events
 
-        #region Methods (7)
-
-        // Public Methods (6) 
+        #region Properties (1)
 
         /// <summary>
-        /// Adds a handler.
+        /// Gets the underlying provider.
         /// </summary>
-        /// <param name="handler">The handler to add.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="handler" /> is <see langword="null" />.
-        /// </exception>
-        public void Add(LogMessageHandler handler)
+        public LogMessageHandlerProvider Provider
         {
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
-
-            lock (this._SYNC)
-            {
-                this._DELEGATES.Add(handler);
-            }
+            get { return this._PROVIDER; }
         }
 
-        /// <summary>
-        /// Clears the list of handlers.
-        /// </summary>
-        public void Clear()
-        {
-            lock (this._SYNC)
-            {
-                this._DELEGATES.Clear();
-            }
-        }
+        #endregion Properties (1)
+
+        #region Methods (10)
 
         /// <summary>
-        /// Creates a new instance from an inital list of handlers.
+        /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
         /// </summary>
-        /// <param name="handlers">The initial list of handlers to add to the new instance.</param>
-        /// <returns>The new instance.</returns>
+        /// <param name="handlers">The handlers to use.</param>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="handlers" /> is <see langword="null" />.
+        /// <paramref name="handlers" /> and/or <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        public static DelegateLogger Create(IEnumerable<LogMessageHandler> handlers)
+        public static DelegateLogger Create(IEnumerable<LogMessageHandler> handlers, bool synchronized, object sync)
         {
             if (handlers == null)
             {
                 throw new ArgumentNullException("handlers");
             }
-            var result = new DelegateLogger();
 
-            handlers.ForEach(ctx => ctx.State
-                                       .Logger.Add(ctx.Item),
-                             actionState: new
-                             {
-                                 Logger = result,
-                             });
-
-            return result;
+            return new DelegateLogger((l) => handlers,
+                                      synchronized: synchronized,
+                                      sync: sync);
         }
 
         /// <summary>
-        /// Creates a new instance from an inital list of handlers.
+        /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
         /// </summary>
-        /// <param name="handlers">The initial list of handlers to add to the new instance.</param>
-        /// <returns>The new instance.</returns>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
+        /// <param name="handlers">The handlers to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handlers" /> and/or <paramref name="sync" /> is <see langword="null" />.
+        /// </exception>
+        public static DelegateLogger Create(bool synchronized, object sync, params LogMessageHandler[] handlers)
+        {
+            return Create(synchronized: synchronized,
+                          sync: sync,
+                          handlers: (IEnumerable<LogMessageHandler>)handlers);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
+        /// </summary>
+        /// <param name="handlers">The handlers to use.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handlers" /> and/or <paramref name="sync" /> is <see langword="null" />.
+        /// </exception>
+        public static DelegateLogger Create(IEnumerable<LogMessageHandler> handlers, object sync)
+        {
+            return Create(handlers,
+                          synchronized: false,
+                          sync: sync);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
+        /// </summary>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
+        /// <param name="handlers">The handlers to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handlers" /> and/or <paramref name="sync" /> is <see langword="null" />.
+        /// </exception>
+        public static DelegateLogger Create(object sync, params LogMessageHandler[] handlers)
+        {
+            return Create(sync: sync,
+                          handlers: (IEnumerable<LogMessageHandler>)handlers);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
+        /// </summary>
+        /// <param name="handlers">The handlers to use.</param>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handlers" /> is <see langword="null" />.
+        /// </exception>
+        public static DelegateLogger Create(IEnumerable<LogMessageHandler> handlers, bool synchronized)
+        {
+            return Create(handlers,
+                          synchronized: false,
+                          sync: new object());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
+        /// </summary>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="handlers">The handlers to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handlers" /> is <see langword="null" />.
+        /// </exception>
+        public static DelegateLogger Create(bool synchronized, params LogMessageHandler[] handlers)
+        {
+            return Create(synchronized: synchronized,
+                          handlers: (IEnumerable<LogMessageHandler>)handlers);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
+        /// </summary>
+        /// <param name="handlers">The handlers to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handlers" /> is <see langword="null" />.
+        /// </exception>
+        public static DelegateLogger Create(IEnumerable<LogMessageHandler> handlers)
+        {
+            return Create(handlers,
+                          synchronized: false);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
+        /// </summary>
+        /// <param name="handlers">The handlers to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handlers" /> is <see langword="null" />.
         /// </exception>
         public static DelegateLogger Create(params LogMessageHandler[] handlers)
         {
-            return Create((IEnumerable<LogMessageHandler>)handlers);
+            return Create(handlers: (IEnumerable<LogMessageHandler>)handlers);
         }
 
         /// <summary>
-        /// Gets a new list of current stored handlers.
+        /// Returns a normalized list of handlers that are provides by <see cref="DelegateLogger.Provider" /> property.
         /// </summary>
-        /// <returns>A list of current handlers.</returns>
-        public List<LogMessageHandler> GetHandlers()
+        /// <returns>The list of handlers.</returns>
+        public IEnumerable<LogMessageHandler> GetHandlers()
         {
-            List<LogMessageHandler> result;
-
-            lock (this._SYNC)
-            {
-                result = new List<LogMessageHandler>(this._DELEGATES);
-            }
-
-            return result;
+            return (this._PROVIDER(this) ?? Enumerable.Empty<LogMessageHandler>()).Where(h => h != null);
         }
-
-        /// <summary>
-        /// Removes a handler.
-        /// </summary>
-        /// <param name="handler">The handler to remove.</param>
-        /// <returns>Handler was removed or not.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="handler" /> is <see langword="null" />.
-        /// </exception>
-        public bool Remove(LogMessageHandler handler)
-        {
-            if (handler == null)
-            {
-                throw new ArgumentNullException("handler");
-            }
-
-            bool result;
-
-            lock (this._SYNC)
-            {
-                result = this._DELEGATES.Remove(handler);
-            }
-
-            return result;
-        }
-
-        // Protected Methods (1) 
 
         /// <inheriteddoc />
         protected override void OnLog(ILogMessage msg, ref bool succeeded)
         {
             bool? allFailed = null;
 
-            this._DELEGATES
-                .ForEach(ctx =>
-                         {
-                             try
-                             {
-                                 ctx.Item(CloneLogMessage(msg));
+            this.GetHandlers()
+                .ForAll(ctx =>
+                        {
+                            try
+                            {
+                                ctx.Item(CloneLogMessage(msg));
 
-                                 allFailed = false;
-                             }
-                             catch
-                             {
-                                 if (allFailed.IsNull())
-                                 {
-                                     allFailed = true;
-                                 }
-                             }
-                         });
+                                allFailed = false;
+                            }
+                            catch
+                            {
+                                if (allFailed.IsNull())
+                                {
+                                    allFailed = true;
+                                }
+                            }
+                        });
 
             if (allFailed.IsTrue())
             {

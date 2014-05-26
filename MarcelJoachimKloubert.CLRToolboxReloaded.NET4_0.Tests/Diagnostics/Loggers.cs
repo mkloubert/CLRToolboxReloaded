@@ -25,22 +25,20 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
             int number = 0;
             string str = "MK+";
 
-            var childLogger2 = new DelegateLogger();
-            childLogger2.Add((msg) => ++number);
-            childLogger2.Add((msg) =>
-            {
-                str += msg.Message;
+            var childLogger2 = DelegateLogger.Create((msg) => ++number,
+                                                     (msg) =>
+                                                     {
+                                                         str += msg.Message;
 
-                if (number > 0)
-                {
-                    throw new Exception();
-                }
+                                                         if (number > 0)
+                                                         {
+                                                             throw new Exception();
+                                                         }
 
-                ++number;
-            });
+                                                         ++number;
+                                                     });
 
-            var childLogger3 = new DelegateLogger();
-            childLogger3.Add((msg) => number++);
+            var childLogger3 = DelegateLogger.Create((msg) => number++);
 
             var logger = AggregateLogger.Create(childLogger1,
                                                 childLogger2,
@@ -52,7 +50,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
             Assert.AreEqual(number, 2);
 
             // 3 loggers
-            Assert.AreEqual(logger.GetLoggers().Count, 3);
+            Assert.AreEqual(logger.GetLoggers().Count(), 3);
 
             // same instances?
             Assert.IsTrue(logger.GetLoggers()
@@ -177,7 +175,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
             // 3 different instances, but are equal because of theit IDs
             Assert.AreEqual(logMsgs.Count, 1);
         }
-        
+
         [Test]
         public void EventLoggerTest()
         {

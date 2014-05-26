@@ -35,7 +35,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         #region Constrcutors (2)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LogMessage" /> class..
+        /// Initializes a new instance of the <see cref="LogMessage" /> class.
         /// </summary>
         /// <param name="id">The (initial) value for the <see cref="LogMessage.Id" /> property.</param>
         public LogMessage(Guid id)
@@ -45,7 +45,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LogMessage" /> class..
+        /// Initializes a new instance of the <see cref="LogMessage" /> class.
         /// </summary>
         public LogMessage()
             : this(id: Guid.NewGuid())

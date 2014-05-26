@@ -5,209 +5,272 @@
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 {
     /// <summary>
     /// A logger that invokes an internal list of stored loggers step-by-step.
     /// </summary>
-    public sealed class AggregateLogger : LoggerBase
+    public class AggregateLogger : LoggerBase
     {
-        #region Fields (1)
+        #region Fields (1)
 
-        private readonly List<ILogger> _LOGGERS = new List<ILogger>();
+        private readonly LoggerProvider _PROVIDER;
 
-        #endregion Fields
+        #endregion Fields (1)
 
-        #region Constructors (1)
+        #region Constrcutors (4)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
         /// </summary>
-        /// <remarks>
-        /// Logging is thread safe.
-        /// </remarks>
-        public AggregateLogger()
-            : base(synchronized: true)
-        {
-        }
-
-        #endregion Constructors
-
-        #region Methods (8)
-
-        // Public Methods (7) 
-
-        /// <summary>
-        /// Adds a logger.
-        /// </summary>
-        /// <param name="logger">The logger to add.</param>
+        /// <param name="provider">The value for the <see cref="AggregateLogger.Provider" /> property.</param>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="logger" /> is <see langword="null" />.
+        /// <paramref name="provider" /> and/or <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        public void Add(ILogger logger)
+        public AggregateLogger(LoggerProvider provider, bool synchronized, object sync)
+            : base(synchronized: synchronized,
+                   sync: sync)
         {
-            if (logger == null)
+            if (provider == null)
             {
-                throw new ArgumentNullException("logger");
+                throw new ArgumentNullException("provider");
             }
 
-            lock (this._SYNC)
-            {
-                this._LOGGERS
-                    .Add(logger);
-            }
+            this._PROVIDER = provider;
         }
 
         /// <summary>
-        /// Clears the list of loggers.
+        /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
         /// </summary>
-        public void Clear()
-        {
-            lock (this._SYNC)
-            {
-                this._LOGGERS
-                    .Clear();
-            }
-        }
-
-        /// <summary>
-        /// Creates a new instance from an inital list of loggers.
-        /// </summary>
-        /// <param name="loggers">The initial list of loggers to add to the new instance.</param>
-        /// <returns>The new instance.</returns>
+        /// <param name="provider">The value for the <see cref="AggregateLogger.Provider" /> property.</param>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="loggers" /> is <see langword="null" />.
+        /// <paramref name="provider" /> is <see langword="null" />.
         /// </exception>
-        public static AggregateLogger Create(IEnumerable<ILogger> loggers)
+        public AggregateLogger(LoggerProvider provider, bool synchronized)
+            : this(provider: provider,
+                   synchronized: synchronized,
+                   sync: new object())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
+        /// </summary>
+        /// <param name="provider">The value for the <see cref="AggregateLogger.Provider" /> property.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="provider" /> and/or <paramref name="sync" /> is <see langword="null" />.
+        /// </exception>
+        public AggregateLogger(LoggerProvider provider, object sync)
+            : this(provider: provider,
+                   sync: sync,
+                   synchronized: false)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
+        /// </summary>
+        /// <param name="provider">The value for the <see cref="AggregateLogger.Provider" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="provider" /> is <see langword="null" />.
+        /// </exception>
+        public AggregateLogger(LoggerProvider provider)
+            : this(provider: provider,
+                   sync: new object())
+        {
+        }
+
+        #endregion Constrcutors (4)
+
+        #region Events and delegates (1)
+
+        /// <summary>
+        /// Describes a function / methods that provides the child loggers for an instance that class.
+        /// </summary>
+        /// <param name="logger">The underlying instance.</param>
+        /// <returns>The loggers for that class.</returns>
+        public delegate IEnumerable<ILogger> LoggerProvider(AggregateLogger logger);
+
+        #endregion Events and delegates (1)
+
+        #region Properties (1)
+
+        /// <summary>
+        /// Gets the underlying provider.
+        /// </summary>
+        public LoggerProvider Provider
+        {
+            get { return this._PROVIDER; }
+        }
+
+        #endregion Properties (1)
+
+        #region Methods (10)
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
+        /// </summary>
+        /// <param name="loggers">The loggers to use.</param>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="loggers" /> and/or <paramref name="sync" /> is <see langword="null" />.
+        /// </exception>
+        public static AggregateLogger Create(IEnumerable<ILogger> loggers, bool synchronized, object sync)
         {
             if (loggers == null)
             {
                 throw new ArgumentNullException("loggers");
             }
 
-            var result = new AggregateLogger();
-
-            loggers.ForEach(ctx => ctx.State
-                                      .Logger.Add(ctx.Item),
-                            actionState: new
-                            {
-                                Logger = result,
-                            });
-
-            return result;
+            return new AggregateLogger((l) => loggers,
+                                       synchronized: synchronized,
+                                       sync: sync);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
+        /// </summary>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
+        /// <param name="loggers">The loggers to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="loggers" /> and/or <paramref name="sync" /> is <see langword="null" />.
+        /// </exception>
+        public static AggregateLogger Create(bool synchronized, object sync, params ILogger[] loggers)
+        {
+            return Create(loggers: (IEnumerable<ILogger>)loggers,
+                          synchronized: synchronized,
+                          sync: sync);
         }
 
         /// <summary>
-        /// Creates a new instance from an inital list of loggers.
+        /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
         /// </summary>
-        /// <param name="loggers">The initial list of loggers to add to the new instance.</param>
-        /// <returns>The new instance.</returns>
+        /// <param name="loggers">The loggers to use.</param>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="loggers" /> and/or <paramref name="sync" /> is <see langword="null" />.
+        /// </exception>
+        public static AggregateLogger Create(IEnumerable<ILogger> loggers, object sync)
+        {
+            return Create(loggers,
+                          synchronized: false,
+                          sync: sync);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
+        /// </summary>
+        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
+        /// <param name="loggers">The loggers to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="loggers" /> and/or <paramref name="sync" /> is <see langword="null" />.
+        /// </exception>
+        public static AggregateLogger Create(object sync, params ILogger[] loggers)
+        {
+            return Create(loggers: (IEnumerable<ILogger>)loggers,
+                          sync: sync);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
+        /// </summary>
+        /// <param name="loggers">The loggers to use.</param>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="loggers" /> is <see langword="null" />.
+        /// </exception>
+        public static AggregateLogger Create(IEnumerable<ILogger> loggers, bool synchronized)
+        {
+            return Create(loggers,
+                          synchronized: false,
+                          sync: new object());
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
+        /// </summary>
+        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="loggers">The loggers to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="loggers" /> is <see langword="null" />.
+        /// </exception>
+        public static AggregateLogger Create(bool synchronized, params ILogger[] loggers)
+        {
+            return Create(loggers: (IEnumerable<ILogger>)loggers,
+                          synchronized: synchronized);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
+        /// </summary>
+        /// <param name="loggers">The loggers to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="loggers" /> is <see langword="null" />.
+        /// </exception>
+        public static AggregateLogger Create(IEnumerable<ILogger> loggers)
+        {
+            return Create(loggers,
+                          synchronized: false);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
+        /// </summary>
+        /// <param name="loggers">The loggers to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="loggers" /> is <see langword="null" />.
         /// </exception>
         public static AggregateLogger Create(params ILogger[] loggers)
         {
-            return Create((IEnumerable<ILogger>)loggers);
+            return Create(loggers: (IEnumerable<ILogger>)loggers);
         }
 
         /// <summary>
-        /// Returns a flatten list of loggers and sub loggers that are part of this instance and its children.
+        /// Returns a normalized list of loggers that are provides by <see cref="AggregateLogger.Provider" /> property.
         /// </summary>
-        /// <returns>The flatten list.</returns>
-        public IEnumerable<ILogger> Flatten()
+        /// <returns>The list of loggers.</returns>
+        public IEnumerable<ILogger> GetLoggers()
         {
-            var aggLogList = new List<AggregateLogger>();
-            aggLogList.Add(this);
-
-            int num = 0;
-            while (aggLogList.Count > num)
-            {
-                var innerLoggers = aggLogList[num++].GetLoggers();
-
-                for (var i = 0; i < innerLoggers.Count; i++)
-                {
-                    var logger = innerLoggers[i];
-
-                    var aggLog = logger as AggregateLogger;
-                    if (aggLog != null)
-                    {
-                        aggLogList.Add(aggLog);
-                    }
-                    else
-                    {
-                        yield return logger;
-                    }
-                }
-            }
+            return (this._PROVIDER(this) ?? Enumerable.Empty<ILogger>()).Where(l => l != null);
         }
-
-        /// <summary>
-        /// Gets a new list of current stored loggers.
-        /// </summary>
-        /// <returns>A list of current loggers.</returns>
-        public List<ILogger> GetLoggers()
-        {
-            List<ILogger> result;
-
-            lock (this._SYNC)
-            {
-                result = new List<ILogger>(this._LOGGERS);
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Removes a logger.
-        /// </summary>
-        /// <param name="logger">The logger to remove.</param>
-        /// <returns>Logger was removed or not.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="logger" /> is <see langword="null" />.
-        /// </exception>
-        public bool Remove(ILogger logger)
-        {
-            if (logger == null)
-            {
-                throw new ArgumentNullException("logger");
-            }
-
-            bool result;
-
-            lock (this._SYNC)
-            {
-                result = this._LOGGERS.Remove(logger);
-            }
-
-            return result;
-        }
-
-        // Protected Methods (1) 
 
         /// <inheriteddoc />
         protected override void OnLog(ILogMessage msg, ref bool succeeded)
         {
             bool? allFailed = null;
 
-            this._LOGGERS
-                .ForEach(ctx =>
-                         {
-                             try
-                             {
-                                 ctx.Item
-                                    .Log(CloneLogMessage(msg));
+            var loggers = this._PROVIDER(this);
+            if (loggers == null)
+            {
+                return;
+            }
 
-                                 allFailed = false;
-                             }
-                             catch
-                             {
-                                 if (allFailed.IsNull())
-                                 {
-                                     allFailed = true;
-                                 }
-                             }
-                         });
+            this.GetLoggers()
+                .ForAll(ctx =>
+                        {
+                            try
+                            {
+                                ctx.Item
+                                   .Log(CloneLogMessage(msg));
+
+                                allFailed = false;
+                            }
+                            catch
+                            {
+                                if (allFailed.IsNull())
+                                {
+                                    allFailed = true;
+                                }
+                            }
+                        });
 
             if (allFailed.IsTrue())
             {

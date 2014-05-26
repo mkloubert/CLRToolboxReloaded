@@ -23,7 +23,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         #region Constrcutors (4)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoggerWrapperBase" /> class..
+        /// Initializes a new instance of the <see cref="LoggerWrapperBase" /> class.
         /// </summary>
         /// <param name="innerLogger">The inner logger to wrap.</param>
         /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
@@ -44,7 +44,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoggerWrapperBase" /> class..
+        /// Initializes a new instance of the <see cref="LoggerWrapperBase" /> class.
         /// </summary>
         /// <param name="innerLogger">The inner logger to wrap.</param>
         /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
@@ -59,7 +59,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoggerWrapperBase" /> class..
+        /// Initializes a new instance of the <see cref="LoggerWrapperBase" /> class.
         /// </summary>
         /// <param name="innerLogger">The inner logger to wrap.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
@@ -74,7 +74,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoggerWrapperBase" /> class..
+        /// Initializes a new instance of the <see cref="LoggerWrapperBase" /> class.
         /// </summary>
         /// <param name="innerLogger">The inner logger to wrap.</param>
         /// <exception cref="ArgumentNullException">
