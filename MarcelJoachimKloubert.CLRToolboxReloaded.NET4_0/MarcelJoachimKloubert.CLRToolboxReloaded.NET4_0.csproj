@@ -92,6 +92,7 @@
     <Compile Include="Execution\Commands\DelegateCommand.cs" />
     <Compile Include="Execution\Commands\ICommand.cs" />
     <Compile Include="Execution\ExecutionErrorEventArgs.cs" />
+    <Compile Include="Execution\Workflows\AggregateWorkflow.cs" />
     <Compile Include="Execution\Workflows\IWorkflow.cs" />
     <Compile Include="Execution\Workflows\IWorkflowExecutionContext.cs" />
     <Compile Include="Execution\Workflows\WorkflowBase.cs" />

@@ -44,8 +44,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// </summary>
         /// <param name="synchronized">Instance should work thread safe or not.</param>
         public WorkflowBase(bool synchronized)
-            : this(synchronized: synchronized,
-                   sync: new object())
+            : base(synchronized: synchronized)
         {
         }
 
@@ -58,8 +57,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// </exception>
         /// <remarks>Object will NOT work thread safe.</remarks>
         public WorkflowBase(object sync)
-            : this(synchronized: true,
-                   sync: sync)
+            : base(sync: sync)
         {
         }
 
@@ -68,7 +66,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// </summary>
         /// <remarks>Object will NOT work thread safe.</remarks>
         public WorkflowBase()
-            : this(sync: new object())
+            : base()
         {
         }
 
