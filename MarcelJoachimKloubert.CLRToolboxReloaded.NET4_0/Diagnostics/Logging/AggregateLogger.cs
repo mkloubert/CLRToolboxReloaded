@@ -10,7 +10,7 @@ using System.Linq;
 namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 {
     /// <summary>
-    /// A logger that invokes an internal list of stored loggers step-by-step.
+    /// A logger that invokes a list of child loggers step-by-step.
     /// </summary>
     public class AggregateLogger : LoggerBase
     {
@@ -246,12 +246,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         protected override void OnLog(ILogMessage msg, ref bool succeeded)
         {
             bool? allFailed = null;
-
-            var loggers = this._PROVIDER(this);
-            if (loggers == null)
-            {
-                return;
-            }
 
             this.GetLoggers()
                 .ForAll(ctx =>

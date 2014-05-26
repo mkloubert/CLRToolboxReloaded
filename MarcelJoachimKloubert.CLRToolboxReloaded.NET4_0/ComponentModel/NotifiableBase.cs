@@ -48,7 +48,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 
         #endregion Constrcutors (4)
 
-        #region Events (2)
+        #region Delegates and Events (2)
 
         /// <inheriteddoc />
         public event PropertyChangedEventHandler PropertyChanged;
@@ -60,9 +60,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 
 #endif
 
-        #endregion Events (2)
+        #endregion Delegates and Events (2)
 
-        #region Events (2)
+        #region Methods (2)
 
         /// <summary>
         /// Raises the <see cref="NotifiableBase.PropertyChanged" /> event.
@@ -79,7 +79,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
                 throw new ArgumentNullException("propertyName");
             }
 
-            PropertyChangedEventHandler handler = this.PropertyChanged;
+            var handler = this.PropertyChanged;
             if (handler != null)
             {
                 handler(this, new PropertyChangedEventArgs(propertyName.AsString()));
@@ -106,7 +106,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
                 throw new global::System.ArgumentNullException("propertyName");
             }
 
-            global::System.ComponentModel.PropertyChangingEventHandler handler = this.PropertyChanging;
+            var handler = this.PropertyChanging;
             if (handler != null)
             {
                 handler(this, new global::System.ComponentModel.PropertyChangingEventArgs(propertyName.AsString()));
@@ -118,6 +118,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 
 #endif
 
-        #endregion Events (2)
+        #endregion Methods (2)
     }
 }

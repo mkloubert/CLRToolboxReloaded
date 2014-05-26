@@ -10,7 +10,7 @@ using System.Linq;
 namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 {
     /// <summary>
-    /// A logger that invokes an internal list of stored delegates that handle <see cref="ILogMessage" />s step-by-step.
+    /// A logger that invokes list of delegates that handle <see cref="ILogMessage" />s step-by-step.
     /// </summary>
     public sealed class DelegateLogger : LoggerBase
     {

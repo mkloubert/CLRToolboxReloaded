@@ -9,7 +9,7 @@ using System.Linq;
 namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 {
     /// <summary>
-    /// A logger that defines a main logger and fallbacks that are called if
+    /// A logger that defines a main logger and uses fallbacks that are called if
     /// the main logger fails.
     /// </summary>
     public sealed class FallbackLogger : LoggerWrapperBase
