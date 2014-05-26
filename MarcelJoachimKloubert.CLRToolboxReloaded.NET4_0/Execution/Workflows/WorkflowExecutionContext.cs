@@ -44,7 +44,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         {
         }
 
-        #endregion Constrcutors (5)
+        #endregion Constrcutors (4)
 
         #region Properties (15)
 
@@ -522,7 +522,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
             set
             {
                 this._nextWithState = value;
-                this.Next = value != null ? new WorkflowAction((ctx) => value((IWorkflowExecutionContext<TState>)ctx)) : null;
+                base.Next = ToActionWithoutState(value);
             }
         }
 
@@ -541,6 +541,96 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         }
 
         #endregion Properties
+
+        #region Methods (3)
+
+        /// <summary>
+        /// Copies all property values that can be changed to a target <see cref="IWorkflowExecutionContext" /> object.
+        /// </summary>
+        /// <param name="target">The target object.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="target" /> is <see langword="null" />.
+        /// </exception>
+        public void CopyChanges(IWorkflowExecutionContext target)
+        {
+            if (target == null)
+            {
+                throw new ArgumentNullException("target");
+            }
+
+            target.Cancel = this.Cancel;
+            target.ContinueOnError = this.ContinueOnError;
+            target.Next = ToActionWithoutState(this.NextWithState);
+            target.Result = this.Result;
+            target.ThrowErrors = this.ThrowErrors;
+        }
+
+        /// <summary>
+        /// Clones an <see cref="IWorkflowExecutionContext" /> object with a state object.
+        /// </summary>
+        /// <param name="original">The original object.</param>
+        /// <param name="state">The state object to set.</param>
+        /// <returns>The clone of <paramref name="original" />.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="original" /> is <see langword="null" />.
+        /// </exception>
+        public static WorkflowExecutionContext<TState> Clone(IWorkflowExecutionContext original, TState state)
+        {
+            if (original == null)
+            {
+                throw new ArgumentNullException("original");
+            }
+
+            var result = new WorkflowExecutionContext<TState>(synchronized: original.Synchronized,
+                                                              sync: original.SyncRoot);
+            result.Cancel = original.Cancel;
+            result.ContinueOnError = original.Cancel;
+            result.ExecutionArguments = original.ExecutionArguments;
+            result.ExecutionVars = original.ExecutionVars;
+            result.HasBeenCanceled = original.HasBeenCanceled;
+            result.Index = original.Index;
+            result.Next = original.Next;
+            result.NextVars = original.NextVars;
+            result.PreviousVars = original.PreviousVars;
+            result.Result = original.Result;
+            result.State = state;
+            result.Tag = original.Tag;
+            result.ThrowErrors = original.ThrowErrors;
+            result.Workflow = original.Workflow;
+            result.WorkflowVars = original.WorkflowVars;
+
+            return result;
+        }
+
+        private static WorkflowAction ToActionWithoutState(WorkflowAction<TState> action)
+        {
+            if (action == null)
+            {
+                return null;
+            }
+
+            return ctx =>
+                {
+                    var clonedCtx = ctx as IWorkflowExecutionContext<TState>;
+                    if (clonedCtx == null)
+                    {
+                        // create "wrapper"
+
+                        clonedCtx = Clone(original: ctx,
+                                          state: default(TState));
+                    }
+
+                    action(clonedCtx);
+
+                    var clonedCtx2 = clonedCtx as WorkflowExecutionContext<TState>;
+                    if (clonedCtx2 != null)
+                    {
+                        clonedCtx2.CopyChanges(ctx);
+                    }
+                };
+        }
+
+        #endregion
     }
 
     #endregion

@@ -4,6 +4,7 @@
 
 using MarcelJoachimKloubert.CLRToolbox.Execution.Workflows;
 using NUnit.Framework;
+using System;
 using System.Text;
 
 namespace MarcelJoachimKloubert.CLRToolbox._Tests.Execution
@@ -127,7 +128,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Execution
 
         #endregion CLASS: AttributeTestWorkflow_Wurst
 
-        #region Methods (1)
+        #region Methods (2)
 
         [Test]
         public void AttributeWorkflowBase()
@@ -143,6 +144,48 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Execution
 
             Assert.AreEqual(result2, 23979);
             Assert.AreEqual(wf2.STRING.ToString(), "Wurst::0102030406090910");
+        }
+        
+        [Test]
+        public void DelegateWorkflowTest()
+        {
+            var str = string.Empty;
+
+            var step3 = new WorkflowAction(ctx =>
+                {
+                    ctx.Result = ctx.GetResult<int>() + 3;
+
+                    str += "03";
+                });
+
+            var step2 = new WorkflowAction(ctx =>
+                {
+                    ctx.Result = ctx.GetResult<int>() + 2;
+                    str += "02";
+
+                    ctx.Next = step3;
+                });
+
+            var step1 = new WorkflowAction(ctx =>
+                {
+                    ctx.Result = 1;
+                    str += "01";
+
+                    ctx.Next = step2;
+                });
+
+
+            var wf1 = DelegateWorkflow.Create(step1);
+            var res1 = wf1.Execute();
+            
+            Assert.AreEqual(str, "010203");
+            Assert.AreEqual(res1, 6);
+
+            var wf2 = new DelegateWorkflow((wf, c) => step1);
+            var res2 = wf2.Execute();
+
+            Assert.AreEqual(str, "010203010203");
+            Assert.AreEqual(res2, 6);
         }
 
         #endregion Methods (1)
