@@ -9,20 +9,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using TMAggregateLogger = MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.AggregateLogger;
-using TMAsyncLogger = MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.AsyncLogger;
-using TMDelegateLogger = MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.DelegateLogger;
-using TMLogCategories = MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.LogCategories;
 
 namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
 {
     [TestFixture]
     public class Loggers
     {
-        #region Methods (4)
+        #region Methods (5)
 
         [Test]
-        public void AggregateLogger()
+        public void AggregateLoggerTest()
         {
             var childLogger1 = new DummyLogger();
 
@@ -46,9 +42,9 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
             var childLogger3 = new DelegateLogger();
             childLogger3.Add((msg) => number++);
 
-            var logger = TMAggregateLogger.Create(childLogger1,
-                                                  childLogger2,
-                                                  childLogger3);
+            var logger = AggregateLogger.Create(childLogger1,
+                                                childLogger2,
+                                                childLogger3);
 
             logger.Log(msg: "TM");
 
@@ -66,11 +62,11 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
         }
 
         [Test]
-        public void AsyncLogger()
+        public void AsyncLoggerTest()
         {
             int? threadId = null;
             string str = null;
-            var childLogger = TMDelegateLogger.Create((msg) =>
+            var childLogger = DelegateLogger.Create((msg) =>
                 {
                     threadId = Thread.CurrentThread.ManagedThreadId;
 
@@ -79,7 +75,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
                           "tm";
                 });
 
-            var logger = new TMAsyncLogger(childLogger);
+            var logger = new AsyncLogger(childLogger);
             logger.Log("mk+",
                        "l://");
 
@@ -110,57 +106,57 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
         }
 
         [Test]
-        public void DelegateLogger()
+        public void DelegateLoggerTest()
         {
             string str = null;
             var ids = new HashSet<Guid>();
             var logMsgs = new HashSet<ILogMessage>();
             var logMsgsRefs = new HashSet<ILogMessage>(new DelegateEqualityComparer<ILogMessage>((x, y) => object.ReferenceEquals(x, y)));
 
-            var logger1 = TMDelegateLogger.Create((msg) =>
-                                                  {
-                                                      ids.Add(msg.Id);
-                                                      logMsgs.Add(msg);
-                                                      logMsgsRefs.Add(msg);
+            var logger1 = DelegateLogger.Create((msg) =>
+                                                {
+                                                    ids.Add(msg.Id);
+                                                    logMsgs.Add(msg);
+                                                    logMsgsRefs.Add(msg);
 
-                                                      if (string.IsNullOrEmpty(str))
-                                                      {
-                                                          str += msg.GetMessage<string>();
-                                                      }
-                                                  },
-                                                  (msg) =>
-                                                  {
-                                                      ids.Add(msg.Id);
-                                                      logMsgs.Add(msg);
-                                                      logMsgsRefs.Add(msg);
+                                                    if (string.IsNullOrEmpty(str))
+                                                    {
+                                                        str += msg.GetMessage<string>();
+                                                    }
+                                                },
+                                                (msg) =>
+                                                {
+                                                    ids.Add(msg.Id);
+                                                    logMsgs.Add(msg);
+                                                    logMsgsRefs.Add(msg);
 
-                                                      if (str != string.Empty)
-                                                      {
-                                                          throw new Exception();
-                                                      }
+                                                    if (str != string.Empty)
+                                                    {
+                                                        throw new Exception();
+                                                    }
 
-                                                      // that should not happen
-                                                      str += "+YS";
-                                                  },
-                                                  (msg) =>
-                                                  {
-                                                      ids.Add(msg.Id);
-                                                      logMsgs.Add(msg);
-                                                      logMsgsRefs.Add(msg);
+                                                    // that should not happen
+                                                    str += "+YS";
+                                                },
+                                                (msg) =>
+                                                {
+                                                    ids.Add(msg.Id);
+                                                    logMsgs.Add(msg);
+                                                    logMsgsRefs.Add(msg);
 
-                                                      if (str != string.Empty)
-                                                      {
-                                                          str += "+TM";
-                                                      }
-                                                      else
-                                                      {
-                                                          str += "+YS";
-                                                      }
-                                                  });
+                                                    if (str != string.Empty)
+                                                    {
+                                                        str += "+TM";
+                                                    }
+                                                    else
+                                                    {
+                                                        str += "+YS";
+                                                    }
+                                                });
 
-            var logger2 = TMDelegateLogger.Create((msg) => { throw new Exception("1"); },
-                                                  (msg) => { throw new Exception("2"); },
-                                                  (msg) => { throw new Exception("3"); });
+            var logger2 = DelegateLogger.Create((msg) => { throw new Exception("1"); },
+                                                (msg) => { throw new Exception("2"); },
+                                                (msg) => { throw new Exception("3"); });
 
             var result1 = logger1.Log(msg: new char[] { 'M', 'K' });
             var result2 = logger2.Log(msg: new DateTime(1979, 9, 5, 23, 9, 19, 79));
@@ -181,43 +177,58 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
             // 3 different instances, but are equal because of theit IDs
             Assert.AreEqual(logMsgs.Count, 1);
         }
+        
+        [Test]
+        public void EventLoggerTest()
+        {
+            string str = null;
+
+            var logger = new EventLogger();
+            logger.MessageReceived += (sender, e) => str += e.Message.LogTag;
+            logger.MessageReceived += (sender, e) => str += e.Message.GetMessage<string>();
+
+            logger.Log(msg: "MK",
+                       tag: "tm+");
+
+            Assert.IsTrue(str == "TM+MK");
+        }
 
         [Test]
-        public void LogCategories()
+        public void LogCategoriesTest()
         {
             ILogMessage lastMsg = null;
-            var logger = TMDelegateLogger.Create((msg) => lastMsg = msg);
+            var logger = DelegateLogger.Create((msg) => lastMsg = msg);
 
             logger.Log(msg: "test",
-                       categories: TMLogCategories.Debug | TMLogCategories.TODO);
+                       categories: LogCategories.Debug | LogCategories.TODO);
 
             Assert.IsNotNull(lastMsg);
 
-            var categories = new List<TMLogCategories>();
+            var categories = new List<LogCategories>();
             categories.AddRange(lastMsg.GetCategoryFlags());
 
             Assert.AreEqual(categories.Count, 2);
-            
+
             Assert.IsTrue(lastMsg.HasAllCategories());
 
             // both are set
-            Assert.IsTrue(lastMsg.HasAllCategories(TMLogCategories.TODO));
-            Assert.IsTrue(lastMsg.HasAllCategories(TMLogCategories.Debug));
-            
+            Assert.IsTrue(lastMsg.HasAllCategories(LogCategories.TODO));
+            Assert.IsTrue(lastMsg.HasAllCategories(LogCategories.Debug));
+
             // these are not set
-            Assert.IsFalse(lastMsg.HasAllCategories(TMLogCategories.Warnings));
-            Assert.IsFalse(lastMsg.HasAllCategories(TMLogCategories.Errors));
-            
+            Assert.IsFalse(lastMsg.HasAllCategories(LogCategories.Warnings));
+            Assert.IsFalse(lastMsg.HasAllCategories(LogCategories.Errors));
+
             // both are set
-            Assert.IsTrue(lastMsg.HasAllCategories(TMLogCategories.TODO,
-                                                   TMLogCategories.Debug));
+            Assert.IsTrue(lastMsg.HasAllCategories(LogCategories.TODO,
+                                                   LogCategories.Debug));
 
             // 'Warnings' is not part of 'lastMsg.Categories'
-            Assert.IsFalse(lastMsg.HasAllCategories(TMLogCategories.TODO,
-                                                    TMLogCategories.Debug,
-                                                    TMLogCategories.Warnings));
+            Assert.IsFalse(lastMsg.HasAllCategories(LogCategories.TODO,
+                                                    LogCategories.Debug,
+                                                    LogCategories.Warnings));
         }
 
-        #endregion Methods (4)
+        #endregion Methods (5)
     }
 }

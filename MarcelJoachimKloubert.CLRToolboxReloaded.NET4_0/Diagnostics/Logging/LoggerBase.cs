@@ -10,11 +10,12 @@
 #define KNOWS_DBNULL
 #endif
 
+using MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.Execution;
+using MarcelJoachimKloubert.CLRToolbox.Execution.Commands;
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Threading;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 {
@@ -80,7 +81,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
         #endregion Constrcutors (4)
 
-        #region Methods (6)
+        #region Methods (7)
 
         /// <summary>
         /// Creates a clone of a message.
@@ -119,6 +120,29 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 #endif
 
 #endif
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a copy of a <see cref="ILogMessage" /> object with a new ID and a new value.
+        /// </summary>
+        /// <param name="src">The source.</param>
+        /// <param name="msgVal">The value for the <see cref="ILogMessage.Message" /> property of the copy.</param>
+        /// <returns>
+        /// The copy of <paramref name="src" /> or <see langword="null" />
+        /// if <paramref name="src" /> is also <see langword="null" />.
+        /// </returns>
+        protected static LogMessage CreateCopyOfLogMessage(ILogMessage src, object msgVal)
+        {
+            if (src == null)
+            {
+                return null;
+            }
+
+            var result = CloneLogMessageInner(src);
+            result.SetId(newValue: Guid.NewGuid());
+            result.Message = msgVal;
 
             return result;
         }
@@ -189,7 +213,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
             try
             {
-                msgObj.Principal = Thread.CurrentPrincipal;
+                msgObj.Principal = global::System.Threading.Thread.CurrentPrincipal;
             }
             catch
             {
@@ -223,7 +247,72 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
             msgObj.Member = member;
             msgObj.Message = msg;
 
-            return this.Log(msgObj);
+            ILogMessage messageToLog = msgObj;
+
+            // define message object to log
+            {
+                bool checkAgain;
+                do
+                {
+                    checkAgain = false;
+
+                    if (messageToLog == null)
+                    {
+                        break;
+                    }
+
+                    if (messageToLog.Message is ILogCommand)
+                    {
+                        var cmd = messageToLog.Message as ILogCommand;
+
+                        messageToLog = null;
+                        if (cmd.CanExecute(messageToLog))
+                        {
+                            var result = cmd.Execute(messageToLog);
+                            if (result != null)
+                            {
+                                if (result.HasFailed)
+                                {
+                                    throw new AggregateException(result.Errors);
+                                }
+
+                                if (result.DoLogMessage)
+                                {
+                                    // send 'result.MessageValueToLog'
+                                    // to "real" logger logic
+
+                                    messageToLog = CreateCopyOfLogMessage(messageToLog,
+                                                                          result.MessageValueToLog);
+                                }
+                            }
+                        }
+
+                        // maybe 'messageToLog' can be a log command again
+                        checkAgain = true;
+                    }
+                    else
+                    {
+                        if (messageToLog.Message is ICommand<ILogMessage>)
+                        {
+                            var cmd = messageToLog.Message as ICommand<ILogMessage>;
+
+                            messageToLog = null;
+                            if (cmd.CanExecute(messageToLog))
+                            {
+                                cmd.Execute(messageToLog);
+                            }
+                        }
+                    }
+                }
+                while (checkAgain);
+            }
+
+            if (messageToLog == null)
+            {
+                return true;
+            }
+
+            return this.Log(messageToLog);
         }
 
         /// <summary>

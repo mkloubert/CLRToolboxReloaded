@@ -112,6 +112,21 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\EventLogger.cs">
       <Link>Diagnostics\Logging\EventLogger.cs</Link>
     </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\diagnostics\logging\execution\ILogCommand.cs">
+      <Link>Diagnostics\Logging\Execution\ILogCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\diagnostics\logging\execution\ILogCommandExecutionContext.cs">
+      <Link>Diagnostics\Logging\Execution\ILogCommandExecutionContext.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\diagnostics\logging\execution\ILogCommandExecutionResult.cs">
+      <Link>Diagnostics\Logging\Execution\ILogCommandExecutionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\diagnostics\logging\execution\LogCommandBase.Classes.cs">
+      <Link>Diagnostics\Logging\Execution\LogCommandBase.Classes.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\diagnostics\logging\execution\LogCommandBase.cs">
+      <Link>Diagnostics\Logging\Execution\LogCommandBase.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\FallbackLogger.cs">
       <Link>Diagnostics\Logging\FallbackLogger.cs</Link>
     </Compile>
@@ -145,6 +160,18 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\DisposableObjectBase.DisposeContext.cs">
       <Link>DisposableObjectBase.DisposeContext.cs</Link>
       <DependentUpon>DisposableObjectBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\execution\commands\CommandBase.cs">
+      <Link>Execution\Commands\CommandBase.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\execution\commands\DelegateCommand.cs">
+      <Link>Execution\Commands\DelegateCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\execution\commands\ICommand.cs">
+      <Link>Execution\Commands\ICommand.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\ExecutionErrorEventArgs.cs">
+      <Link>Execution\ExecutionErrorEventArgs.cs</Link>
     </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\execution\workflows\IWorkflow.cs">
       <Link>Execution\Workflows\IWorkflow.cs</Link>

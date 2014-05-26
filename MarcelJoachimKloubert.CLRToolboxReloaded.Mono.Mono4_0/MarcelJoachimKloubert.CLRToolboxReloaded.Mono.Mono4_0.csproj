@@ -231,6 +231,33 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.AsSequence.cs">
       <Link>Extensions\Collections.AsSequence.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\ExecutionErrorEventArgs.cs">
+      <Link>Execution\ExecutionErrorEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Commands\CommandBase.cs">
+      <Link>Execution\Commands\CommandBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Commands\DelegateCommand.cs">
+      <Link>Execution\Commands\DelegateCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Commands\ICommand.cs">
+      <Link>Execution\Commands\ICommand.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\Execution\ILogCommand.cs">
+      <Link>Diagnostics\Logging\Execution\ILogCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\Execution\ILogCommandExecutionContext.cs">
+      <Link>Diagnostics\Logging\Execution\ILogCommandExecutionContext.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\Execution\ILogCommandExecutionResult.cs">
+      <Link>Diagnostics\Logging\Execution\ILogCommandExecutionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\Execution\LogCommandBase.Classes.cs">
+      <Link>Diagnostics\Logging\Execution\LogCommandBase.Classes.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\Execution\LogCommandBase.cs">
+      <Link>Diagnostics\Logging\Execution\LogCommandBase.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -241,6 +268,8 @@
     <Folder Include="Data\" />
     <Folder Include="Execution\" />
     <Folder Include="Diagnostics\" />
+    <Folder Include="Execution\Commands\" />
+    <Folder Include="Diagnostics\Logging\Execution\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs.csproj">

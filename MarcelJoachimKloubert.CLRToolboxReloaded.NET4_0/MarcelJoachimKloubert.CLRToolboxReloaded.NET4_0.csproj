@@ -70,6 +70,11 @@
     <Compile Include="Diagnostics\Logging\DelegateLogger.cs" />
     <Compile Include="Diagnostics\Logging\DummyLogger.cs" />
     <Compile Include="Diagnostics\Logging\EventLogger.cs" />
+    <Compile Include="Diagnostics\Logging\Execution\ILogCommand.cs" />
+    <Compile Include="Diagnostics\Logging\Execution\ILogCommandExecutionContext.cs" />
+    <Compile Include="Diagnostics\Logging\Execution\ILogCommandExecutionResult.cs" />
+    <Compile Include="Diagnostics\Logging\Execution\LogCommandBase.Classes.cs" />
+    <Compile Include="Diagnostics\Logging\Execution\LogCommandBase.cs" />
     <Compile Include="Diagnostics\Logging\FallbackLogger.cs" />
     <Compile Include="Diagnostics\Logging\ILogger.cs" />
     <Compile Include="Diagnostics\Logging\ILogMessage.cs" />
@@ -83,6 +88,10 @@
     <Compile Include="DisposableObjectBase.DisposeContext.cs">
       <DependentUpon>DisposableObjectBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Execution\Commands\CommandBase.cs" />
+    <Compile Include="Execution\Commands\DelegateCommand.cs" />
+    <Compile Include="Execution\Commands\ICommand.cs" />
+    <Compile Include="Execution\ExecutionErrorEventArgs.cs" />
     <Compile Include="Execution\Workflows\IWorkflow.cs" />
     <Compile Include="Execution\Workflows\IWorkflowExecutionContext.cs" />
     <Compile Include="Execution\Workflows\WorkflowBase.cs" />
