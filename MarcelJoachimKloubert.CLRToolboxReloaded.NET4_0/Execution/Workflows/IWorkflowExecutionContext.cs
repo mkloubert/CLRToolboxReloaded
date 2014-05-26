@@ -17,16 +17,16 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
 
     #endregion DELEGATE: WorkflowAction
 
-    #region DELEGATE: WorkflowAction<S>
+    #region DELEGATE: WorkflowAction<TState>
 
     /// <summary>
     /// Describes an action for handling an <see cref="IWorkflowExecutionContext{S}" /> object.
     /// </summary>
-    /// <typeparam name="S">Type of the state object.</typeparam>
+    /// <typeparam name="TState">Type of the state object.</typeparam>
     /// <param name="context">The context object.</param>
-    public delegate void WorkflowAction<S>(IWorkflowExecutionContext<S> context);
+    public delegate void WorkflowAction<TState>(IWorkflowExecutionContext<TState> context);
 
-    #endregion DELEGATE: WorkflowAction<S>
+    #endregion DELEGATE: WorkflowAction<TState>
 
     #region INTERFACE: IWorkflowExecutionContext
 
