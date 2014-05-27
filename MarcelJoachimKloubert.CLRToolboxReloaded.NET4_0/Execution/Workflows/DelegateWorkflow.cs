@@ -13,10 +13,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
     {
         #region Fields (1)
 
-        /// <summary>
-        /// Stores the function for providing the workflow action.
-        /// </summary>
-        protected readonly WorkflowActionProvider _PROVIDER;
+        private readonly WorkflowActionProvider _PROVIDER;
 
         #endregion Fields (1)
 
@@ -119,7 +116,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <summary>
         /// Creates a new instance of the <see cref="DelegateWorkflow" /> class.
         /// </summary>
-        /// <param name="action">The action to use.</param>
+        /// <param name="action">The start action to use.</param>
         /// <param name="synchronized">Instance should work thread safe or not.</param>
         /// <param name="sync">The value for <see cref="ObjectBase._SYNC" /> field.</param>
         /// <exception cref="ArgumentNullException">
@@ -140,7 +137,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <summary>
         /// Creates a new instance of the <see cref="DelegateWorkflow" /> class.
         /// </summary>
-        /// <param name="action">The action to use.</param>
+        /// <param name="action">The start action to use.</param>
         /// <param name="sync">The value for <see cref="ObjectBase._SYNC" /> field.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="action" /> and/or <paramref name="sync" /> are <see langword="null" />.
@@ -155,7 +152,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <summary>
         /// Creates a new instance of the <see cref="DelegateWorkflow" /> class.
         /// </summary>
-        /// <param name="action">The action to use.</param>
+        /// <param name="action">The start action to use.</param>
         /// <param name="synchronized">Instance should work thread safe or not.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="action" /> is <see langword="null" />.
@@ -170,7 +167,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <summary>
         /// Creates a new instance of the <see cref="DelegateWorkflow" /> class.
         /// </summary>
-        /// <param name="action">The action to use.</param>
+        /// <param name="action">The start action to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="action" /> is <see langword="null" />.
         /// </exception>
@@ -181,7 +178,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         }
 
         [WorkflowStart]
-        private virtual void StartWorkflow(IWorkflowExecutionContext ctx)
+        private void StartWorkflow(IWorkflowExecutionContext ctx)
         {
             var action = this._PROVIDER(this, this.ContractName);
             if (action != null)

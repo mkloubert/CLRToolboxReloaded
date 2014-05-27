@@ -44,9 +44,11 @@
     <Compile Include="Diagnostics\Loggers.cs" />
     <Compile Include="Execution\Workflows.cs" />
     <Compile Include="Extensions\Collections.cs" />
+    <Compile Include="Extensions\Serialization.cs" />
     <Compile Include="Extensions\ValuesAndObjects.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomValues.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs.csproj">

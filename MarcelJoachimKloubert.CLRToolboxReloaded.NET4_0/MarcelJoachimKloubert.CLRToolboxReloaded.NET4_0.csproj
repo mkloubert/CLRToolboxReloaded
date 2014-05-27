@@ -61,6 +61,7 @@
     <Compile Include="Collections\Generic\ForAllItemContext.cs" />
     <Compile Include="ComponentModel\INotifiable.cs" />
     <Compile Include="ComponentModel\NotifiableBase.cs" />
+    <Compile Include="CryptoRandom.cs" />
     <Compile Include="Data\Conversion\CommonConverter.cs" />
     <Compile Include="Data\Conversion\ConverterBase.cs" />
     <Compile Include="Data\Conversion\GlobalConverter.cs" />
@@ -161,6 +162,11 @@
     <Compile Include="IObject.cs" />
     <Compile Include="ObjectBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\CommonSerializer.cs" />
+    <Compile Include="Serialization\ISerializer.cs" />
+    <Compile Include="Serialization\Json\JsonParamResult.cs" />
+    <Compile Include="Serialization\Json\JsonResult.cs" />
+    <Compile Include="Serialization\SerializerBase.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyDictionary.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyList.cs" />
