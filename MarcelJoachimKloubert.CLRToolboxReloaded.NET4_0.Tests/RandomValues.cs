@@ -13,6 +13,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
         #region Methods (2)
 
         [Test]
+        // [Ignore]
         public void CryptoRandom_NoSeed()
         {
             for (var i = 0; i < 7; i++)
@@ -41,6 +42,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
         }
 
         [Test]
+        // [Ignore]
         public void CryptoRandom_WithSeed()
         {
             for (var i = 0; i < 13; i++)

@@ -64,6 +64,12 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
                                           .GetTypes()
                                           .OrderBy(t => t.Name, StringComparer.InvariantCultureIgnoreCase))
             {
+                object[] typeIgnoreAttribs = type.GetCustomAttributes(typeof(global::NUnit.Framework.IgnoreAttribute), true);
+                if (typeIgnoreAttribs.Length > 0)
+                {
+                    continue;
+                }
+
                 object[] testFixureAttribs = type.GetCustomAttributes(typeof(global::NUnit.Framework.TestFixtureAttribute), true);
                 if (testFixureAttribs.Length < 1)
                 {
@@ -77,6 +83,12 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
                                                  .GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
                                                  .OrderBy(m => m.Name, StringComparer.InvariantCultureIgnoreCase))
                 {
+                    object[] methodIgnoreAttribs = method.GetCustomAttributes(typeof(global::NUnit.Framework.IgnoreAttribute), true);
+                    if (methodIgnoreAttribs.Length > 0)
+                    {
+                        continue;
+                    }
+
                     object[] testAttribs = method.GetCustomAttributes(typeof(global::NUnit.Framework.TestAttribute), true);
                     if (testAttribs.Length < 1)
                     {
