@@ -345,15 +345,6 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
             CharSequence chars4 = string.Empty;
             CharSequence chars5 = null;
 
-            // check if original char sequences
-            // have the save data as back converted strings
-            // (explicit operator)
-            Assert.AreEqual(chars1, (string)chars1);
-            Assert.AreEqual(chars2, (string)chars2);
-            Assert.AreEqual(chars3, (string)chars3);
-            Assert.AreEqual(chars4, (string)chars4);
-            Assert.AreEqual(chars5, (string)chars5);
-
             // check equal operators (CharSequence <==> CharSequence)
             {
                 // chars1 (==)
@@ -411,57 +402,6 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
                 // chars4 (!=)
                 Assert.IsTrue(chars4 != chars5);
                 Assert.IsTrue(chars5 != chars4);
-            }
-
-            // check equal operators (CharSequence <==> string)
-            {
-                // chars1 (==)
-                Assert.IsTrue(chars1 == str1);
-                Assert.IsTrue(str1 == chars1);
-                Assert.IsFalse(chars1 == str2);
-                Assert.IsFalse(str2 == chars1);
-                Assert.IsFalse(chars1 == str3);
-                Assert.IsFalse(str3 == chars1);
-                
-                // chars1 (!=)
-                Assert.IsFalse(chars1 != str1);
-                Assert.IsFalse(str1 != chars1);
-                Assert.IsTrue(chars1 != str2);
-                Assert.IsTrue(str2 != chars1);
-                Assert.IsTrue(chars1 != str3);
-                Assert.IsTrue(str3 != chars1);
-
-                // chars2 (==)
-                Assert.IsFalse(chars2 == str1);
-                Assert.IsFalse(str1 == chars2);
-                Assert.IsTrue(chars2 == str2);
-                Assert.IsTrue(str2 == chars2);
-                Assert.IsFalse(chars2 == str3);
-                Assert.IsFalse(str3 == chars2);
-                
-                // chars2 (!=)
-                Assert.IsTrue(chars2 != str1);
-                Assert.IsTrue(str1 != chars2);
-                Assert.IsFalse(chars2 != str2);
-                Assert.IsFalse(str2 != chars2);
-                Assert.IsTrue(chars2 != str3);
-                Assert.IsTrue(str3 != chars2);
-
-                // chars3 (==)
-                Assert.IsFalse(chars3 == str1);
-                Assert.IsFalse(str1 == chars3);
-                Assert.IsFalse(chars3 == str2);
-                Assert.IsFalse(str2 == chars3);
-                Assert.IsTrue(chars3 == str3);
-                Assert.IsTrue(str3 == chars3);
-
-                // chars3 (!=)
-                Assert.IsTrue(chars3 != str1);
-                Assert.IsTrue(str1 != chars3);
-                Assert.IsTrue(chars3 != str2);
-                Assert.IsTrue(str2 != chars3);
-                Assert.IsFalse(chars3 != str3);
-                Assert.IsFalse(str3 != chars3);
             }
 
             // check instances
