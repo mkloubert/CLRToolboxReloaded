@@ -57,11 +57,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
 
         private static bool IsAssignableFrom(Type type, Type c)
         {
-#if (PORTABLE || PORTABLE40)
-            //TODO
-            return false;
-#else
+#if !(PORTABLE || PORTABLE40)
             return type.IsAssignableFrom(c);
+#else
+            return false;
 #endif
         }
 
@@ -110,8 +109,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
             if (targetValue == null)
             {
                 if (targetType.IsValueType &&
-                    (global::System.Nullable.GetUnderlyingType(targetType) == null)
-                )
+                    (global::System.Nullable.GetUnderlyingType(targetType) == null))
                 {
                     // a (non-nullable) struct, so create instance by use the default parameter-less constructor
                     targetValue = global::System.Activator.CreateInstance(targetType);
