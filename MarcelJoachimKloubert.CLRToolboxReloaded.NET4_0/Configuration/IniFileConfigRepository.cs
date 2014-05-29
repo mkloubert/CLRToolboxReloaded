@@ -120,7 +120,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// <returns>The converted value.</returns>
         protected virtual IEnumerable<char> FromIniSectionValue(string input)
         {
-            string result = (input ?? string.Empty).Replace("\\\\", _TEMP_CHAR);
+            var result = (input ?? string.Empty).Replace("\\\\", _TEMP_CHAR);
 
             result = result.Replace("\\n", "\n")
                            .Replace("\\r", "\r")
@@ -150,7 +150,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// <inheriteddoc />
         protected override void OnSetValue<T>(string category, string name, T value, ref bool valueWasSet, bool invokeOnUpdated)
         {
-            string strValue = value.AsString();
+            var strValue = value.AsString();
             if (string.IsNullOrEmpty(strValue))
             {
                 strValue = null;
@@ -251,9 +251,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
             base.OnUpdated(context: context,
                            category: category, name: name);
 
-            using (MemoryStream temp = new MemoryStream())
+            using (var temp = new MemoryStream())
             {
-                using (StreamWriter writer = new StreamWriter(temp, this.GetEncoding()))
+                using (var writer = new StreamWriter(temp, this.GetEncoding()))
                 {
                     foreach (var categoryValues in this._VALUES)
                     {
@@ -263,12 +263,20 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
                                              .AsString());
 
                         // writes values
-                        foreach (var item in categoryValues.Value)
-                        {
-                            writer.WriteLine(string.Format("{0}={1}",
-                                                           this.ParseIniSectionKey(item.Key).AsString(),
-                                                           this.ToIniSectionValue(item.Value).AsString()));
-                        }
+                        categoryValues.Value
+                                      .ForEach(ctx =>
+                                      {
+                                          var repo = ctx.State.Repo;
+
+                                          ctx.State
+                                             .Writer.WriteLine(string.Format("{0}={1}",
+                                                                             repo.ParseIniSectionKey(ctx.Item.Key).AsString(),
+                                                                             repo.ToIniSectionValue(ctx.Item.Value).AsString()));
+                                      }, actionState: new
+                                      {
+                                          Repo = this,
+                                          Writer = writer,
+                                      });
 
                         writer.WriteLine();
                     }
@@ -431,15 +439,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
                                 // extract until comment
 
                                 var sharpIndex = value.IndexOf('#');
-                                if (sharpIndex > 0 &&
-                                    value[sharpIndex - 1] != '\\')
+                                if ((sharpIndex > 0) &&
+                                    (value[sharpIndex - 1] != '\\'))
                                 {
                                     value = value.Substring(0, sharpIndex);
                                 }
 
                                 var semicolonIndex = value.IndexOf(';');
-                                if (semicolonIndex > 0 &&
-                                    value[semicolonIndex - 1] != '\\')
+                                if ((semicolonIndex > 0) &&
+                                    (value[semicolonIndex - 1] != '\\'))
                                 {
                                     value = value.Substring(0, semicolonIndex);
                                 }
@@ -447,10 +455,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
 
                             string configCat;
                             string configName;
-                            this.PrepareCategoryAndName(this.ParseBackIniSectionName(currentSection), this.ParseBackIniSectionKey(name),
+                            this.PrepareCategoryAndName(this.ParseBackIniSectionKey(currentSection), this.ParseBackIniSectionName(name),
                                                         out configCat, out configName);
 
-                            bool valueWasSet = false;
+                            var valueWasSet = false;
                             this.OnSetValue<string>(category: configCat,
                                                     name: configName,
                                                     value: this.FromIniSectionValue(value).AsString(),
