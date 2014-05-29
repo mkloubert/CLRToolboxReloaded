@@ -23,12 +23,10 @@ using System.Reflection;
 
 namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 {
-    #region CLASS: NotifiableBase
-
     /// <summary>
     /// A basic implementation of <see cref="INotifiable" /> interface.
     /// </summary>
-    public abstract class NotifiableBase : ObjectBase, INotifiable
+    public abstract partial class NotifiableBase : ObjectBase, INotifiable
     {
         #region Fields (1)
 
@@ -342,55 +340,35 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
                             // no parameters
                             invokationParams = new object[0];
                         }
-                        else if (methodParams.Length == 1)
-                        {
-                            // (T newValue)
-                            invokationParams = new object[] { newValue };
-                        }
-                        else if (methodParams.Length == 2)
-                        {
-                            // (T newValue, T oldValue)
-                            invokationParams = new object[] { newValue, oldValue };
-                        }
-                        else if (methodParams.Length == 3)
-                        {
-                            // (T newValue, T oldValue, string senderName)
-                            invokationParams = new object[] { newValue, oldValue, nameOfSender };
-                        }
-                        else if (methodParams.Length == 4)
-                        {
-                            // (T newValue, T oldValue, string senderName, NotificationObjectBase obj)
-                            invokationParams = new object[] { newValue, oldValue, nameOfSender, this };
-                        }
-                        else if (methodParams.Length == 5)
-                        {
-                            // (T newValue, T oldValue, string senderName, NotificationObjectBase obj, Type targetType)
-                            invokationParams = new object[] { newValue, oldValue, nameOfSender, this, ctx.State.ValueType };
-                        }
                         else
                         {
-                            // (T newValue, T oldValue, string senderName, NotificationObjectBase obj, Type targetType, MemberTypes senderType)
-
                             invokationParams = new object[]
                             {
-                                newValue,
-                                oldValue,
-                                nameOfSender,
-                                this,
-                                ctx.State.ValueType,
+                                new ReceiveValueFromArgs()
+                                {
+                                    NewValue = ctx.State.NewValue,
+                                    OldValue = ctx.State.OldValue,
+                                    Sender = ctx.State.Sender,
+                                    SenderName = ctx.State.SenderName,
 #if CAN_GET_MEMBERS_FROM_TYPE
-                                global::System.Reflection.MemberTypes.Property,
+                                    SenderType = (int)global::System.Reflection.MemberTypes.Property,
 #else
-                                16,
-#endif                          
+                                    SenderType = 16,    // s. MemberTypes.Property
+#endif
+                                    TargetType = ctx.State.ValueType,
+                                },
                             };
                         }
 
-                        method.Invoke(this,
-                                        invokationParams);
+                        method.Invoke(method.IsStatic == false ? ctx.State.Sender : null,
+                                      invokationParams);
                     }
                 }, actionState: new
                 {
+                    NewValue = newValue,
+                    OldValue = oldValue,
+                    Sender = this,
+                    SenderName = nameOfSender,
                     ValueType = typeof(T),
                 });
         }
@@ -537,6 +515,4 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 
         #endregion Methods (10)
     }
-
-    #endregion
 }

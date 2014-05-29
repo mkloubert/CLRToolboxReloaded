@@ -324,6 +324,24 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\ReceiveValueFromOptions.cs">
       <Link>ComponentModel\ReceiveValueFromOptions.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\IReceiveValueFromArgs.cs">
+      <Link>ComponentModel\IReceiveValueFromArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\NotifiableBase.ReceiveValueFromArgs.cs">
+      <Link>ComponentModel\NotifiableBase.ReceiveValueFromArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Configuration\KeyValuePairConfigRepository.cs">
+      <Link>Configuration\KeyValuePairConfigRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Configuration\KeyValuePairConfigRepository.UpdateContext.cs">
+      <Link>Configuration\KeyValuePairConfigRepository.UpdateContext.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Configuration\IniFileConfigRepository.cs">
+      <Link>Configuration\IniFileConfigRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Configuration\JsonFileConfigRepository.cs">
+      <Link>Configuration\JsonFileConfigRepository.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

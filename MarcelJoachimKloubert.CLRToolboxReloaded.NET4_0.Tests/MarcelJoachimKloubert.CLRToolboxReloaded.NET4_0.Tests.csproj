@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComponentModel\Notification.cs" />
     <Compile Include="Diagnostics\Loggers.cs" />
     <Compile Include="Execution\Workflows.cs" />
     <Compile Include="Extensions\Collections.cs" />

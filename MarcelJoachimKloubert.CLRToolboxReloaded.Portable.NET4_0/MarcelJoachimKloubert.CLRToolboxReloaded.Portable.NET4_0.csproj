@@ -85,8 +85,15 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\componentmodel\INotifiable.cs">
       <Link>ComponentModel\INotifiable.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\IReceiveValueFromArgs.cs">
+      <Link>ComponentModel\IReceiveValueFromArgs.cs</Link>
+    </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\componentmodel\NotifiableBase.cs">
       <Link>ComponentModel\NotifiableBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\NotifiableBase.ReceiveValueFromArgs.cs">
+      <Link>ComponentModel\NotifiableBase.ReceiveValueFromArgs.cs</Link>
+      <DependentUpon>NotifiableBase.cs</DependentUpon>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\ReceiveNotificationFromAttribute.cs">
       <Link>ComponentModel\ReceiveNotificationFromAttribute.cs</Link>
@@ -108,6 +115,13 @@
     </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\configuration\IConfigRepository.cs">
       <Link>Configuration\IConfigRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Configuration\KeyValuePairConfigRepository.cs">
+      <Link>Configuration\KeyValuePairConfigRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Configuration\KeyValuePairConfigRepository.UpdateContext.cs">
+      <Link>Configuration\KeyValuePairConfigRepository.UpdateContext.cs</Link>
+      <DependentUpon>KeyValuePairConfigRepository.cs</DependentUpon>
     </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\configuration\ReadOnlyConfigRepositoryWrapper.cs">
       <Link>Configuration\ReadOnlyConfigRepositoryWrapper.cs</Link>
