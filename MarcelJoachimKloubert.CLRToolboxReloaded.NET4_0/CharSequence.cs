@@ -81,8 +81,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// <inheriteddoc />
         public int CompareTo(IEnumerable<char> other)
         {
-            return this._STRING
-                       .CompareTo(other.AsString());
+            return this.CompareTo(other.AsString());
         }
 
         /// <inheriteddoc />

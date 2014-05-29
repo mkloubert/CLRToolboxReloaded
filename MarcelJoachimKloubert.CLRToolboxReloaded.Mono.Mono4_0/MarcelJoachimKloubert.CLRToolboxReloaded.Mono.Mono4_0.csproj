@@ -15,7 +15,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>DEBUG;MONO40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -311,6 +311,18 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\CharSequence.cs">
       <Link>CharSequence.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\ReceiveNotificationFromAttribute.cs">
+      <Link>ComponentModel\ReceiveNotificationFromAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\ReceiveNotificationFromOptions.cs">
+      <Link>ComponentModel\ReceiveNotificationFromOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\ReceiveValueFromAttribute.cs">
+      <Link>ComponentModel\ReceiveValueFromAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\ReceiveValueFromOptions.cs">
+      <Link>ComponentModel\ReceiveValueFromOptions.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

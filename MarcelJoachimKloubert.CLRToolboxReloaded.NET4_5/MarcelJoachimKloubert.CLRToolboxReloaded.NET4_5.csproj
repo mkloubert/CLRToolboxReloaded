@@ -86,6 +86,18 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\NotifiableBase.cs">
       <Link>ComponentModel\NotifiableBase.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\ReceiveNotificationFromAttribute.cs">
+      <Link>ComponentModel\ReceiveNotificationFromAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\ReceiveNotificationFromOptions.cs">
+      <Link>ComponentModel\ReceiveNotificationFromOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\ReceiveValueFromAttribute.cs">
+      <Link>ComponentModel\ReceiveValueFromAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\ReceiveValueFromOptions.cs">
+      <Link>ComponentModel\ReceiveValueFromOptions.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Configuration\ConfigRepositoryBase.cs">
       <Link>Configuration\ConfigRepositoryBase.cs</Link>
     </Compile>
