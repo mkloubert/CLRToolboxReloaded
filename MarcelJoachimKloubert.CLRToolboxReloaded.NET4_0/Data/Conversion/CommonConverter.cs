@@ -3,12 +3,15 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 #if !(PORTABLE || PORTABLE40)
+#define CAN_GET_MEMBERS_FROM_TYPE
 #define KNOWS_DBNULL
 #define STRING_IS_CHAR_SEQUENCE
 #endif
 
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
+using System.Linq;
+using System.Reflection;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
 {
@@ -71,12 +74,120 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
 
             if (targetValue != null)
             {
-                var valueType = targetValue.GetType();
-                if (valueType.Equals(targetType) ||
-                    IsAssignableFrom(targetType, valueType))
+                var handled = false;
+
+                // ConvertToAttribute
                 {
-                    // no need to convert
-                    return;
+                    var obj = targetValue;
+
+                    var members = Enumerable.Empty<MemberInfo>();
+#if CAN_GET_MEMBERS_FROM_TYPE
+
+                    var memberBindFlags = global::System.Reflection.BindingFlags.Public |
+                                          global::System.Reflection.BindingFlags.NonPublic |
+                                          global::System.Reflection.BindingFlags.Instance |
+                                          global::System.Reflection.BindingFlags.Static;
+
+                    members = members.Concat(obj.GetType().GetFields(memberBindFlags))
+                                     .Concat(obj.GetType().GetMethods(memberBindFlags))
+                                     .Concat(obj.GetType().GetProperties(memberBindFlags));
+
+#endif
+
+                    var convertToMembers = members.Select(m =>
+                        {
+                            return new
+                            {
+                                Attributes = m.GetCustomAttributes(typeof(global::MarcelJoachimKloubert.CLRToolbox.Data.Conversion.ConvertToAttribute),
+                                                                   true)
+                                              .Cast<ConvertToAttribute>(),
+                                Member = m,
+                            };
+                        }).Where(x =>
+                        {
+                            return x.Attributes
+                                    .Any(a => targetType.Equals(a.TargetType) ||
+                                              IsAssignableFrom(targetType, a.TargetType));
+                        }).OrderBy(x =>
+                        {
+                            var sortValue = ulong.MaxValue;
+
+                            if (x.Attributes.Any(a => targetType.Equals(a.TargetType)))
+                            {
+                                sortValue = 0;
+                            }
+
+                            return sortValue;
+                        });
+
+                    var converter = convertToMembers.FirstOrDefault();
+                    if (converter != null)
+                    {
+                        var member = converter.Member;
+                        handled = true;
+
+                        if (member is MethodBase)
+                        {
+                            var method = (MethodBase)member;
+                            object[] invokationParams;
+
+                            var methodParams = method.GetParameters();
+                            if (methodParams.Length < 1)
+                            {
+                                // no parameters
+                                invokationParams = new object[0];
+                            }
+                            else
+                            {
+                                invokationParams = new object[]
+                            {
+                                new ConvertToArgs()
+                                {
+                                    CurrentValue = targetValue,
+                                    FormatProvider = provider,
+                                    TargetType = targetType,
+                                },
+                            };
+                            }
+
+                            targetValue = method.Invoke(method.IsStatic == false ? obj : null,
+                                                        invokationParams);
+                        }
+                        else if (member is PropertyInfo)
+                        {
+                            var property = (PropertyInfo)member;
+
+                            targetValue = property.GetValue(obj, null);
+                        }
+                        else if (member is FieldInfo)
+                        {
+                            var field = (FieldInfo)member;
+
+                            targetValue = field.GetValue(obj);
+                        }
+                        else
+                        {
+                            handled = false;
+                        }
+
+                        if (handled)
+                        {
+                            this.OnChangeType(targetType: targetType,
+                                              targetValue: ref targetValue,
+                                              provider: provider);
+                        }
+                    }
+                }
+
+                if (handled == false)
+                {
+                    var valueType = targetValue.GetType();
+                    if (valueType.Equals(targetType) ||
+                        IsAssignableFrom(targetType, valueType))
+                    {
+                        // no need to convert
+                        return;
+                    }
                 }
             }
 
@@ -101,6 +212,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
                 targetValue = (global::MarcelJoachimKloubert.CLRToolbox.CharSequence)temp.AsString();
 #endif
 
+                return;
+            }
+
+            if (targetType.Equals(typeof(global::MarcelJoachimKloubert.CLRToolbox.CharSequence)))
+            {
+                object temp = targetValue;
+                ConvertToString(ref temp, provider);
+
+                targetValue = (CharSequence)temp.AsString();
                 return;
             }
 

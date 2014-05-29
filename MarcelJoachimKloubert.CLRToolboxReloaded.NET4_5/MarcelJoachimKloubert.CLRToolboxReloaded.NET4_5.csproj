@@ -133,17 +133,27 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\CryptoRandom.cs">
       <Link>CryptoRandom.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\Conversion\CommonConverter.ConvertToArgs.cs">
+      <Link>Data\Conversion\CommonConverter.ConvertToArgs.cs</Link>
+      <DependentUpon>CommonConverter.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\Conversion\CommonConverter.cs">
       <Link>Data\Conversion\CommonConverter.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\Conversion\ConverterBase.cs">
       <Link>Data\Conversion\ConverterBase.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\Conversion\ConvertToAttribute.cs">
+      <Link>Data\Conversion\ConvertToAttribute.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\Conversion\GlobalConverter.cs">
       <Link>Data\Conversion\GlobalConverter.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\Conversion\IConverter.cs">
       <Link>Data\Conversion\IConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\Conversion\IConvertToArgs.cs">
+      <Link>Data\Conversion\IConvertToArgs.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\AggregateLogger.cs">
       <Link>Diagnostics\Logging\AggregateLogger.cs</Link>

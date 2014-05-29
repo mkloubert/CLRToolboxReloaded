@@ -265,7 +265,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 
         private void Handle_ReceiveValueFrom<T>(string nameOfSender, bool hasBeenNotified, T newValue, object oldValue)
         {
-            IEnumerable<MemberInfo> members = Enumerable.Empty<MemberInfo>();
+            var members = Enumerable.Empty<MemberInfo>();
 #if CAN_GET_MEMBERS_FROM_TYPE
             var memberBindFlags = global::System.Reflection.BindingFlags.Public |
                                   global::System.Reflection.BindingFlags.NonPublic |
@@ -334,7 +334,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
                         MethodBase method = (MethodBase)m;
                         object[] invokationParams;
 
-                        ParameterInfo[] methodParams = method.GetParameters();
+                        var methodParams = method.GetParameters();
                         if (methodParams.Length < 1)
                         {
                             // no parameters

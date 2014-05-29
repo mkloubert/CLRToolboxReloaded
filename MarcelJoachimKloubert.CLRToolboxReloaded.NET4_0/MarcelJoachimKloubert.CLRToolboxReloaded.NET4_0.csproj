@@ -81,10 +81,15 @@
     </Compile>
     <Compile Include="Configuration\ReadOnlyConfigRepositoryWrapper.cs" />
     <Compile Include="CryptoRandom.cs" />
+    <Compile Include="Data\Conversion\CommonConverter.ConvertToArgs.cs">
+      <DependentUpon>CommonConverter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data\Conversion\CommonConverter.cs" />
     <Compile Include="Data\Conversion\ConverterBase.cs" />
+    <Compile Include="Data\Conversion\ConvertToAttribute.cs" />
     <Compile Include="Data\Conversion\GlobalConverter.cs" />
     <Compile Include="Data\Conversion\IConverter.cs" />
+    <Compile Include="Data\Conversion\IConvertToArgs.cs" />
     <Compile Include="Diagnostics\Logging\AggregateLogger.cs" />
     <Compile Include="Diagnostics\Logging\AsyncLogger.cs" />
     <Compile Include="Diagnostics\Logging\DelegateLogger.cs" />

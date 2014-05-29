@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComponentModel\Notification.cs" />
+    <Compile Include="Data\Conversion.cs" />
     <Compile Include="Diagnostics\Loggers.cs" />
     <Compile Include="Execution\Workflows.cs" />
     <Compile Include="Extensions\Collections.cs" />
