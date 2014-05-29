@@ -279,6 +279,24 @@
     <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\Json\JsonResult.cs">
       <Link>Serialization\Json\JsonResult.cs</Link>
     </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Configuration\ConfigRepositoryBase.cs">
+      <Link>Configuration\ConfigRepositoryBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Configuration\ConfigRepositoryWrapper.cs">
+      <Link>Configuration\ConfigRepositoryWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Configuration\IConfigRepository.cs">
+      <Link>Configuration\IConfigRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Configuration\ReadOnlyConfigRepositoryWrapper.cs">
+      <Link>Configuration\ReadOnlyConfigRepositoryWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Strings.AsChars.cs">
+      <Link>Extensions\Strings.AsChars.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\CharSequence.cs">
+      <Link>CharSequence.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -296,5 +314,6 @@
     <Folder Include="Diagnostics\Logging\Execution\" />
     <Folder Include="Serialization\" />
     <Folder Include="Serialization\Json\" />
+    <Folder Include="Configuration\" />
   </ItemGroup>
 </Project>

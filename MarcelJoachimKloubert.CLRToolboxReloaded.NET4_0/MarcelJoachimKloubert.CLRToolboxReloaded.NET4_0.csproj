@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharSequence.cs" />
     <Compile Include="Collections\Generic\DelegateEqualityComparer.cs" />
     <Compile Include="Collections\Generic\EqualityComparerFactory.cs" />
     <Compile Include="Collections\Generic\ForEachItemContext.cs" />
@@ -61,6 +62,10 @@
     <Compile Include="Collections\Generic\ForAllItemContext.cs" />
     <Compile Include="ComponentModel\INotifiable.cs" />
     <Compile Include="ComponentModel\NotifiableBase.cs" />
+    <Compile Include="Configuration\ConfigRepositoryBase.cs" />
+    <Compile Include="Configuration\ConfigRepositoryWrapper.cs" />
+    <Compile Include="Configuration\IConfigRepository.cs" />
+    <Compile Include="Configuration\ReadOnlyConfigRepositoryWrapper.cs" />
     <Compile Include="CryptoRandom.cs" />
     <Compile Include="Data\Conversion\CommonConverter.cs" />
     <Compile Include="Data\Conversion\ConverterBase.cs" />
@@ -129,6 +134,9 @@
     </Compile>
     <Compile Include="Extensions\Serialization.ToJson.cs">
       <DependentUpon>Serialization.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Strings.AsChars.cs">
+      <DependentUpon>Strings.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Strings.AsHexString.cs">
       <DependentUpon>Strings.cs</DependentUpon>
