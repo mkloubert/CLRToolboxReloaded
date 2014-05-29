@@ -174,6 +174,30 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
             Assert.AreEqual(chars3, ca3);
             Assert.AreEqual(chars4, ca4);
             Assert.AreEqual(chars5, ca5);
+
+            // check equal operators
+            Assert.IsTrue(chars1 == ca1);
+            Assert.IsTrue(ca1 == chars1);
+            Assert.IsTrue(chars2 == ca2);
+            Assert.IsTrue(ca2 == chars2);
+            Assert.IsTrue(chars3 == ca3);
+            Assert.IsTrue(ca3 == chars3);
+            Assert.IsTrue(chars4 == ca4);
+            Assert.IsTrue(ca4 == chars4);
+            Assert.IsTrue(chars5 == ca5);
+            Assert.IsTrue(ca5 == chars5);
+
+            // check UNequal operators
+            Assert.IsFalse(chars1 != ca1);
+            Assert.IsFalse(ca1 != chars1);
+            Assert.IsFalse(chars2 != ca2);
+            Assert.IsFalse(ca2 != chars2);
+            Assert.IsFalse(chars3 != ca3);
+            Assert.IsFalse(ca3 != chars3);
+            Assert.IsFalse(chars4 != ca4);
+            Assert.IsFalse(ca4 != chars4);
+            Assert.IsFalse(chars5 != ca5);
+            Assert.IsFalse(ca5 != chars5);
         }
 
         [Test]
@@ -200,6 +224,30 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
             Assert.AreEqual(chars3, s3);
             Assert.AreEqual(chars4, s4);
             Assert.AreEqual(chars5, s5);
+
+            // check equal operators
+            Assert.IsTrue(chars1 == s1);
+            Assert.IsTrue(s1 == chars1);
+            Assert.IsTrue(chars2 == s2);
+            Assert.IsTrue(s2 == chars2);
+            Assert.IsTrue(chars3 == s3);
+            Assert.IsTrue(s3 == chars3);
+            Assert.IsTrue(chars4 == s4);
+            Assert.IsTrue(s4 == chars4);
+            Assert.IsTrue(chars5 == s5);
+            Assert.IsTrue(s5 == chars5);
+
+            // check UNequal operators
+            Assert.IsFalse(chars1 != s1);
+            Assert.IsFalse(s1 != chars1);
+            Assert.IsFalse(chars2 != s2);
+            Assert.IsFalse(s2 != chars2);
+            Assert.IsFalse(chars3 != s3);
+            Assert.IsFalse(s3 != chars3);
+            Assert.IsFalse(chars4 != s4);
+            Assert.IsFalse(s4 != chars4);
+            Assert.IsFalse(chars5 != s5);
+            Assert.IsFalse(s5 != chars5);
         }
 
         [Test]
@@ -226,8 +274,31 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
             Assert.AreEqual(chars3, sb3);
             Assert.AreEqual(chars4, sb4);
             Assert.AreEqual(chars5, sb5);
-        }
 
+            // check equal operators
+            Assert.IsTrue(chars1 == sb1);
+            Assert.IsTrue(sb1 == chars1);
+            Assert.IsTrue(chars2 == sb2);
+            Assert.IsTrue(sb2 == chars2);
+            Assert.IsTrue(chars3 == sb3);
+            Assert.IsTrue(sb3 == chars3);
+            Assert.IsTrue(chars4 == sb4);
+            Assert.IsTrue(sb4 == chars4);
+            Assert.IsTrue(chars5 == sb5);
+            Assert.IsTrue(sb5 == chars5);
+            
+            // check UNequal operators
+            Assert.IsFalse(chars1 != sb1);
+            Assert.IsFalse(sb1 != chars1);
+            Assert.IsFalse(chars2 != sb2);
+            Assert.IsFalse(sb2 != chars2);
+            Assert.IsFalse(chars3 != sb3);
+            Assert.IsFalse(sb3 != chars3);
+            Assert.IsFalse(chars4 != sb4);
+            Assert.IsFalse(sb4 != chars4);
+            Assert.IsFalse(chars5 != sb5);
+            Assert.IsFalse(sb5 != chars5);
+        }
         
         [Test]
         public void CharSquence_Compare_String()
@@ -241,7 +312,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
             var charList2 = new CharSequence[] { "1", string.Empty, "MK", "TM" };
             var charList2Sorted = charList2.OrderBy(x => x);
 
-            var charList3 = new List<CharSequence> { "1", null, "MK" };
+            var charList3 = new List<CharSequence> { "1", "MK", null };
             var charList3Sorted = charList3.OrderBy(x => x);
 
             // strListSorted == charList1Sorted
