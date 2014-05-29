@@ -33,8 +33,8 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
         {
             lock (_SYNC)
             {
-                ConsoleColor oldForeColor = Console.ForegroundColor;
-                ConsoleColor oldBgColor = Console.BackgroundColor;
+                var oldForeColor = Console.ForegroundColor;
+                var oldBgColor = Console.BackgroundColor;
 
                 try
                 {
@@ -60,38 +60,40 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
 
         private static void Main(string[] args)
         {
-            foreach (Type type in Assembly.GetExecutingAssembly()
-                                          .GetTypes()
-                                          .OrderBy(t => t.Name, StringComparer.InvariantCultureIgnoreCase))
+            foreach (var type in Assembly.GetExecutingAssembly()
+                                         .GetTypes()
+                                         .OrderBy(t => t.Name, StringComparer.InvariantCultureIgnoreCase))
             {
-                object[] typeIgnoreAttribs = type.GetCustomAttributes(typeof(global::NUnit.Framework.IgnoreAttribute), true);
+                var typeIgnoreAttribs = type.GetCustomAttributes(typeof(global::NUnit.Framework.IgnoreAttribute), true);
                 if (typeIgnoreAttribs.Length > 0)
                 {
                     continue;
                 }
 
-                object[] testFixureAttribs = type.GetCustomAttributes(typeof(global::NUnit.Framework.TestFixtureAttribute), true);
+                var testFixureAttribs = type.GetCustomAttributes(typeof(global::NUnit.Framework.TestFixtureAttribute), true);
                 if (testFixureAttribs.Length < 1)
                 {
                     continue;
                 }
 
-                object obj = Activator.CreateInstance(type);
+                var obj = Activator.CreateInstance(type);
                 Console.WriteLine("{0} ...", obj.GetType().Name);
 
-                foreach (MethodInfo method in obj.GetType()
-                                                 .GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
-                                                 .OrderBy(m => m.Name, StringComparer.InvariantCultureIgnoreCase))
+                foreach (var method in obj.GetType()
+                                          .GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+                                          .OrderBy(m => m.Name, StringComparer.InvariantCultureIgnoreCase))
                 {
-                    object[] methodIgnoreAttribs = method.GetCustomAttributes(typeof(global::NUnit.Framework.IgnoreAttribute), true);
-                    if (methodIgnoreAttribs.Length > 0)
+                    var testAttribs = method.GetCustomAttributes(typeof(global::NUnit.Framework.TestAttribute), true);
+                    if (testAttribs.Length < 1)
                     {
+                        // not marked as test
                         continue;
                     }
 
-                    object[] testAttribs = method.GetCustomAttributes(typeof(global::NUnit.Framework.TestAttribute), true);
-                    if (testAttribs.Length < 1)
+                    var methodIgnoreAttribs = method.GetCustomAttributes(typeof(global::NUnit.Framework.IgnoreAttribute), true);
+                    if (methodIgnoreAttribs.Length > 0)
                     {
+                        // is ignored
                         continue;
                     }
 

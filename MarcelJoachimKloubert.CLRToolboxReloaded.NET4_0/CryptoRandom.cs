@@ -5,6 +5,7 @@
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Cryptography;
 
 namespace MarcelJoachimKloubert.CLRToolbox
@@ -95,36 +96,47 @@ namespace MarcelJoachimKloubert.CLRToolbox
 
         #endregion Events and delegates
 
-        #region Methods (14)
+        #region Methods (15)
 
-        // Public Methods (11)
+        // Public Methods (12)
 
         /// <summary>
         /// Creates a new instance of the <see cref="CryptoRandom" /> class.
         /// </summary>
-        /// <param name="seed">The seed to use.</param>
-        public static CryptoRandom Create(IEnumerable<byte> seed)
+        /// <remarks>
+        /// The method defines a seed by using <see cref="Guid.NewGuid()" />.
+        /// </remarks>
+        public static CryptoRandom Create()
+        {
+            return Create(new RNGCryptoServiceProvider());
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="CryptoRandom" /> class.
+        /// </summary>
+        /// <param name="binSeed">The seed to use.</param>
+        public static CryptoRandom Create(IEnumerable<byte> binSeed)
         {
             return Create(new RNGCryptoServiceProvider(),
-                          seed);
+                          binSeed);
         }
 
         /// <summary>
         /// Creates a new instance of the <see cref="CryptoRandom" /> class.
         /// </summary>
-        /// <param name="seed">The seed to use.</param>
-        public static CryptoRandom Create(double seed)
+        /// <param name="dblSeed">The seed to use.</param>
+        public static CryptoRandom Create(double dblSeed)
         {
-            return Create(ToBinary(seed));
+            return Create(binSeed: ToBinary(dblSeed));
         }
 
         /// <summary>
         /// Creates a new instance of the <see cref="CryptoRandom" /> class.
         /// </summary>
-        /// <param name="seed">The seed to use.</param>
-        public static CryptoRandom Create(Guid seed)
+        /// <param name="guidSeed">The seed to use.</param>
+        public static CryptoRandom Create(Guid guidSeed)
         {
-            return Create(seed.ToByteArray());
+            return Create(binSeed: guidSeed.ToByteArray());
         }
 
         /// <summary>
@@ -140,49 +152,49 @@ namespace MarcelJoachimKloubert.CLRToolbox
         public static CryptoRandom Create(RNGCryptoServiceProvider rng)
         {
             return Create(rng,
-                          Environment.TickCount);
+                          guidSeed: Guid.NewGuid());
         }
 
         /// <summary>
         /// Creates a new instance of the <see cref="CryptoRandom" /> class.
         /// </summary>
         /// <param name="rng">The random data provider.</param>
-        /// <param name="seed">The seed to use.</param>
+        /// <param name="dblSeed">The seed to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="rng" /> is <see langword="null" />.
         /// </exception>
-        public static CryptoRandom Create(RNGCryptoServiceProvider rng, double seed)
+        public static CryptoRandom Create(RNGCryptoServiceProvider rng, double dblSeed)
         {
             return Create(rng,
-                          ToBinary(seed));
+                          binSeed: ToBinary(dblSeed));
         }
 
         /// <summary>
         /// Creates a new instance of the <see cref="CryptoRandom" /> class.
         /// </summary>
         /// <param name="rng">The random data provider.</param>
-        /// <param name="seed">The seed to use.</param>
+        /// <param name="guidSeed">The seed to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="rng" /> is <see langword="null" />.
         /// </exception>
-        public static CryptoRandom Create(RNGCryptoServiceProvider rng, Guid seed)
+        public static CryptoRandom Create(RNGCryptoServiceProvider rng, Guid guidSeed)
         {
             return Create(rng,
-                          seed.ToByteArray());
+                          binSeed: guidSeed.ToByteArray());
         }
 
         /// <summary>
         /// Creates a new instance of the <see cref="CryptoRandom" /> class.
         /// </summary>
         /// <param name="rng">The random data provider.</param>
-        /// <param name="seed">The seed to use.</param>
+        /// <param name="binSeed">The seed to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="rng" /> is <see langword="null" />.
         /// </exception>
-        public static CryptoRandom Create(RNGCryptoServiceProvider rng, IEnumerable<byte> seed)
+        public static CryptoRandom Create(RNGCryptoServiceProvider rng, IEnumerable<byte> binSeed)
         {
             return new CryptoRandom(rng,
-                                    r => seed);
+                                    provider: r => binSeed);
         }
 
         /// <inheriteddoc />
@@ -198,6 +210,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         }
 
         /// <inheriteddoc />
+        [DebuggerStepThrough]
         public override int Next(int minValue, int maxValue)
         {
             if (minValue > maxValue)

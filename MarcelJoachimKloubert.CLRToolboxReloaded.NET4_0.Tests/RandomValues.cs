@@ -47,7 +47,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
         {
             for (var i = 0; i < 13; i++)
             {
-                var r = CryptoRandom.Create(Guid.NewGuid().ToByteArray());
+                var r = CryptoRandom.Create();
 
                 for (var ii = 0; ii < 1000000; ii++)
                 {
