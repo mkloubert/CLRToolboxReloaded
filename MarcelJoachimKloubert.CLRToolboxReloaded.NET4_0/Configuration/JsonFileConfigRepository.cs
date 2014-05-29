@@ -185,7 +185,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         {
             lock (this._SYNC)
             {
-                using (var jsonFile = File.OpenRead(this.FilePath))
+                using (var jsonFile = File.OpenRead(this._FILE_PATH))
                 {
                     using (var reader = new StreamReader(jsonFile, this.GetEncoding()))
                     {
@@ -195,7 +195,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
 
                             this._VALUES.Clear();
                             {
-                                IDictionary<string, object> values = serializer.Deserialize<IDictionary<string, object>>(jsonReader);
+                                var values = serializer.Deserialize<IDictionary<string, object>>(jsonReader);
                                 if (values != null)
                                 {
                                     values.ForEach((ctx) =>

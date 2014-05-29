@@ -368,7 +368,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         {
             lock (this._SYNC)
             {
-                using (var iniFile = File.OpenRead(this.FilePath))
+                using (var iniFile = File.OpenRead(this._FILE_PATH))
                 {
                     using (var reader = new StreamReader(iniFile, this.GetEncoding()))
                     {
