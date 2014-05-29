@@ -162,18 +162,33 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
             CharSequence chars3 = string.Empty;
             CharSequence chars4 = string.Empty;
             CharSequence chars5 = null;
-
+            
+            // convert TO
             char[] ca1 = chars1;
             char[] ca2 = chars2;
             char[] ca3 = chars3;
             char[] ca4 = chars4;
             char[] ca5 = chars5;
+            
+            // convert BACK
+            CharSequence chars1Back = ca1;
+            CharSequence chars2Back = ca2;
+            CharSequence chars3Back = ca3;
+            CharSequence chars4Back = ca4;
+            CharSequence chars5Back = ca5;
 
             Assert.AreEqual(chars1, ca1);
             Assert.AreEqual(chars2, ca2);
             Assert.AreEqual(chars3, ca3);
             Assert.AreEqual(chars4, ca4);
             Assert.AreEqual(chars5, ca5);
+           
+            // check if back conversion was correct
+            Assert.AreEqual(chars1, chars1Back);
+            Assert.AreEqual(chars2, chars2Back);
+            Assert.AreEqual(chars3, chars3Back);
+            Assert.AreEqual(chars4, chars4Back);
+            Assert.AreEqual(chars5, chars5Back);
 
             // check equal operators
             Assert.IsTrue(chars1 == ca1);
@@ -212,18 +227,33 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
             CharSequence chars3 = string.Empty;
             CharSequence chars4 = string.Empty;
             CharSequence chars5 = null;
-
+            
+            // convert TO
             string s1 = chars1;
             string s2 = chars2;
             string s3 = chars3;
             string s4 = chars4;
             string s5 = chars5;
 
+            // convert BACK
+            CharSequence chars1Back = s1;
+            CharSequence chars2Back = s2;
+            CharSequence chars3Back = s3;
+            CharSequence chars4Back = s4;
+            CharSequence chars5Back = s5;
+
             Assert.AreEqual(chars1, s1);
             Assert.AreEqual(chars2, s2);
             Assert.AreEqual(chars3, s3);
             Assert.AreEqual(chars4, s4);
             Assert.AreEqual(chars5, s5);
+
+            // check if back conversion was correct
+            Assert.AreEqual(chars1, chars1Back);
+            Assert.AreEqual(chars2, chars2Back);
+            Assert.AreEqual(chars3, chars3Back);
+            Assert.AreEqual(chars4, chars4Back);
+            Assert.AreEqual(chars5, chars5Back);
 
             // check equal operators
             Assert.IsTrue(chars1 == s1);
@@ -262,18 +292,33 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
             CharSequence chars3 = string.Empty;
             CharSequence chars4 = string.Empty;
             CharSequence chars5 = null;
-
+            
+            // convert TO
             StringBuilder sb1 = chars1;
             StringBuilder sb2 = chars2;
             StringBuilder sb3 = chars3;
             StringBuilder sb4 = chars4;
             StringBuilder sb5 = chars5;
-
+            
+            // convert BACK
+            CharSequence chars1Back = sb1;
+            CharSequence chars2Back = sb2;
+            CharSequence chars3Back = sb3;
+            CharSequence chars4Back = sb4;
+            CharSequence chars5Back = sb5;
+            
             Assert.AreEqual(chars1, sb1);
             Assert.AreEqual(chars2, sb2);
             Assert.AreEqual(chars3, sb3);
             Assert.AreEqual(chars4, sb4);
             Assert.AreEqual(chars5, sb5);
+            
+            // check if back conversion was correct
+            Assert.AreEqual(chars1, chars1Back);
+            Assert.AreEqual(chars2, chars2Back);
+            Assert.AreEqual(chars3, chars3Back);
+            Assert.AreEqual(chars4, chars4Back);
+            Assert.AreEqual(chars5, chars5Back);
 
             // check equal operators
             Assert.IsTrue(chars1 == sb1);
