@@ -4,6 +4,7 @@
 
 #if !(PORTABLE || PORTABLE40)
 #define KNOWS_DBNULL
+#define STRING_IS_CHAR_SEQUENCE
 #endif
 
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
@@ -16,18 +17,62 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
     /// </summary>
     public partial class CommonConverter : ConverterBase
     {
-        #region Methods (2)
+        #region Methods (4)
 
-        // Protected Methods (1) 
+        private static void ConvertToString(ref object targetValue, IFormatProvider provider)
+        {
+            var handled = false;
+
+#if !(PORTABLE || PROTABLE40)
+
+            if (provider != null)
+            {
+                var conv = targetValue as global::System.IConvertible;
+                if (conv != null)
+                {
+                    targetValue = conv.ToString(provider);
+                    handled = true;
+                }
+            }
+
+#endif
+
+            if (handled == false)
+            {
+                var str = targetValue.AsString();
+
+#if !(PORTABLE || PORTABLE40)
+
+                if ((str != null) &&
+                    (provider != null))
+                {
+                    str = str.ToString(provider);
+                }
+
+#endif
+
+                targetValue = str;
+            }
+        }
+
+        private static bool IsAssignableFrom(Type type, Type c)
+        {
+#if (PORTABLE || PORTABLE40)
+            //TODO
+            return false;
+#else
+            return type.IsAssignableFrom(c);
+#endif
+        }
 
         /// <inheriteddoc />
         protected override void OnChangeType(Type targetType, ref object targetValue, IFormatProvider provider)
         {
-            this.ParseInputValueForChangeType(targetType, ref targetValue, provider);
+            ParseInputValueForChangeType(targetType, ref targetValue, provider);
 
             if (targetValue != null)
             {
-                Type valueType = targetValue.GetType();
+                var valueType = targetValue.GetType();
                 if (valueType.Equals(targetType) ||
                     IsAssignableFrom(targetType, valueType))
                 {
@@ -36,43 +81,26 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
                 }
             }
 
-            if (targetType.Equals(typeof(string)) ||
-                targetType.Equals(typeof(global::System.Collections.Generic.IEnumerable<char>)))
+            if (targetType.Equals(typeof(string)))
             {
                 // force to convert to string
 
-                bool handled = false;
+                ConvertToString(ref targetValue, provider);
+                return;
+            }
 
-#if !(PORTABLE || PROTABLE40)
+            if (targetType.Equals(typeof(global::System.Collections.Generic.IEnumerable<char>)))
+            {
+                // force to convert to char sequence
 
-                if (provider != null)
-                {
-                    global::System.IConvertible conv = targetValue as global::System.IConvertible;
-                    if (conv != null)
-                    {
-                        targetValue = conv.ToString(provider);
-                        handled = true;
-                    }
-                }
+                object temp = targetValue;
+                ConvertToString(ref temp, provider);
 
+#if STRING_IS_CHAR_SEQUENCE
+                targetValue = temp;
+#else
+                targetValue = (global::MarcelJoachimKloubert.CLRToolbox.CharSequence)temp.AsString();
 #endif
-
-                if (handled == false)
-                {
-                    string str = targetValue.AsString();
-
-#if !(PORTABLE || PORTABLE40)
-
-                    if ((str != null) &&
-                        (provider != null))
-                    {
-                        str = str.ToString(provider);
-                    }
-
-#endif
-
-                    targetValue = str;
-                }
 
                 return;
             }
@@ -98,21 +126,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
             targetValue = global::System.Convert.ChangeType(targetValue, targetType, provider);
         }
 
-        // Private Methods (2) 
-
-        private static bool IsAssignableFrom(Type type, Type c)
-        {
-#if (PORTABLE || PORTABLE40)
-            //TODO
-            return false;
-#else
-            return type.IsAssignableFrom(c);
-#endif
-        }
-
-        private void ParseInputValueForChangeType(Type targetType, ref object targetValue, IFormatProvider provider)
+        private static void ParseInputValueForChangeType(Type targetType, ref object targetValue, IFormatProvider provider)
         {
 #if KNOWS_DBNULL
+
             if (targetType.Equals(typeof(global::System.DBNull)) == false)
             {
                 if (global::System.DBNull.Value.Equals(targetValue))
@@ -136,6 +153,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
                     }
                 }
             }
+
 #endif
         }
 
