@@ -72,6 +72,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
         {
             ParseInputValueForChangeType(targetType, ref targetValue, provider);
 
+            var valueType = targetValue.GetType();
+            if (valueType.Equals(targetType) ||
+                IsAssignableFrom(targetType, valueType))
+            {
+                // no need to convert
+                return;
+            }
+
             if (targetValue != null)
             {
                 var handled = false;
@@ -176,17 +184,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
                                               targetValue: ref targetValue,
                                               provider: provider);
                         }
-                    }
-                }
-
-                if (handled == false)
-                {
-                    var valueType = targetValue.GetType();
-                    if (valueType.Equals(targetType) ||
-                        IsAssignableFrom(targetType, valueType))
-                    {
-                        // no need to convert
-                        return;
                     }
                 }
             }
