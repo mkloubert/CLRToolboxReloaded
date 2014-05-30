@@ -382,32 +382,34 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// Converts a <see cref="NullIndexDictionary{TValue}" /> to a well known
         /// <see cref="List{T}" /> object.
         /// </summary>
-        /// <param name="dict">The input value.</param>
+        /// <param name="niDict">The input value.</param>
         /// <returns>The output value.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The smallest key of <paramref name="dict" /> is less than 0.
+        /// <exception cref="InvalidCastException">
+        /// The smallest key of <paramref name="niDict" /> is less than 0.
         /// </exception>
         /// <remarks>
-        /// All breaks in the index list of <paramref name="dict" /> are filled wirh default values.
+        /// All breaks in the index list of <paramref name="niDict" /> are filled wirh default values.
         /// </remarks>
-        protected internal static List<TValue> ToList(NullIndexDictionary<TValue> dict)
+        protected internal static List<TValue> ToList(NullIndexDictionary<TValue> niDict)
         {
             List<TValue> result = null;
 
-            if (dict != null)
+            if (niDict != null)
             {
                 result = new List<TValue>();
-                if (dict.Count > 0)
+                if (niDict.Count > 0)
                 {
-                    var minIndex = dict.Keys.Min();
+                    var minIndex = niDict.Keys.Min();
                     if (minIndex < 0)
                     {
-                        throw new ArgumentOutOfRangeException("dict");
+                        // must be at least 0
+                        throw new InvalidCastException();
                     }
 
-                    // fill with default values before 'minIndex'
-                    // starts
-                    Enumerable.Range(0, minIndex)
+                    // fill with default values before
+                    // insertion starts
+                    Enumerable.Range(start: 0,
+                                     count: minIndex)
                               .ForEach(ctx =>
                               {
                                   ctx.State
@@ -418,20 +420,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                                   List = result,
                               });
 
-                    var maxIndex = dict.Keys.Max();
-
-                    Enumerable.Range(minIndex, maxIndex - minIndex + 1)
+                    // set items and fill breaks with default values
+                    Enumerable.Range(start: minIndex,
+                                     count: niDict.Keys.Max() - minIndex + 1)
                               .ForEach(ctx =>
                               {
-                                  var d = ctx.State.Dictionary;
-                                  var k = ctx.Item;
+                                  var dict = ctx.State.Dictionary;
+                                  var key = ctx.Item;
 
                                   ctx.State
-                                     .List.Add(d.ContainsKey(k) ? d[k] : ctx.State.DefaultValue);
+                                     .List.Add(dict.ContainsKey(key) ? dict[key]
+                                                                     : ctx.State.DefaultValue);
                               }, actionState: new
                               {
                                   DefaultValue = default(TValue),
-                                  Dictionary = dict,
+                                  Dictionary = niDict,
                                   List = result,
                               });
                 }
@@ -579,7 +582,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// <remarks>
         /// All breaks in the index list of <paramref name="dict" /> are filled wirh default values.
         /// </remarks>
-        /// <exception cref="ArgumentOutOfRangeException">
+        /// <exception cref="InvalidCastException">
         /// The smallest key of <paramref name="dict" /> is less than 0.
         /// </exception>
         public static explicit operator List<TValue>(NullIndexDictionary<TValue> dict)
@@ -637,7 +640,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// <remarks>
         /// All breaks in the index list of <paramref name="dict" /> are filled wirh default values.
         /// </remarks>
-        /// <exception cref="ArgumentOutOfRangeException">
+        /// <exception cref="InvalidCastException">
         /// The smallest key of <paramref name="dict" /> is less than 0.
         /// </exception>
         public static explicit operator List<object>(NullIndexDictionary dict)
