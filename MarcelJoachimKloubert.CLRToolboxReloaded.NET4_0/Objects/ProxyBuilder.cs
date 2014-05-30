@@ -54,9 +54,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Objects
         /// <summary>
         /// Describes a function or method that provides a name (or a part) by a
         /// </summary>
+        /// <param name="builder">The underlying builder instance.</param>
         /// <param name="type">The type the name (part) is (or should be) based on.</param>
         /// <returns>The name (part).</returns>
-        public delegate IEnumerable<char> TypeNameProvider(Type type);
+        public delegate IEnumerable<char> TypeNameProvider(ProxyBuilder<T> builder, Type type);
 
         #endregion Delegates and Events
 
@@ -95,7 +96,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Objects
         public Type CreateType(ModuleBuilder modBuilder)
         {
             return this.CreateType(modBuilder,
-                                   proxyTypeNamePrefixProvider: (interfaceType) => "TMImplOf_");
+                                   proxyTypeNamePrefixProvider: (builder, interfaceType) => "TMImplOf_");
         }
 
         /// <summary>
@@ -112,9 +113,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Objects
         {
             return this.CreateType(modBuilder,
                                    proxyTypeNamePrefixProvider: proxyTypeNamePrefixProvider,
-                                   proxyTypeNameSuffixProvider: (interfaceType) => string.Format("_{0:N}_{1}",
-                                                                                                 Guid.NewGuid(),
-                                                                                                 this.GetHashCode()));
+                                   proxyTypeNameSuffixProvider: (builder, interfaceType) => string.Format("_{0:N}_{1}",
+                                                                                                          Guid.NewGuid(),
+                                                                                                          builder.GetHashCode()));
         }
 
         /// <summary>
@@ -133,7 +134,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Objects
         {
             return this.CreateType(modBuilder,
                                    proxyTypeNamePrefixProvider: proxyTypeNamePrefixProvider,
-                                   proxyTypeNameProvider: (interfaceType) => this.InterfaceType.Name,
+                                   proxyTypeNameProvider: (builder, interfaceType) => interfaceType.Name,
                                    proxyTypeNameSuffixProvider: proxyTypeNameSuffixProvider);
         }
 
@@ -158,11 +159,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Objects
                 throw new ArgumentNullException("modBuilder");
             }
 
-            var prefix = proxyTypeNamePrefixProvider != null ? (proxyTypeNamePrefixProvider(this.InterfaceType).AsString() ?? string.Empty).Trim()
+            var prefix = proxyTypeNamePrefixProvider != null ? (proxyTypeNamePrefixProvider(this, this.InterfaceType).AsString() ?? string.Empty).Trim()
                                                              : null;
-            var name = proxyTypeNameProvider != null ? (proxyTypeNameProvider(this.InterfaceType).AsString() ?? string.Empty).Trim()
+            var name = proxyTypeNameProvider != null ? (proxyTypeNameProvider(this, this.InterfaceType).AsString() ?? string.Empty).Trim()
                                                      : null;
-            var suffix = proxyTypeNameSuffixProvider != null ? (proxyTypeNameSuffixProvider(this.InterfaceType).AsString() ?? string.Empty).Trim()
+            var suffix = proxyTypeNameSuffixProvider != null ? (proxyTypeNameSuffixProvider(this, this.InterfaceType).AsString() ?? string.Empty).Trim()
                                                              : null;
 
             var baseType = typeof(object);
