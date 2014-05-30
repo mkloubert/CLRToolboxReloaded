@@ -2,8 +2,10 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using NUnit.Framework;
-using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MarcelJoachimKloubert.CLRToolbox._Tests
 {
@@ -68,6 +70,24 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
                     Assert.IsTrue(v4 >= -1 && v4 < 1);
                 }
             }
+        }
+
+        [Test]
+        public void ShuffleList()
+        {
+            var r = new CryptoRandom();
+
+            var list1 = new byte[5979 + 23979];
+            r.NextBytes(list1);
+
+            var list2 = new List<byte>(list1);
+            list2.Shuffle(r);
+
+            var list1Sorted = list1.OrderBy(b => b);
+            var list2Sorted = list2.OrderBy(b => b);
+            
+            Assert.IsFalse(list1.SequenceEqual(list2));
+            Assert.IsTrue(list1Sorted.SequenceEqual(list2Sorted));
         }
 
         #endregion Methods (2)

@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Tests\Collections\StackTests.cs">
+      <Link>Collections\StackTests.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Tests\ComponentModel\Notification.cs">
       <Link>ComponentModel\Notification.cs</Link>
     </Compile>

@@ -291,6 +291,18 @@
       <Link>Extensions\Collections.ForEach.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.PeekOrDefault.cs">
+      <Link>Extensions\Collections.PeekOrDefault.cs</Link>
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.PushRange.cs">
+      <Link>Extensions\Collections.PushRange.cs</Link>
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.Shuffle.cs">
+      <Link>Extensions\Collections.Shuffle.cs</Link>
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Serialization.cs">
       <Link>Extensions\Serialization.cs</Link>
     </Compile>
