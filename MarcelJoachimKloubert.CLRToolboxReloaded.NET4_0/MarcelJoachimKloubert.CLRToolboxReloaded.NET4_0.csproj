@@ -210,6 +210,10 @@
     <Compile Include="Serialization\Json\JsonParamResult.cs" />
     <Compile Include="Serialization\Json\JsonResult.cs" />
     <Compile Include="Serialization\SerializerBase.cs" />
+    <Compile Include="ServiceLocation\IServiceLocator.cs" />
+    <Compile Include="ServiceLocation\ServiceActivationException.cs" />
+    <Compile Include="ServiceLocation\ServiceLocator.cs" />
+    <Compile Include="ServiceLocation\ServiceLocatorBase.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyDictionary.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyList.cs" />

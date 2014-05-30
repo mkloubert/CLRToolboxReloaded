@@ -384,6 +384,18 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\serialization\SerializerBase.cs">
       <Link>Serialization\SerializerBase.cs</Link>
     </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\servicelocation\IServiceLocator.cs">
+      <Link>ServiceLocation\IServiceLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\servicelocation\ServiceActivationException.cs">
+      <Link>ServiceLocation\ServiceActivationException.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\servicelocation\ServiceLocator.cs">
+      <Link>ServiceLocation\ServiceLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\servicelocation\ServiceLocatorBase.cs">
+      <Link>ServiceLocation\ServiceLocatorBase.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0\__Compatibility\System\IO\ErrorEventArgs.cs">
       <Link>__Compatiblity\System\IO\ErrorEventArgs.cs</Link>
     </Compile>

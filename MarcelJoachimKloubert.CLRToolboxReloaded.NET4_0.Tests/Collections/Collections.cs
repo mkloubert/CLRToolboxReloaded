@@ -33,9 +33,9 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Collections
         public void NullIndexDictionary_NullIndex()
         {
             var dict1 = new NullIndexDictionary<long>();
-            dict1[null] = 5979;
-            dict1[null] = 5980;
-            dict1[null] = 5981;
+            dict1[null] = 5979;    // append with index/key 0
+            dict1[null] = 5980;    // append with index/key 1
+            dict1[null] = 5981;    // append with index/key 2
 
             Assert.IsTrue(dict1.Keys
                                .SequenceEqual(Enumerable.Range(0, 3)));
