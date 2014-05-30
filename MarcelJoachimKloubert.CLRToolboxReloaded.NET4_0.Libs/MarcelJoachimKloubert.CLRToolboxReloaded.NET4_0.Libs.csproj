@@ -22,7 +22,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\MarcelJoachimKloubert.CLRToolboxReloaded.Libs.XML</DocumentationFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <NoWarn>1574 3021 1591 1699 1616 1587 1573 3001 1572 1734 618 1570 3002 3003</NoWarn>
+    <NoWarn>3005 3009 1574 3021 1591 1699 1616 1587 1573 3001 1572 1734 618 1570 3002 3003</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,6 +41,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -50,6 +51,69 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FreeImage\Classes\FreeImageBitmap.cs" />
+    <Compile Include="FreeImage\Classes\FreeImageEngine.cs" />
+    <Compile Include="FreeImage\Classes\FreeImagePlugin.cs" />
+    <Compile Include="FreeImage\Classes\FreeImageStreamIO.cs" />
+    <Compile Include="FreeImage\Classes\GifInformation.cs" />
+    <Compile Include="FreeImage\Classes\ImageMetadata.cs" />
+    <Compile Include="FreeImage\Classes\LocalPlugin.cs" />
+    <Compile Include="FreeImage\Classes\MemoryArray.cs" />
+    <Compile Include="FreeImage\Classes\MetadataModel.cs" />
+    <Compile Include="FreeImage\Classes\MetadataModels.cs" />
+    <Compile Include="FreeImage\Classes\MetadataTag.cs" />
+    <Compile Include="FreeImage\Classes\Palette.cs" />
+    <Compile Include="FreeImage\Classes\PluginRepository.cs" />
+    <Compile Include="FreeImage\Classes\Scanline.cs" />
+    <Compile Include="FreeImage\Classes\StreamWrapper.cs" />
+    <Compile Include="FreeImage\Delegates.cs" />
+    <Compile Include="FreeImage\Enumerations\DisposalMethodType.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_COLOR_CHANNEL.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_COLOR_DEPTH.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_COLOR_OPTIONS.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_COLOR_TYPE.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_COMPARE_FLAGS.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_DITHER.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_FILTER.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_FORMAT.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_JPEG_OPERATION.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_LOAD_FLAGS.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_MDMODEL.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_MDTYPE.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_METADATA_COPY.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_QUANTIZE.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_SAVE_FLAGS.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_TMO.cs" />
+    <Compile Include="FreeImage\Enumerations\FREE_IMAGE_TYPE.cs" />
+    <Compile Include="FreeImage\Enumerations\ICC_FLAGS.cs" />
+    <Compile Include="FreeImage\Enumerations\MD_SEARCH_FLAGS.cs" />
+    <Compile Include="FreeImage\FreeImageStaticImports.cs" />
+    <Compile Include="FreeImage\FreeImageWrapper.cs" />
+    <Compile Include="FreeImage\Structs\BITMAP.cs" />
+    <Compile Include="FreeImage\Structs\BITMAPINFO.cs" />
+    <Compile Include="FreeImage\Structs\BITMAPINFOHEADER.cs" />
+    <Compile Include="FreeImage\Structs\FI16RGB555.cs" />
+    <Compile Include="FreeImage\Structs\FI16RGB565.cs" />
+    <Compile Include="FreeImage\Structs\FI1BIT.cs" />
+    <Compile Include="FreeImage\Structs\FI4BIT.cs" />
+    <Compile Include="FreeImage\Structs\FIBITMAP.cs" />
+    <Compile Include="FreeImage\Structs\FICOMPLEX.cs" />
+    <Compile Include="FreeImage\Structs\FIICCPROFILE.cs" />
+    <Compile Include="FreeImage\Structs\FIMEMORY.cs" />
+    <Compile Include="FreeImage\Structs\FIMETADATA.cs" />
+    <Compile Include="FreeImage\Structs\FIMULTIBITMAP.cs" />
+    <Compile Include="FreeImage\Structs\FIRational.cs" />
+    <Compile Include="FreeImage\Structs\FIRGB16.cs" />
+    <Compile Include="FreeImage\Structs\FIRGBA16.cs" />
+    <Compile Include="FreeImage\Structs\FIRGBAF.cs" />
+    <Compile Include="FreeImage\Structs\FIRGBF.cs" />
+    <Compile Include="FreeImage\Structs\FITAG.cs" />
+    <Compile Include="FreeImage\Structs\FIURational.cs" />
+    <Compile Include="FreeImage\Structs\fi_handle.cs" />
+    <Compile Include="FreeImage\Structs\FreeImageIO.cs" />
+    <Compile Include="FreeImage\Structs\Plugin.cs" />
+    <Compile Include="FreeImage\Structs\RGBQUAD.cs" />
+    <Compile Include="FreeImage\Structs\RGBTRIPLE.cs" />
     <Compile Include="Json.NET\Bson\BsonBinaryType.cs" />
     <Compile Include="Json.NET\Bson\BsonBinaryWriter.cs" />
     <Compile Include="Json.NET\Bson\BsonObjectId.cs" />
@@ -381,6 +445,7 @@
     <Compile Include="Jurassic\Library\RegExp\RegExpInstance.cs" />
     <Compile Include="Jurassic\Library\String\StringConstructor.cs" />
     <Compile Include="Jurassic\Library\String\StringInstance.cs" />
+    <Compile Include="MarkdownSharp\Markdown.cs" />
     <Compile Include="NUnit\Framework\ActionTargets.cs" />
     <Compile Include="NUnit\Framework\AssemblyInfo.cs" />
     <Compile Include="NUnit\Framework\Assert.cs" />
@@ -620,6 +685,10 @@
     <EmbeddedResource Include="NUnit\license.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FreeImage\Dist\3.1.6.0\x86\FreeImage.dll" />
+    <EmbeddedResource Include="FreeImage\license-fi.txt" />
+    <EmbeddedResource Include="FreeImage\license-gplv2.txt" />
+    <EmbeddedResource Include="FreeImage\license-gplv3.txt" />
     <Content Include="Jurassic\Compiler\Emit\Optimizations.txt" />
     <EmbeddedResource Include="SharpZipLib\COPYING.txt" />
     <EmbeddedResource Include="Jurassic\License.txt" />
