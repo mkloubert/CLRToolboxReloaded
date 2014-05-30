@@ -56,6 +56,7 @@
     <Compile Include="Collections\Generic\ForEachItemContext.cs" />
     <Compile Include="Collections\Generic\IForAllItemContext.cs" />
     <Compile Include="Collections\Generic\IForEachItemContext.cs" />
+    <Compile Include="Collections\Generic\NullIndexDictionary.cs" />
     <Compile Include="Collections\Generic\ReadOnlyCollectionWrapper.cs" />
     <Compile Include="Collections\Generic\ReadOnlyDictionaryWrapper.cs" />
     <Compile Include="Collections\Generic\ReadOnlyListWrapper.cs" />
@@ -128,6 +129,9 @@
     <Compile Include="Execution\Workflows\WorkflowExecutionContext.cs" />
     <Compile Include="Execution\Workflows\WorkflowStartAttribute.cs" />
     <Compile Include="Extensions\ClrToolboxExtensionMethods.cs" />
+    <Compile Include="Extensions\Collections.AddRange.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Collections.AsArray.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
@@ -154,6 +158,9 @@
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Collections.Shuffle.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Collections.Transform.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Serialization.cs" />

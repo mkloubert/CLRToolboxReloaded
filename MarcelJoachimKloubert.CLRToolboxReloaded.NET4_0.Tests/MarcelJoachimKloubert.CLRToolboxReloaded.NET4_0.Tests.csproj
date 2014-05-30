@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Collections.cs" />
+    <Compile Include="Collections\Lists.cs" />
     <Compile Include="Collections\StackTests.cs" />
     <Compile Include="ComponentModel\Notification.cs" />
     <Compile Include="Data\Conversion.cs" />

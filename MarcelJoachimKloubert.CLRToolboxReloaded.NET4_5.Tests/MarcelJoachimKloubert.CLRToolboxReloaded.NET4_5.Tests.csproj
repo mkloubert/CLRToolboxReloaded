@@ -41,6 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Tests\Collections\Collections.cs">
+      <Link>Collections\Collections.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Tests\Collections\Lists.cs">
+      <Link>Collections\Lists.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Tests\Collections\StackTests.cs">
       <Link>Collections\StackTests.cs</Link>
     </Compile>

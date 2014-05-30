@@ -22,6 +22,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// <returns>
         /// Operation was canceled (<see langword="true" />) or completely done (<see langword="true" />).
         /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="seq" /> and/or <paramref name="action" /> are <see langword="null" />.
+        /// </exception>
         public static bool ForEach<T>(this IEnumerable<T> seq,
                                       Action<IForEachItemContext<T>> action)
         {
@@ -51,6 +54,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// <returns>
         /// Operation was canceled (<see langword="true" />) or completely done (<see langword="true" />).
         /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="seq" /> and/or <paramref name="action" /> are <see langword="null" />.
+        /// </exception>
         public static bool ForEach<T, TState>(this IEnumerable<T> seq,
                                               Action<IForEachItemContext<T, TState>> action,
                                               TState actionState)
@@ -76,6 +82,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// <returns>
         /// Operation was canceled (<see langword="true" />) or completely done (<see langword="true" />).
         /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="seq" />, <paramref name="action" /> and/or <paramref name="actionStateProvider" /> are <see langword="null" />.
+        /// </exception>
         public static bool ForEach<T, TState>(this IEnumerable<T> seq,
                                               Action<IForEachItemContext<T, TState>> action,
                                               Func<T, long, TState> actionStateProvider)
