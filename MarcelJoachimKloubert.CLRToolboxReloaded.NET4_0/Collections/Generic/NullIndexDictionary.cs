@@ -60,7 +60,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         #endregion Constructors (2)
 
-        #region Methods (30)
+        #region Methods (31)
 
         /// <summary>
         /// Adds an items add the end of the list.
@@ -359,6 +359,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
             this.Remove(key: index);
         }
 
+        private void ThrowIfOutOfRange(int index)
+        {
+            if ((index < 0) || (index >= this.Count))
+            {
+                throw new ArgumentOutOfRangeException("index");
+            }
+        }
+
         /// <summary>
         /// Converts a <see cref="NullIndexDictionary{TValue}" /> to a well known
         /// <see cref="Dictionary{TKey, TValue}" /> object.
@@ -542,14 +550,27 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         TValue IList<TValue>.this[int index]
         {
-            get { return this._INNER_DICT[index]; }
+            get
+            {
+                this.ThrowIfOutOfRange(index);
 
-            set { this._INNER_DICT[index] = value; }
+                TValue result;
+                this._INNER_DICT.TryGetValue(key: index, value: out result);
+
+                return result;
+            }
+
+            set
+            {
+                this.ThrowIfOutOfRange(index);
+
+                this._INNER_DICT[index] = value;
+            }
         }
 
         TValue IReadOnlyList<TValue>.this[int index]
         {
-            get { return this._INNER_DICT[index]; }
+            get { return ((IList<TValue>)this)[index]; }
         }
 
         /// <inheriteddoc />
