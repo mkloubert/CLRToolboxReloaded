@@ -14,7 +14,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Collections
     [TestFixture]
     public class Collections
     {
-        #region Methods (2)
+        #region Methods (3)
 
         [Test]
         public void AddRange()
@@ -30,7 +30,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Collections
         }
 
         [Test]
-        public void NullIndexDictionaryTest()
+        public void NullIndexDictionary_NullIndex()
         {
             var dict1 = new NullIndexDictionary<long>();
             dict1[null] = 5979;
@@ -44,6 +44,34 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Collections
                                                         .Select(v => (long)v)));
         }
 
-        #endregion Methods (2)
+        [Test]
+        public void NullIndexDictionary_AddRange()
+        {
+            var dict1 = new NullIndexDictionary<long>();
+            dict1.AddRange(new long[] { 23979, 23980, 23981 });
+
+            Assert.IsTrue(dict1.Keys
+                               .SequenceEqual(Enumerable.Range(0, 3)));
+            Assert.IsTrue(dict1.Values
+                               .SequenceEqual(Enumerable.Range(23979, 3)
+                                                        .Select(v => (long)v)));
+        }
+
+        [Test]
+        public void NullIndexDictionary_AddRangeExtension()
+        {
+            var dict1 = new NullIndexDictionary<long>();
+
+            IList<long> dict2 = dict1;
+            dict2.AddRange(new long[] { 23979, 23980, 23981 });
+
+            Assert.IsTrue(dict1.Keys
+                               .SequenceEqual(Enumerable.Range(0, 3)));
+            Assert.IsTrue(dict1.Values
+                               .SequenceEqual(Enumerable.Range(23979, 3)
+                                                        .Select(v => (long)v)));
+        }
+
+        #endregion Methods (3)
     }
 }

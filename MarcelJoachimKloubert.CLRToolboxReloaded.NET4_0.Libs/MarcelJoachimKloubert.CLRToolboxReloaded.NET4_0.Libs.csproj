@@ -685,10 +685,10 @@
     <EmbeddedResource Include="NUnit\license.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FreeImage\Dist\3.1.6.0\x86\FreeImage.dll" />
     <EmbeddedResource Include="FreeImage\license-fi.txt" />
     <EmbeddedResource Include="FreeImage\license-gplv2.txt" />
     <EmbeddedResource Include="FreeImage\license-gplv3.txt" />
+    <None Include="FreeImage\Dist\3.1.6.0\x86\FreeImage.dll" />
     <Content Include="Jurassic\Compiler\Emit\Optimizations.txt" />
     <EmbeddedResource Include="SharpZipLib\COPYING.txt" />
     <EmbeddedResource Include="Jurassic\License.txt" />

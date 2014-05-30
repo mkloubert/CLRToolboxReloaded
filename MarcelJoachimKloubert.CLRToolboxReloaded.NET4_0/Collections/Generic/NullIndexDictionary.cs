@@ -2,6 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,11 +19,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
     /// <typeparam name="TValue">Type of the values.</typeparam>
     public class NullIndexDictionary<TValue> : IDictionary<int?, TValue>,
                                                IReadOnlyDictionary<int?, TValue>,
-                                               IEnumerable<KeyValuePair<int, TValue>>
+                                               IEnumerable<KeyValuePair<int, TValue>>,
+                                               IList<TValue>, IReadOnlyList<TValue>
     {
         #region Fields (1)
 
-        private readonly IDictionary<int, TValue> _INNER_DICT;
+        /// <summary>
+        /// Stores the inner dictionary.
+        /// </summary>
+        protected readonly IDictionary<int, TValue> _INNER_DICT;
 
         #endregion Fields (1)
 
@@ -55,10 +60,26 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         #endregion Constructors (2)
 
-        #region Methods (15)
+        #region Methods (30)
+
+        /// <summary>
+        /// Adds an items add the end of the list.
+        /// </summary>
+        /// <param name="value">The value to add.</param>
+        /// <returns>The new index.</returns>
+        public int Add(TValue value)
+        {
+            return this.Add(key: null,
+                            value: value);
+        }
+
+        void ICollection<TValue>.Add(TValue item)
+        {
+            this.Add(value: item);
+        }
 
         /// <inheriteddoc />
-        public void Add(int? key, TValue value)
+        public int Add(int? key, TValue value)
         {
             if (key.HasValue == false)
             {
@@ -67,6 +88,31 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
             this._INNER_DICT
                 .Add(key: key.Value,
+                     value: value);
+
+            return key.Value;
+        }
+
+        /// <summary>
+        /// Adds/appends a list of items.
+        /// </summary>
+        /// <param name="seq">The itrms to add.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="seq" /> is <see langword="null" />.
+        /// </exception>
+        public void AddRange(IEnumerable<TValue> seq)
+        {
+            seq.ForEach(action: ctx => ctx.State
+                                          .Dictionary.Add(ctx.Item),
+                        actionState: new
+                        {
+                            Dictionary = this,
+                        });
+        }
+
+        void IDictionary<int?, TValue>.Add(int? key, TValue value)
+        {
+            this.Add(key: key,
                      value: value);
         }
 
@@ -79,12 +125,28 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// <inheriteddoc />
         public void Clear()
         {
-            this._INNER_DICT.Clear();
+            this._INNER_DICT
+                .Clear();
+        }
+
+        /// <inheriteddoc />
+        public bool Contains(TValue item)
+        {
+            return this._INNER_DICT
+                       .Values
+                       .Contains(item);
         }
 
         bool ICollection<KeyValuePair<int?, TValue>>.Contains(KeyValuePair<int?, TValue> item)
         {
-            return this.ContainsKey(item.Key);
+            TValue value;
+            if (this.TryGetValue(item.Key, out value))
+            {
+                // found => now check if equal
+                return object.Equals(item.Value, value);
+            }
+
+            return false;
         }
 
         /// <inheriteddoc />
@@ -106,6 +168,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                              arrayIndex: arrayIndex,
                              arrayValueProvider: (i, v) => new KeyValuePair<int, TValue>(key: i,
                                                                                          value: v));
+        }
+
+        /// <inheriteddoc />
+        public void CopyTo(TValue[] array, int arrayIndex)
+        {
+            this.Values
+                .CopyTo(array, arrayIndex);
         }
 
         void ICollection<KeyValuePair<int?, TValue>>.CopyTo(KeyValuePair<int?, TValue>[] array, int arrayIndex)
@@ -157,31 +226,218 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                        .GetEnumerator();
         }
 
+        IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator()
+        {
+            return this.Values
+                       .GetEnumerator();
+        }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }
 
         /// <inheriteddoc />
-        public bool Remove(int? key)
+        public int IndexOf(TValue item)
+        {
+            var result = -1;
+            this._INNER_DICT
+                .ForEach(ctx =>
+                {
+                    if (object.Equals(ctx.Item.Value,  // current item
+                                      ctx.State.Item))  // item from method parameter
+                    {
+                        result = ctx.Item.Key;
+                        ctx.Cancel = true;
+                    }
+                }, actionState: new
+                {
+                    Item = item,
+                });
+
+            return result;
+        }
+
+        /// <inheriteddoc />
+        public void Insert(int index, TValue item)
+        {
+            // move other items "down"
+            this.Keys
+                .OrderByDescending(k => k)
+                .ForEach(ctx =>
+                {
+                    var dict = ctx.State.Dictionary;
+                    var key = ctx.Item;
+
+                    dict[key + 1] = dict[key];
+                }, actionState: new
+                {
+                    Dictionary = this,
+                    Item = item,
+                });
+
+            // set insrted item
+            this._INNER_DICT[index] = item;
+        }
+
+        /// <summary>
+        /// Removes the last item.
+        /// </summary>
+        /// <returns>The key that was removed.</returns>
+        public int? Remove()
+        {
+            return this.Remove(key: null);
+        }
+
+        /// <inheriteddoc />
+        public int? Remove(int? key)
         {
             if (key.HasValue == false)
             {
                 key = this.TryGetLastIndex();
             }
 
-            if (key.HasValue == false)
+            if (key.HasValue)
             {
-                return false;
+                if (this._INNER_DICT.Remove(key.Value))
+                {
+                    return key.Value;
+                }
             }
 
-            return this._INNER_DICT
-                       .Remove(key.Value);
+            return null;
+        }
+
+        bool IDictionary<int?, TValue>.Remove(int? key)
+        {
+            return this.Remove(key: key)
+                       .HasValue;
         }
 
         bool ICollection<KeyValuePair<int?, TValue>>.Remove(KeyValuePair<int?, TValue> item)
         {
-            return this.Remove(key: item.Key);
+            TValue value;
+            if (this.TryGetValue(item.Key, out value))
+            {
+                if (object.Equals(item.Value, value))
+                {
+                    // found => now check if equal
+                    return this.Remove(key: item.Key)
+                               .HasValue;
+                }
+            }
+
+            return false;
+        }
+
+        bool ICollection<TValue>.Remove(TValue item)
+        {
+            using (var e = this.Keys.GetEnumerator())
+            {
+                while (e.MoveNext())
+                {
+                    var key = e.Current;
+                    var value = this[key];
+
+                    if (object.Equals(value, item))
+                    {
+                        return this.Remove(key)
+                                   .HasValue;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <inheriteddoc />
+        public void RemoveAt(int index)
+        {
+            this.Remove(key: index);
+        }
+
+        /// <summary>
+        /// Converts a <see cref="NullIndexDictionary{TValue}" /> to a well known
+        /// <see cref="Dictionary{TKey, TValue}" /> object.
+        /// </summary>
+        /// <param name="dict">The input value.</param>
+        /// <returns>The output value.</returns>
+        protected internal static Dictionary<int, TValue> ToDictionary(NullIndexDictionary<TValue> dict)
+        {
+            Dictionary<int, TValue> result = null;
+
+            if (dict != null)
+            {
+                result = dict._INNER_DICT as Dictionary<int, TValue>;
+                if (result == null)
+                {
+                    result = new Dictionary<int, TValue>(dict._INNER_DICT);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts a <see cref="NullIndexDictionary{TValue}" /> to a well known
+        /// <see cref="List{T}" /> object.
+        /// </summary>
+        /// <param name="dict">The input value.</param>
+        /// <returns>The output value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The smallest key of <paramref name="dict" /> is less than 0.
+        /// </exception>
+        /// <remarks>
+        /// All breaks in the index list of <paramref name="dict" /> are filled wirh default values.
+        /// </remarks>
+        protected internal static List<TValue> ToList(NullIndexDictionary<TValue> dict)
+        {
+            List<TValue> result = null;
+
+            if (dict != null)
+            {
+                result = new List<TValue>();
+                if (dict.Count > 0)
+                {
+                    var minIndex = dict.Keys.Min();
+                    if (minIndex < 0)
+                    {
+                        throw new ArgumentOutOfRangeException("dict");
+                    }
+
+                    // fill with default values before 'minIndex'
+                    // starts
+                    Enumerable.Range(0, minIndex)
+                              .ForEach(ctx =>
+                              {
+                                  ctx.State
+                                     .List.Add(ctx.State.DefaultValue);
+                              }, actionState: new
+                              {
+                                  DefaultValue = default(TValue),
+                                  List = result,
+                              });
+
+                    var maxIndex = dict.Keys.Max();
+
+                    Enumerable.Range(minIndex, maxIndex - minIndex + 1)
+                              .ForEach(ctx =>
+                              {
+                                  var d = ctx.State.Dictionary;
+                                  var k = ctx.Item;
+
+                                  ctx.State
+                                     .List.Add(d.ContainsKey(k) ? d[k] : ctx.State.DefaultValue);
+                              }, actionState: new
+                              {
+                                  DefaultValue = default(TValue),
+                                  Dictionary = dict,
+                                  List = result,
+                              });
+                }
+            }
+
+            return result;
         }
 
         private int? TryGetLastIndex()
@@ -212,9 +468,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                                     value: out value);
         }
 
-        #endregion Methods (15)
+        #endregion Methods (30)
 
-        #region Properties (8)
+        #region Properties (9)
 
         /// <inheriteddoc />
         public int Count
@@ -270,10 +526,22 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                 }
                 else
                 {
-                    this.Add(key: key,
-                             value: value);
+                    // append item
+                    this.Add(value: value);
                 }
             }
+        }
+
+        TValue IList<TValue>.this[int index]
+        {
+            get { return this[index]; }
+
+            set { this[index] = value; }
+        }
+
+        TValue IReadOnlyList<TValue>.this[int index]
+        {
+            get { return this[index]; }
         }
 
         /// <inheriteddoc />
@@ -287,7 +555,39 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
             get { return this.Values; }
         }
 
-        #endregion Properties (8)
+        #endregion Properties (9)
+
+        #region Operators (2)
+
+        /// <summary>
+        /// Converts a <see cref="NullIndexDictionary{TValue}" /> to a well known
+        /// <see cref="Dictionary{TKey, TValue}" /> object.
+        /// </summary>
+        /// <param name="dict">The input value.</param>
+        /// <returns>The output value.</returns>
+        public static implicit operator Dictionary<int, TValue>(NullIndexDictionary<TValue> dict)
+        {
+            return ToDictionary(dict);
+        }
+
+        /// <summary>
+        /// Converts a <see cref="NullIndexDictionary{TValue}" /> to a well known
+        /// <see cref="List{T}" /> object.
+        /// </summary>
+        /// <param name="dict">The input value.</param>
+        /// <returns>The output value.</returns>
+        /// <remarks>
+        /// All breaks in the index list of <paramref name="dict" /> are filled wirh default values.
+        /// </remarks>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The smallest key of <paramref name="dict" /> is less than 0.
+        /// </exception>
+        public static explicit operator List<TValue>(NullIndexDictionary<TValue> dict)
+        {
+            return ToList(dict);
+        }
+
+        #endregion Operators (2)
     }
 
     #endregion CLASS: NullIndexDictionary<TValue>
@@ -314,6 +614,38 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         }
 
         #endregion Constructors (2)
+
+        #region Operators (2)
+
+        /// <summary>
+        /// Converts a <see cref="NullIndexDictionary" /> to a well known
+        /// <see cref="Dictionary{TKey, TValue}" /> object.
+        /// </summary>
+        /// <param name="dict">The input value.</param>
+        /// <returns>The output value.</returns>
+        public static implicit operator Dictionary<int, object>(NullIndexDictionary dict)
+        {
+            return ToDictionary(dict);
+        }
+
+        /// <summary>
+        /// Converts a <see cref="NullIndexDictionary{TValue}" /> to a well known
+        /// <see cref="List{T}" /> object.
+        /// </summary>
+        /// <param name="dict">The input value.</param>
+        /// <returns>The output value.</returns>
+        /// <remarks>
+        /// All breaks in the index list of <paramref name="dict" /> are filled wirh default values.
+        /// </remarks>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The smallest key of <paramref name="dict" /> is less than 0.
+        /// </exception>
+        public static explicit operator List<object>(NullIndexDictionary dict)
+        {
+            return ToList(dict);
+        }
+
+        #endregion Operators (2)
     }
 
     #endregion CLASS: NullIndexDictionary

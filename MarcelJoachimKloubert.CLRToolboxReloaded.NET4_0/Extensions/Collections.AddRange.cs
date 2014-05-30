@@ -2,6 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.CLRToolbox.Collections.Generic;
 using System;
 using System.Collections.Generic;
 
@@ -29,23 +30,30 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                 throw new ArgumentNullException("items");
             }
 
-            var list = coll as List<T>;
-            if (list != null)
+            if (coll is global::System.Collections.Generic.List<T>)
             {
                 // use build in method
-                list.AddRange(items);
+
+                ((List<T>)coll).AddRange(items);
+                return;
             }
-            else
+
+            if (coll is global::MarcelJoachimKloubert.CLRToolbox.Collections.Generic.NullIndexDictionary<T>)
             {
-                ForEach(items,
-                        action: (ctx) => ctx.State
-                                            .Collection
-                                            .Add(ctx.Item),
-                        actionState: new
-                            {
-                                Collection = coll,
-                            });
+                // use build in method
+
+                ((NullIndexDictionary<T>)coll).AddRange(items);
+                return;
             }
+
+            ForEach(items,
+                    action: (ctx) => ctx.State
+                                        .Collection
+                                        .Add(ctx.Item),
+                    actionState: new
+                        {
+                            Collection = coll,
+                        });
         }
 
         #endregion Methods
