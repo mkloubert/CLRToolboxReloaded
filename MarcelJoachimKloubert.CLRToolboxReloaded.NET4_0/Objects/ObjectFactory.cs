@@ -169,7 +169,19 @@ namespace MarcelJoachimKloubert.CLRToolbox.Objects
 
         #region Methods (5)
 
-        // Public Methods (4) 
+        private Type CreateInterfaceImplementation(Type interfaceType)
+        {
+            var genericPBType = typeof(ProxyBuilder<>);
+            var pbType = genericPBType.MakeGenericType(interfaceType);
+
+            var pb = Activator.CreateInstance(pbType);
+
+            return (Type)pbType.InvokeMember("CreateType",
+                                             BindingFlags.Public | BindingFlags.InvokeMethod | BindingFlags.Instance,
+                                             null,
+                                             pb,
+                                             new object[] { this._MOD_BUILDER });
+        }
 
         /// <summary>
         /// Creates a new proxy object for an interface type.
@@ -252,22 +264,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Objects
             }
 
             return result;
-        }
-
-        // Private Methods (1) 
-
-        private Type CreateInterfaceImplementation(Type interfaceType)
-        {
-            var genericPBType = typeof(ProxyBuilder<>);
-            var pbType = genericPBType.MakeGenericType(interfaceType);
-
-            var pb = Activator.CreateInstance(pbType);
-
-            return (Type)pbType.InvokeMember("CreateType",
-                                             BindingFlags.Public | BindingFlags.InvokeMethod | BindingFlags.Instance,
-                                             null,
-                                             pb,
-                                             new object[] { this.ModuleBuilder });
         }
 
         #endregion Methods

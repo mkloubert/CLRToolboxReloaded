@@ -4,6 +4,7 @@
 
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security;
 
 [assembly: AssemblyTitle("CLR Toolbox Reloaded Embedded Libraries")]
 [assembly: AssemblyDescription("Collection of embedded 3rd party libraries that are used by CLR Toolbox Reloaded (.NET 4.0 and above)")]
@@ -19,3 +20,5 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyVersion("4.0.0.0")]
 [assembly: AssemblyFileVersion("4.0.0.0")]
+
+[assembly: SecurityRules(SecurityRuleSet.Level1)]

@@ -52,6 +52,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\AppTime.cs">
+      <Link>AppTime.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\CharSequence.cs">
       <Link>CharSequence.cs</Link>
     </Compile>
@@ -301,6 +304,9 @@
       <Link>Extensions\Collections.Transform.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Reflection.cs">
+      <Link>Extensions\Reflection.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Serialization.cs">
       <Link>Extensions\Serialization.cs</Link>
     </Compile>
@@ -368,6 +374,18 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ObjectBase.cs">
       <Link>ObjectBase.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\scripting\ExportScriptFuncAttribute.cs">
+      <Link>Scripting\ExportScriptFuncAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\scripting\ExportScriptTypeAttribute.cs">
+      <Link>Scripting\ExportScriptTypeAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\scripting\IScriptExecutionContext.cs">
+      <Link>Scripting\IScriptExecutionContext.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\scripting\IScriptExecutor.cs">
+      <Link>Scripting\IScriptExecutor.cs</Link>
     </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\serialization\CommonSerializer.cs">
       <Link>Serialization\CommonSerializer.cs</Link>

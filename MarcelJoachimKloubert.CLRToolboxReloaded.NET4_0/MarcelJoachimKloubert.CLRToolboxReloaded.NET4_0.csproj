@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppTime.cs" />
     <Compile Include="CharSequence.cs" />
     <Compile Include="Collections\Generic\DelegateEqualityComparer.cs" />
     <Compile Include="Collections\Generic\EqualityComparerFactory.cs" />
@@ -163,6 +164,10 @@
     <Compile Include="Extensions\Collections.Transform.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Reflection.cs" />
+    <Compile Include="Extensions\Reflection.TryGetDelegateTypeFromMethod.cs">
+      <DependentUpon>Reflection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Serialization.cs" />
     <Compile Include="Extensions\Serialization.FromJson.cs">
       <DependentUpon>Serialization.cs</DependentUpon>
@@ -207,6 +212,24 @@
     <Compile Include="Objects\ObjectFactory.cs" />
     <Compile Include="Objects\ProxyBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripting\ExportScriptFuncAttribute.cs" />
+    <Compile Include="Scripting\ExportScriptTypeAttribute.cs" />
+    <Compile Include="Scripting\IScriptExecutionContext.cs" />
+    <Compile Include="Scripting\IScriptExecutor.cs" />
+    <Compile Include="Scripting\JurassicScriptExecutor.cs" />
+    <Compile Include="Scripting\ScriptExecutorBase.Collections.cs">
+      <DependentUpon>ScriptExecutorBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripting\ScriptExecutorBase.cs" />
+    <Compile Include="Scripting\ScriptExecutorBase.Interface.cs">
+      <DependentUpon>ScriptExecutorBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripting\ScriptExecutorBase.OnExecuteContext.cs">
+      <DependentUpon>ScriptExecutorBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripting\ScriptExecutorBase.ScriptExecutionContext.cs">
+      <DependentUpon>ScriptExecutorBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Serialization\CommonSerializer.cs" />
     <Compile Include="Serialization\ISerializer.cs" />
     <Compile Include="Serialization\Json\JsonParamResult.cs" />

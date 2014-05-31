@@ -4,6 +4,7 @@
 
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security;
 
 [assembly: AssemblyTitle("CLR Toolbox Reloaded Tests")]
 [assembly: AssemblyDescription("Unit tests for CLR Toolbox Reloaded (.NET 4.5 and above)")]
@@ -19,3 +20,5 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyVersion("4.5.0.0")]
 [assembly: AssemblyFileVersion("4.5.0.0")]
+
+[assembly: SecurityRules(SecurityRuleSet.Level1)]

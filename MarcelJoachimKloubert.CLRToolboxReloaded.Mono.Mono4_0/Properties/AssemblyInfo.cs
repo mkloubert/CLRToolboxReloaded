@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security;
 
 [assembly: AssemblyTitle("CLR Toolbox Reloaded")]
 [assembly: AssemblyDescription("Class library for CLR based environments (Mono Profile 4.0 and above)")]
@@ -15,3 +16,5 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyVersion("4.0.0.0")]
 [assembly: AssemblyFileVersion("4.0.0.0")]
+
+[assembly: SecurityRules(SecurityRuleSet.Level1)]
