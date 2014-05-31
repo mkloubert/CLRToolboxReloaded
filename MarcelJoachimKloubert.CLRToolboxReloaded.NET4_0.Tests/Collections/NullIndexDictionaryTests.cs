@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using MarcelJoachimKloubert.CLRToolbox.Extensions;
 
 namespace MarcelJoachimKloubert.CLRToolbox._Tests.Collections
 {
@@ -55,16 +56,16 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Collections
 
             // check keys
 
-            var test = dict.Cast<KeyValuePair<int, int>>()
+            var test = dict.SelectEntries()
                            .Select(i => i.Key).ToArray();
 
-            Assert.IsTrue(dict.Cast<KeyValuePair<int, int>>()
+            Assert.IsTrue(dict.SelectEntries()
                               .Select(i => i.Key)
                               .Cast<int?>()
                               .SequenceEqual(Enumerable.Range(0, 5).Cast<int?>()));
 
             // check values
-            Assert.IsTrue(dict.Cast<KeyValuePair<int, int>>()
+            Assert.IsTrue(dict.SelectEntries()
                               .Select(i => i.Value)
                               .Cast<int>()
                               .SequenceEqual(new int[] { 1, 3, 2, 0, 666 }));
@@ -73,7 +74,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Collections
             {
                 dict.Remove((long)1);
 
-                Assert.IsTrue(dict.Cast<KeyValuePair<int, int>>()
+                Assert.IsTrue(dict.SelectEntries()
                                   .Select(i => i.Value)
                                   .Cast<int>()
                                   .Reverse()
@@ -98,13 +99,13 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Collections
                     Assert.DoesNotThrow(() => dict[7] = 668);
 
                     // check keys
-                    Assert.IsTrue(dict.Cast<KeyValuePair<int, int>>()
+                    Assert.IsTrue(dict.SelectEntries()
                                       .Select(e => e.Key)
                                       .Cast<int?>()
                                       .SequenceEqual(Enumerable.Range(0, 8).Cast<int?>()));
 
                     // check values
-                    Assert.IsTrue(dict.Cast<KeyValuePair<int, int>>()
+                    Assert.IsTrue(dict.SelectEntries()
                                       .Select(e => e.Value)
                                       .Reverse()
                                       .Cast<int>()

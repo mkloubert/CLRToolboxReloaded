@@ -304,6 +304,10 @@
       <Link>Extensions\Collections.PushRange.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.SelectEntries.cs">
+      <Link>Extensions\Collections.SelectEntries.cs</Link>
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.Shuffle.cs">
       <Link>Extensions\Collections.Shuffle.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
@@ -343,6 +347,10 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ValuesAndObjects.cs">
       <Link>Extensions\ValuesAndObjects.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ValuesAndObjects.DisposeEx.cs">
+      <Link>Extensions\ValuesAndObjects.DisposeEx.cs</Link>
+      <DependentUpon>ValuesAndObjects.cs</DependentUpon>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ValuesAndObjects.IsFalse.cs">
       <Link>Extensions\ValuesAndObjects.IsFalse.cs</Link>

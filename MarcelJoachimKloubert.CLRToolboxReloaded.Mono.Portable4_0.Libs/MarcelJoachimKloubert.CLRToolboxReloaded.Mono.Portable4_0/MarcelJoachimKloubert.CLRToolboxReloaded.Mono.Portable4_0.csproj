@@ -381,6 +381,12 @@
     <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\NullIndexDictionary.Interface.cs">
       <Link>Collections\Generic\NullIndexDictionary.Interface.cs</Link>
     </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.SelectEntries.cs">
+      <Link>Extensions\Collections.SelectEntries.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ValuesAndObjects.DisposeEx.cs">
+      <Link>Extensions\ValuesAndObjects.DisposeEx.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
