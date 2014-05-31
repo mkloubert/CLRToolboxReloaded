@@ -12,47 +12,19 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
     /// </summary>
     public interface IScriptExecutor : IDisposableObject
     {
-        #region Operations (9)
+        #region Operations (5)
 
         /// <summary>
         /// Executes a script.
         /// </summary>
         /// <param name="src">The source code of the script.</param>
-        /// <returns>The execution context.</returns>
-        /// <exception cref="ObjectDisposedException">Object has already been disposed.</exception>
-        /// <remarks>Script is automatically started and is NOT set to debug mode.</remarks>
-        IScriptExecutionContext Execute(IEnumerable<char> src);
-
-        /// <summary>
-        /// Executes a script.
-        /// </summary>
-        /// <param name="src">The source code of the script.</param>
-        /// <param name="autoStart">Start script execution automatically or not.</param>
-        /// <returns>The execution context.</returns>
-        /// <exception cref="ObjectDisposedException">Object has already been disposed.</exception>
-        /// <remarks>Script is NOT set to debug mode.</remarks>
-        IScriptExecutionContext Execute(IEnumerable<char> src,
-                                        bool autoStart);
-
-        /// <summary>
-        /// Executes a script.
-        /// </summary>
-        /// <param name="src">The source code of the script.</param>
-        /// <param name="autoStart">Start script execution automatically or not.</param>
-        /// <param name="debug">Enbale debug mode.</param>
+        /// <param name="autoStart">Automatically start script execution or not.</param>
+        /// <param name="debug">Run in debug mode or not.</param>
         /// <returns>The execution context.</returns>
         /// <exception cref="ObjectDisposedException">Object has already been disposed.</exception>
         IScriptExecutionContext Execute(IEnumerable<char> src,
-                                        bool autoStart,
-                                        bool debug);
-
-        /// <summary>
-        /// Exposes a type.
-        /// </summary>
-        /// <typeparam name="T">Type to expose.</typeparam>
-        /// <returns>That instance.</returns>
-        /// <exception cref="ObjectDisposedException">Object has already been disposed.</exception>
-        IScriptExecutor ExposeType<T>();
+                                        bool autoStart = true,
+                                        bool debug = false);
 
         /// <summary>
         /// Exposes a type.
@@ -61,16 +33,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
         /// <param name="alias">The name of the type to use in the script.</param>
         /// <returns>That instance.</returns>
         /// <exception cref="ObjectDisposedException">Object has already been disposed.</exception>
-        IScriptExecutor ExposeType<T>(IEnumerable<char> alias);
-
-        /// <summary>
-        /// Exposes a type.
-        /// </summary>
-        /// <param name="type">Type to expose.</param>
-        /// <returns>That instance.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="type" /> is <see langword="null" />.</exception>
-        /// <exception cref="ObjectDisposedException">Object has already been disposed.</exception>
-        IScriptExecutor ExposeType(Type type);
+        IScriptExecutor ExposeType<T>(IEnumerable<char> alias = null);
 
         /// <summary>
         /// Exposes a type.
@@ -80,7 +43,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
         /// <returns>That instance.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="type" /> is <see langword="null" />.</exception>
         /// <exception cref="ObjectDisposedException">Object has already been disposed.</exception>
-        IScriptExecutor ExposeType(Type type, IEnumerable<char> alias);
+        IScriptExecutor ExposeType(Type type, IEnumerable<char> alias = null);
 
         /// <summary>
         /// Sets a global function.

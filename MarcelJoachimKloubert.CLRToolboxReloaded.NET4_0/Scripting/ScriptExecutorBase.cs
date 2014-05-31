@@ -56,24 +56,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
 
         #endregion Delegates and Events
 
-        #region Methods (14)
-
-        /// <inheriteddoc />
-        public IScriptExecutionContext Execute(IEnumerable<char> src)
-        {
-            return this.Execute(src, true);
-        }
-
-        /// <inheriteddoc />
-        public IScriptExecutionContext Execute(IEnumerable<char> src, bool autoStart)
-        {
-            return this.Execute(src, autoStart, false);
-        }
+        #region Methods (10)
 
         /// <inheriteddoc />
         public IScriptExecutionContext Execute(IEnumerable<char> src,
-                                               bool autoStart,
-                                               bool debug)
+                                               bool autoStart = true,
+                                               bool debug = false)
         {
             ScriptExecutionContext result;
 
@@ -150,120 +138,108 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
 
             asm.GetTypes()
                .ForEach(ctx =>
-               {
-                   var obj = ctx.State.Executor;
-
-                   var type = ctx.Item;
-                   if (obj.IsTrustedType(type) == false)
                    {
-                       // type is not trusted
-                       return;
-                   }
+                       var obj = ctx.State.Executor;
 
-                   var allExpTypeAttribs = type.GetCustomAttributes(typeof(global::MarcelJoachimKloubert.CLRToolbox.Scripting.Export.ExportScriptTypeAttribute),
-                                                                    false);
-                   if (allExpTypeAttribs.Length > 0)
-                   {
-                       var expTypeAttrib = (ExportScriptTypeAttribute)allExpTypeAttribs[allExpTypeAttribs.Length - 1];
-                       if (string.IsNullOrWhiteSpace(expTypeAttrib.Alias))
+                       var type = ctx.Item;
+                       if (obj.IsTrustedType(type) == false)
                        {
-                           ctx.State.ExportedTypes[type] = null;
-                       }
-                       else
-                       {
-                           ctx.State.ExportedTypes[type] = expTypeAttrib.Alias.Trim();
-                       }
-                   }
-
-                   var allMethods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic |
-                                                    BindingFlags.Instance | BindingFlags.Static);
-
-                   object instanceOfType = null;
-                   allMethods.ForEach(ctx2 =>
-                   {
-                       var obj2 = ctx2.State.Executor;
-
-                       var method = ctx2.Item;
-                       if (obj2.IsTrustedMethod(method))
-                       {
-                           // method is not trusted
+                           // type is not trusted
                            return;
                        }
 
-                       var allExpFuncAttribs = method.GetCustomAttributes(typeof(global::MarcelJoachimKloubert.CLRToolbox.Scripting.Export.ExportScriptFuncAttribute),
-                                                                          false);
-                       if (allExpFuncAttribs.Length < 1)
+                       var allExpTypeAttribs = type.GetCustomAttributes(typeof(global::MarcelJoachimKloubert.CLRToolbox.Scripting.Export.ExportScriptTypeAttribute),
+                                                                        false);
+                       if (allExpTypeAttribs.Length > 0)
                        {
-                           return;
+                           var expTypeAttrib = (ExportScriptTypeAttribute)allExpTypeAttribs[allExpTypeAttribs.Length - 1];
+                           if (string.IsNullOrWhiteSpace(expTypeAttrib.Alias))
+                           {
+                               ctx.State.ExportedTypes[type] = null;
+                           }
+                           else
+                           {
+                               ctx.State.ExportedTypes[type] = expTypeAttrib.Alias.Trim();
+                           }
                        }
 
-                       var delegateType = method.TryGetDelegateTypeFromMethod();
-                       if (delegateType == null)
-                       {
-                           return;
-                       }
+                       var allMethods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic |
+                                                        BindingFlags.Instance | BindingFlags.Static);
 
-                       if ((method.IsStatic == false) &&
-                           (instanceOfType == null))
-                       {
-                           instanceOfType = Activator.CreateInstance(type);
-                       }
+                       object instanceOfType = null;
+                       allMethods.ForEach(ctx2 =>
+                           {
+                               var obj2 = ctx2.State.Executor;
 
-                       Delegate @delegate;
-                       if (method.IsStatic)
-                       {
-                           @delegate = Delegate.CreateDelegate(delegateType,
-                                                               method);
-                       }
-                       else
-                       {
-                           @delegate = Delegate.CreateDelegate(delegateType,
-                                                               instanceOfType,
-                                                               method);
-                       }
+                               var method = ctx2.Item;
+                               if (obj2.IsTrustedMethod(method))
+                               {
+                                   // method is not trusted
+                                   return;
+                               }
 
-                       var expFuncAttrib = (ExportScriptFuncAttribute)allExpFuncAttribs[allExpFuncAttribs.Length - 1];
-                       if (string.IsNullOrWhiteSpace(expFuncAttrib.Alias))
-                       {
-                           ctx2.State.ExportedFuncs[method.Name] = @delegate;
-                       }
-                       else
-                       {
-                           ctx2.State.ExportedFuncs[expFuncAttrib.Alias.Trim()] = @delegate;
-                       }
+                               var allExpFuncAttribs = method.GetCustomAttributes(typeof(global::MarcelJoachimKloubert.CLRToolbox.Scripting.Export.ExportScriptFuncAttribute),
+                                                                                  false);
+                               if (allExpFuncAttribs.Length < 1)
+                               {
+                                   return;
+                               }
+
+                               var delegateType = method.TryGetDelegateTypeFromMethod();
+                               if (delegateType == null)
+                               {
+                                   return;
+                               }
+
+                               if ((method.IsStatic == false) &&
+                                   (instanceOfType == null))
+                               {
+                                   instanceOfType = Activator.CreateInstance(type);
+                               }
+
+                               Delegate @delegate;
+                               if (method.IsStatic)
+                               {
+                                   @delegate = Delegate.CreateDelegate(delegateType,
+                                                                       method);
+                               }
+                               else
+                               {
+                                   @delegate = Delegate.CreateDelegate(delegateType,
+                                                                       instanceOfType,
+                                                                       method);
+                               }
+
+                               var expFuncAttrib = (ExportScriptFuncAttribute)allExpFuncAttribs[allExpFuncAttribs.Length - 1];
+                               if (string.IsNullOrWhiteSpace(expFuncAttrib.Alias))
+                               {
+                                   ctx2.State.ExportedFuncs[method.Name] = @delegate;
+                               }
+                               else
+                               {
+                                   ctx2.State.ExportedFuncs[expFuncAttrib.Alias.Trim()] = @delegate;
+                               }
+                           }, actionState: new
+                           {
+                               Executor = obj,
+                               ExportedFuncs = ctx.State.ExportedFuncs,
+                           });
                    }, actionState: new
                    {
-                       Executor = obj,
-                       ExportedFuncs = ctx.State.ExportedFuncs,
+                       Executor = this,
+                       ExportedFuncs = exportedFuncs,
+                       ExportedTypes = exportedTypes,
                    });
-               }, actionState: new
-               {
-                   Executor = this,
-                   ExportedFuncs = exportedFuncs,
-                   ExportedTypes = exportedTypes,
-               });
         }
 
         /// <inheriteddoc />
-        public ScriptExecutorBase ExposeType<T>()
-        {
-            return this.ExposeType(typeof(T));
-        }
-
-        /// <inheriteddoc />
-        public ScriptExecutorBase ExposeType<T>(IEnumerable<char> alias)
+        public ScriptExecutorBase ExposeType<T>(IEnumerable<char> alias = null)
         {
             return this.ExposeType(typeof(T), alias);
         }
 
         /// <inheriteddoc />
-        public ScriptExecutorBase ExposeType(Type type)
-        {
-            return this.ExposeType(type, null);
-        }
-
-        /// <inheriteddoc />
-        public ScriptExecutorBase ExposeType(Type type, IEnumerable<char> alias)
+        public ScriptExecutorBase ExposeType(Type type, IEnumerable<char> alias = null)
         {
             lock (this._SYNC)
             {
@@ -274,11 +250,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                     throw new ArgumentNullException("type");
                 }
 
-                string typeAlias = alias.AsString();
+                var typeAlias = alias.AsString();
                 this._EXPOSED_TYPES[type] = string.IsNullOrWhiteSpace(typeAlias) ? null : typeAlias.Trim();
-
-                return this;
             }
+
+            return this;
         }
 
         /// <summary>
@@ -314,11 +290,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                 throw new ArgumentNullException("method");
             }
 
-            Type reflType = method.ReflectedType;
-            if (!this.IsTrustedType(reflType))
+            var reflType = method.ReflectedType;
+            if (this.IsTrustedType(reflType) == false)
             {
-                Type decType = method.DeclaringType;
-                if (!this.IsTrustedType(decType))
+                var decType = method.DeclaringType;
+                if (this.IsTrustedType(decType) == false)
                 {
                     return false;
                 }
@@ -342,7 +318,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                 throw new ArgumentNullException("type");
             }
 
-            if (!this.IsTrustedAssembly(type.Assembly))
+            if (this.IsTrustedAssembly(type.Assembly) == false)
             {
                 return false;
             }
@@ -368,7 +344,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                     throw new ArgumentNullException("funcName");
                 }
 
-                string name = funcName.AsString().Trim();
+                var name = funcName.AsString().Trim();
                 if (name == string.Empty)
                 {
                     throw new ArgumentException("funcName");
@@ -380,8 +356,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                 }
 
                 this._FUNCS[name] = func;
-                return this;
             }
+
+            return this;
         }
 
         /// <inheriteddoc />
@@ -396,7 +373,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                     throw new ArgumentNullException("varName");
                 }
 
-                string name = varName.AsString().Trim();
+                var name = varName.AsString().Trim();
                 if (name == string.Empty)
                 {
                     throw new ArgumentException("varName");
@@ -408,8 +385,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                 }
 
                 this._VARS[name] = value;
-                return this;
             }
+
+            return this;
         }
 
         #endregion Methods

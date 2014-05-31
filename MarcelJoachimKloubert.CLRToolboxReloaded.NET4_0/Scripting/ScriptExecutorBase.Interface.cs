@@ -2,7 +2,6 @@
 
 // s. http://blog.marcel-kloubert.de
 
-
 using System;
 using System.Collections.Generic;
 
@@ -10,23 +9,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
 {
     partial class ScriptExecutorBase
     {
-        #region Methods (6)
-
-        // Private Methods (6) 
-
-        IScriptExecutor IScriptExecutor.ExposeType<T>()
-        {
-            return this.ExposeType<T>();
-        }
+        #region Methods (4)
 
         IScriptExecutor IScriptExecutor.ExposeType<T>(IEnumerable<char> alias)
         {
             return this.ExposeType<T>(alias);
-        }
-
-        IScriptExecutor IScriptExecutor.ExposeType(Type type)
-        {
-            return this.ExposeType(type);
         }
 
         IScriptExecutor IScriptExecutor.ExposeType(Type type, IEnumerable<char> alias)
