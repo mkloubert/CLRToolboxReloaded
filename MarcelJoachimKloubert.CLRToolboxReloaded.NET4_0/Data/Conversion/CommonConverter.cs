@@ -10,6 +10,7 @@
 
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -72,16 +73,16 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
         {
             ParseInputValueForChangeType(targetType, ref targetValue, provider);
 
-            var valueType = targetValue.GetType();
-            if (valueType.Equals(targetType) ||
-                IsAssignableFrom(targetType, valueType))
-            {
-                // no need to convert
-                return;
-            }
-
             if (targetValue != null)
             {
+                var valueType = targetValue.GetType();
+                if (valueType.Equals(targetType) ||
+                    IsAssignableFrom(targetType, valueType))
+                {
+                    // no need to convert
+                    return;
+                }
+
                 var handled = false;
 
                 // ConvertToAttribute
@@ -148,14 +149,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
                             else
                             {
                                 invokationParams = new object[]
-                            {
-                                new ConvertToArgs()
                                 {
-                                    CurrentValue = targetValue,
-                                    FormatProvider = provider,
-                                    TargetType = targetType,
-                                },
-                            };
+                                    new ConvertToArgs()
+                                    {
+                                        CurrentValue = targetValue,
+                                        FormatProvider = provider,
+                                        TargetType = targetType,
+                                    },
+                                };
                             }
 
                             targetValue = method.Invoke(method.IsStatic == false ? obj : null,
@@ -200,7 +201,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
             {
                 // force to convert to char sequence
 
-                object temp = targetValue;
+                var temp = targetValue;
                 ConvertToString(ref temp, provider);
 
 #if STRING_IS_CHAR_SEQUENCE
@@ -214,7 +215,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
 
             if (targetType.Equals(typeof(global::MarcelJoachimKloubert.CLRToolbox.CharSequence)))
             {
-                object temp = targetValue;
+                var temp = targetValue;
                 ConvertToString(ref temp, provider);
 
                 targetValue = (CharSequence)temp.AsString();
@@ -235,10 +236,49 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
                 return;
             }
 
+            if (targetType.IsValueType)
+            {
+                var underlyingType = global::System.Nullable.GetUnderlyingType(targetType);
+
+                if (targetValue != null)
+                {
+                    if (underlyingType != null)
+                    {
+                        // try again by converting to underlying nullable struct type
+
+                        this.OnChangeType(targetType: underlyingType,
+                                          targetValue: ref targetValue,
+                                          provider: provider);
+                        return;
+                    }
+                }
+                else
+                {
+                    if (underlyingType == null)
+                    {
+                        // a (non-nullable) struct, so create instance by use the default parameter-less constructor
+
+                        targetValue = global::System.Activator.CreateInstance(targetType);
+                        return;
+                    }
+                }
+            }
+
 #endif
 
             // use BCL logic
-            targetValue = global::System.Convert.ChangeType(targetValue, targetType, provider);
+            {
+                if (targetValue is IEnumerable<char>)
+                {
+                    // keep sure to have a real string
+                    // before use 'System.Convert.ChangeType()' method
+                    targetValue = targetValue.AsString();
+                }
+
+                targetValue = global::System.Convert.ChangeType(value: targetValue,
+                                                                conversionType: targetType,
+                                                                provider: provider);
+            }
         }
 
         private static void ParseInputValueForChangeType(Type targetType, ref object targetValue, IFormatProvider provider)

@@ -17,20 +17,26 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
     /// <see langword="null" /> indexes can be used to access the last or next index.
     /// </summary>
     /// <typeparam name="TValue">Type of the values.</typeparam>
-    public class NullIndexDictionary<TValue> : IDictionary<int?, TValue>,
-                                               IReadOnlyDictionary<int?, TValue>,
-                                               IEnumerable<KeyValuePair<int, TValue>>,
-                                               IList<TValue>, IReadOnlyList<TValue>
+    public partial class NullIndexDictionary<TValue> : IDictionary<int?, TValue>,
+                                                       IReadOnlyDictionary<int?, TValue>,
+                                                       IEnumerable<KeyValuePair<int, TValue>>,
+                                                       IList<TValue>, IReadOnlyList<TValue>,
+                                                       IList, IDictionary
     {
-        #region Fields (1)
+        #region Fields (2)
 
         /// <summary>
         /// Stores the inner dictionary.
         /// </summary>
         protected readonly IDictionary<int, TValue> _INNER_DICT;
 
-        #endregion Fields (1)
+        /// <summary>
+        /// An unique object for sync operations.
+        /// </summary>
+        protected readonly object _SYNC = new object();
 
+        #endregion Fields (2)
+        
         #region Constructors (2)
 
         /// <summary>
@@ -60,7 +66,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         #endregion Constructors (2)
 
-        #region Methods (31)
+        #region Methods (20)
 
         /// <summary>
         /// Adds an items add the end of the list.
@@ -73,14 +79,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                             value: item);
         }
 
-        void ICollection<TValue>.Add(TValue item)
-        {
-            this.Add(item: item);
-        }
-
         /// <inheriteddoc />
         public int Add(int? key, TValue value)
         {
+            this.CheckIndex(key);
+
             if (key.HasValue == false)
             {
                 key = (this.TryGetLastIndex() + 1) ?? 0;
@@ -110,16 +113,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                         });
         }
 
-        void IDictionary<int?, TValue>.Add(int? key, TValue value)
+        private void CheckIndex(int? key)
         {
-            this.Add(key: key,
-                     value: value);
-        }
-
-        void ICollection<KeyValuePair<int?, TValue>>.Add(KeyValuePair<int?, TValue> item)
-        {
-            this.Add(key: item.Key,
-                     value: item.Value);
+            if (key < 0)
+            {
+                throw new ArgumentOutOfRangeException("key");
+            }
         }
 
         /// <inheriteddoc />
@@ -137,18 +136,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                        .Contains(item);
         }
 
-        bool ICollection<KeyValuePair<int?, TValue>>.Contains(KeyValuePair<int?, TValue> item)
-        {
-            TValue value;
-            if (this.TryGetValue(item.Key, out value))
-            {
-                // found => now check if equal
-                return object.Equals(item.Value, value);
-            }
-
-            return false;
-        }
-
         /// <inheriteddoc />
         public bool ContainsKey(int? key)
         {
@@ -157,8 +144,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                 return this.Count > 0;
             }
 
-            return this._INNER_DICT
-                       .ContainsKey(key.Value);
+            return (key >= 0) &&
+                   (key < this.Count);
         }
 
         /// <inheriteddoc />
@@ -176,14 +163,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
             this._INNER_DICT
                 .Values
                 .CopyTo(array, arrayIndex);
-        }
-
-        void ICollection<KeyValuePair<int?, TValue>>.CopyTo(KeyValuePair<int?, TValue>[] array, int arrayIndex)
-        {
-            this.CopyToInner(array: array,
-                             arrayIndex: arrayIndex,
-                             arrayValueProvider: (i, v) => new KeyValuePair<int?, TValue>(key: i,
-                                                                                          value: v));
         }
 
         private void CopyToInner(Array array, int arrayIndex,
@@ -215,28 +194,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// <inheriteddoc />
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
-            return this._INNER_DICT
-                       .GetEnumerator();
-        }
+            return this.Keys
+                       .Select(k =>
+                           {
+                               TValue value;
+                               this._INNER_DICT.TryGetValue(k, out value);
 
-        IEnumerator<KeyValuePair<int?, TValue>> IEnumerable<KeyValuePair<int?, TValue>>.GetEnumerator()
-        {
-            return this._INNER_DICT
-                       .Select(i => new KeyValuePair<int?, TValue>(key: i.Key,
-                                                                   value: i.Value))
-                       .GetEnumerator();
-        }
-
-        IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator()
-        {
-            return this._INNER_DICT
-                       .Values
-                       .GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
+                               return new KeyValuePair<int, TValue>(key: k,
+                                                                    value: value);
+                           }).GetEnumerator();
         }
 
         /// <inheriteddoc />
@@ -263,23 +229,27 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// <inheriteddoc />
         public void Insert(int index, TValue item)
         {
+            this.CheckIndex(index);
+
             // move other items "down"
             this._INNER_DICT
                 .Keys
+                .Where(k => k >= index)
                 .OrderByDescending(k => k)
+                .ToArray()
                 .ForEach(ctx =>
                 {
                     var dict = ctx.State.Dictionary;
-                    var key = ctx.Item;
+                    var k = ctx.Item;
 
-                    dict[key + 1] = dict[key];
+                    dict[k + 1] = dict[k];
                 }, actionState: new
                 {
                     Dictionary = this._INNER_DICT,
                     Item = item,
                 });
 
-            // set insrted item
+            // set inserted item
             this._INNER_DICT[index] = item;
         }
 
@@ -295,6 +265,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// <inheriteddoc />
         public int? Remove(int? key)
         {
+            this.CheckIndex(key);
+
             if (key.HasValue == false)
             {
                 key = this.TryGetLastIndex();
@@ -304,6 +276,24 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
             {
                 if (this._INNER_DICT.Remove(key.Value))
                 {
+                    // move other items "up"
+                    this._INNER_DICT
+                        .Keys
+                        .Where(k => k > key)
+                        .OrderBy(k => k)
+                        .ToArray()
+                        .ForEach(ctx =>
+                        {
+                            var dict = ctx.State.Dictionary;
+                            var k = ctx.Item;
+
+                            dict[k - 1] = dict[k];
+                            dict.Remove(k);
+                        }, actionState: new
+                        {
+                            Dictionary = this._INNER_DICT,
+                        });
+
                     return key.Value;
                 }
             }
@@ -311,51 +301,16 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
             return null;
         }
 
-        bool IDictionary<int?, TValue>.Remove(int? key)
-        {
-            return this.Remove(key: key)
-                       .HasValue;
-        }
-
-        bool ICollection<KeyValuePair<int?, TValue>>.Remove(KeyValuePair<int?, TValue> item)
-        {
-            TValue value;
-            if (this.TryGetValue(item.Key, out value))
-            {
-                if (object.Equals(item.Value, value))
-                {
-                    // found => now check if equal
-                    return this.Remove(key: item.Key)
-                               .HasValue;
-                }
-            }
-
-            return false;
-        }
-
-        bool ICollection<TValue>.Remove(TValue item)
-        {
-            using (var e = this._INNER_DICT.Keys.GetEnumerator())
-            {
-                while (e.MoveNext())
-                {
-                    var key = e.Current;
-                    var value = this._INNER_DICT[key];
-
-                    if (object.Equals(value, item))
-                    {
-                        return this.Remove(key)
-                                   .HasValue;
-                    }
-                }
-            }
-
-            return false;
-        }
-
         /// <inheriteddoc />
         public void RemoveAt(int index)
         {
+            this.CheckIndex(index);
+
+            if (index >= this.Count)
+            {
+                throw new ArgumentOutOfRangeException("index");
+            }
+
             this.Remove(key: index);
         }
 
@@ -459,14 +414,20 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
             return this._INNER_DICT
                        .Keys
                        .Cast<int?>()
-                       .OrderByDescending(k => k)
-                       .FirstOrDefault();
+                       .Max();
         }
 
         /// <inheriteddoc />
         public bool TryGetValue(int? key, out TValue value)
         {
+            this.CheckIndex(key);
+
             value = default(TValue);
+
+            if (key >= this.Count)
+            {
+                return false;
+            }
 
             if (key.HasValue == false)
             {
@@ -483,14 +444,20 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                                     value: out value);
         }
 
-        #endregion Methods (30)
+        #endregion Methods (20)
 
-        #region Properties (9)
+        #region Properties (8)
 
         /// <inheriteddoc />
         public int Count
         {
-            get { return this._INNER_DICT.Count; }
+            get { return this._INNER_DICT.Keys.Max() + 1; }
+        }
+
+        /// <inheriteddoc />
+        public bool IsFixedSize
+        {
+            get { return this.IsReadOnly; }
         }
 
         /// <inheriteddoc />
@@ -500,19 +467,55 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         }
 
         /// <inheriteddoc />
-        public ICollection<int> Keys
+        public bool IsSynchronized
         {
-            get { return this._INNER_DICT.Keys; }
+            get
+            {
+                var coll = this._INNER_DICT as ICollection;
+                if (coll != null)
+                {
+                    return coll.IsSynchronized;
+                }
+
+                var obj = this._INNER_DICT as IObject;
+                if (obj != null)
+                {
+                    return obj.Synchronized;
+                }
+
+                return false;
+            }
         }
 
-        IEnumerable<int?> IReadOnlyDictionary<int?, TValue>.Keys
+        /// <inheriteddoc />
+        public IEnumerable<int> Keys
         {
-            get { return this.Keys.Cast<int?>(); }
+            get
+            {
+                return Enumerable.Range(0, this._INNER_DICT.Count < 1 ? 0
+                                                                      : this.Count);
+            }
         }
 
-        ICollection<int?> IDictionary<int?, TValue>.Keys
+        /// <inheriteddoc />
+        public object SyncRoot
         {
-            get { return this._INNER_DICT.Keys.Cast<int?>().ToArray(); }
+            get
+            {
+                var coll = this._INNER_DICT as ICollection;
+                if (coll != null)
+                {
+                    return coll.SyncRoot;
+                }
+
+                var obj = this._INNER_DICT as IObject;
+                if (obj != null)
+                {
+                    return obj.SyncRoot;
+                }
+
+                return this._SYNC;
+            }
         }
 
         /// <inheriteddoc />
@@ -530,7 +533,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                     throw new ArgumentOutOfRangeException("key");
                 }
 
-                return this._INNER_DICT[key.Value];
+                if (key.Value >= this.Count)
+                {
+                    throw new ArgumentOutOfRangeException("key");
+                }
+
+                TValue result;
+                this._INNER_DICT.TryGetValue(key.Value, out result);
+
+                return result;
             }
 
             set
@@ -548,43 +559,23 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
             }
         }
 
-        TValue IList<TValue>.this[int index]
+        /// <inheriteddoc />
+        public IEnumerable<TValue> Values
         {
             get
             {
-                this.ThrowIfOutOfRange(index);
+                return Enumerable.Range(0, this.Count)
+                                 .Select(i =>
+                                     {
+                                         TValue result;
+                                         this._INNER_DICT.TryGetValue(i, out result);
 
-                TValue result;
-                this._INNER_DICT.TryGetValue(key: index, value: out result);
-
-                return result;
-            }
-
-            set
-            {
-                this.ThrowIfOutOfRange(index);
-
-                this._INNER_DICT[index] = value;
+                                         return result;
+                                     });
             }
         }
 
-        TValue IReadOnlyList<TValue>.this[int index]
-        {
-            get { return ((IList<TValue>)this)[index]; }
-        }
-
-        /// <inheriteddoc />
-        public ICollection<TValue> Values
-        {
-            get { return this._INNER_DICT.Values; }
-        }
-
-        IEnumerable<TValue> IReadOnlyDictionary<int?, TValue>.Values
-        {
-            get { return this._INNER_DICT.Values; }
-        }
-
-        #endregion Properties (9)
+        #endregion Properties (8)
 
         #region Operators (2)
 

@@ -77,6 +77,14 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\NullIndexDictionary.cs">
       <Link>Collections\Generic\NullIndexDictionary.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\NullIndexDictionary.DictionaryEnumerator.cs">
+      <Link>Collections\Generic\NullIndexDictionary.DictionaryEnumerator.cs</Link>
+      <DependentUpon>NullIndexDictionary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\NullIndexDictionary.Interface.cs">
+      <Link>Collections\Generic\NullIndexDictionary.Interface.cs</Link>
+      <DependentUpon>NullIndexDictionary.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\ReadOnlyCollectionWrapper.cs">
       <Link>Collections\Generic\ReadOnlyCollectionWrapper.cs</Link>
     </Compile>

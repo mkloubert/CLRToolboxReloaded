@@ -58,6 +58,12 @@
     <Compile Include="Collections\Generic\IForAllItemContext.cs" />
     <Compile Include="Collections\Generic\IForEachItemContext.cs" />
     <Compile Include="Collections\Generic\NullIndexDictionary.cs" />
+    <Compile Include="Collections\Generic\NullIndexDictionary.DictionaryEnumerator.cs">
+      <DependentUpon>NullIndexDictionary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\Generic\NullIndexDictionary.Interface.cs">
+      <DependentUpon>NullIndexDictionary.cs</DependentUpon>
+    </Compile>
     <Compile Include="Collections\Generic\ReadOnlyCollectionWrapper.cs" />
     <Compile Include="Collections\Generic\ReadOnlyDictionaryWrapper.cs" />
     <Compile Include="Collections\Generic\ReadOnlyListWrapper.cs" />
