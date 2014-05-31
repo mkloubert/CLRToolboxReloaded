@@ -64,24 +64,41 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
                                          .GetTypes()
                                          .OrderBy(t => t.Name, StringComparer.InvariantCultureIgnoreCase))
             {
-                var typeIgnoreAttribs = type.GetCustomAttributes(typeof(global::NUnit.Framework.IgnoreAttribute), true);
-                if (typeIgnoreAttribs.Length > 0)
+                if (type.GetCustomAttributes(typeof(global::NUnit.Framework.IgnoreAttribute), true)
+                        .Any())
                 {
                     continue;
                 }
 
-                var testFixureAttribs = type.GetCustomAttributes(typeof(global::NUnit.Framework.TestFixtureAttribute), true);
-                if (testFixureAttribs.Length < 1)
+                if (type.GetCustomAttributes(typeof(global::NUnit.Framework.TestFixtureAttribute), true)
+                        .Any() == false)
                 {
                     continue;
                 }
 
                 var obj = Activator.CreateInstance(type);
                 Console.WriteLine("{0} ...", obj.GetType().Name);
+                
+                var allMethods = obj.GetType()
+                                    .GetMethods(BindingFlags.Instance | BindingFlags.Public)
+                                    .OrderBy(m => m.Name, StringComparer.InvariantCultureIgnoreCase);
 
-                foreach (var method in obj.GetType()
-                                          .GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
-                                          .OrderBy(m => m.Name, StringComparer.InvariantCultureIgnoreCase))
+                var fixtureSetupMethod = allMethods.SingleOrDefault(m => m.GetCustomAttributes(typeof(global::NUnit.Framework.TestFixtureSetUpAttribute), true)
+                                                                          .Any());
+                var fixtureTearDownMethod = allMethods.SingleOrDefault(m => m.GetCustomAttributes(typeof(global::NUnit.Framework.TestFixtureTearDownAttribute), true)
+                                                                             .Any());
+
+                var setupMethod = allMethods.SingleOrDefault(m => m.GetCustomAttributes(typeof(global::NUnit.Framework.SetUpAttribute), true)
+                                                                   .Any());
+                var tearDownMethod = allMethods.SingleOrDefault(m => m.GetCustomAttributes(typeof(global::NUnit.Framework.TearDownAttribute), true)
+                                                                      .Any());
+
+                if (fixtureSetupMethod != null)
+                {
+                    fixtureSetupMethod.Invoke(obj, null);
+                }
+
+                foreach (var method in allMethods)
                 {
                     var testAttribs = method.GetCustomAttributes(typeof(global::NUnit.Framework.TestAttribute), true);
                     if (testAttribs.Length < 1)
@@ -103,7 +120,17 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
 
                         Console.Write("\t'{0}' ... ", method.Name);
 
+                        if (setupMethod != null)
+                        {
+                            setupMethod.Invoke(obj, null);
+                        }
+
                         method.Invoke(obj, null);
+                        
+                        if (tearDownMethod != null)
+                        {
+                            tearDownMethod.Invoke(obj, null);
+                        }
 
                         InvokeConsole(() =>
                             {
@@ -120,6 +147,11 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
                             }, ConsoleColor.Red
                              , ConsoleColor.Black);
                     }
+                }
+
+                if (fixtureTearDownMethod != null)
+                {
+                    fixtureTearDownMethod.Invoke(obj, null);
                 }
 
                 Console.WriteLine();

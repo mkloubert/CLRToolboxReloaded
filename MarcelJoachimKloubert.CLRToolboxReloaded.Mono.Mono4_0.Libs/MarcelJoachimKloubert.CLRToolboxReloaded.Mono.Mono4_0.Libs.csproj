@@ -19,7 +19,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <NoWarn>1574 3021 1591 1699 1616 1587 1573 3001 1572 1734 618 1570 3002 3003 3005 3009</NoWarn>
+    <NoWarn>3015 1574 3021 1591 1699 1616 1587 1573 3001 1572 1734 618 1570 3002 3003 3005 3009</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>bin\Debug\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs.xml</DocumentationFile>
   </PropertyGroup>
@@ -1906,6 +1906,189 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\FreeImage\Structs\RGBTRIPLE.cs">
       <Link>FreeImage\Structs\RGBTRIPLE.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Block.cs">
+      <Link>DotLiquid\Block.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Condition.cs">
+      <Link>DotLiquid\Condition.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Context.cs">
+      <Link>DotLiquid\Context.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Document.cs">
+      <Link>DotLiquid\Document.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Drop.cs">
+      <Link>DotLiquid\Drop.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Hash.cs">
+      <Link>DotLiquid\Hash.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\IContextAware.cs">
+      <Link>DotLiquid\IContextAware.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\IIndexable.cs">
+      <Link>DotLiquid\IIndexable.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\ILiquidizable.cs">
+      <Link>DotLiquid\ILiquidizable.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\IRenderable.cs">
+      <Link>DotLiquid\IRenderable.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\IValueTypeConvertible.cs">
+      <Link>DotLiquid\IValueTypeConvertible.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Liquid.cs">
+      <Link>DotLiquid\Liquid.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\LiquidTypeAttribute.cs">
+      <Link>DotLiquid\LiquidTypeAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Proc.cs">
+      <Link>DotLiquid\Proc.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\RenderParameters.cs">
+      <Link>DotLiquid\RenderParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\StandardFilters.cs">
+      <Link>DotLiquid\StandardFilters.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Strainer.cs">
+      <Link>DotLiquid\Strainer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tag.cs">
+      <Link>DotLiquid\Tag.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Template.cs">
+      <Link>DotLiquid\Template.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Variable.cs">
+      <Link>DotLiquid\Variable.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Exceptions\ArgumentException.cs">
+      <Link>DotLiquid\Exceptions\ArgumentException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Exceptions\ContextException.cs">
+      <Link>DotLiquid\Exceptions\ContextException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Exceptions\FileSystemException.cs">
+      <Link>DotLiquid\Exceptions\FileSystemException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Exceptions\FilterNotFoundException.cs">
+      <Link>DotLiquid\Exceptions\FilterNotFoundException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Exceptions\LiquidException.cs">
+      <Link>DotLiquid\Exceptions\LiquidException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Exceptions\StackLevelException.cs">
+      <Link>DotLiquid\Exceptions\StackLevelException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Exceptions\SyntaxException.cs">
+      <Link>DotLiquid\Exceptions\SyntaxException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\FileSystems\BlankFileSystem.cs">
+      <Link>DotLiquid\FileSystems\BlankFileSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\FileSystems\EmbeddedFileSystem.cs">
+      <Link>DotLiquid\FileSystems\EmbeddedFileSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\FileSystems\IFileSystem.cs">
+      <Link>DotLiquid\FileSystems\IFileSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\FileSystems\LocalFileSystem.cs">
+      <Link>DotLiquid\FileSystems\LocalFileSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\NamingConventions\CSharpNamingConvention.cs">
+      <Link>DotLiquid\NamingConventions\CSharpNamingConvention.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\NamingConventions\INamingConvention.cs">
+      <Link>DotLiquid\NamingConventions\INamingConvention.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\NamingConventions\RubyNamingConvention.cs">
+      <Link>DotLiquid\NamingConventions\RubyNamingConvention.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Resources\Resources.Designer.cs">
+      <Link>DotLiquid\Resources\Resources.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Resources\Resources1.Designer.cs">
+      <Link>DotLiquid\Resources\Resources1.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\Assign.cs">
+      <Link>DotLiquid\Tags\Assign.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\Block.cs">
+      <Link>DotLiquid\Tags\Block.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\Capture.cs">
+      <Link>DotLiquid\Tags\Capture.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\Case.cs">
+      <Link>DotLiquid\Tags\Case.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\Comment.cs">
+      <Link>DotLiquid\Tags\Comment.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\Cycle.cs">
+      <Link>DotLiquid\Tags\Cycle.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\Extends.cs">
+      <Link>DotLiquid\Tags\Extends.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\For.cs">
+      <Link>DotLiquid\Tags\For.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\If.cs">
+      <Link>DotLiquid\Tags\If.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\IfChanged.cs">
+      <Link>DotLiquid\Tags\IfChanged.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\Include.cs">
+      <Link>DotLiquid\Tags\Include.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\Literal.cs">
+      <Link>DotLiquid\Tags\Literal.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\Raw.cs">
+      <Link>DotLiquid\Tags\Raw.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\Unless.cs">
+      <Link>DotLiquid\Tags\Unless.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Tags\Html\TableRow.cs">
+      <Link>DotLiquid\Tags\Html\TableRow.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Util\EnumerableExtensionMethods.cs">
+      <Link>DotLiquid\Util\EnumerableExtensionMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Util\ExpressionUtility.cs">
+      <Link>DotLiquid\Util\ExpressionUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Util\ListExtensionMethods.cs">
+      <Link>DotLiquid\Util\ListExtensionMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Util\ObjectExtensionMethods.cs">
+      <Link>DotLiquid\Util\ObjectExtensionMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Util\R.cs">
+      <Link>DotLiquid\Util\R.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Util\Range.cs">
+      <Link>DotLiquid\Util\Range.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Util\StrFTime.cs">
+      <Link>DotLiquid\Util\StrFTime.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Util\Symbol.cs">
+      <Link>DotLiquid\Util\Symbol.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Util\TypeUtility.cs">
+      <Link>DotLiquid\Util\TypeUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Util\WeakTable.cs">
+      <Link>DotLiquid\Util\WeakTable.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -1914,6 +2097,9 @@
     </None>
     <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\FreeImage\Dist\3.1.6.0\x86\FreeImage.dll">
       <Link>FreeImage\Dist\3.1.6.0\x86\FreeImage.dll</Link>
+    </None>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Resources\Resources.resx">
+      <Link>DotLiquid\Resources\Resources.resx</Link>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1941,10 +2127,14 @@
     <EmbeddedResource Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\FreeImage\license-gplv3.txt">
       <Link>FreeImage\license-gplv3.txt</Link>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\LICENSE.txt">
+      <Link>DotLiquid\LICENSE.txt</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SharpZipLib\" />
     <Folder Include="MarkdownSharp\" />
     <Folder Include="FreeImage\" />
+    <Folder Include="DotLiquid\" />
   </ItemGroup>
 </Project>

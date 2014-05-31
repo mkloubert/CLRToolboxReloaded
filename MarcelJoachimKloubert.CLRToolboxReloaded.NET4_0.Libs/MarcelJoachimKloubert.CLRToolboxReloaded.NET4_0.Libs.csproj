@@ -22,7 +22,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\MarcelJoachimKloubert.CLRToolboxReloaded.Libs.XML</DocumentationFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <NoWarn>3005 3009 1574 3021 1591 1699 1616 1587 1573 3001 1572 1734 618 1570 3002 3003</NoWarn>
+    <NoWarn>3015 3005 3009 1574 3021 1591 1699 1616 1587 1573 3001 1572 1734 618 1570 3002 3003</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,6 +51,68 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DotLiquid\Block.cs" />
+    <Compile Include="DotLiquid\Condition.cs" />
+    <Compile Include="DotLiquid\Context.cs" />
+    <Compile Include="DotLiquid\Document.cs" />
+    <Compile Include="DotLiquid\Drop.cs" />
+    <Compile Include="DotLiquid\Exceptions\ArgumentException.cs" />
+    <Compile Include="DotLiquid\Exceptions\ContextException.cs" />
+    <Compile Include="DotLiquid\Exceptions\FileSystemException.cs" />
+    <Compile Include="DotLiquid\Exceptions\FilterNotFoundException.cs" />
+    <Compile Include="DotLiquid\Exceptions\LiquidException.cs" />
+    <Compile Include="DotLiquid\Exceptions\StackLevelException.cs" />
+    <Compile Include="DotLiquid\Exceptions\SyntaxException.cs" />
+    <Compile Include="DotLiquid\FileSystems\BlankFileSystem.cs" />
+    <Compile Include="DotLiquid\FileSystems\EmbeddedFileSystem.cs" />
+    <Compile Include="DotLiquid\FileSystems\IFileSystem.cs" />
+    <Compile Include="DotLiquid\FileSystems\LocalFileSystem.cs" />
+    <Compile Include="DotLiquid\Hash.cs" />
+    <Compile Include="DotLiquid\IContextAware.cs" />
+    <Compile Include="DotLiquid\IIndexable.cs" />
+    <Compile Include="DotLiquid\ILiquidizable.cs" />
+    <Compile Include="DotLiquid\IRenderable.cs" />
+    <Compile Include="DotLiquid\IValueTypeConvertible.cs" />
+    <Compile Include="DotLiquid\Liquid.cs" />
+    <Compile Include="DotLiquid\LiquidTypeAttribute.cs" />
+    <Compile Include="DotLiquid\NamingConventions\CSharpNamingConvention.cs" />
+    <Compile Include="DotLiquid\NamingConventions\INamingConvention.cs" />
+    <Compile Include="DotLiquid\NamingConventions\RubyNamingConvention.cs" />
+    <Compile Include="DotLiquid\Proc.cs" />
+    <Compile Include="DotLiquid\RenderParameters.cs" />
+    <Compile Include="DotLiquid\Resources\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="DotLiquid\StandardFilters.cs" />
+    <Compile Include="DotLiquid\Strainer.cs" />
+    <Compile Include="DotLiquid\Tag.cs" />
+    <Compile Include="DotLiquid\Tags\Assign.cs" />
+    <Compile Include="DotLiquid\Tags\Block.cs" />
+    <Compile Include="DotLiquid\Tags\Capture.cs" />
+    <Compile Include="DotLiquid\Tags\Case.cs" />
+    <Compile Include="DotLiquid\Tags\Comment.cs" />
+    <Compile Include="DotLiquid\Tags\Cycle.cs" />
+    <Compile Include="DotLiquid\Tags\Extends.cs" />
+    <Compile Include="DotLiquid\Tags\For.cs" />
+    <Compile Include="DotLiquid\Tags\Html\TableRow.cs" />
+    <Compile Include="DotLiquid\Tags\If.cs" />
+    <Compile Include="DotLiquid\Tags\IfChanged.cs" />
+    <Compile Include="DotLiquid\Tags\Include.cs" />
+    <Compile Include="DotLiquid\Tags\Literal.cs" />
+    <Compile Include="DotLiquid\Tags\Raw.cs" />
+    <Compile Include="DotLiquid\Tags\Unless.cs" />
+    <Compile Include="DotLiquid\Template.cs" />
+    <Compile Include="DotLiquid\Util\EnumerableExtensionMethods.cs" />
+    <Compile Include="DotLiquid\Util\ExpressionUtility.cs" />
+    <Compile Include="DotLiquid\Util\ListExtensionMethods.cs" />
+    <Compile Include="DotLiquid\Util\ObjectExtensionMethods.cs" />
+    <Compile Include="DotLiquid\Util\R.cs" />
+    <Compile Include="DotLiquid\Util\Range.cs" />
+    <Compile Include="DotLiquid\Util\StrFTime.cs" />
+    <Compile Include="DotLiquid\Util\Symbol.cs" />
+    <Compile Include="DotLiquid\Util\TypeUtility.cs" />
+    <Compile Include="DotLiquid\Util\WeakTable.cs" />
+    <Compile Include="DotLiquid\Variable.cs" />
     <Compile Include="FreeImage\Classes\FreeImageBitmap.cs" />
     <Compile Include="FreeImage\Classes\FreeImageEngine.cs" />
     <Compile Include="FreeImage\Classes\FreeImagePlugin.cs" />
@@ -678,6 +740,7 @@
     <None Include="MarcelJoachimKloubert.CLRToolboxReloaded.Libs.snk" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DotLiquid\Resources\Resources.resx" />
     <EmbeddedResource Include="Json.NET\license.txt" />
     <EmbeddedResource Include="Json.NET\readme.txt" />
   </ItemGroup>
@@ -689,6 +752,7 @@
     <EmbeddedResource Include="FreeImage\license-gplv2.txt" />
     <EmbeddedResource Include="FreeImage\license-gplv3.txt" />
     <None Include="FreeImage\Dist\3.1.6.0\x86\FreeImage.dll" />
+    <EmbeddedResource Include="DotLiquid\LICENSE.txt" />
     <Content Include="Jurassic\Compiler\Emit\Optimizations.txt" />
     <EmbeddedResource Include="SharpZipLib\COPYING.txt" />
     <EmbeddedResource Include="Jurassic\License.txt" />
