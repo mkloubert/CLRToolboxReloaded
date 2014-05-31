@@ -36,7 +36,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         protected readonly object _SYNC = new object();
 
         #endregion Fields (2)
-        
+
         #region Constructors (2)
 
         /// <summary>
@@ -194,15 +194,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// <inheriteddoc />
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
-            return this.Keys
-                       .Select(k =>
-                           {
-                               TValue value;
-                               this._INNER_DICT.TryGetValue(k, out value);
+            return new DictionaryEnumerator(this.Keys
+                                                .Select(k =>
+                                                    {
+                                                        TValue value;
+                                                        this._INNER_DICT.TryGetValue(k, out value);
 
-                               return new KeyValuePair<int, TValue>(key: k,
-                                                                    value: value);
-                           }).GetEnumerator();
+                                                        return new KeyValuePair<int, TValue>(key: k,
+                                                                                             value: value);
+                                                    }), 2);
         }
 
         /// <inheriteddoc />

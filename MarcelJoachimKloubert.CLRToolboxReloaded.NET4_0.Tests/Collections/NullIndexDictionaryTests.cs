@@ -3,11 +3,11 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using MarcelJoachimKloubert.CLRToolbox.Collections.Generic;
+using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using MarcelJoachimKloubert.CLRToolbox.Extensions;
 
 namespace MarcelJoachimKloubert.CLRToolbox._Tests.Collections
 {
@@ -65,7 +65,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Collections
                               .SequenceEqual(Enumerable.Range(0, 5).Cast<int?>()));
 
             // check values
-            Assert.IsTrue(dict.SelectEntries()
+            Assert.IsTrue(dict.Cast<KeyValuePair<int, int>>()
                               .Select(i => i.Value)
                               .Cast<int>()
                               .SequenceEqual(new int[] { 1, 3, 2, 0, 666 }));
@@ -99,7 +99,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Collections
                     Assert.DoesNotThrow(() => dict[7] = 668);
 
                     // check keys
-                    Assert.IsTrue(dict.SelectEntries()
+                    Assert.IsTrue(dict.Cast<KeyValuePair<int, int>>()
                                       .Select(e => e.Key)
                                       .Cast<int?>()
                                       .SequenceEqual(Enumerable.Range(0, 8).Cast<int?>()));
@@ -295,7 +295,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Collections
                 Assert.IsTrue(coll.SequenceEqual(new object[] { 23979, 1 }));
             }
         }
-        
+
         [Test]
         public void NullIndexDictionary_Test1_Generic_IDictionary_TKey_TValue()
         {
@@ -367,11 +367,11 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Collections
                     Assert.DoesNotThrow(() => dict[null] = 667);
                     Assert.DoesNotThrow(() => dict[5] = 123);
                     Assert.DoesNotThrow(() => dict[7] = 668);
-                    
+
                     // check keys
                     Assert.IsTrue(dict.Select(i => i.Key)
                                       .SequenceEqual(Enumerable.Range(0, 8).Cast<int?>()));
-                    
+
                     // check values
                     Assert.IsTrue(dict.Select(i => i.Value)
                                       .Reverse()

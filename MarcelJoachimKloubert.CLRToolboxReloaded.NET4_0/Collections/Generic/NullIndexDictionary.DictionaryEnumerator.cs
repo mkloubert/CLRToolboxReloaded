@@ -13,25 +13,25 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         private struct DictionaryEnumerator : IEnumerator<KeyValuePair<int, TValue>>, IDictionaryEnumerator
         {
-            #region Fields (1)
+            #region Fields (2)
 
             private readonly IEnumerator<KeyValuePair<int, TValue>> _ENUMERATOR;
             private readonly byte _RETURN_TYPE;
 
-            #endregion Fields (1)
+            #endregion Fields (2)
 
             #region Constrcutors (1)
 
-            internal DictionaryEnumerator(NullIndexDictionary<TValue> dict, byte returnType)
+            internal DictionaryEnumerator(IEnumerable<KeyValuePair<int, TValue>> enumerator, byte returnType)
             {
-                this._ENUMERATOR = dict.GetEnumerator();
+                this._ENUMERATOR = enumerator.GetEnumerator();
                 this._RETURN_TYPE = returnType;
             }
 
             #endregion Constrcutors (1)
 
             #region Methods (3)
-            
+
             public void Dispose()
             {
                 this._ENUMERATOR
@@ -49,7 +49,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                 this._ENUMERATOR.Reset();
             }
 
-            #endregion Methods (2)
+            #endregion Methods (3)
 
             #region Properties (7)
 
