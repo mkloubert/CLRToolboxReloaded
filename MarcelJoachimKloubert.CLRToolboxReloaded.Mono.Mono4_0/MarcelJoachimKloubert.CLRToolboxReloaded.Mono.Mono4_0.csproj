@@ -438,6 +438,12 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ValuesAndObjects.DisposeEx.cs">
       <Link>Extensions\ValuesAndObjects.DisposeEx.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Caching\DelegateCache.CacheItem.cs">
+      <Link>Caching\DelegateCache.CacheItem.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Caching\DelegateCache.cs">
+      <Link>Caching\DelegateCache.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -456,6 +462,7 @@
     <Folder Include="ServiceLocation\" />
     <Folder Include="Objects\" />
     <Folder Include="Scripting\" />
+    <Folder Include="Caching\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs.csproj">

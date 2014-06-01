@@ -55,6 +55,12 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\AppTime.cs">
       <Link>AppTime.cs</Link>
     </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\caching\DelegateCache.CacheItem.cs">
+      <Link>Caching\DelegateCache.CacheItem.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\caching\DelegateCache.cs">
+      <Link>Caching\DelegateCache.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\CharSequence.cs">
       <Link>CharSequence.cs</Link>
     </Compile>
