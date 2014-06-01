@@ -36,18 +36,34 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
 
             var action2 = new Func<int, int>((input) => input * 2);
 
+            
+
             var test3 = new TestClass();
             executor.SetVariable("test3", test3);
+            
+            var action3 = new Action(() =>
+            {
+                if (test1)
+                {
+                    throw new Exception();
+                }
+
+                ++test3.Test;
+            });
 
             executor.SetFunction("testAction1", action1);
             executor.SetFunction("testAction2", action2);
+            executor.SetFunction("testAction3", action3);
 
             var ctx = executor.Execute(@"
 testAction1();
+
 test3.Test = 1 + testAction2(4) * 2;
+
+testAction3();
 ");
 
-            Assert.IsFalse(ctx.HasFailed);
+            Assert.IsTrue(ctx.HasFailed);
             Assert.IsTrue(test1);
             Assert.AreEqual(test3.Test, 17);
         }
