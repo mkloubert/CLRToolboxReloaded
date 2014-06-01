@@ -22,7 +22,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.ComponentModel
 
             public int Test1
             {
-                get { return this.Get<int>(() => this.Test1); }
+                get { return this.Get(() => this.Test1); }
 
                 set { this.Set(value, "Test1"); }
             }
@@ -36,6 +36,19 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.ComponentModel
             public int Test3
             {
                 get { return this.Test1; }
+            }
+
+            public DateTime Test4
+            {
+#if (NET40 || MONO40 || PORTABLE || PORTABLE40)
+                get { return this.Get<DateTime>("Test4"); }
+
+                set { this.Set(value, "Test4"); }
+#else
+                get { return this.Get<DateTime>(); }
+
+                set { this.Set(value); }
+#endif
             }
 
             [ReceiveValueFrom("Test1")]
@@ -115,18 +128,26 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.ComponentModel
                              maxValue: int.MaxValue);
             obj.Test1 = test1Val;
 
+            var testVal4 = new DateTime(1979, 9, 5, 23, 9, 19, 79);
+            Assert.AreNotEqual(obj.Test4, testVal4);
+
+            obj.Test4 = testVal4;
+
             Assert.AreEqual(obj.Test1, test1Val);
             Assert.AreEqual(obj.Test2, obj.Test1);
+            Assert.AreEqual(obj.Test4, testVal4);
 
             // PropertyChanged
             Assert.IsTrue(changedProperties.Contains("Test1"));
             Assert.IsTrue(changedProperties.Contains("Test2"));
             Assert.IsFalse(changedProperties.Contains("Test3"));
+            Assert.IsTrue(changedProperties.Contains("Test4"));
 
             // PropertyChanging
             Assert.IsTrue(changingProperties.Contains("Test1"));
             Assert.IsTrue(changingProperties.Contains("Test2"));
             Assert.IsFalse(changingProperties.Contains("Test3"));
+            Assert.IsTrue(changingProperties.Contains("Test4"));
 
             // ReceivedValueFromAttribute
             Assert.IsTrue(obj.ReceivedValueFrom_Test1_Methods.Contains("ReceiveFrom_Test1_1"));
