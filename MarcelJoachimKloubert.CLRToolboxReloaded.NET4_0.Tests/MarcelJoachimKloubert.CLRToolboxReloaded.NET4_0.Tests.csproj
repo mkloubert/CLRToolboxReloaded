@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\Delegates.cs" />
     <Compile Include="Collections\Collections.cs" />
     <Compile Include="Collections\Lists.cs" />
     <Compile Include="Collections\NullIndexDictionaryTests.cs" />

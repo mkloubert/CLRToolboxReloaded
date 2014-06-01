@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Tests\Caching\Delegates.cs">
+      <Link>Caching\Delegates.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Tests\Collections\Collections.cs">
       <Link>Collections\Collections.cs</Link>
     </Compile>
