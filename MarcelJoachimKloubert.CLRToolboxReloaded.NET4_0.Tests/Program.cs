@@ -62,6 +62,8 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
         {
             foreach (var type in Assembly.GetExecutingAssembly()
                                          .GetTypes()
+                                         .Where(t => t.IsPublic &&
+                                                     (t.IsAbstract == false))
                                          .OrderBy(t => t.Name, StringComparer.InvariantCultureIgnoreCase))
             {
                 if (type.GetCustomAttributes(typeof(global::NUnit.Framework.IgnoreAttribute), true)

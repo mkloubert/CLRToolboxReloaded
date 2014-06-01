@@ -15,11 +15,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
     /// </summary>
     public static class AppTime
     {
-        #region Fields (4)
-
-        private static TimeProvider _nowProvider;
-        private static TimeSpanProvider _runTimeProvider;
-        private static TimeProvider _startTimeProvider;
+        #region Fields
 
         /// <summary>
         /// Stores the real start time of the app.
@@ -67,9 +63,8 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// </summary>
         public static TimeProvider NowProvider
         {
-            get { return _nowProvider; }
-
-            set { _nowProvider = value; }
+            get;
+            set;
         }
 
         /// <summary>
@@ -86,9 +81,8 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// </summary>
         public static TimeSpanProvider RunTimeProvider
         {
-            get { return _runTimeProvider; }
-
-            set { _runTimeProvider = value; }
+            get;
+            set;
         }
 
         /// <summary>
@@ -105,9 +99,8 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// </summary>
         public static TimeProvider StartTimeProvider
         {
-            get { return _startTimeProvider; }
-
-            set { _startTimeProvider = value; }
+            get;
+            set;
         }
 
         /// <summary>
@@ -139,8 +132,6 @@ namespace MarcelJoachimKloubert.CLRToolbox
         #endregion Delegates and Events
 
         #region Methods (3)
-
-        // Private Methods (3) 
 
         private static DateTimeOffset GetNow()
         {
