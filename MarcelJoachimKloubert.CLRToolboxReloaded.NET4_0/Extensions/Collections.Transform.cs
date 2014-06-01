@@ -92,7 +92,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                 throw new ArgumentNullException("funcStateProvider");
             }
 
-            for (var i = 0; i < list.Count; i++)
+            var count = list.Count;
+            for (var i = 0; i < count; i++)
             {
                 var ctx = new ForEachItemContext<T, TState>(isSynchronized: false);
                 ctx.Cancel = false;
