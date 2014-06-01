@@ -1,9 +1,9 @@
 ﻿// LICENSE: LGPL 3 - https://www.gnu.org/licenses/lgpl-3.0.txt
 
-// s. http://blog.marcel-kloubert.de
+// s. https://github.com/mkloubert/CLRToolboxReloaded
 
 #if !(PORTABLE || PORTABLE40)
-#define KNOWN_SYSTEM_DIAGNOSTICS_PROCESS
+#define KNOWS_SYSTEM_DIAGNOSTICS_PROCESS
 #endif
 
 using System;
@@ -11,7 +11,7 @@ using System;
 namespace MarcelJoachimKloubert.CLRToolbox
 {
     /// <summary>
-    /// Handles application time.
+    /// Handles (custom) application time.
     /// </summary>
     public static class AppTime
     {
@@ -35,7 +35,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// </summary>
         static AppTime()
         {
-#if KNOWN_SYSTEM_DIAGNOSTICS_PROCESS
+#if KNOWS_SYSTEM_DIAGNOSTICS_PROCESS
             try
             {
                 START_TIME = global::System.Diagnostics.Process.GetCurrentProcess().StartTime;

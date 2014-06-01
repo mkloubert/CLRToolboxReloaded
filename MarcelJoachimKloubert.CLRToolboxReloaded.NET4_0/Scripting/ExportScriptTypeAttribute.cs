@@ -1,7 +1,6 @@
 ﻿// LICENSE: LGPL 3 - https://www.gnu.org/licenses/lgpl-3.0.txt
 
-// s. http://blog.marcel-kloubert.de
-
+// s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using System;
 
@@ -41,7 +40,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting.Export
         public ExportScriptTypeAttribute()
             : this(null)
         {
-
         }
 
         #endregion Constructors

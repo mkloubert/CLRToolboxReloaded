@@ -51,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppTime.cs" />
+    <Compile Include="Caching\DelegateCache.CacheItem.cs" />
+    <Compile Include="Caching\DelegateCache.cs" />
     <Compile Include="CharSequence.cs" />
     <Compile Include="Collections\Generic\DelegateEqualityComparer.cs" />
     <Compile Include="Collections\Generic\EqualityComparerFactory.cs" />

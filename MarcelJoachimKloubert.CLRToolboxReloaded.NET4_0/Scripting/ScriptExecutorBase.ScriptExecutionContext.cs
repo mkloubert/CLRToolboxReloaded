@@ -1,10 +1,11 @@
 ﻿// LICENSE: LGPL 3 - https://www.gnu.org/licenses/lgpl-3.0.txt
 
-// s. http://blog.marcel-kloubert.de
+// s. https://github.com/mkloubert/CLRToolboxReloaded
 
-
+using MarcelJoachimKloubert.CLRToolbox.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Scripting
 {
@@ -15,58 +16,32 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
         /// <summary>
         /// Simple implementation of <see cref="IScriptExecutionContext" /> interface.
         /// </summary>
-        protected sealed class ScriptExecutionContext : IScriptExecutionContext
+        protected sealed class ScriptExecutionContext : NotifiableBase, IScriptExecutionContext
         {
-            #region Fields (12)
+            #region Properties (11)
 
-            private DateTimeOffset? _endTime;
-            private IList<Exception> _exceptions;
-            private ScriptExecutorBase _executor;
-            private bool _isDebug;
-            private bool _isExecuting;
-            private ScriptExecutionCompletedHandler _onCompleted;
-            private ScriptExecutionFailedHandler _onFailed;
-            private ScriptExecutionSucceedHandler _onSucceeded;
-            private object _result;
-            private string _source;
-            private StartActionHandler _startAction;
-            private DateTimeOffset? _startTime;
-
-            #endregion Fields
-
-            #region Properties (13)
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <see cref="IScriptExecutionContext.Exceptions" />
+            /// <inheriteddoc />
             public DateTimeOffset? EndTime
             {
-                get { return this._endTime; }
+                get { return this.Get<DateTimeOffset?>("EndTime"); }
 
-                private set { this._endTime = value; }
+                private set { this.Set(value, "EndTime"); }
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <see cref="IScriptExecutionContext.Exceptions" />
+            /// <inheriteddoc />
             public IList<Exception> Exceptions
             {
-                get { return this._exceptions; }
+                get { return this.Get<IList<Exception>>("Exceptions"); }
 
-                private set { this._exceptions = value; }
+                private set { this.Set(value, "Exceptions"); }
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <see cref="IScriptExecutionContext.Executor" />
+            /// <inheriteddoc />
             public ScriptExecutorBase Executor
             {
-                get { return this._executor; }
+                get { return this.Get<ScriptExecutorBase>("Executor"); }
 
-                internal set { this._executor = value; }
+                internal set { this.Set(value, "Executor"); }
             }
 
             IScriptExecutor IScriptExecutionContext.Executor
@@ -74,129 +49,84 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                 get { return this.Executor; }
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <see cref="IScriptExecutionContext.HasFailed" />
+            /// <inheriteddoc />
             public bool HasFailed
             {
                 get
                 {
-                    IList<Exception> exList = this.Exceptions;
+                    var exList = this.Exceptions;
 
-                    return exList != null &&
-                           exList.Count > 0;
+                    return (exList != null) &&
+                           exList.Where(ex => ex != null)
+                                 .Any();
                 }
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <see cref="IScriptExecutionContext.IsDebug" />
+            /// <inheriteddoc />
             public bool IsDebug
             {
-                get { return this._isDebug; }
+                get { return this.Get<bool>("IsDebug"); }
 
-                internal set { this._isDebug = value; }
+                internal set { this.Set(value, "IsDebug"); }
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <see cref="IScriptExecutionContext.IsExecuting" />
+            /// <inheriteddoc />
             public bool IsExecuting
             {
-                get { return this._isExecuting; }
+                get { return this.Get<bool>("IsExecuting"); }
 
-                private set { this._isExecuting = value; }
+                private set { this.Set(value, "IsExecuting"); }
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <see cref="IScriptExecutionContext.OnCompleted" />
-            public ScriptExecutionCompletedHandler OnCompleted
-            {
-                get { return this._onCompleted; }
-
-                set { this._onCompleted = value; }
-            }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <see cref="IScriptExecutionContext.OnFailed" />
-            public ScriptExecutionFailedHandler OnFailed
-            {
-                get { return this._onFailed; }
-
-                set { this._onFailed = value; }
-            }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <see cref="IScriptExecutionContext.OnSucceed" />
-            public ScriptExecutionSucceedHandler OnSucceed
-            {
-                get { return this._onSucceeded; }
-
-                set { this._onSucceeded = value; }
-            }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <see cref="IScriptExecutionContext.Result" />
+            /// <inheriteddoc />
             public object Result
             {
-                get { return this._result; }
+                get { return this.Get<object>("Result"); }
 
-                internal set { this._result = value; }
+                internal set { this.Set(value, "Result"); }
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <see cref="IScriptExecutionContext.Source" />
+            /// <inheriteddoc />
             public string Source
             {
-                get { return this._source; }
+                get { return this.Get<string>("Source"); }
 
-                set { this._source = value; }
+                set { this.Set(value, "Source"); }
             }
 
-            /// <summary>
-            /// Gets or sets the logic for <see cref="ScriptExecutionContext.Start()" /> method.
-            /// </summary>
+            /// <inheriteddoc />
             public StartActionHandler StartAction
             {
-                get { return this._startAction; }
+                get { return this.Get<StartActionHandler>("StartAction"); }
 
-                set { this._startAction = value; }
+                set { this.Set(value, "StartAction"); }
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <see cref="IScriptExecutionContext.StartTime" />
+            /// <inheriteddoc />
             public DateTimeOffset? StartTime
             {
-                get { return this._startTime; }
+                get { return this.Get<DateTimeOffset?>("StartTime"); }
 
-                private set { this._startTime = value; }
+                private set { this.Set(value, "StartTime"); }
             }
 
             #endregion Properties
 
-            #region Delegates and Events (1)
-
-            // Delegates (1) 
+            #region Delegates and Events (4)
+            
+            /// <inheriteddoc />
+            public event EventHandler Completed;
+            
+            /// <inheriteddoc />
+            public event EventHandler Failed;
 
             /// <summary>
             /// Describes a handler for the <see cref="ScriptExecutionContext.Start()" /> method.
             /// </summary>
             public delegate void StartActionHandler();
+            
+            /// <inheriteddoc />
+            public event EventHandler Succeed;
 
             #endregion Delegates and Events
 
@@ -205,14 +135,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
             // Public Methods (1) 
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             /// <see cref="IScriptExecutionContext.Start()" />
             public void Start()
             {
                 try
                 {
-                    this.StartTime = DateTimeOffset.Now;
+                    this.StartTime = AppTime.Now;
                     this.IsExecuting = true;
 
                     StartActionHandler action = this.StartAction;
@@ -223,32 +153,20 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
 
                     this.Exceptions = null;
 
-                    ScriptExecutionSucceedHandler handler = this.OnSucceed;
-                    if (handler != null)
-                    {
-                        handler(this);
-                    }
+                    this.RaiseEventHandler(this.Succeed);
                 }
                 catch (Exception ex)
                 {
                     this.Exceptions = new Exception[] { ex };
 
-                    ScriptExecutionFailedHandler handler = this.OnFailed;
-                    if (handler != null)
-                    {
-                        handler(this);
-                    }
+                    this.RaiseEventHandler(this.Failed);
                 }
                 finally
                 {
-                    this.EndTime = DateTimeOffset.Now;
+                    this.EndTime = AppTime.Now;
                     this.IsExecuting = false;
 
-                    ScriptExecutionCompletedHandler handler = this.OnCompleted;
-                    if (handler != null)
-                    {
-                        handler(this);
-                    }
+                    this.RaiseEventHandler(this.Completed);
                 }
             }
 

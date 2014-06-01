@@ -1,51 +1,38 @@
 ﻿// LICENSE: LGPL 3 - https://www.gnu.org/licenses/lgpl-3.0.txt
 
-// s. http://blog.marcel-kloubert.de
+// s. https://github.com/mkloubert/CLRToolboxReloaded
 
-
+using MarcelJoachimKloubert.CLRToolbox.ComponentModel;
 using System;
 using System.Collections.Generic;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Scripting
 {
-    #region DELEGATE: ScriptExecutionCompletedHandler
-
-    /// <summary>
-    /// Describes a function or method that is invoked after execution of a script has been completed.
-    /// </summary>
-    /// <param name="context">The underlying execution context.</param>
-    public delegate void ScriptExecutionCompletedHandler(IScriptExecutionContext context);
-
-    #endregion
-
-    #region DELEGATE: ScriptExecutionFailedHandler
-
-    /// <summary>
-    /// Describes a function or method that is when execution of a script has been failed.
-    /// </summary>
-    /// <param name="context">The underlying execution context.</param>
-    public delegate void ScriptExecutionFailedHandler(IScriptExecutionContext context);
-
-    #endregion
-
-    #region DELEGATE: ScriptExecutionSucceedHandler
-
-    /// <summary>
-    /// Describes a function or method that is when execution of a script has been succeeded.
-    /// </summary>
-    /// <param name="context">The underlying execution context.</param>
-    public delegate void ScriptExecutionSucceedHandler(IScriptExecutionContext context);
-
-    #endregion
-
-    #region INTERFACE:IScriptExecutionContext
-
     /// <summary>
     /// Describes a script execution context.
     /// </summary>
-    public interface IScriptExecutionContext
+    public interface IScriptExecutionContext : INotifiable
     {
-        #region Data Members (12)
+        #region Delegates and events (3)
+
+        /// <summary>
+        /// Is invoked if execution was completed.
+        /// </summary>
+        event EventHandler Completed;
+
+        /// <summary>
+        /// Is invoked if execution was has been failed.
+        /// </summary>
+        event EventHandler Failed;
+
+        /// <summary>
+        /// Is invoked if execution was succeeded.
+        /// </summary>
+        event EventHandler Succeed;
+
+        #endregion Delegates and events (3)
+
+        #region Data Members (9)
 
         /// <summary>
         /// Gets the time the execution has been ended.
@@ -78,21 +65,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
         bool IsExecuting { get; }
 
         /// <summary>
-        /// Gets or sets the handler that is called if execution was completed.
-        /// </summary>
-        ScriptExecutionCompletedHandler OnCompleted { get; set; }
-
-        /// <summary>
-        /// Gets or sets the handler that is called if execution was has been failed.
-        /// </summary>
-        ScriptExecutionFailedHandler OnFailed { get; set; }
-
-        /// <summary>
-        /// Gets or sets the handler that is called if execution was succeeded.
-        /// </summary>
-        ScriptExecutionSucceedHandler OnSucceed { get; set; }
-
-        /// <summary>
         /// Gets the script result.
         /// </summary>
         object Result { get; }
@@ -107,7 +79,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
         /// </summary>
         DateTimeOffset? StartTime { get; }
 
-        #endregion Data Members
+        #endregion Data Members (9)
 
         #region Operations (1)
 
@@ -118,6 +90,4 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
 
         #endregion Operations
     }
-
-    #endregion
 }
