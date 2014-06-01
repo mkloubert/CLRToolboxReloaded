@@ -80,7 +80,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
 
                 var obj = Activator.CreateInstance(type);
                 Console.WriteLine("{0} ...", obj.GetType().Name);
-                
+
                 var allMethods = obj.GetType()
                                     .GetMethods(BindingFlags.Instance | BindingFlags.Public)
                                     .OrderBy(m => m.Name, StringComparer.InvariantCultureIgnoreCase);
@@ -128,7 +128,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
                         }
 
                         method.Invoke(obj, null);
-                        
+
                         if (tearDownMethod != null)
                         {
                             tearDownMethod.Invoke(obj, null);

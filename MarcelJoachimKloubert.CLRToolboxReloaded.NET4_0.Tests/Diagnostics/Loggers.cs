@@ -172,7 +172,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
             // 3 different instances
             Assert.AreEqual(logMsgsRefs.Count, 3);
 
-            // 3 different instances, but are equal because of theit IDs
+            // 3 different instances, but are equal because of their IDs
             Assert.AreEqual(logMsgs.Count, 1);
         }
 

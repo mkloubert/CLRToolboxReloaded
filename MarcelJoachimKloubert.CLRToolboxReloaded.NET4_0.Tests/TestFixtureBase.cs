@@ -67,24 +67,36 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
             // dummy
         }
 
+        /// <summary>
+        /// Logic for <see cref="TestFixtureSetUpAttribute" />.
+        /// </summary>
         [TestFixtureSetUp]
         public void SetupFixture()
         {
             this.OnSetupFixture();
         }
 
+        /// <summary>
+        /// Logic for <see cref="SetUpAttribute" />.
+        /// </summary>
         [SetUp]
         public void SetupTest()
         {
             this.OnSetupTest();
         }
 
+        /// <summary>
+        /// Logic for <see cref="TestFixtureTearDownAttribute" />.
+        /// </summary>
         [TestFixtureTearDown]
         public void TearDownFixture()
         {
             this.OnTearDownFixture();
         }
 
+        /// <summary>
+        /// Logic for <see cref="TearDownAttribute" />.
+        /// </summary>
         [TearDown]
         public void TearDownTest()
         {

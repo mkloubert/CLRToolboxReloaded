@@ -4,6 +4,7 @@
 
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,7 +13,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
     /// <summary>
     /// A logger that invokes a list of child loggers step-by-step.
     /// </summary>
-    public class AggregateLogger : LoggerBase
+    public class AggregateLogger : LoggerBase, IEnumerable<ILogger>
     {
         #region Fields (1)
 
@@ -133,7 +134,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                                        isSynchronized: isSynchronized,
                                        sync: sync);
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
         /// </summary>
@@ -164,7 +165,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                           isSynchronized: false,
                           sync: sync);
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
         /// </summary>
@@ -193,7 +194,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                           isSynchronized: false,
                           sync: new object());
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
         /// </summary>
@@ -231,6 +232,18 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         public static AggregateLogger Create(params ILogger[] loggers)
         {
             return Create(loggers: (IEnumerable<ILogger>)loggers);
+        }
+
+        /// <inheriteddoc />
+        public IEnumerator<ILogger> GetEnumerator()
+        {
+            return this.GetLoggers()
+                       .GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
 
         /// <summary>

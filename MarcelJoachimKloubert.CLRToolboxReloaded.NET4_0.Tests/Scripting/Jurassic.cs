@@ -22,7 +22,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
             }
         }
 
-        #endregion
+        #endregion CLASS: TestClass
 
         #region Methods (1)
 
@@ -33,7 +33,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
 
             var test1 = false;
             var action1 = new Action(() => test1 = true);
-            
+
             var action2 = new Func<int, int>((input) => input * 2);
 
             var test3 = new TestClass();
@@ -47,6 +47,7 @@ testAction1();
 test3.Test = 1 + testAction2(4) * 2;
 ");
 
+            Assert.IsFalse(ctx.HasFailed);
             Assert.IsTrue(test1);
             Assert.AreEqual(test3.Test, 17);
         }

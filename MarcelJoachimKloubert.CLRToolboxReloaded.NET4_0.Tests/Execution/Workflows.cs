@@ -4,7 +4,6 @@
 
 using MarcelJoachimKloubert.CLRToolbox.Execution.Workflows;
 using NUnit.Framework;
-using System;
 using System.Text;
 
 namespace MarcelJoachimKloubert.CLRToolbox._Tests.Execution
@@ -145,7 +144,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Execution
             Assert.AreEqual(result2, 23979);
             Assert.AreEqual(wf2.STRING.ToString(), "Wurst::0102030406090910");
         }
-        
+
         [Test]
         public void DelegateWorkflowTest()
         {
@@ -184,7 +183,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Execution
 
             var wf1 = DelegateWorkflow.Create(step1);
             var res1 = wf1.Execute();
-            
+
             Assert.AreEqual(str, "010203");
             Assert.AreEqual(res1, 6);
 
@@ -195,6 +194,6 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Execution
             Assert.AreEqual(res2, 6);
         }
 
-        #endregion Methods (1)
+        #endregion Methods (2)
     }
 }

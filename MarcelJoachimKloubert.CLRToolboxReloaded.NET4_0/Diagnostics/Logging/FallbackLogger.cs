@@ -164,7 +164,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </exception>
         public static FallbackLogger Create(ILogger mainLogger, bool isSynchronized, object sync, params ILogger[] loggers)
         {
-            return Create(mainLogger: mainLogger, 
+            return Create(mainLogger: mainLogger,
                           loggers: (IEnumerable<ILogger>)loggers,
                           isSynchronized: isSynchronized,
                           sync: sync);
@@ -198,7 +198,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </exception>
         public static FallbackLogger Create(ILogger mainLogger, object sync, params ILogger[] loggers)
         {
-            return Create(mainLogger: mainLogger, 
+            return Create(mainLogger: mainLogger,
                           loggers: (IEnumerable<ILogger>)loggers,
                           sync: sync);
         }
@@ -246,7 +246,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </exception>
         public static FallbackLogger Create(ILogger mainLogger, IEnumerable<ILogger> loggers)
         {
-            return Create(mainLogger: mainLogger, 
+            return Create(mainLogger: mainLogger,
                           loggers: loggers,
                           isSynchronized: false);
         }

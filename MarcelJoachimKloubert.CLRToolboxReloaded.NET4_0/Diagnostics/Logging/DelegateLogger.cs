@@ -4,15 +4,16 @@
 
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 {
     /// <summary>
-    /// A logger that invokes list of delegates that handle <see cref="ILogMessage" />s step-by-step.
+    /// A logger that invokes a list of delegates that handle <see cref="ILogMessage" />s step-by-step.
     /// </summary>
-    public sealed class DelegateLogger : LoggerBase
+    public sealed class DelegateLogger : LoggerBase, IEnumerable<global::MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.DelegateLogger.LogMessageHandler>
     {
         #region Fields (1)
 
@@ -117,7 +118,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
         #endregion Properties (1)
 
-        #region Methods (10)
+        #region Methods (12)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
@@ -237,6 +238,18 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         public static DelegateLogger Create(params LogMessageHandler[] handlers)
         {
             return Create(handlers: (IEnumerable<LogMessageHandler>)handlers);
+        }
+
+        /// <inheriteddoc />
+        public IEnumerator<DelegateLogger.LogMessageHandler> GetEnumerator()
+        {
+            return this.GetHandlers()
+                       .GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
 
         /// <summary>
