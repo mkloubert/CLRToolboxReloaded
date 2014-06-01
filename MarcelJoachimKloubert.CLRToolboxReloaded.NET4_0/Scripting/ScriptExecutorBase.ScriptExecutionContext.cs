@@ -23,25 +23,25 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
             /// <inheriteddoc />
             public DateTimeOffset? EndTime
             {
-                get { return this.Get<DateTimeOffset?>("EndTime"); }
+                get { return this.Get(() => this.EndTime); }
 
-                private set { this.Set(value, "EndTime"); }
+                private set { this.Set(value, () => this.EndTime); }
             }
 
             /// <inheriteddoc />
             public IList<Exception> Exceptions
             {
-                get { return this.Get<IList<Exception>>("Exceptions"); }
+                get { return this.Get(() => this.Exceptions); }
 
-                private set { this.Set(value, "Exceptions"); }
+                private set { this.Set(value, () => this.Exceptions); }
             }
 
             /// <inheriteddoc />
             public ScriptExecutorBase Executor
             {
-                get { return this.Get<ScriptExecutorBase>("Executor"); }
+                get { return this.Get(() => this.Executor); }
 
-                internal set { this.Set(value, "Executor"); }
+                internal set { this.Set(value, () => this.Executor); }
             }
 
             IScriptExecutor IScriptExecutionContext.Executor
@@ -65,58 +65,58 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
             /// <inheriteddoc />
             public bool IsDebug
             {
-                get { return this.Get<bool>("IsDebug"); }
+                get { return this.Get(() => this.IsDebug); }
 
-                internal set { this.Set(value, "IsDebug"); }
+                internal set { this.Set(value, () => this.IsDebug); }
             }
 
             /// <inheriteddoc />
             public bool IsExecuting
             {
-                get { return this.Get<bool>("IsExecuting"); }
+                get { return this.Get(() => this.IsExecuting); }
 
-                private set { this.Set(value, "IsExecuting"); }
+                private set { this.Set(value, () => this.IsExecuting); }
             }
 
             /// <inheriteddoc />
             public object Result
             {
-                get { return this.Get<object>("Result"); }
+                get { return this.Get(() => this.Result); }
 
-                internal set { this.Set(value, "Result"); }
+                internal set { this.Set(value, () => this.Result); }
             }
 
             /// <inheriteddoc />
             public string Source
             {
-                get { return this.Get<string>("Source"); }
+                get { return this.Get(() => this.Source); }
 
-                set { this.Set(value, "Source"); }
+                set { this.Set(value, () => this.Source); }
             }
 
             /// <inheriteddoc />
             public StartActionHandler StartAction
             {
-                get { return this.Get<StartActionHandler>("StartAction"); }
+                get { return this.Get(() => this.StartAction); }
 
-                set { this.Set(value, "StartAction"); }
+                set { this.Set(value, () => this.StartAction); }
             }
 
             /// <inheriteddoc />
             public DateTimeOffset? StartTime
             {
-                get { return this.Get<DateTimeOffset?>("StartTime"); }
+                get { return this.Get(() => this.StartTime); }
 
-                private set { this.Set(value, "StartTime"); }
+                private set { this.Set(value, () => this.StartTime); }
             }
 
             #endregion Properties
 
             #region Delegates and Events (4)
-            
+
             /// <inheriteddoc />
             public event EventHandler Completed;
-            
+
             /// <inheriteddoc />
             public event EventHandler Failed;
 
@@ -124,7 +124,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
             /// Describes a handler for the <see cref="ScriptExecutionContext.Start()" /> method.
             /// </summary>
             public delegate void StartActionHandler();
-            
+
             /// <inheriteddoc />
             public event EventHandler Succeed;
 

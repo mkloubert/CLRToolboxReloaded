@@ -12,12 +12,44 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Caching
     [TestFixture]
     public class Delegates
     {
+        #region Fields (1)
+
+        private DelegateCache _cache;
+        private int _tests;
+
+        #endregion Fields (1)
+
         #region Methods (2)
 
+        [TestFixtureSetUp]
+        public void Setup_Global_Fixture()
+        {
+            this._cache = new DelegateCache();
+        }
+
+        [TestFixtureTearDown]
+        public void Setup_Global_TearDown()
+        {
+            this._cache.Dispose();
+        }
+
+        [SetUp]
+        public void Setup_Test_Fixture()
+        {
+            this._cache.Clear();
+        }
+
+        [TearDown]
+        public void Setup_Test_TearDown()
+        {
+            ++this._tests;
+        }
+
         [Test]
+        // [Ignore]
         public void DelgateCache_Action()
         {
-            var cache = new DelegateCache();
+            var cache = this._cache;
 
             var val = -1;
             DelegateCache.CachedAction action = () => ++val;
@@ -42,9 +74,10 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Caching
         }
 
         [Test]
+        // [Ignore]
         public void DelgateCache_Func()
         {
-            var cache = new DelegateCache();
+            var cache = this._cache;
 
             var val = 0;
             DelegateCache.CachedFunc<int> func = () => val++;

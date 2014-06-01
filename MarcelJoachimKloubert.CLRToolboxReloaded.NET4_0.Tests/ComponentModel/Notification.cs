@@ -18,10 +18,11 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.ComponentModel
         {
             public int ReceivedValueFrom_Test1_Count = 0;
             public readonly List<string> ReceivedValueFrom_Test1_Methods = new List<string>();
+            public int Uses = 0;
 
             public int Test1
             {
-                get { return this.Get<int>("Test1"); }
+                get { return this.Get<int>(() => this.Test1); }
 
                 set { this.Set(value, "Test1"); }
             }
@@ -58,7 +59,38 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.ComponentModel
 
         #endregion CLASS: TestNotifiable
 
+        #region Fields (1)
+
+        private TestNotifiable _notifiable;
+
+        #endregion
+
         #region Methods (1)
+
+        [TestFixtureSetUp]
+        public void Setup_Global_Fixture()
+        {
+            this._notifiable = new TestNotifiable();
+        }
+
+        [TestFixtureTearDown]
+        public void Setup_Global_TearDown()
+        {
+            this._notifiable = null;
+        }
+
+        [SetUp]
+        public void Setup_Test_Fixture()
+        {
+            this._notifiable.ReceivedValueFrom_Test1_Count = 0;
+            this._notifiable.ReceivedValueFrom_Test1_Methods.Clear();
+        }
+
+        [TearDown]
+        public void Setup_Test_TearDown()
+        {
+            ++this._notifiable.Uses;
+        }
 
         [Test]
         public void NotifiableTest1()
@@ -68,7 +100,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.ComponentModel
             var changedProperties = new List<string>();
             var changingProperties = new List<string>();
 
-            var obj = new TestNotifiable();
+            var obj = this._notifiable;
             obj.PropertyChanged += (sender, e) =>
                 {
                     changedProperties.Add(e.PropertyName);
@@ -84,6 +116,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.ComponentModel
             obj.Test1 = test1Val;
 
             Assert.AreEqual(obj.Test1, test1Val);
+            Assert.AreEqual(obj.Test2, obj.Test1);
 
             // PropertyChanged
             Assert.IsTrue(changedProperties.Contains("Test1"));
