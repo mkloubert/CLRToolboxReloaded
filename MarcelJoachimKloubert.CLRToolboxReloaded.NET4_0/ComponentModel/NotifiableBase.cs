@@ -32,35 +32,35 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 
         private readonly IDictionary<string, object> _PROPERTIES;
 
-        #endregion
+        #endregion Fields (1)
 
         #region Constrcutors (4)
 
         /// <inheriteddoc />
-        protected NotifiableBase(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        protected NotifiableBase(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
             this._PROPERTIES = this.CreatePropertyStorage() ?? new Dictionary<string, object>();
         }
 
         /// <inheriteddoc />
-        protected NotifiableBase(bool synchronized)
-            : this(synchronized: synchronized,
+        protected NotifiableBase(bool isSynchronized)
+            : this(isSynchronized: isSynchronized,
                    sync: new object())
         {
         }
 
         /// <inheriteddoc />
         protected NotifiableBase(object sync)
-            : this(synchronized: false,
+            : this(isSynchronized: false,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
         protected NotifiableBase()
-            : this(synchronized: false)
+            : this(isSynchronized: false)
         {
         }
 
@@ -127,7 +127,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 #else
                            IEnumerable<char> propertyName
 #endif
-        )
+)
         {
             if (propertyName == null)
             {
@@ -463,7 +463,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 #else
                               IEnumerable<char> propertyName
 #endif
-        )
+)
         {
             if (propertyName == null)
             {

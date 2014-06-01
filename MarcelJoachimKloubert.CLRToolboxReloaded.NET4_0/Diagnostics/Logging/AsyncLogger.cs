@@ -40,7 +40,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                            TaskCreationOptions options,
                            TaskScheduler scheduler)
             : base(innerLogger: innerLogger,
-                   synchronized: false)
+                   isSynchronized: false)
         {
             this._TOKEN = token;
             this._OPTIONS = options;

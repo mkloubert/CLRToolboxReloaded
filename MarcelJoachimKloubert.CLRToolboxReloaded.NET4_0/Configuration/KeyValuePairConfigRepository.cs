@@ -26,7 +26,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
 
         /// <inheriteddoc />
         protected KeyValuePairConfigRepository(object sync)
-            : base(synchronized: true,
+            : base(isSynchronized: true,
                    sync: sync)
         {
             this._VALUES = this.CreateInitalConfigValueCollection() ?? new Dictionary<string, IDictionary<string, object>>();

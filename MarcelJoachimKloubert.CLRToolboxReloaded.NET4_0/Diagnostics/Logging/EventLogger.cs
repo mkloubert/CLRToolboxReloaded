@@ -17,7 +17,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="EventLogger" /> class.
         /// </summary>
         public EventLogger()
-            : base(synchronized: false)
+            : base(isSynchronized: false)
         {
         }
 

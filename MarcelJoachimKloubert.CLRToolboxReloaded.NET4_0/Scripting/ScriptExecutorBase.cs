@@ -19,7 +19,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
 
         /// <inheriteddoc />
         protected ScriptExecutorBase(object sync)
-            : base(synchronized: true,
+            : base(isSynchronized: true,
                    sync: sync)
         {
         }

@@ -56,7 +56,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// <paramref name="innerConf" /> is <see langword="null" />.
         /// </exception>
         public ConfigRepositoryWrapper(TConf innerConf, IEnumerable<char> prefix, IEnumerable<char> suffix)
-            : base(synchronized: false)
+            : base(isSynchronized: false)
         {
             if (innerConf == null)
             {

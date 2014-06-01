@@ -16,13 +16,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
         /// <summary>
         /// Initializes a new instance of the <see cref="ConverterBase" /> class.
         /// </summary>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        protected ConverterBase(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        protected ConverterBase(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
         }
@@ -30,9 +30,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
         /// <summary>
         /// Initializes a new instance of the <see cref="ConverterBase" /> class.
         /// </summary>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
-        protected ConverterBase(bool synchronized)
-            : base(synchronized: synchronized)
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
+        protected ConverterBase(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
         {
         }
 

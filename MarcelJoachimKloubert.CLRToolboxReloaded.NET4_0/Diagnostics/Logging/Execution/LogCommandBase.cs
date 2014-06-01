@@ -17,15 +17,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.Execution
         #region Constrcutors (4)
 
         /// <inheriteddoc />
-        protected LogCommandBase(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        protected LogCommandBase(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
-        protected LogCommandBase(bool synchronized)
-            : base(synchronized: synchronized)
+        protected LogCommandBase(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
         {
         }
 

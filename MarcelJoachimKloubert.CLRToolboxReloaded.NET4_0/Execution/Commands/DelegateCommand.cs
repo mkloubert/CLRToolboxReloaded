@@ -33,7 +33,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Commands
         /// </exception>
         public DelegateCommand(ExecuteHandler executeAction,
                                CanExecutePredicate canExecutePredicate)
-            : base(synchronized: false)
+            : base(isSynchronized: false)
         {
             if (executeAction == null)
             {

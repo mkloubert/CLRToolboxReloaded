@@ -480,7 +480,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                 var obj = this._INNER_DICT as IObject;
                 if (obj != null)
                 {
-                    return obj.Synchronized;
+                    return obj.IsSynchronized;
                 }
 
                 return false;

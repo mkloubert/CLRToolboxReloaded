@@ -25,13 +25,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// Initializes a new instance of the <see cref="AggregateWorkflow" /> class.
         /// </summary>
         /// <param name="provider">The value for the <see cref="AggregateWorkflow.Provider" /> property.</param>
-        /// <param name="synchronized">Instance should work thread safe or not.</param>
+        /// <param name="isSynchronized">Instance should work thread safe or not.</param>
         /// <param name="sync">The value for <see cref="ObjectBase._SYNC" /> field.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="provider" /> and/or <paramref name="sync" /> are <see langword="null" />.
         /// </exception>
-        public AggregateWorkflow(WorkflowProvider provider, bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        public AggregateWorkflow(WorkflowProvider provider, bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
             if (provider == null)
@@ -46,13 +46,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// Initializes a new instance of the <see cref="AggregateWorkflow" /> class.
         /// </summary>
         /// <param name="provider">The value for the <see cref="AggregateWorkflow.Provider" /> property.</param>
-        /// <param name="synchronized">Instance should work thread safe or not.</param>
+        /// <param name="isSynchronized">Instance should work thread safe or not.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="provider" /> is <see langword="null" />.
         /// </exception>
-        public AggregateWorkflow(WorkflowProvider provider, bool synchronized)
+        public AggregateWorkflow(WorkflowProvider provider, bool isSynchronized)
             : this(provider: provider,
-                   synchronized: synchronized,
+                   isSynchronized: isSynchronized,
                    sync: new object())
         {
         }
@@ -68,7 +68,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <remarks>Object will NOT work thread safe.</remarks>
         public AggregateWorkflow(WorkflowProvider provider, object sync)
             : this(provider: provider,
-                   synchronized: false,
+                   isSynchronized: false,
                    sync: sync)
         {
         }
@@ -83,7 +83,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// </exception>
         public AggregateWorkflow(WorkflowProvider provider)
             : this(provider: provider,
-                   synchronized: false)
+                   isSynchronized: false)
         {
         }
 
@@ -118,12 +118,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// Initializes a new instance of the <see cref="AggregateWorkflow" /> class.
         /// </summary>
         /// <param name="workflows">The workflows to use.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="workflows" /> and/or <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        public static AggregateWorkflow Create(IEnumerable<IWorkflow> workflows, bool synchronized, object sync)
+        public static AggregateWorkflow Create(IEnumerable<IWorkflow> workflows, bool isSynchronized, object sync)
         {
             if (workflows == null)
             {
@@ -131,23 +131,23 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
             }
 
             return new AggregateWorkflow((wf) => workflows,
-                                         synchronized: synchronized,
+                                         isSynchronized: isSynchronized,
                                          sync: sync);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateWorkflow" /> class.
         /// </summary>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <param name="workflows">The workflows to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="workflows" /> and/or <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        public static AggregateWorkflow Create(bool synchronized, object sync, params IWorkflow[] workflows)
+        public static AggregateWorkflow Create(bool isSynchronized, object sync, params IWorkflow[] workflows)
         {
             return Create(workflows: (IEnumerable<IWorkflow>)workflows,
-                          synchronized: synchronized,
+                          isSynchronized: isSynchronized,
                           sync: sync);
         }
 
@@ -162,7 +162,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         public static AggregateWorkflow Create(IEnumerable<IWorkflow> workflows, object sync)
         {
             return Create(workflows,
-                          synchronized: false,
+                          isSynchronized: false,
                           sync: sync);
         }
 
@@ -184,29 +184,29 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// Initializes a new instance of the <see cref="AggregateWorkflow" /> class.
         /// </summary>
         /// <param name="workflows">The workflows to use.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="workflows" /> is <see langword="null" />.
         /// </exception>
-        public static AggregateWorkflow Create(IEnumerable<IWorkflow> workflows, bool synchronized)
+        public static AggregateWorkflow Create(IEnumerable<IWorkflow> workflows, bool isSynchronized)
         {
             return Create(workflows,
-                          synchronized: false,
+                          isSynchronized: false,
                           sync: new object());
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateWorkflow" /> class.
         /// </summary>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="workflows">The workflows to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="workflows" /> is <see langword="null" />.
         /// </exception>
-        public static AggregateWorkflow Create(bool synchronized, params IWorkflow[] workflows)
+        public static AggregateWorkflow Create(bool isSynchronized, params IWorkflow[] workflows)
         {
             return Create(workflows: (IEnumerable<IWorkflow>)workflows,
-                          synchronized: synchronized);
+                          isSynchronized: isSynchronized);
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         public static AggregateWorkflow Create(IEnumerable<IWorkflow> workflows)
         {
             return Create(workflows,
-                          synchronized: false);
+                          isSynchronized: false);
         }
 
         /// <summary>

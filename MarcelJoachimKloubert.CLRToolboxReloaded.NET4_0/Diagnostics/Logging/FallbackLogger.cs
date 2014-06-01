@@ -27,14 +27,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </summary>
         /// <param name="mainLogger">The main logger.</param>
         /// <param name="provider">The value for the <see cref="AggregateLogger.Provider" /> property.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="provider" /> and/or <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        public FallbackLogger(ILogger mainLogger, LoggerProvider provider, bool synchronized, object sync)
+        public FallbackLogger(ILogger mainLogger, LoggerProvider provider, bool isSynchronized, object sync)
             : base(innerLogger: mainLogger,
-                   synchronized: synchronized,
+                   isSynchronized: isSynchronized,
                    sync: sync)
         {
             if (provider == null)
@@ -50,14 +50,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </summary>
         /// <param name="mainLogger">The main logger.</param>
         /// <param name="provider">The value for the <see cref="AggregateLogger.Provider" /> property.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="provider" /> is <see langword="null" />.
         /// </exception>
-        public FallbackLogger(ILogger mainLogger, LoggerProvider provider, bool synchronized)
+        public FallbackLogger(ILogger mainLogger, LoggerProvider provider, bool isSynchronized)
             : this(mainLogger: mainLogger,
                    provider: provider,
-                   synchronized: synchronized,
+                   isSynchronized: isSynchronized,
                    sync: new object())
         {
         }
@@ -75,7 +75,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
             : this(mainLogger: mainLogger,
                    provider: provider,
                    sync: sync,
-                   synchronized: false)
+                   isSynchronized: false)
         {
         }
 
@@ -134,12 +134,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </summary>
         /// <param name="mainLogger">The main logger.</param>
         /// <param name="loggers">The loggers to use.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="mainLogger" />, <paramref name="sync" /> and/or <paramref name="loggers" /> are <see langword="null" />.
         /// </exception>
-        public static FallbackLogger Create(ILogger mainLogger, IEnumerable<ILogger> loggers, bool synchronized, object sync)
+        public static FallbackLogger Create(ILogger mainLogger, IEnumerable<ILogger> loggers, bool isSynchronized, object sync)
         {
             if (loggers == null)
             {
@@ -148,7 +148,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
             return new FallbackLogger(mainLogger: mainLogger,
                                       provider: (l) => loggers,
-                                      synchronized: synchronized,
+                                      isSynchronized: isSynchronized,
                                       sync: sync);
         }
 
@@ -156,17 +156,17 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
         /// </summary>
         /// <param name="mainLogger">The main logger.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <param name="loggers">The loggers to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="mainLogger" />, <paramref name="sync" /> and/or <paramref name="loggers" /> are <see langword="null" />.
         /// </exception>
-        public static FallbackLogger Create(ILogger mainLogger, bool synchronized, object sync, params ILogger[] loggers)
+        public static FallbackLogger Create(ILogger mainLogger, bool isSynchronized, object sync, params ILogger[] loggers)
         {
             return Create(mainLogger: mainLogger, 
                           loggers: (IEnumerable<ILogger>)loggers,
-                          synchronized: synchronized,
+                          isSynchronized: isSynchronized,
                           sync: sync);
         }
 
@@ -183,7 +183,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         {
             return Create(mainLogger: mainLogger,
                           loggers: loggers,
-                          synchronized: false,
+                          isSynchronized: false,
                           sync: sync);
         }
 
@@ -208,15 +208,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </summary>
         /// <param name="mainLogger">The main logger.</param>
         /// <param name="loggers">The loggers to use.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="mainLogger" /> and/or <paramref name="loggers" /> are <see langword="null" />.
         /// </exception>
-        public static FallbackLogger Create(ILogger mainLogger, IEnumerable<ILogger> loggers, bool synchronized)
+        public static FallbackLogger Create(ILogger mainLogger, IEnumerable<ILogger> loggers, bool isSynchronized)
         {
             return Create(mainLogger: mainLogger,
                           loggers: loggers,
-                          synchronized: false,
+                          isSynchronized: false,
                           sync: new object());
         }
 
@@ -224,16 +224,16 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
         /// </summary>
         /// <param name="mainLogger">The main logger.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="loggers">The loggers to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="mainLogger" /> and/or <paramref name="loggers" /> are <see langword="null" />.
         /// </exception>
-        public static FallbackLogger Create(ILogger mainLogger, bool synchronized, params ILogger[] loggers)
+        public static FallbackLogger Create(ILogger mainLogger, bool isSynchronized, params ILogger[] loggers)
         {
             return Create(mainLogger: mainLogger,
                           loggers: (IEnumerable<ILogger>)loggers,
-                          synchronized: synchronized);
+                          isSynchronized: isSynchronized);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         {
             return Create(mainLogger: mainLogger, 
                           loggers: loggers,
-                          synchronized: false);
+                          isSynchronized: false);
         }
 
         /// <summary>

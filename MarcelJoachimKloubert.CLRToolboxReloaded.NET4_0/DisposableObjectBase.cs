@@ -20,28 +20,28 @@ namespace MarcelJoachimKloubert.CLRToolbox
         #region Constrcutors (5)
 
         /// <inheriteddoc />
-        protected DisposableObjectBase(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        protected DisposableObjectBase(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
-        protected DisposableObjectBase(bool synchronized)
-            : base(synchronized: synchronized)
+        protected DisposableObjectBase(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
         {
         }
 
         /// <inheriteddoc />
         protected DisposableObjectBase(object sync)
-            : base(synchronized: true,
+            : base(isSynchronized: true,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
         protected DisposableObjectBase()
-            : base(synchronized: true)
+            : base(isSynchronized: true)
         {
         }
 
@@ -85,7 +85,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         private void Dispose(DisposeContext ctx)
         {
             Action<DisposeContext> disposeAction;
-            if (this._SYNCHRONIZED == false)
+            if (this._IS_SYNCHRONIZED == false)
             {
                 disposeAction = this.Dispose_NonThreadSafe;
             }

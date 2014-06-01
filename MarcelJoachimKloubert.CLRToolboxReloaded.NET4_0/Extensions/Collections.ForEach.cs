@@ -112,7 +112,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
                 while (e.MoveNext())
                 {
-                    var ctx = new ForEachItemContext<T, TState>(synchronized: false)
+                    var ctx = new ForEachItemContext<T, TState>(isSynchronized: false)
                     {
                         Cancel = false,
                         Index = ++index,

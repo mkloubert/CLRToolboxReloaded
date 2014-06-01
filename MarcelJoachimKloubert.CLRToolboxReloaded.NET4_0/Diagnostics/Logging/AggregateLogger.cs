@@ -26,13 +26,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
         /// </summary>
         /// <param name="provider">The value for the <see cref="AggregateLogger.Provider" /> property.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="provider" /> and/or <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        public AggregateLogger(LoggerProvider provider, bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        public AggregateLogger(LoggerProvider provider, bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
             if (provider == null)
@@ -47,13 +47,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
         /// </summary>
         /// <param name="provider">The value for the <see cref="AggregateLogger.Provider" /> property.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="provider" /> is <see langword="null" />.
         /// </exception>
-        public AggregateLogger(LoggerProvider provider, bool synchronized)
+        public AggregateLogger(LoggerProvider provider, bool isSynchronized)
             : this(provider: provider,
-                   synchronized: synchronized,
+                   isSynchronized: isSynchronized,
                    sync: new object())
         {
         }
@@ -69,7 +69,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         public AggregateLogger(LoggerProvider provider, object sync)
             : this(provider: provider,
                    sync: sync,
-                   synchronized: false)
+                   isSynchronized: false)
         {
         }
 
@@ -117,12 +117,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
         /// </summary>
         /// <param name="loggers">The loggers to use.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="loggers" /> and/or <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        public static AggregateLogger Create(IEnumerable<ILogger> loggers, bool synchronized, object sync)
+        public static AggregateLogger Create(IEnumerable<ILogger> loggers, bool isSynchronized, object sync)
         {
             if (loggers == null)
             {
@@ -130,23 +130,23 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
             }
 
             return new AggregateLogger((l) => loggers,
-                                       synchronized: synchronized,
+                                       isSynchronized: isSynchronized,
                                        sync: sync);
         }
         
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
         /// </summary>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <param name="loggers">The loggers to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="loggers" /> and/or <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        public static AggregateLogger Create(bool synchronized, object sync, params ILogger[] loggers)
+        public static AggregateLogger Create(bool isSynchronized, object sync, params ILogger[] loggers)
         {
             return Create(loggers: (IEnumerable<ILogger>)loggers,
-                          synchronized: synchronized,
+                          isSynchronized: isSynchronized,
                           sync: sync);
         }
 
@@ -161,7 +161,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         public static AggregateLogger Create(IEnumerable<ILogger> loggers, object sync)
         {
             return Create(loggers,
-                          synchronized: false,
+                          isSynchronized: false,
                           sync: sync);
         }
         
@@ -183,29 +183,29 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
         /// </summary>
         /// <param name="loggers">The loggers to use.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="loggers" /> is <see langword="null" />.
         /// </exception>
-        public static AggregateLogger Create(IEnumerable<ILogger> loggers, bool synchronized)
+        public static AggregateLogger Create(IEnumerable<ILogger> loggers, bool isSynchronized)
         {
             return Create(loggers,
-                          synchronized: false,
+                          isSynchronized: false,
                           sync: new object());
         }
         
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
         /// </summary>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="loggers">The loggers to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="loggers" /> is <see langword="null" />.
         /// </exception>
-        public static AggregateLogger Create(bool synchronized, params ILogger[] loggers)
+        public static AggregateLogger Create(bool isSynchronized, params ILogger[] loggers)
         {
             return Create(loggers: (IEnumerable<ILogger>)loggers,
-                          synchronized: synchronized);
+                          isSynchronized: isSynchronized);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         public static AggregateLogger Create(IEnumerable<ILogger> loggers)
         {
             return Create(loggers,
-                          synchronized: false);
+                          isSynchronized: false);
         }
 
         /// <summary>

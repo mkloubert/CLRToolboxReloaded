@@ -31,7 +31,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// <paramref name="dict" /> is <see langword="null" />.
         /// </exception>
         public ReadOnlyDictionaryWrapper(IDictionary<TKey, TValue> dict)
-            : base(synchronized: false)
+            : base(isSynchronized: false)
         {
             if (dict == null)
             {

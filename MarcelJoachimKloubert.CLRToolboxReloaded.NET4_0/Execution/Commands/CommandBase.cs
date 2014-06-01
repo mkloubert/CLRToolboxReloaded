@@ -15,15 +15,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Commands
         #region Constrcutors (4)
 
         /// <inheriteddoc />
-        protected CommandBase(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        protected CommandBase(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
-        protected CommandBase(bool synchronized)
-            : base(synchronized: synchronized)
+        protected CommandBase(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
         {
         }
 

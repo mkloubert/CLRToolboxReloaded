@@ -30,7 +30,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// <paramref name="collection" /> is <see langword="null" />.
         /// </exception>
         public ReadOnlyCollectionWrapper(ICollection<T> collection)
-            : base(synchronized: false)
+            : base(isSynchronized: false)
         {
             if (collection == null)
             {

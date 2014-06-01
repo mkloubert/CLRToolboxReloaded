@@ -24,9 +24,9 @@ namespace MarcelJoachimKloubert.CLRToolbox
         protected readonly object _SYNC;
 
         /// <summary>
-        /// Stores the value for the <see cref="ObjectBase.Synchronized" /> property.
+        /// Stores the value for the <see cref="ObjectBase.IsSynchronized" /> property.
         /// </summary>
-        protected readonly bool _SYNCHRONIZED;
+        protected readonly bool _IS_SYNCHRONIZED;
 
         #endregion Fields (2)
 
@@ -35,12 +35,12 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectBase" /> class.
         /// </summary>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        protected ObjectBase(bool synchronized, object sync)
+        protected ObjectBase(bool isSynchronized, object sync)
         {
             if (sync == null)
             {
@@ -48,15 +48,15 @@ namespace MarcelJoachimKloubert.CLRToolbox
             }
 
             this._SYNC = sync;
-            this._SYNCHRONIZED = synchronized;
+            this._IS_SYNCHRONIZED = isSynchronized;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectBase" /> class.
         /// </summary>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
-        protected ObjectBase(bool synchronized)
-            : this(synchronized: synchronized,
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
+        protected ObjectBase(bool isSynchronized)
+            : this(isSynchronized: isSynchronized,
                    sync: new object())
         {
         }
@@ -69,7 +69,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
         protected ObjectBase(object sync)
-            : this(synchronized: false,
+            : this(isSynchronized: false,
                    sync: sync)
         {
         }
@@ -78,7 +78,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// Initializes a new instance of the <see cref="ObjectBase" /> class.
         /// </summary>
         protected ObjectBase()
-            : this(synchronized: false)
+            : this(isSynchronized: false)
         {
         }
 
@@ -94,9 +94,9 @@ namespace MarcelJoachimKloubert.CLRToolbox
         #region Properties (3)
 
         /// <inheriteddoc />
-        public bool Synchronized
+        public bool IsSynchronized
         {
-            get { return this._SYNCHRONIZED; }
+            get { return this._IS_SYNCHRONIZED; }
         }
 
         /// <inheriteddoc />

@@ -19,28 +19,28 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         #region Constrcutors (4)
 
         /// <inheriteddoc />
-        public WorkflowExecutionContext(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        public WorkflowExecutionContext(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
-        public WorkflowExecutionContext(bool synchronized)
-            : base(synchronized: synchronized)
+        public WorkflowExecutionContext(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
         {
         }
 
         /// <inheriteddoc />
         public WorkflowExecutionContext(object sync)
-            : base(synchronized: true,
+            : base(isSynchronized: true,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
         public WorkflowExecutionContext()
-            : base(synchronized: true)
+            : base(isSynchronized: true)
         {
         }
 
@@ -470,28 +470,28 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         #region Constrcutors (4)
 
         /// <inheriteddoc />
-        public WorkflowExecutionContext(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        public WorkflowExecutionContext(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
-        public WorkflowExecutionContext(bool synchronized)
-            : base(synchronized: synchronized)
+        public WorkflowExecutionContext(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
         {
         }
 
         /// <inheriteddoc />
         public WorkflowExecutionContext(object sync)
-            : base(synchronized: true,
+            : base(isSynchronized: true,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
         public WorkflowExecutionContext()
-            : base(synchronized: true)
+            : base(isSynchronized: true)
         {
         }
 
@@ -581,7 +581,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
                 throw new ArgumentNullException("original");
             }
 
-            var result = new WorkflowExecutionContext<TState>(synchronized: original.Synchronized,
+            var result = new WorkflowExecutionContext<TState>(isSynchronized: original.IsSynchronized,
                                                               sync: original.SyncRoot);
             result.Cancel = original.Cancel;
             result.ContinueOnError = original.Cancel;

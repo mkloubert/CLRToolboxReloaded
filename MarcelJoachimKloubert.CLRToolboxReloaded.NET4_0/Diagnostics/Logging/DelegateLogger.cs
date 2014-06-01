@@ -26,13 +26,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
         /// </summary>
         /// <param name="provider">The value for the <see cref="DelegateLogger.Provider" /> property.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="provider" /> and/or <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        public DelegateLogger(LogMessageHandlerProvider provider, bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        public DelegateLogger(LogMessageHandlerProvider provider, bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
             if (provider == null)
@@ -47,13 +47,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
         /// </summary>
         /// <param name="provider">The value for the <see cref="DelegateLogger.Provider" /> property.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="provider" /> is <see langword="null" />.
         /// </exception>
-        public DelegateLogger(LogMessageHandlerProvider provider, bool synchronized)
+        public DelegateLogger(LogMessageHandlerProvider provider, bool isSynchronized)
             : this(provider: provider,
-                   synchronized: synchronized,
+                   isSynchronized: isSynchronized,
                    sync: new object())
         {
         }
@@ -69,7 +69,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         public DelegateLogger(LogMessageHandlerProvider provider, object sync)
             : this(provider: provider,
                    sync: sync,
-                   synchronized: false)
+                   isSynchronized: false)
         {
         }
 
@@ -123,12 +123,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
         /// </summary>
         /// <param name="handlers">The handlers to use.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handlers" /> and/or <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        public static DelegateLogger Create(IEnumerable<LogMessageHandler> handlers, bool synchronized, object sync)
+        public static DelegateLogger Create(IEnumerable<LogMessageHandler> handlers, bool isSynchronized, object sync)
         {
             if (handlers == null)
             {
@@ -136,22 +136,22 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
             }
 
             return new DelegateLogger((l) => handlers,
-                                      synchronized: synchronized,
+                                      isSynchronized: isSynchronized,
                                       sync: sync);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
         /// </summary>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <param name="handlers">The handlers to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handlers" /> and/or <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        public static DelegateLogger Create(bool synchronized, object sync, params LogMessageHandler[] handlers)
+        public static DelegateLogger Create(bool isSynchronized, object sync, params LogMessageHandler[] handlers)
         {
-            return Create(synchronized: synchronized,
+            return Create(isSynchronized: isSynchronized,
                           sync: sync,
                           handlers: (IEnumerable<LogMessageHandler>)handlers);
         }
@@ -167,7 +167,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         public static DelegateLogger Create(IEnumerable<LogMessageHandler> handlers, object sync)
         {
             return Create(handlers,
-                          synchronized: false,
+                          isSynchronized: false,
                           sync: sync);
         }
 
@@ -189,28 +189,28 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
         /// </summary>
         /// <param name="handlers">The handlers to use.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handlers" /> is <see langword="null" />.
         /// </exception>
-        public static DelegateLogger Create(IEnumerable<LogMessageHandler> handlers, bool synchronized)
+        public static DelegateLogger Create(IEnumerable<LogMessageHandler> handlers, bool isSynchronized)
         {
             return Create(handlers,
-                          synchronized: false,
+                          isSynchronized: false,
                           sync: new object());
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DelegateLogger" /> class.
         /// </summary>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="handlers">The handlers to use.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="handlers" /> is <see langword="null" />.
         /// </exception>
-        public static DelegateLogger Create(bool synchronized, params LogMessageHandler[] handlers)
+        public static DelegateLogger Create(bool isSynchronized, params LogMessageHandler[] handlers)
         {
-            return Create(synchronized: synchronized,
+            return Create(isSynchronized: isSynchronized,
                           handlers: (IEnumerable<LogMessageHandler>)handlers);
         }
 
@@ -224,7 +224,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         public static DelegateLogger Create(IEnumerable<LogMessageHandler> handlers)
         {
             return Create(handlers,
-                          synchronized: false);
+                          isSynchronized: false);
         }
 
         /// <summary>

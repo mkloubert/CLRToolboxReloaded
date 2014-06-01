@@ -94,7 +94,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
             for (var i = 0; i < list.Count; i++)
             {
-                var ctx = new ForEachItemContext<T, TState>(synchronized: false);
+                var ctx = new ForEachItemContext<T, TState>(isSynchronized: false);
                 ctx.Cancel = false;
                 ctx.Index = i;
                 ctx.Item = list[i];

@@ -20,13 +20,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkflowBase" /> class.
         /// </summary>
-        /// <param name="synchronized">Instance should work thread safe or not.</param>
+        /// <param name="isSynchronized">Instance should work thread safe or not.</param>
         /// <param name="sync">The value for <see cref="ObjectBase._SYNC" /> field.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        public AttributeWorkflowBase(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        public AttributeWorkflowBase(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
         }
@@ -34,9 +34,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <summary>
         /// Initializes a new instance of the <see cref="AttributeWorkflowBase" /> class.
         /// </summary>
-        /// <param name="synchronized">Instance should work thread safe or not.</param>
-        public AttributeWorkflowBase(bool synchronized)
-            : base(synchronized: synchronized)
+        /// <param name="isSynchronized">Instance should work thread safe or not.</param>
+        public AttributeWorkflowBase(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
         {
         }
 
@@ -126,7 +126,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
             {
                 yield return (args) =>
                     {
-                        var ctx = new WorkflowExecutionContext(synchronized: false,
+                        var ctx = new WorkflowExecutionContext(isSynchronized: false,
                                                                sync: sync);
                         ctx.Cancel = false;
                         ctx.ContinueOnError = false;

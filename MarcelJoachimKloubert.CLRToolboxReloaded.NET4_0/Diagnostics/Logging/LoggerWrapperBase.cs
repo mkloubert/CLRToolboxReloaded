@@ -26,13 +26,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="LoggerWrapperBase" /> class.
         /// </summary>
         /// <param name="innerLogger">The inner logger to wrap.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="innerLogger" /> and/or <paramref name="sync" /> and/or are <see langword="null" />.
         /// </exception>
-        protected LoggerWrapperBase(ILogger innerLogger, bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        protected LoggerWrapperBase(ILogger innerLogger, bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
             if (innerLogger == null)
@@ -47,13 +47,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="LoggerWrapperBase" /> class.
         /// </summary>
         /// <param name="innerLogger">The inner logger to wrap.</param>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="innerLogger" /> is <see langword="null" />.
         /// </exception>
-        protected LoggerWrapperBase(ILogger innerLogger, bool synchronized)
+        protected LoggerWrapperBase(ILogger innerLogger, bool isSynchronized)
             : this(innerLogger: innerLogger,
-                   synchronized: synchronized,
+                   isSynchronized: isSynchronized,
                    sync: new object())
         {
         }
@@ -69,7 +69,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         protected LoggerWrapperBase(ILogger innerLogger, object sync)
             : this(innerLogger: innerLogger,
                    sync: sync,
-                   synchronized: false)
+                   isSynchronized: false)
         {
         }
 

@@ -189,7 +189,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                     {
                         try
                         {
-                            var ctx = new ForAllItemContext<T, TState>(synchronized: false)
+                            var ctx = new ForAllItemContext<T, TState>(isSynchronized: false)
                             {
                                 Index = ++index,
                                 Item = e.Current,

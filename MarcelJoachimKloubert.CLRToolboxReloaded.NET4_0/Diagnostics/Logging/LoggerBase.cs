@@ -35,25 +35,25 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Initializes a new instance of the <see cref="LoggerBase" /> class.
         /// </summary>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        protected LoggerBase(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        protected LoggerBase(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
-            this._LOG_METHOD = this._SYNCHRONIZED ? new Func<ILogMessage, bool>(this.OnLog_ThreadSafe)
-                                                  : new Func<ILogMessage, bool>(this.OnLog_NonThreadSafe);
+            this._LOG_METHOD = this._IS_SYNCHRONIZED ? new Func<ILogMessage, bool>(this.OnLog_ThreadSafe)
+                                                     : new Func<ILogMessage, bool>(this.OnLog_NonThreadSafe);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LoggerBase" /> class.
         /// </summary>
-        /// <param name="synchronized">The value for the <see cref="ObjectBase.Synchronized" /> property.</param>
-        protected LoggerBase(bool synchronized)
-            : this(synchronized: synchronized,
+        /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
+        protected LoggerBase(bool isSynchronized)
+            : this(isSynchronized: isSynchronized,
                    sync: new object())
         {
         }
@@ -67,7 +67,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </exception>
         protected LoggerBase(object sync)
             : this(sync: sync,
-                   synchronized: false)
+                   isSynchronized: false)
         {
         }
 

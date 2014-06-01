@@ -22,15 +22,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         #region Constructors (4)
 
         /// <inheriteddoc />
-        protected ConfigRepositoryBase(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        protected ConfigRepositoryBase(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
-        protected ConfigRepositoryBase(bool synchronized)
-            : base(synchronized: synchronized)
+        protected ConfigRepositoryBase(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
         {
         }
 
@@ -417,7 +417,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
             }
 
             Func<Func<ConfigRepositoryBase, TState, TResult>, TState, TResult> funcToInvoke;
-            if (this._SYNCHRONIZED)
+            if (this._IS_SYNCHRONIZED)
             {
                 funcToInvoke = this.InvokeRepoAction_ThreadSafe;
             }

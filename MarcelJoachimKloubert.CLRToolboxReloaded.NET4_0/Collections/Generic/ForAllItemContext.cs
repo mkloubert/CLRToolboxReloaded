@@ -15,15 +15,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         #region Constrcutors (4)
 
         /// <inheriteddoc />
-        public ForAllItemContext(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        public ForAllItemContext(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
-        public ForAllItemContext(bool synchronized)
-            : base(synchronized: synchronized)
+        public ForAllItemContext(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
         {
         }
 
@@ -74,15 +74,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         #region Constrcutors (4)
 
         /// <inheriteddoc />
-        public ForAllItemContext(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        public ForAllItemContext(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
-        public ForAllItemContext(bool synchronized)
-            : base(synchronized: synchronized)
+        public ForAllItemContext(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
         {
         }
 

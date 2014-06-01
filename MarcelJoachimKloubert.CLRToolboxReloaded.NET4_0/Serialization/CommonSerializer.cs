@@ -20,7 +20,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
         /// Initializes a new instance of the <see cref="SerializerBase" /> class.
         /// </summary>
         public CommonSerializer()
-            : base(synchronized: false)
+            : base(isSynchronized: false)
         {
         }
 

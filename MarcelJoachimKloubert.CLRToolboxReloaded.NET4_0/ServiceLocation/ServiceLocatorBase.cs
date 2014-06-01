@@ -17,28 +17,28 @@ namespace MarcelJoachimKloubert.CLRToolbox.ServiceLocation
         #region Constructors (2)
 
         /// <inheriteddoc />
-        protected ServiceLocatorBase(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        protected ServiceLocatorBase(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
-        protected ServiceLocatorBase(bool synchronized)
-            : base(synchronized: synchronized)
+        protected ServiceLocatorBase(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
         {
         }
 
         /// <inheriteddoc />
         protected ServiceLocatorBase(object sync)
-            : base(synchronized: true,
+            : base(isSynchronized: true,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
         protected ServiceLocatorBase()
-            : base(synchronized: true)
+            : base(isSynchronized: true)
         {
         }
 

@@ -30,13 +30,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </summary>
         /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
         /// <param name="argProvider">The value for the <see cref="WorkflowLogger.ProviderOfArguments" /> property.</param>
-        /// <param name="synchronized">Object is thread safe or not.</param>
+        /// <param name="isSynchronized">Object is thread safe or not.</param>
         /// <param name="sync">The unique object for sync operations.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="workflow" />, <paramref name="argProvider" /> and/or <paramref name="sync" /> are <see langword="null" />.
         /// </exception>
-        public WorkflowLogger(IWorkflow workflow, ArgumentProvider argProvider, bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        public WorkflowLogger(IWorkflow workflow, ArgumentProvider argProvider, bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
             if (workflow == null)
@@ -57,15 +57,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="WorkflowLogger" /> class.
         /// </summary>
         /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
-        /// <param name="synchronized">Object is thread safe or not.</param>
+        /// <param name="isSynchronized">Object is thread safe or not.</param>
         /// <param name="sync">The unique object for sync operations.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="workflow" /> and/or <paramref name="sync" /> are <see langword="null" />.
         /// </exception>
-        public WorkflowLogger(IWorkflow workflow, bool synchronized, object sync)
+        public WorkflowLogger(IWorkflow workflow, bool isSynchronized, object sync)
             : this(workflow: workflow,
                    argProvider: GetEmptyArguments,
-                   synchronized: synchronized,
+                   isSynchronized: isSynchronized,
                    sync: sync)
         {
         }
@@ -82,7 +82,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         public WorkflowLogger(IWorkflow workflow, ArgumentProvider argProvider, object sync)
             : this(workflow: workflow,
                    argProvider: argProvider,
-                   synchronized: false,
+                   isSynchronized: false,
                    sync: sync)
         {
         }
@@ -92,14 +92,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </summary>
         /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
         /// <param name="argProvider">The value for the <see cref="WorkflowLogger.ProviderOfArguments" /> property.</param>
-        /// <param name="synchronized">Object is thread safe or not.</param>
+        /// <param name="isSynchronized">Object is thread safe or not.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="workflow" /> and/or <paramref name="argProvider" /> are <see langword="null" />.
         /// </exception>
-        public WorkflowLogger(IWorkflow workflow, ArgumentProvider argProvider, bool synchronized)
+        public WorkflowLogger(IWorkflow workflow, ArgumentProvider argProvider, bool isSynchronized)
             : this(workflow: workflow,
                    argProvider: argProvider,
-                   synchronized: synchronized,
+                   isSynchronized: isSynchronized,
                    sync: new object())
         {
         }
@@ -114,7 +114,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </exception>
         public WorkflowLogger(IWorkflow workflow, object sync)
             : this(workflow: workflow,
-                   synchronized: false,
+                   isSynchronized: false,
                    sync: sync)
         {
         }
@@ -123,13 +123,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="WorkflowLogger" /> class.
         /// </summary>
         /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
-        /// <param name="synchronized">Object is thread safe or not.</param>
+        /// <param name="isSynchronized">Object is thread safe or not.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="workflow" /> is <see langword="null" />.
         /// </exception>
-        public WorkflowLogger(IWorkflow workflow, bool synchronized)
+        public WorkflowLogger(IWorkflow workflow, bool isSynchronized)
             : this(workflow: workflow,
-                   synchronized: synchronized,
+                   isSynchronized: isSynchronized,
                    sync: new object())
         {
         }
@@ -143,7 +143,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </exception>
         public WorkflowLogger(IWorkflow workflow)
             : this(workflow: workflow,
-                   synchronized: false)
+                   isSynchronized: false)
         {
         }
 
@@ -199,7 +199,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         {
             return Create(workflow: workflow,
                           args: args,
-                          synchronized: false,
+                          isSynchronized: false,
                           sync: sync);
         }
 
@@ -208,15 +208,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </summary>
         /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
         /// <param name="args">The arguments to use for each invokation.</param>
-        /// <param name="synchronized">Object is thread safe or not.</param>
+        /// <param name="isSynchronized">Object is thread safe or not.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="workflow" /> is <see langword="null" />.
         /// </exception>
-        public static WorkflowLogger Create(IWorkflow workflow, IEnumerable args, bool synchronized)
+        public static WorkflowLogger Create(IWorkflow workflow, IEnumerable args, bool isSynchronized)
         {
             return Create(workflow: workflow,
                           args: args,
-                          synchronized: synchronized,
+                          isSynchronized: isSynchronized,
                           sync: new object());
         }
 
@@ -225,16 +225,16 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </summary>
         /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
         /// <param name="args">The arguments to use for each invokation.</param>
-        /// <param name="synchronized">Object is thread safe or not.</param>
+        /// <param name="isSynchronized">Object is thread safe or not.</param>
         /// <param name="sync">The unique object for sync operations.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="workflow" /> and/or <paramref name="sync" /> are <see langword="null" />.
         /// </exception>
-        public static WorkflowLogger Create(IWorkflow workflow, IEnumerable args, bool synchronized, object sync)
+        public static WorkflowLogger Create(IWorkflow workflow, IEnumerable args, bool isSynchronized, object sync)
         {
             return new WorkflowLogger(workflow: workflow,
                                       argProvider: (l) => args,
-                                      synchronized: synchronized,
+                                      isSynchronized: isSynchronized,
                                       sync: sync);
         }
 

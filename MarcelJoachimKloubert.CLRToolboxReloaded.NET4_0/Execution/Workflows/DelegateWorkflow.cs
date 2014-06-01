@@ -23,13 +23,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// Initializes a new instance of the <see cref="DelegateWorkflow" /> class.
         /// </summary>
         /// <param name="provider">The value for the <see cref="DelegateWorkflow.Provider" /> property.</param>
-        /// <param name="synchronized">Instance should work thread safe or not.</param>
+        /// <param name="isSynchronized">Instance should work thread safe or not.</param>
         /// <param name="sync">The value for <see cref="ObjectBase._SYNC" /> field.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="provider" /> and/or <paramref name="sync" /> are <see langword="null" />.
         /// </exception>
-        public DelegateWorkflow(WorkflowActionProvider provider, bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        public DelegateWorkflow(WorkflowActionProvider provider, bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
             if (provider == null)
@@ -44,14 +44,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// Initializes a new instance of the <see cref="DelegateWorkflow" /> class.
         /// </summary>
         /// <param name="provider">The value for the <see cref="DelegateWorkflow.Provider" /> property.</param>
-        /// <param name="synchronized">Instance should work thread safe or not.</param>
+        /// <param name="isSynchronized">Instance should work thread safe or not.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="provider" /> is <see langword="null" />.
         /// </exception>
-        public DelegateWorkflow(WorkflowActionProvider provider, bool synchronized)
+        public DelegateWorkflow(WorkflowActionProvider provider, bool isSynchronized)
             : this(provider: provider,
                    sync: new object(),
-                   synchronized: synchronized)
+                   isSynchronized: isSynchronized)
         {
         }
 
@@ -67,7 +67,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         public DelegateWorkflow(WorkflowActionProvider provider, object sync)
             : this(provider: provider,
                    sync: sync,
-                   synchronized: false)
+                   isSynchronized: false)
         {
         }
 
@@ -81,7 +81,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// </exception>
         public DelegateWorkflow(WorkflowActionProvider provider)
             : this(provider: provider,
-                   synchronized: false)
+                   isSynchronized: false)
         {
         }
 
@@ -117,12 +117,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// Creates a new instance of the <see cref="DelegateWorkflow" /> class.
         /// </summary>
         /// <param name="action">The start action to use.</param>
-        /// <param name="synchronized">Instance should work thread safe or not.</param>
+        /// <param name="isSynchronized">Instance should work thread safe or not.</param>
         /// <param name="sync">The value for <see cref="ObjectBase._SYNC" /> field.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="action" /> and/or <paramref name="sync" /> are <see langword="null" />.
         /// </exception>
-        public static DelegateWorkflow Create(WorkflowAction action, bool synchronized, object sync)
+        public static DelegateWorkflow Create(WorkflowAction action, bool isSynchronized, object sync)
         {
             if (action == null)
             {
@@ -130,7 +130,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
             }
 
             return new DelegateWorkflow(provider: (wf, c) => action,
-                                        synchronized: synchronized,
+                                        isSynchronized: isSynchronized,
                                         sync: sync);
         }
 
@@ -145,7 +145,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         public static DelegateWorkflow Create(WorkflowAction action, object sync)
         {
             return Create(action: action,
-                          synchronized: false,
+                          isSynchronized: false,
                           sync: sync);
         }
 
@@ -153,14 +153,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// Creates a new instance of the <see cref="DelegateWorkflow" /> class.
         /// </summary>
         /// <param name="action">The start action to use.</param>
-        /// <param name="synchronized">Instance should work thread safe or not.</param>
+        /// <param name="isSynchronized">Instance should work thread safe or not.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="action" /> is <see langword="null" />.
         /// </exception>
-        public static DelegateWorkflow Create(WorkflowAction action, bool synchronized)
+        public static DelegateWorkflow Create(WorkflowAction action, bool isSynchronized)
         {
             return Create(action: action,
-                          synchronized: synchronized,
+                          isSynchronized: isSynchronized,
                           sync: new object());
         }
 
@@ -174,7 +174,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         public static DelegateWorkflow Create(WorkflowAction action)
         {
             return Create(action: action,
-                          synchronized: false);
+                          isSynchronized: false);
         }
 
         [WorkflowStart]

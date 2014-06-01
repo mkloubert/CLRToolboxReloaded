@@ -53,7 +53,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                 try
                 {
                     var ctx = new ForAllItemContext<T, TState>(sync: this.SYNC,
-                                                               synchronized: true)
+                                                               isSynchronized: true)
                     {
                         Index = this.INDEX,
                         Item = this.ITEM,

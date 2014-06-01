@@ -16,28 +16,28 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
         #region Constructors (4)
 
         /// <inheriteddoc />
-        protected SerializerBase(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        protected SerializerBase(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
-        protected SerializerBase(bool synchronized)
-            : base(synchronized: synchronized)
+        protected SerializerBase(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
         {
         }
 
         /// <inheriteddoc />
         protected SerializerBase(object sync)
-            : base(synchronized: true,
+            : base(isSynchronized: true,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
         protected SerializerBase()
-            : base(synchronized: true)
+            : base(isSynchronized: true)
         {
         }
 

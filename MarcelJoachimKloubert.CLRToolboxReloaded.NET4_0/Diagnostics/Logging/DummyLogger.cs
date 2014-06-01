@@ -16,13 +16,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Initializes a new instance of the <see cref="DummyLogger" /> class.
         /// </summary>
-        /// <param name="synchronized">Object is thread safe or not.</param>
+        /// <param name="isSynchronized">Object is thread safe or not.</param>
         /// <param name="sync">The unique object for sync operations.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        public DummyLogger(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        public DummyLogger(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
         }
@@ -30,9 +30,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Initializes a new instance of the <see cref="DummyLogger" /> class.
         /// </summary>
-        /// <param name="synchronized">Object is thread safe or not.</param>
-        public DummyLogger(bool synchronized)
-            : base(synchronized: synchronized)
+        /// <param name="isSynchronized">Object is thread safe or not.</param>
+        public DummyLogger(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
         {
         }
 

@@ -27,13 +27,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkflowBase" /> class.
         /// </summary>
-        /// <param name="synchronized">Instance should work thread safe or not.</param>
+        /// <param name="isSynchronized">Instance should work thread safe or not.</param>
         /// <param name="sync">The value for <see cref="ObjectBase._SYNC" /> field.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
-        public WorkflowBase(bool synchronized, object sync)
-            : base(synchronized: synchronized,
+        public WorkflowBase(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
             this._VARS = this.CreateVarStorage() ?? new Dictionary<string, object>();
@@ -42,9 +42,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkflowBase" /> class.
         /// </summary>
-        /// <param name="synchronized">Instance should work thread safe or not.</param>
-        public WorkflowBase(bool synchronized)
-            : base(synchronized: synchronized)
+        /// <param name="isSynchronized">Instance should work thread safe or not.</param>
+        public WorkflowBase(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
         {
         }
 
@@ -116,7 +116,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         public object Execute(params object[] args)
         {
             Func<object[], object> funcToInvoke;
-            if (this.Synchronized)
+            if (this._IS_SYNCHRONIZED)
             {
                 funcToInvoke = this.Execute_ThreadSafe;
             }
@@ -132,7 +132,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         public IEnumerator<WorkflowFunc> GetEnumerator()
         {
             Func<IEnumerator<WorkflowFunc>> funcToInvoke;
-            if (this._SYNCHRONIZED)
+            if (this._IS_SYNCHRONIZED)
             {
                 funcToInvoke = this.GetEnumerator_ThreadSafe;
             }

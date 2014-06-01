@@ -17,7 +17,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// <summary>
         /// Gets if that object works thread safe or not.
         /// </summary>
-        bool Synchronized { get; }
+        bool IsSynchronized { get; }
 
         /// <summary>
         /// Gets the object for thread safe operations.

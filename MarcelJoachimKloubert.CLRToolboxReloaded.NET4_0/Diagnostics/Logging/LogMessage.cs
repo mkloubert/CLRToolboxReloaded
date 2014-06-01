@@ -39,7 +39,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </summary>
         /// <param name="id">The (initial) value for the <see cref="LogMessage.Id" /> property.</param>
         public LogMessage(Guid id)
-            : base(synchronized: false)
+            : base(isSynchronized: false)
         {
             this._id = id;
         }
