@@ -162,7 +162,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
 
                         jsonWriter.Flush();
 
-                        var jsonFile = new FileInfo(this.FilePath);
+                        var jsonFile = new FileInfo(this._FILE_PATH);
                         if (jsonFile.Exists)
                         {
                             jsonFile.Delete();
@@ -205,8 +205,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
                                                        var keyValues = GlobalConverter.Current
                                                                                       .ChangeType<IDictionary<string, object>>(ctx.Item.Value);
 
-                                                       repo._VALUES[category ?? string.Empty] =
-                                                           keyValues ?? repo.CreateEmptyDictionaryForCategory(category);
+                                                       var valuesEntry = keyValues ?? repo.CreateEmptyDictionaryForCategory(category);
+                                                       if (valuesEntry != null)
+                                                       {
+                                                           repo._VALUES[category ?? string.Empty] = valuesEntry;
+                                                       }
                                                    }, actionState: new
                                                    {
                                                        Repo = this,

@@ -41,6 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -175,6 +176,30 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\Conversion\IConvertToArgs.cs">
       <Link>Data\Conversion\IConvertToArgs.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\Database\AdoDatabaseBase.cs">
+      <Link>Data\Database\AdoDatabaseBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\Database\AdoDataConnection.cs">
+      <Link>Data\Database\AdoDataConnection.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\Database\DatabaseBase.cs">
+      <Link>Data\Database\DatabaseBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\Database\IAdoDatabase.cs">
+      <Link>Data\Database\IAdoDatabase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\Database\IAdoDataConnection.cs">
+      <Link>Data\Database\IAdoDataConnection.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\Database\IDatabase.cs">
+      <Link>Data\Database\IDatabase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\DataConnectionBase.cs">
+      <Link>Data\DataConnectionBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\IDataConnection.cs">
+      <Link>Data\IDataConnection.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\AggregateLogger.cs">
       <Link>Diagnostics\Logging\AggregateLogger.cs</Link>
     </Compile>
@@ -281,6 +306,9 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Workflows\WorkflowStartAttribute.cs">
       <Link>Execution\Workflows\WorkflowStartAttribute.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ClrToolboxDataExtensionMethods.cs">
+      <Link>Extensions\ClrToolboxDataExtensionMethods.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ClrToolboxExtensionMethods.cs">
       <Link>Extensions\ClrToolboxExtensionMethods.cs</Link>
     </Compile>
@@ -334,6 +362,44 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.Transform.cs">
       <Link>Extensions\Collections.Transform.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Compression.cs">
+      <Link>Extensions\Compression.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Compression.GUnzip.cs">
+      <Link>Extensions\Compression.GUnzip.cs</Link>
+      <DependentUpon>Compression.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Compression.GZip.cs">
+      <Link>Extensions\Compression.GZip.cs</Link>
+      <DependentUpon>Compression.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.cs">
+      <Link>Extensions\Data.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.FromDbValue.cs">
+      <Link>Extensions\Data.FromDbValue.cs</Link>
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.ToDbValue.cs">
+      <Link>Extensions\Data.ToDbValue.cs</Link>
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.ToEnumerable.cs">
+      <Link>Extensions\Data.ToEnumerable.cs</Link>
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.ToEnumerable.Odbc.cs">
+      <Link>Extensions\Data.ToEnumerable.Odbc.cs</Link>
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.ToEnumerable.OleDb.cs">
+      <Link>Extensions\Data.ToEnumerable.OleDb.cs</Link>
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.ToEnumerable.SqlClient.cs">
+      <Link>Extensions\Data.ToEnumerable.SqlClient.cs</Link>
+      <DependentUpon>Data.cs</DependentUpon>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Reflection.cs">
       <Link>Extensions\Reflection.cs</Link>
@@ -468,6 +534,16 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\SerializerBase.cs">
       <Link>Serialization\SerializerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ServiceLocation\DelegateServiceLocator.Classes.cs">
+      <Link>ServiceLocation\DelegateServiceLocator.Classes.cs</Link>
+      <DependentUpon>DelegateServiceLocator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ServiceLocation\DelegateServiceLocator.cs">
+      <Link>ServiceLocation\DelegateServiceLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ServiceLocation\ExportProviderServiceLocator.cs">
+      <Link>ServiceLocation\ExportProviderServiceLocator.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ServiceLocation\IServiceLocator.cs">
       <Link>ServiceLocation\IServiceLocator.cs</Link>

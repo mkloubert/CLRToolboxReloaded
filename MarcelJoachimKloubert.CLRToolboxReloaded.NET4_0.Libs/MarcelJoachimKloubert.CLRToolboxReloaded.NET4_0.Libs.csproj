@@ -40,10 +40,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -113,6 +115,7 @@
     <Compile Include="DotLiquid\Util\TypeUtility.cs" />
     <Compile Include="DotLiquid\Util\WeakTable.cs" />
     <Compile Include="DotLiquid\Variable.cs" />
+    <Compile Include="DotNetWikiBot\DotNetWikiBot.cs" />
     <Compile Include="FreeImage\Classes\FreeImageBitmap.cs" />
     <Compile Include="FreeImage\Classes\FreeImageEngine.cs" />
     <Compile Include="FreeImage\Classes\FreeImagePlugin.cs" />

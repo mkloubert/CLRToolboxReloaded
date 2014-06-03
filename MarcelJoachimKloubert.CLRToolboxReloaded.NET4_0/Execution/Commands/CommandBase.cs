@@ -43,8 +43,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Commands
 
         #region Delegates and Events (2)
 
-        // Events (2) 
-
         /// <inheriteddoc />
         public event EventHandler CanExecuteChanged;
 
@@ -54,8 +52,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Commands
         #endregion Delegates and Events
 
         #region Methods (5)
-
-        // Public Methods (3) 
 
         /// <inheriteddoc />
         public virtual bool CanExecute(TParam param)
@@ -89,12 +85,18 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Commands
         }
 
         /// <summary>
+        /// The logic of the <see cref="CommandBase{TParam}.Execute(TParam)" /> method.
+        /// </summary>
+        /// <param name="param">The parameter for the execution.</param>
+        protected abstract void OnExecute(TParam param);
+
+        /// <summary>
         /// Raises the <see cref="CommandBase{TParam}.CanExecuteChanged" /> event.
         /// </summary>
         /// <returns>Event was raised or not.</returns>
         public bool RaiseCanExecuteChanged()
         {
-            EventHandler handler = this.CanExecuteChanged;
+            var handler = this.CanExecuteChanged;
             if (handler != null)
             {
                 handler(this, EventArgs.Empty);
@@ -104,19 +106,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Commands
             return false;
         }
 
-        // Protected Methods (1) 
-
-        /// <summary>
-        /// The logic of the <see cref="CommandBase{TParam}.Execute(TParam)" /> method.
-        /// </summary>
-        /// <param name="param">The parameter for the execution.</param>
-        protected abstract void OnExecute(TParam param);
-
-        // Private Methods (1) 
-
         private bool RaiseExecutionError(TParam param, Exception ex)
         {
-            EventHandler<ExecutionErrorEventArgs<TParam>> handler = this.ExecutionError;
+            var handler = this.ExecutionError;
             if (handler != null)
             {
                 handler(this, new ExecutionErrorEventArgs<TParam>(param, ex));

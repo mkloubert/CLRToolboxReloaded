@@ -29,39 +29,42 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
         [Test]
         public void Functions()
         {
-            var executor = new JurassicScriptExecutor();
+            bool test1;
+            TestClass test3;
+            IScriptExecutionContext ctx;
 
-            var test1 = false;
-            var action1 = new Action(() => test1 = true);
-
-            var action2 = new Func<int, int>((input) => input * 2);
-
-            
-
-            var test3 = new TestClass();
-            executor.SetVariable("test3", test3);
-            
-            var action3 = new Action(() =>
+            using (var executor = new JurassicScriptExecutor())
             {
-                if (test1)
+                test1 = false;
+                var action1 = new Action(() => test1 = true);
+
+                var action2 = new Func<int, int>((input) => input * 2);
+
+                test3 = new TestClass();
+                executor.SetVariable("test3", test3);
+
+                var action3 = new Action(() =>
                 {
-                    throw new Exception();
-                }
+                    if (test1)
+                    {
+                        throw new Exception();
+                    }
 
-                ++test3.Test;
-            });
+                    ++test3.Test;
+                });
 
-            executor.SetFunction("testAction1", action1);
-            executor.SetFunction("testAction2", action2);
-            executor.SetFunction("testAction3", action3);
+                executor.SetFunction("testAction1", action1);
+                executor.SetFunction("testAction2", action2);
+                executor.SetFunction("testAction3", action3);
 
-            var ctx = executor.Execute(@"
+                ctx = executor.Execute(@"
 testAction1();
 
 test3.Test = 1 + testAction2(4) * 2;
 
 testAction3();
 ");
+            }
 
             Assert.IsTrue(ctx.HasFailed);
             Assert.IsTrue(test1);

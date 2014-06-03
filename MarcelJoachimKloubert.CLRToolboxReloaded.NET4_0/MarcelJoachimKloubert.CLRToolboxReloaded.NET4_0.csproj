@@ -41,6 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -100,6 +101,14 @@
     <Compile Include="Data\Conversion\GlobalConverter.cs" />
     <Compile Include="Data\Conversion\IConverter.cs" />
     <Compile Include="Data\Conversion\IConvertToArgs.cs" />
+    <Compile Include="Data\Database\AdoDatabaseBase.cs" />
+    <Compile Include="Data\Database\AdoDataConnection.cs" />
+    <Compile Include="Data\Database\DatabaseBase.cs" />
+    <Compile Include="Data\Database\IAdoDatabase.cs" />
+    <Compile Include="Data\Database\IAdoDataConnection.cs" />
+    <Compile Include="Data\Database\IDatabase.cs" />
+    <Compile Include="Data\DataConnectionBase.cs" />
+    <Compile Include="Data\IDataConnection.cs" />
     <Compile Include="Diagnostics\Logging\AggregateLogger.cs" />
     <Compile Include="Diagnostics\Logging\AsyncLogger.cs" />
     <Compile Include="Diagnostics\Logging\DelegateLogger.cs" />
@@ -137,6 +146,7 @@
     <Compile Include="Execution\Workflows\WorkflowBase.cs" />
     <Compile Include="Execution\Workflows\WorkflowExecutionContext.cs" />
     <Compile Include="Execution\Workflows\WorkflowStartAttribute.cs" />
+    <Compile Include="Extensions\ClrToolboxDataExtensionMethods.cs" />
     <Compile Include="Extensions\ClrToolboxExtensionMethods.cs" />
     <Compile Include="Extensions\Collections.AddRange.cs">
       <DependentUpon>Collections.cs</DependentUpon>
@@ -175,6 +185,26 @@
     <Compile Include="Extensions\Collections.Transform.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Compression.GUnzip.cs">
+      <DependentUpon>Compression.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Compression.GZip.cs">
+      <DependentUpon>Compression.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Compression.cs" />
+    <Compile Include="Extensions\Data.cs" />
+    <Compile Include="Extensions\Data.ToEnumerable.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Data.ToEnumerable.Odbc.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Data.ToEnumerable.OleDb.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Data.ToEnumerable.SqlClient.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Reflection.cs" />
     <Compile Include="Extensions\Reflection.TryGetDelegateTypeFromMethod.cs">
       <DependentUpon>Reflection.cs</DependentUpon>
@@ -200,6 +230,9 @@
     <Compile Include="Extensions\ValuesAndObjects.DisposeEx.cs">
       <DependentUpon>ValuesAndObjects.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Data.FromDbValue.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\ValuesAndObjects.IsNotTrue.cs">
       <DependentUpon>ValuesAndObjects.cs</DependentUpon>
     </Compile>
@@ -217,6 +250,9 @@
     </Compile>
     <Compile Include="Extensions\ValuesAndObjects.IsNull.cs">
       <DependentUpon>ValuesAndObjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Data.ToDbValue.cs">
+      <DependentUpon>Data.cs</DependentUpon>
     </Compile>
     <Compile Include="IdentifiableBase.cs" />
     <Compile Include="IDisposableObject.cs" />
@@ -245,10 +281,15 @@
       <DependentUpon>ScriptExecutorBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Serialization\CommonSerializer.cs" />
+    <Compile Include="ServiceLocation\DelegateServiceLocator.Classes.cs">
+      <DependentUpon>DelegateServiceLocator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceLocation\DelegateServiceLocator.cs" />
     <Compile Include="Serialization\ISerializer.cs" />
     <Compile Include="Serialization\Json\JsonParamResult.cs" />
     <Compile Include="Serialization\Json\JsonResult.cs" />
     <Compile Include="Serialization\SerializerBase.cs" />
+    <Compile Include="ServiceLocation\ExportProviderServiceLocator.cs" />
     <Compile Include="ServiceLocation\IServiceLocator.cs" />
     <Compile Include="ServiceLocation\ServiceActivationException.cs" />
     <Compile Include="ServiceLocation\ServiceLocator.cs" />
@@ -269,6 +310,7 @@
       <Name>MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

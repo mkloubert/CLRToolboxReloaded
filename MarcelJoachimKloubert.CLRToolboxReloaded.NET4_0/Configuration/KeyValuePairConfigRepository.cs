@@ -170,6 +170,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// <summary>
         /// Is invoked after data were updated.
         /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="category">The name of the category.</param>
+        /// <param name="name">The name of the value.</param>
         protected virtual void OnUpdated(UpdateContext context, string category, string name)
         {
             // dummy

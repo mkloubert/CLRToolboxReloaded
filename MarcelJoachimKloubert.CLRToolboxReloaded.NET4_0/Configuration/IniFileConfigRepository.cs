@@ -283,7 +283,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
 
                     writer.Flush();
 
-                    var iniFile = new FileInfo(this.FilePath);
+                    var iniFile = new FileInfo(this._FILE_PATH);
                     if (iniFile.Exists)
                     {
                         iniFile.Delete();

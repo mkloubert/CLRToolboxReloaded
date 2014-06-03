@@ -40,6 +40,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2089,6 +2091,9 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Util\WeakTable.cs">
       <Link>DotLiquid\Util\WeakTable.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotNetWikiBot\DotNetWikiBot.cs">
+      <Link>DotNetWikiBot\DotNetWikiBot.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -2136,5 +2141,6 @@
     <Folder Include="MarkdownSharp\" />
     <Folder Include="FreeImage\" />
     <Folder Include="DotLiquid\" />
+    <Folder Include="DotNetWikiBot\" />
   </ItemGroup>
 </Project>

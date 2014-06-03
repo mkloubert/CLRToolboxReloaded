@@ -60,7 +60,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
 
             // one task for each item
             Assert.IsTrue(tasks.Count() == 6);
-            // nothiong executed yet
+            // nothing executed yet
             Assert.IsTrue(result == 0);
 
             foreach (var t in tasks)
