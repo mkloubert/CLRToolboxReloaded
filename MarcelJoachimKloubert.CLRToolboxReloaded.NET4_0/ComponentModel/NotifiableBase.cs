@@ -104,7 +104,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
         /// </exception>
         protected T Get<T>(Expression<Func<T>> expr)
         {
-            return this.Get<T>(propertyName: GetPropertyName<T>(expr).AsChars());
+            return this.Get<T>(propertyName: GetPropertyName<T>(expr));
         }
 
         /// <summary>
@@ -114,32 +114,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
         /// <param name="propertyName">The name of the property.</param>
         /// <returns>The value of the property.</returns>
         /// <remarks>If property value does not exist, the default value of the target type will be returned.</remarks>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="propertyName" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// <paramref name="propertyName" /> is invalid.
-        /// </exception>
         protected T Get<T>(
 #if KNOWS_CALLER_MEMBER_NAME
                            [global::System.Runtime.CompilerServices.CallerMemberName]
-                           IEnumerable<char> propertyName = null
+                           string propertyName = null
 #else
-                           IEnumerable<char> propertyName
+                           string propertyName
 #endif
 )
         {
-            if (propertyName == null)
-            {
-                throw new ArgumentNullException("propertyName");
-            }
-
-            string pn = propertyName.AsString().Trim();
-            if (pn == string.Empty)
-            {
-                throw new ArgumentException("propertyName");
-            }
-
             return this.InvokeThreadSafe((obj, state) =>
                 {
                     var no = (NotifiableBase)obj;
@@ -155,7 +138,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
                                           .ChangeType<T>(temp);
                 }, funcState: new
                 {
-                    PropertyName = pn,
+                    PropertyName = propertyName,
                 });
         }
 
@@ -251,12 +234,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
                 {
 #if KNOWS_PROPERTY_CHANGING
                     ctx.State.Object
-                             .OnPropertyChanging(ctx.Item.Name
-                                                         .AsChars());
+                             .OnPropertyChanging(ctx.Item.Name);
 #endif
                     ctx.State.Object
-                             .OnPropertyChanged(ctx.Item.Name
-                                                        .AsChars());
+                             .OnPropertyChanged(ctx.Item.Name);
                 }, actionState: new
                 {
                     Object = this,
@@ -378,20 +359,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
         /// </summary>
         /// <param name="propertyName">The name of the property that has been changed.</param>
         /// <returns>Event was raised or not.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="propertyName" /> is <see langword="null" />.
-        /// </exception>
-        protected bool OnPropertyChanged(IEnumerable<char> propertyName)
+        protected bool OnPropertyChanged(string propertyName)
         {
-            if (propertyName == null)
-            {
-                throw new ArgumentNullException("propertyName");
-            }
-
             var handler = this.PropertyChanged;
             if (handler != null)
             {
-                handler(this, new PropertyChangedEventArgs(propertyName.AsString()));
+                handler(this, new PropertyChangedEventArgs(propertyName));
                 return true;
             }
 
@@ -405,10 +378,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
         /// </summary>
         /// <param name="propertyName">The name of the property that is changing.</param>
         /// <returns>Event was raised or not.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="propertyName" /> is <see langword="null" />.
-        /// </exception>
-        public bool OnPropertyChanging(global::System.Collections.Generic.IEnumerable<char> propertyName)
+        public bool OnPropertyChanging(string propertyName)
         {
             if (propertyName == null)
             {
@@ -418,7 +388,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
             var handler = this.PropertyChanging;
             if (handler != null)
             {
-                handler(this, new global::System.ComponentModel.PropertyChangingEventArgs(propertyName.AsString()));
+                handler(this, new global::System.ComponentModel.PropertyChangingEventArgs(propertyName));
                 return true;
             }
 
@@ -440,7 +410,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
         protected bool Set<T>(T value, Expression<Func<T>> expr)
         {
             return this.Set<T>(value: value,
-                               propertyName: GetPropertyName<T>(expr).AsChars());
+                               propertyName: GetPropertyName<T>(expr));
         }
 
         /// <summary>
@@ -459,9 +429,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
         protected bool Set<T>(T value,
 #if KNOWS_CALLER_MEMBER_NAME
                               [global::System.Runtime.CompilerServices.CallerMemberName]
-                              IEnumerable<char> propertyName = null
+                              string propertyName = null
 #else
-                              IEnumerable<char> propertyName
+                              string propertyName
 #endif
 )
         {
@@ -495,10 +465,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
                     if (areDifferent)
                     {
 #if KNOWS_PROPERTY_CHANGING
-                        this.OnPropertyChanging(pn.AsChars());
+                        this.OnPropertyChanging(state.PropertyName);
 #endif
-                        propertyValues[pn] = value;
-                        no.OnPropertyChanged(pn.AsChars());
+                        propertyValues[state.PropertyName] = value;
+                        no.OnPropertyChanged(state.PropertyName);
                     }
 
                     return areDifferent;

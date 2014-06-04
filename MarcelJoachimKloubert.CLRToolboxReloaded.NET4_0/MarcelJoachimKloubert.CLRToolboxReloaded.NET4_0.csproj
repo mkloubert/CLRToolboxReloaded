@@ -192,6 +192,12 @@
       <DependentUpon>Compression.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Compression.cs" />
+    <Compile Include="Extensions\Data.Build.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Data.BuildAll.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Data.cs" />
     <Compile Include="Extensions\Data.ExecuteEnumerableReader.SqlClient.cs">
       <DependentUpon>Data.cs</DependentUpon>
@@ -309,6 +315,15 @@
     <Compile Include="ServiceLocation\ServiceActivationException.cs" />
     <Compile Include="ServiceLocation\ServiceLocator.cs" />
     <Compile Include="ServiceLocation\ServiceLocatorBase.cs" />
+    <Compile Include="Text\Html\Builders\HtmlBuilderBase.cs" />
+    <Compile Include="Text\Html\Builders\IHtmlBuilder.cs" />
+    <Compile Include="Text\Html\DotLiquidHtmlTemplate.cs" />
+    <Compile Include="Text\Html\HtmlTemplateBase.cs" />
+    <Compile Include="Text\Html\IHtmlTemplate.cs" />
+    <Compile Include="Text\IStringTemplate.cs" />
+    <Compile Include="Text\ITemplate.cs" />
+    <Compile Include="Text\StringTemplateBase.cs" />
+    <Compile Include="Text\TemplateBase.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyDictionary.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyList.cs" />

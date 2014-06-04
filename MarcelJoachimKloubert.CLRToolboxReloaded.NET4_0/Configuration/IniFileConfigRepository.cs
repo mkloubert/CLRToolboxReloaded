@@ -304,11 +304,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// </summary>
         /// <param name="input">The input expression.</param>
         /// <returns>The parsed name of the section key.</returns>
-        protected virtual IEnumerable<char> ParseBackIniSectionKey(string input)
+        protected virtual string ParseBackIniSectionKey(string input)
         {
             return (input ?? string.Empty).Replace("\\=", "=")
-                                          .Trim()
-                                          .AsChars();
+                                          .Trim();
         }
 
         /// <summary>
@@ -316,12 +315,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// </summary>
         /// <param name="input">The input expression.</param>
         /// <returns>The parsed name of the section.</returns>
-        protected virtual IEnumerable<char> ParseBackIniSectionName(string input)
+        protected virtual string ParseBackIniSectionName(string input)
         {
             return (input ?? string.Empty).Replace("\\[", "[")
                                           .Replace("\\]", "]")
-                                          .Trim()
-                                          .AsChars();
+                                          .Trim();
         }
 
         /// <summary>

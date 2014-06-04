@@ -2,10 +2,6 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-#if !(PORTABLE || PORTABLE40)
-#define STRING_IS_CHAR_SEQUENCE
-#endif
-
 using MarcelJoachimKloubert.CLRToolbox.Data.Conversion;
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
@@ -81,14 +77,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         }
 
         /// <inheriteddoc />
-        public bool ContainsValue(IEnumerable<char> name)
-        {
-            return this.ContainsValue(name,
-                                      category: null);
-        }
-
-        /// <inheriteddoc />
-        public bool ContainsValue(IEnumerable<char> name, IEnumerable<char> category)
+        public bool ContainsValue(string name, string category = null)
         {
             return this.InvokeRepoFunc((repo, state) =>
                 {
@@ -120,14 +109,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         }
 
         /// <inheriteddoc />
-        public bool DeleteValue(IEnumerable<char> name)
-        {
-            return this.DeleteValue(name,
-                                    category: null);
-        }
-
-        /// <inheriteddoc />
-        public bool DeleteValue(IEnumerable<char> name, IEnumerable<char> category)
+        public bool DeleteValue(string name, string category = null)
         {
             return this.InvokeRepoFunc((repo, state) =>
                 {
@@ -153,7 +135,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// <inheriteddoc />
         public IEnumerable<string> GetCategoryNames()
         {
-            var names = this.OnGetCategoryNames() ?? Enumerable.Empty<IEnumerable<char>>();
+            var names = this.OnGetCategoryNames() ?? Enumerable.Empty<string>();
 
             return names.Select(n =>
                                 {
@@ -165,28 +147,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         }
 
         /// <inheriteddoc />
-        public object GetValue(IEnumerable<char> name)
-        {
-            return this.GetValue(name,
-                                 category: null);
-        }
-
-        /// <inheriteddoc />
-        public T GetValue<T>(IEnumerable<char> name)
-        {
-            return this.GetValue<T>(name,
-                                    category: null);
-        }
-
-        /// <inheriteddoc />
-        public object GetValue(IEnumerable<char> name, IEnumerable<char> category)
+        public object GetValue(string name, string category = null)
         {
             return this.GetValue<object>(name,
                                          category: category);
         }
 
         /// <inheriteddoc />
-        public T GetValue<T>(IEnumerable<char> name, IEnumerable<char> category)
+        public T GetValue<T>(string name, string category = null)
         {
             return this.InvokeRepoFunc((repo, state) =>
                 {
@@ -217,28 +185,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         }
 
         /// <inheriteddoc />
-        public bool SetValue(IEnumerable<char> name, object value)
-        {
-            return this.SetValue(name, value,
-                                 category: null);
-        }
-
-        /// <inheriteddoc />
-        public bool SetValue<T>(IEnumerable<char> name, T value)
-        {
-            return this.SetValue<T>(name, value,
-                                    category: null);
-        }
-
-        /// <inheriteddoc />
-        public bool SetValue(IEnumerable<char> name, object value, IEnumerable<char> category)
+        public bool SetValue(string name, object value, string category = null)
         {
             return this.SetValue<object>(name, value,
                                          category: category);
         }
 
         /// <inheriteddoc />
-        public bool SetValue<T>(IEnumerable<char> name, T value, IEnumerable<char> category)
+        public bool SetValue<T>(string name, T value, string category = null)
         {
             return this.InvokeRepoFunc((repo, state) =>
                 {
@@ -264,35 +218,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         }
 
         /// <inheriteddoc />
-        public bool TryGetValue<T>(IEnumerable<char> name, out T value)
-        {
-            return this.TryGetValue<T>(name, out value,
-                                       category: null);
-        }
-
-        /// <inheriteddoc />
-        public bool TryGetValue(IEnumerable<char> name, out object value)
-        {
-            return this.TryGetValue(name, out value,
-                                    category: null);
-        }
-
-        /// <inheriteddoc />
-        public bool TryGetValue<T>(IEnumerable<char> name, out T value, IEnumerable<char> category)
-        {
-            return this.TryGetValue<T>(name, out value,
-                                      category: category, defaultVal: default(T));
-        }
-
-        /// <inheriteddoc />
-        public bool TryGetValue(IEnumerable<char> name, out object value, IEnumerable<char> category)
-        {
-            return this.TryGetValue(name, out value,
-                                    category: category, defaultVal: null);
-        }
-
-        /// <inheriteddoc />
-        public bool TryGetValue(IEnumerable<char> name, out object value, IEnumerable<char> category, object defaultVal)
+        public bool TryGetValue(string name, out object value, string category = null, object defaultVal = null)
         {
             return this.TryGetValue<object>(name,
                                             out value,
@@ -300,21 +226,23 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         }
 
         /// <inheriteddoc />
-        public bool TryGetValue<T>(IEnumerable<char> name, out T value, IEnumerable<char> category, T defaultVal)
+        public bool TryGetValue<T>(string name, out T value, string category = null, T defaultVal = default(T))
         {
             return this.TryGetValue<T>(name, out value,
-                                       category: category, defaultValProvider: (c, n) => defaultVal);
+                                       category: category,
+                                       defaultValProvider: (c, n) => defaultVal);
         }
 
         /// <inheriteddoc />
-        public bool TryGetValue(IEnumerable<char> name, out object value, IEnumerable<char> category, DefaultConfigValueProvider<object> defaultValProvider)
+        public bool TryGetValue(string name, out object value, string category, DefaultConfigValueProvider<object> defaultValProvider)
         {
             return this.TryGetValue<object>(name, out value,
-                                           category: category, defaultValProvider: defaultValProvider);
+                                            category: category,
+                                            defaultValProvider: defaultValProvider);
         }
 
         /// <inheriteddoc />
-        public bool TryGetValue<T>(IEnumerable<char> name, out T value, IEnumerable<char> category, DefaultConfigValueProvider<T> defaultValProvider)
+        public bool TryGetValue<T>(string name, out T value, string category, DefaultConfigValueProvider<T> defaultValProvider)
         {
             if (defaultValProvider == null)
             {
@@ -456,7 +384,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         protected abstract void OnClear(ref bool wasCleared);
 
         /// <summary>
-        /// The logic for <see cref="ConfigRepositoryBase.ContainsValue(IEnumerable{char}, IEnumerable{char})" /> method.
+        /// The logic for <see cref="ConfigRepositoryBase.ContainsValue(string, string)" /> method.
         /// </summary>
         /// <param name="category">The category.</param>
         /// <param name="name">The name.</param>
@@ -467,13 +395,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         protected virtual void OnContainsValue(string category, string name, ref bool exists)
         {
             object dummy;
-            exists = this.TryGetValue(name: name.AsChars(),
+            exists = this.TryGetValue(name: name,
                                       value: out dummy,
-                                      category: category.AsChars());
+                                      category: category);
         }
 
         /// <summary>
-        /// The logic for <see cref="ConfigRepositoryBase.DeleteValue(IEnumerable{char}, IEnumerable{char})" /> method.
+        /// The logic for <see cref="ConfigRepositoryBase.DeleteValue(string, string)" /> method.
         /// </summary>
         /// <param name="category">The category.</param>
         /// <param name="name">The name.</param>
@@ -486,10 +414,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// <summary>
         /// The logic for <see cref="ConfigRepositoryBase.GetCategoryNames()" />
         /// </summary>
-        protected abstract IEnumerable<IEnumerable<char>> OnGetCategoryNames();
+        protected abstract IEnumerable<string> OnGetCategoryNames();
 
         /// <summary>
-        /// Stores the logic for <see cref="ConfigRepositoryBase.SetValue{T}(IEnumerable{char}, T, IEnumerable{char})" /> method.
+        /// Stores the logic for <see cref="ConfigRepositoryBase.SetValue{T}(string, T, string)" /> method.
         /// </summary>
         /// <typeparam name="T">Type of rhe value to set.</typeparam>
         /// <param name="category">The category where the value should be stored to.</param>
@@ -502,7 +430,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         protected abstract void OnSetValue<T>(string category, string name, T value, ref bool valueWasSet);
 
         /// <summary>
-        /// Stores the logic for <see cref="ConfigRepositoryBase.TryGetValue{T}(IEnumerable{char}, out T, IEnumerable{char}, T)" /> method.
+        /// Stores the logic for <see cref="ConfigRepositoryBase.TryGetValue{T}(string, out T, string, T)" /> method.
         /// </summary>
         /// <typeparam name="T">Result type.</typeparam>
         /// <param name="category">The category.</param>
@@ -521,16 +449,16 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// <param name="name">The name value to parse.</param>
         /// <param name="newCategory">The target category value.</param>
         /// <param name="newName">The target name value.</param>
-        protected virtual void PrepareCategoryAndName(IEnumerable<char> category, IEnumerable<char> name,
+        protected virtual void PrepareCategoryAndName(string category, string name,
                                                       out string newCategory, out string newName)
         {
-            newCategory = (category.AsString() ?? string.Empty).ToLower().Trim();
+            newCategory = (category ?? string.Empty).ToLower().Trim();
             if (newCategory == string.Empty)
             {
                 newCategory = null;
             }
 
-            newName = (name.AsString() ?? string.Empty).ToLower().Trim();
+            newName = (name ?? string.Empty).ToLower().Trim();
             if (newName == string.Empty)
             {
                 newName = null;
@@ -579,6 +507,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
             return result;
         }
 
-        #endregion Methods
+        #endregion Methods (29)
     }
 }

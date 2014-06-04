@@ -121,44 +121,43 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         protected override void OnDeleteValue(string category, string name, ref bool deleted)
         {
             deleted = this._INNER_CONF
-                          .DeleteValue(name: name.AsChars(),
-                                       category: category.AsChars());
+                          .DeleteValue(name: name,
+                                       category: category);
         }
 
         /// <inheriteddoc />
-        protected override IEnumerable<IEnumerable<char>> OnGetCategoryNames()
+        protected override IEnumerable<string> OnGetCategoryNames()
         {
             return this._INNER_CONF
-                       .GetCategoryNames()
-                       .Select(n => n.AsChars());
+                       .GetCategoryNames();
         }
 
         /// <inheriteddoc />
         protected override void OnSetValue<T>(string category, string name, T value, ref bool valueWasSet)
         {
             valueWasSet = this._INNER_CONF
-                              .SetValue<T>(name: name.AsChars(),
+                              .SetValue<T>(name: name,
                                            value: value,
-                                           category: category.AsChars());
+                                           category: category);
         }
 
         /// <inheriteddoc />
         protected override void OnTryGetValue<T>(string category, string name, ref T foundValue, ref bool valueWasFound)
         {
             valueWasFound = this._INNER_CONF
-                                .TryGetValue<T>(name: name.AsChars(),
+                                .TryGetValue<T>(name: name,
                                                 value: out foundValue,
-                                                category: category.AsChars());
+                                                category: category);
         }
 
         /// <inheriteddoc />
-        protected override void PrepareCategoryAndName(IEnumerable<char> category, IEnumerable<char> name,
+        protected override void PrepareCategoryAndName(string category, string name,
                                                        out string newCategory, out string newName)
         {
             base.PrepareCategoryAndName(string.Format("{0}{1}{2}",
                                                       this._PREFIX,
                                                       (category.AsString() ?? string.Empty).Trim(),
-                                                      this._SUFFIX).AsChars(),
+                                                      this._SUFFIX),
                                         name,
                                         out newCategory, out newName);
         }

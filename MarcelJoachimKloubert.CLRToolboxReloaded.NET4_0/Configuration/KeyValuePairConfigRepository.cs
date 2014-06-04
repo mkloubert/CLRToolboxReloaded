@@ -95,11 +95,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         }
 
         /// <inheriteddoc />
-        protected override IEnumerable<IEnumerable<char>> OnGetCategoryNames()
+        protected override IEnumerable<string> OnGetCategoryNames()
         {
             return this._VALUES
-                       .Keys
-                       .Select(k => k.AsChars());
+                       .Keys;
         }
 
         /// <summary>
@@ -179,7 +178,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         }
 
         /// <inheriteddoc />
-        protected override void PrepareCategoryAndName(IEnumerable<char> category, IEnumerable<char> name,
+        protected override void PrepareCategoryAndName(string category, string name,
                                                        out string newCategory, out string newName)
         {
             base.PrepareCategoryAndName(category, name,

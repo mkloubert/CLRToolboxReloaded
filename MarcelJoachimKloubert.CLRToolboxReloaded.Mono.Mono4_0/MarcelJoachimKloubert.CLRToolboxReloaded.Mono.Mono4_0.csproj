@@ -527,6 +527,39 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.ExecuteEnumerableReader.SqlClient.cs">
       <Link>Extensions\Data.ExecuteEnumerableReader.SqlClient.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.Build.cs">
+      <Link>Extensions\Data.Build.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.BuildAll.cs">
+      <Link>Extensions\Data.BuildAll.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\IStringTemplate.cs">
+      <Link>Text\IStringTemplate.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\ITemplate.cs">
+      <Link>Text\ITemplate.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\StringTemplateBase.cs">
+      <Link>Text\StringTemplateBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\TemplateBase.cs">
+      <Link>Text\TemplateBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\Html\HtmlTemplateBase.cs">
+      <Link>Text\Html\HtmlTemplateBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\Html\IHtmlTemplate.cs">
+      <Link>Text\Html\IHtmlTemplate.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\Html\Builders\HtmlBuilderBase.cs">
+      <Link>Text\Html\Builders\HtmlBuilderBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\Html\Builders\IHtmlBuilder.cs">
+      <Link>Text\Html\Builders\IHtmlBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\Html\DotLiquidHtmlTemplate.cs">
+      <Link>Text\Html\DotLiquidHtmlTemplate.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -546,6 +579,7 @@
     <Folder Include="Objects\" />
     <Folder Include="Scripting\" />
     <Folder Include="Caching\" />
+    <Folder Include="Text\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs.csproj">
