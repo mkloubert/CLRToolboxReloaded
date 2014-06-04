@@ -169,8 +169,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ServiceLocation
             InstanceProvider provider;
             if (this._MULTI_PROVIDERS.TryGetValue(serviceType, out provider))
             {
-                var seq = provider.Invoke<IEnumerable>(this.BaseLocator,
-                                                       key);
+                var seq = provider.Invoke<IEnumerable>(this, key);
 
                 if (seq != null)
                 {
@@ -219,8 +218,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ServiceLocation
             InstanceProvider provider;
             if (this._SINGLE_PROVIDERS.TryGetValue(serviceType, out provider))
             {
-                result = provider.Invoke<object>(this.BaseLocator,
-                                                 key);
+                result = provider.Invoke<object>(this, key);
 
                 if (result == null)
                 {

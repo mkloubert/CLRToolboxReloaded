@@ -193,6 +193,21 @@
     </Compile>
     <Compile Include="Extensions\Compression.cs" />
     <Compile Include="Extensions\Data.cs" />
+    <Compile Include="Extensions\Data.ExecuteEnumerableReader.SqlClient.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Data.ExecuteEnumerableReader.OleDb.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Data.ExecuteEnumerableReader.Odbc.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Data.ExecuteEnumerableReader.Common.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Data.ExecuteEnumerableReader.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Data.ToEnumerable.cs">
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>
