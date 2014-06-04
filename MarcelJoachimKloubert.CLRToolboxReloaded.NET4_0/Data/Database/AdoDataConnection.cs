@@ -18,7 +18,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Database
         #region Constructors (4)
 
         /// <inheriteddoc />
-        protected AdoDataConnection(IEnumerable<char> connStr, bool isSynchronized, object sync)
+        protected AdoDataConnection(string connStr, bool isSynchronized, object sync)
             : base(connStr,
                    isSynchronized: isSynchronized,
                    sync: sync)
@@ -26,21 +26,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Database
         }
 
         /// <inheriteddoc />
-        protected AdoDataConnection(IEnumerable<char> connStr, bool isSynchronized)
+        protected AdoDataConnection(string connStr, bool isSynchronized)
             : base(connStr: connStr,
                    isSynchronized: isSynchronized)
         {
         }
 
         /// <inheriteddoc />
-        protected AdoDataConnection(IEnumerable<char> connStr, object sync)
+        protected AdoDataConnection(string connStr, object sync)
             : base(connStr: connStr,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
-        protected AdoDataConnection(IEnumerable<char> connStr)
+        protected AdoDataConnection(string connStr)
             : base(connStr: connStr)
         {
         }

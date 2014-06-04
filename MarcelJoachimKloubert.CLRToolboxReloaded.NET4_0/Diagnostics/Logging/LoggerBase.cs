@@ -169,7 +169,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
         /// <inheriteddoc />
         public bool Log(object msg,
-                        IEnumerable<char> tag = null,
+                        string tag = null,
                         LogCategories categories = LogCategories.None)
         {
             var msgObj = new LogMessage();

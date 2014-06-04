@@ -56,7 +56,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
 
         #endregion Properties
 
-        #region Methods (3)
+        #region Methods (2)
 
         /// <summary>
         /// Returns the contract name from a <see cref="Type" /> object.
@@ -81,16 +81,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <summary>
         /// Parses a contract name.
         /// </summary>
-        /// <param name="contractName">The input value.</param>
-        /// <returns>The parsed value.</returns>
-        public static string ParseContractName(IEnumerable<char> contractName)
-        {
-            return ParseContractName(contract: contractName.AsString());
-        }
-
-        /// <summary>
-        /// Parses a contract name.
-        /// </summary>
         /// <param name="contract">The input value.</param>
         /// <returns>The parsed value.</returns>
         public static string ParseContractName(string contract)
@@ -100,13 +90,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
                 return null;
             }
 
-            string result = contract.ToUpper().Trim();
-            if (result == string.Empty)
+            contract = contract.ToUpper().Trim();
+            if (contract == string.Empty)
             {
-                result = null;
+                contract = null;
             }
 
-            return result;
+            return contract;
         }
 
         #endregion

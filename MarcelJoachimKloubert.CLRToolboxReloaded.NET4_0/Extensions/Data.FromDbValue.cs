@@ -23,7 +23,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Data
         /// <exception cref="ArgumentNullException">
         /// <paramref name="rec" /> is <see langword="null" />.
         /// </exception>
-        public static T FromDbValue<T>(this IDataRecord rec, IEnumerable<char> name)
+        public static T FromDbValue<T>(this IDataRecord rec, string name)
         {
             if (rec == null)
             {
@@ -31,7 +31,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Data
             }
 
             return FromDbValue<T>(rec,
-                                  rec.GetOrdinal(name.AsString()));
+                                  rec.GetOrdinal(name));
         }
 
         /// <summary>

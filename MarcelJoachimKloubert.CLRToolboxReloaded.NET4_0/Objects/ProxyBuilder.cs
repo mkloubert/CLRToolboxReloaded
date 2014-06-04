@@ -57,7 +57,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Objects
         /// <param name="builder">The underlying builder instance.</param>
         /// <param name="type">The type the name (part) is (or should be) based on.</param>
         /// <returns>The name (part).</returns>
-        public delegate IEnumerable<char> TypeNameProvider(ProxyBuilder<T> builder, Type type);
+        public delegate string TypeNameProvider(ProxyBuilder<T> builder, Type type);
 
         #endregion Delegates and Events
 
@@ -159,11 +159,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Objects
                 throw new ArgumentNullException("modBuilder");
             }
 
-            var prefix = proxyTypeNamePrefixProvider != null ? (proxyTypeNamePrefixProvider(this, this.InterfaceType).AsString() ?? string.Empty).Trim()
+            var prefix = proxyTypeNamePrefixProvider != null ? (proxyTypeNamePrefixProvider(this, this.InterfaceType) ?? string.Empty).Trim()
                                                              : null;
-            var name = proxyTypeNameProvider != null ? (proxyTypeNameProvider(this, this.InterfaceType).AsString() ?? string.Empty).Trim()
+            var name = proxyTypeNameProvider != null ? (proxyTypeNameProvider(this, this.InterfaceType) ?? string.Empty).Trim()
                                                      : null;
-            var suffix = proxyTypeNameSuffixProvider != null ? (proxyTypeNameSuffixProvider(this, this.InterfaceType).AsString() ?? string.Empty).Trim()
+            var suffix = proxyTypeNameSuffixProvider != null ? (proxyTypeNameSuffixProvider(this, this.InterfaceType) ?? string.Empty).Trim()
                                                              : null;
 
             var baseType = typeof(object);

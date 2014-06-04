@@ -11,22 +11,22 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
     {
         #region Methods (4)
 
-        IScriptExecutor IScriptExecutor.ExposeType<T>(IEnumerable<char> alias)
+        IScriptExecutor IScriptExecutor.ExposeType<T>(string alias)
         {
             return this.ExposeType<T>(alias);
         }
 
-        IScriptExecutor IScriptExecutor.ExposeType(Type type, IEnumerable<char> alias)
+        IScriptExecutor IScriptExecutor.ExposeType(Type type, string alias)
         {
             return this.ExposeType(type, alias);
         }
 
-        IScriptExecutor IScriptExecutor.SetFunction(IEnumerable<char> funcName, Delegate func)
+        IScriptExecutor IScriptExecutor.SetFunction(string funcName, Delegate func)
         {
             return this.SetFunction(funcName, func);
         }
 
-        IScriptExecutor IScriptExecutor.SetVariable(IEnumerable<char> varName, object value)
+        IScriptExecutor IScriptExecutor.SetVariable(string varName, object value)
         {
             return this.SetVariable(varName, value);
         }

@@ -18,7 +18,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data
         #region Constructors (4)
 
         /// <inheriteddoc />
-        protected DataConnectionBase(IEnumerable<char> connStr, bool isSynchronized, object sync)
+        protected DataConnectionBase(string connStr, bool isSynchronized, object sync)
             : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
@@ -26,7 +26,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data
         }
 
         /// <inheriteddoc />
-        protected DataConnectionBase(IEnumerable<char> connStr, bool isSynchronized)
+        protected DataConnectionBase(string connStr, bool isSynchronized)
             : this(connStr: connStr,
                    isSynchronized: isSynchronized,
                    sync: new object())
@@ -34,7 +34,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data
         }
 
         /// <inheriteddoc />
-        protected DataConnectionBase(IEnumerable<char> connStr, object sync)
+        protected DataConnectionBase(string connStr, object sync)
             : this(connStr: connStr,
                    isSynchronized: false,
                    sync: sync)
@@ -42,7 +42,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data
         }
 
         /// <inheriteddoc />
-        protected DataConnectionBase(IEnumerable<char> connStr)
+        protected DataConnectionBase(string connStr)
             : this(connStr: connStr,
                    isSynchronized: false)
         {
@@ -81,7 +81,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data
         #region Constructors (4)
 
         /// <inheriteddoc />
-        protected DataConnectionBase(IEnumerable<char> connStr, bool isSynchronized, object sync)
+        protected DataConnectionBase(string connStr, bool isSynchronized, object sync)
             : base(connStr: connStr,
                    isSynchronized: isSynchronized,
                    sync: sync)
@@ -89,21 +89,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data
         }
 
         /// <inheriteddoc />
-        protected DataConnectionBase(IEnumerable<char> connStr, bool isSynchronized)
+        protected DataConnectionBase(string connStr, bool isSynchronized)
             : base(connStr: connStr,
                    isSynchronized: isSynchronized)
         {
         }
 
         /// <inheriteddoc />
-        protected DataConnectionBase(IEnumerable<char> connStr, object sync)
+        protected DataConnectionBase(string connStr, object sync)
             : base(connStr: connStr,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
-        protected DataConnectionBase(IEnumerable<char> connStr)
+        protected DataConnectionBase(string connStr)
             : base(connStr: connStr)
         {
         }

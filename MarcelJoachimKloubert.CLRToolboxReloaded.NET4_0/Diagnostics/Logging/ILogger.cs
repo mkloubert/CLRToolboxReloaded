@@ -32,7 +32,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <param name="categories">The list of categaories the message object belongs to.</param>
         /// <returns>Logging was successful or not.</returns>
         bool Log(object msg,
-                 IEnumerable<char> tag = null,
+                 string tag = null,
                  LogCategories categories = LogCategories.None);
 
         #endregion Operations (2)

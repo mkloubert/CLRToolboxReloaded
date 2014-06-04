@@ -59,7 +59,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
         #region Methods (10)
 
         /// <inheriteddoc />
-        public IScriptExecutionContext Execute(IEnumerable<char> src,
+        public IScriptExecutionContext Execute(string src,
                                                bool autoStart = true,
                                                bool debug = false)
         {
@@ -233,13 +233,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
         }
 
         /// <inheriteddoc />
-        public ScriptExecutorBase ExposeType<T>(IEnumerable<char> alias = null)
+        public ScriptExecutorBase ExposeType<T>(string alias = null)
         {
             return this.ExposeType(typeof(T), alias);
         }
 
         /// <inheriteddoc />
-        public ScriptExecutorBase ExposeType(Type type, IEnumerable<char> alias = null)
+        public ScriptExecutorBase ExposeType(Type type, string alias = null)
         {
             lock (this._SYNC)
             {
@@ -327,13 +327,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
         }
 
         /// <summary>
-        /// The logic for the <see cref="ScriptExecutorBase.Execute(IEnumerable{char}, bool, bool)" /> method.
+        /// The logic for the <see cref="ScriptExecutorBase.Execute(string, bool, bool)" /> method.
         /// </summary>
         /// <param name="context">The execution context.</param>
         protected abstract void OnExecute(OnExecuteContext context);
 
         /// <inheriteddoc />
-        public ScriptExecutorBase SetFunction(IEnumerable<char> funcName, Delegate func)
+        public ScriptExecutorBase SetFunction(string funcName, Delegate func)
         {
             lock (this._SYNC)
             {
@@ -362,7 +362,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
         }
 
         /// <inheriteddoc />
-        public ScriptExecutorBase SetVariable(IEnumerable<char> varName, object value)
+        public ScriptExecutorBase SetVariable(string varName, object value)
         {
             lock (this._SYNC)
             {

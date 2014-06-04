@@ -145,9 +145,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         {
             var targetType = typeof(T);
 
-            IEnumerable<char> innerValue = null;
-            base.OnTryGetValue<IEnumerable<char>>(category, name,
-                                                  ref innerValue, ref valueWasFound);
+            string innerValue = null;
+            base.OnTryGetValue<string>(category, name,
+                                       ref innerValue, ref valueWasFound);
 
             if (valueWasFound == false)
             {
@@ -236,8 +236,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
                     {
                         // create section
                         writer.WriteLine("[{0}]",
-                                         this.ParseIniSectionName(categoryValues.Key)
-                                             .AsString());
+                                         this.ParseIniSectionName(categoryValues.Key));
 
                         // writes values
                         categoryValues.Value
@@ -247,8 +246,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
 
                                           ctx.State
                                              .Writer.WriteLine(string.Format("{0}={1}",
-                                                                             repo.ParseIniSectionKey(ctx.Item.Key).AsString(),
-                                                                             repo.ToIniSectionValue(ctx.Item.Value).AsString()));
+                                                                             repo.ParseIniSectionKey(ctx.Item.Key),
+                                                                             repo.ToIniSectionValue(ctx.Item.Value)));
                                       }, actionState: new
                                       {
                                           Repo = this,
@@ -304,11 +303,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// </summary>
         /// <param name="input">The input expression.</param>
         /// <returns>The parsed name of the section key.</returns>
-        protected virtual IEnumerable<char> ParseIniSectionKey(string input)
+        protected virtual string ParseIniSectionKey(string input)
         {
             return (input ?? string.Empty).Replace("=", "\\=")
-                                          .Trim()
-                                          .AsChars();
+                                          .Trim();
         }
 
         /// <summary>
@@ -316,12 +314,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// </summary>
         /// <param name="input">The input expression.</param>
         /// <returns>The parsed name of the section.</returns>
-        protected virtual IEnumerable<char> ParseIniSectionName(string input)
+        protected virtual string ParseIniSectionName(string input)
         {
             return (input ?? string.Empty).Replace("[", "\\[")
                                           .Replace("]", "\\]")
-                                          .Trim()
-                                          .AsChars();
+                                          .Trim();
         }
 
         /// <summary>
@@ -329,7 +326,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// </summary>
         /// <param name="input">The input value to convert.</param>
         /// <returns>The converted value.</returns>
-        protected virtual IEnumerable<char> ToIniSectionValue(object input)
+        protected virtual string ToIniSectionValue(object input)
         {
             return (input.AsString() ?? string.Empty).Replace("\\", "\\\\")
                                                      .Replace("\n", "\\n")
@@ -341,8 +338,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
                                                      .Replace("#", "\\#")
                                                      .Replace("=", "\\=")
                                                      .Replace(":", "\\:")
-                                                     .Replace("\t", "\\t")
-                                                     .AsChars();
+                                                     .Replace("\t", "\\t");
         }
 
         // Private Methods (1) 
