@@ -48,13 +48,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
         // Public Methods (3) 
 
         /// <inheriteddoc />
-        public IDictionary<string, object> FromJson(IEnumerable<char> json)
+        public IDictionary<string, object> FromJson(string json)
         {
             return this.FromJson<IDictionary<string, object>>(json);
         }
 
         /// <inheriteddoc />
-        public T FromJson<T>(IEnumerable<char> json)
+        public T FromJson<T>(string json)
         {
             var jsonStr = json.AsString();
             if (string.IsNullOrWhiteSpace(jsonStr))
@@ -85,7 +85,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
         // Protected Methods (2) 
 
         /// <summary>
-        /// The logic for <see cref="SerializerBase.FromJson{T}(IEnumerable{char})" /> method.
+        /// The logic for <see cref="SerializerBase.FromJson{T}(string)" /> method.
         /// </summary>
         /// <typeparam name="T">Type of the target object.</typeparam>
         /// <param name="json">The JSON string.</param>

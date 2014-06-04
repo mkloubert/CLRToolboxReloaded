@@ -82,7 +82,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <remarks>
         /// The variable names are NOT case sensitive.
         /// </remarks>
-        public object this[IEnumerable<char> name]
+        public object this[string name]
         {
             get { return this.Vars[WorkflowExecutionContext.ParseVarName(name)]; }
 
@@ -151,7 +151,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <param name="name">The name of the var.</param>
         /// <returns>The strong typed version of var.</returns>
         /// <exception cref="InvalidOperationException"><paramref name="name" /> does not exist.</exception>
-        public T GetVar<T>(IEnumerable<char> name)
+        public T GetVar<T>(string name)
         {
             T result;
             if (this.TryGetVar<T>(name, out result))
@@ -169,7 +169,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <param name="name">The name of the var.</param>
         /// <param name="value">The field where to write the found value to.</param>
         /// <returns>Var exists or not.</returns>
-        public bool TryGetVar<T>(IEnumerable<char> name, out T value)
+        public bool TryGetVar<T>(string name, out T value)
         {
             return this.TryGetVar<T>(name, out value, default(T));
         }
@@ -185,7 +185,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// if <paramref name="value" /> does not exist.
         /// </param>
         /// <returns>Var exists or not.</returns>
-        public bool TryGetVar<T>(IEnumerable<char> name, out T value, T defaultValue)
+        public bool TryGetVar<T>(string name, out T value, T defaultValue)
         {
             return this.TryGetVar<T>(name, out value,
                                      delegate(string varName)
@@ -208,7 +208,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <exception cref="ArgumentNullException">
         /// <paramref name="defaultValueProvider" /> is <see langword="null" />.
         /// </exception>
-        public bool TryGetVar<T>(IEnumerable<char> name, out T value, Func<string, T> defaultValueProvider)
+        public bool TryGetVar<T>(string name, out T value, Func<string, T> defaultValueProvider)
         {
             if (defaultValueProvider == null)
             {

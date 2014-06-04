@@ -24,7 +24,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
 
         #endregion Fields
 
-        #region Constructors (4)
+        #region Constructors (2)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IniFileConfigRepository"/> class.
@@ -33,22 +33,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// <param name="isReadOnly">Repository is readonly or writable.</param>
         /// <exception cref="ArgumentNullException"><paramref name="filePath" /> is <see langword="null" />.</exception>
         /// <exception cref="ArgumentException"><paramref name="filePath" /> is invalid.</exception>
-        public JsonFileConfigRepository(IEnumerable<char> filePath, bool isReadOnly)
+        public JsonFileConfigRepository(string filePath, bool isReadOnly = true)
         {
             if (filePath == null)
             {
                 throw new ArgumentNullException("filePath");
             }
 
-            var fp = filePath.AsString();
-            if (string.IsNullOrWhiteSpace(fp))
+            if (string.IsNullOrWhiteSpace(filePath))
             {
                 throw new ArgumentException("filePath");
             }
 
             this._CAN_WRITE = isReadOnly == false;
 
-            this._FILE_PATH = Path.GetFullPath(fp);
+            this._FILE_PATH = Path.GetFullPath(filePath);
             if (File.Exists(this._FILE_PATH))
             {
                 this.LoadJsonFile();
@@ -61,31 +60,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// <param name="file">The INI file.</param>
         /// <param name="isReadOnly">Repository is readonly or writable.</param>
         /// <exception cref="NullReferenceException"><paramref name="file" /> is <see langword="null" />.</exception>
-        public JsonFileConfigRepository(FileInfo file, bool isReadOnly)
+        public JsonFileConfigRepository(FileInfo file, bool isReadOnly = true)
             : this(file.FullName, isReadOnly)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IniFileConfigRepository"/> class.
-        /// </summary>
-        /// <param name="filePath">The path of the INI file.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="filePath" /> is <see langword="null" />.</exception>
-        /// <exception cref="ArgumentException"><paramref name="filePath" /> is invalid.</exception>
-        /// <remarks>Repository becomes readonly.</remarks>
-        public JsonFileConfigRepository(IEnumerable<char> filePath)
-            : this(filePath, true)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IniFileConfigRepository"/> class.
-        /// </summary>
-        /// <param name="file">The INI file.</param>
-        /// <exception cref="NullReferenceException"><paramref name="file" /> is <see langword="null" />.</exception>
-        /// <remarks>Repository becomes readonly.</remarks>
-        public JsonFileConfigRepository(FileInfo file)
-            : this(file, true)
         {
         }
 

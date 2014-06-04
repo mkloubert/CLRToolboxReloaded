@@ -29,22 +29,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
 
         #endregion Fields (3)
 
-        #region Constructors (2)
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigRepositoryWrapper{TConf}" /> class.
-        /// </summary>
-        /// <param name="innerConf">The value for the <see cref="ConfigRepositoryWrapper{TConf}.InnerConfig" /> property.</param>
-        /// <param name="prefix">The value for the <see cref="ConfigRepositoryWrapper{TConf}.Prefix" /> property.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="innerConf" /> is <see langword="null" />.
-        /// </exception>
-        public ConfigRepositoryWrapper(TConf innerConf, IEnumerable<char> prefix)
-            : this(innerConf,
-                   prefix: prefix,
-                   suffix: null)
-        {
-        }
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigRepositoryWrapper{TConf}" /> class.
@@ -55,7 +40,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// <exception cref="ArgumentNullException">
         /// <paramref name="innerConf" /> is <see langword="null" />.
         /// </exception>
-        public ConfigRepositoryWrapper(TConf innerConf, IEnumerable<char> prefix, IEnumerable<char> suffix)
+        public ConfigRepositoryWrapper(TConf innerConf, string prefix, string suffix = null)
             : base(isSynchronized: false)
         {
             if (innerConf == null)
@@ -65,13 +50,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
 
             this._INNER_CONF = innerConf;
 
-            this._PREFIX = (prefix.AsString() ?? string.Empty).Trim();
+            this._PREFIX = (prefix ?? string.Empty).Trim();
             if (this._PREFIX == string.Empty)
             {
                 this._PREFIX = null;
             }
 
-            this._SUFFIX = (suffix.AsString() ?? string.Empty).Trim();
+            this._SUFFIX = (suffix ?? string.Empty).Trim();
             if (this._SUFFIX == string.Empty)
             {
                 this._SUFFIX = null;
@@ -174,21 +159,16 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
     /// </summary>
     public sealed class ConfigRepositoryWrapper : ConfigRepositoryWrapper<global::MarcelJoachimKloubert.CLRToolbox.Configuration.IConfigRepository>
     {
-        #region Constructors (2)
+        #region Constructors (1)
 
         /// <inheriteddoc />
-        public ConfigRepositoryWrapper(IConfigRepository innerConf, IEnumerable<char> prefix)
-            : base(innerConf, prefix)
+        public ConfigRepositoryWrapper(IConfigRepository innerConf, string prefix, string suffix = null)
+            : base(innerConf: innerConf,
+                   prefix: prefix, suffix: suffix)
         {
         }
 
-        /// <inheriteddoc />
-        public ConfigRepositoryWrapper(IConfigRepository innerConf, IEnumerable<char> prefix, IEnumerable<char> suffix)
-            : base(innerConf, prefix, suffix)
-        {
-        }
-
-        #endregion Constructors (4)
+        #endregion Constructors (1)
     }
 
     #endregion

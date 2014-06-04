@@ -153,9 +153,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
 
         #endregion CLASS: WorkflowExecutionContext
 
-        #region Methods (22)
-
-        // Public Methods (22) 
+        #region Methods (17)
 
         /// <inheriteddoc />
         public T GetExecutionArgument<T>(int index)
@@ -170,7 +168,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         }
 
         /// <inheriteddoc />
-        public T GetExecutionVar<T>(IEnumerable<char> name)
+        public T GetExecutionVar<T>(string name)
         {
             T result;
             if (this.TryGetExecutionVar<T>(name, out result) == false)
@@ -182,7 +180,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         }
 
         /// <inheriteddoc />
-        public T GetNextVar<T>(IEnumerable<char> name)
+        public T GetNextVar<T>(string name)
         {
             T result;
             if (this.TryGetNextVar<T>(name, out result) == false)
@@ -194,7 +192,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         }
 
         /// <inheriteddoc />
-        public T GetPreviousVar<T>(IEnumerable<char> name)
+        public T GetPreviousVar<T>(string name)
         {
             T result;
             if (this.TryGetPreviousVar<T>(name, out result) == false)
@@ -220,7 +218,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         }
 
         /// <inheriteddoc />
-        public T GetWorkflowVar<T>(IEnumerable<char> name)
+        public T GetWorkflowVar<T>(string name)
         {
             T result;
             if (this.TryGetWorkflowVar<T>(name, out result) == false)
@@ -236,19 +234,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// </summary>
         /// <param name="name">The char sequence.</param>
         /// <returns>The parsed char sequence.</returns>
-        public static string ParseVarName(IEnumerable<char> name)
+        public static string ParseVarName(string name)
         {
-            return name.AsString() ?? string.Empty;
+            return name ?? string.Empty;
         }
 
         /// <inheriteddoc />
-        public bool TryGetExecutionArgument<T>(int index, out T value)
-        {
-            return this.TryGetExecutionArgument<T>(index, out value, default(T));
-        }
-
-        /// <inheriteddoc />
-        public bool TryGetExecutionArgument<T>(int index, out T value, T defaultValue)
+        public bool TryGetExecutionArgument<T>(int index, out T value, T defaultValue = default(T))
         {
             return this.TryGetExecutionArgument<T>(index, out value,
                                                    delegate(int i)
@@ -285,20 +277,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         }
 
         /// <inheriteddoc />
-        public bool TryGetExecutionVar<T>(IEnumerable<char> name, out T value)
-        {
-            return this.TryGetExecutionVar<T>(name, out value, default(T));
-        }
-
-        /// <inheriteddoc />
-        public bool TryGetExecutionVar<T>(IEnumerable<char> name, out T value, T defaultValue)
+        public bool TryGetExecutionVar<T>(string name, out T value, T defaultValue = default(T))
         {
             return this.TryGetExecutionVar<T>(name, out value,
                                               defaultValueProvider: (varName) => defaultValue);
         }
 
         /// <inheriteddoc />
-        public bool TryGetExecutionVar<T>(IEnumerable<char> name, out T value, Func<string, T> defaultValueProvider)
+        public bool TryGetExecutionVar<T>(string name, out T value, Func<string, T> defaultValueProvider)
         {
             if (defaultValueProvider == null)
             {
@@ -326,20 +312,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         }
 
         /// <inheriteddoc />
-        public bool TryGetNextVar<T>(IEnumerable<char> name, out T value)
-        {
-            return this.TryGetNextVar<T>(name, out value, default(T));
-        }
-
-        /// <inheriteddoc />
-        public bool TryGetNextVar<T>(IEnumerable<char> name, out T value, T defaultValue)
+        public bool TryGetNextVar<T>(string name, out T value, T defaultValue = default(T))
         {
             return this.TryGetNextVar<T>(name, out value,
                                          defaultValueProvider: (varName) => defaultValue);
         }
 
         /// <inheriteddoc />
-        public bool TryGetNextVar<T>(IEnumerable<char> name, out T value, Func<string, T> defaultValueProvider)
+        public bool TryGetNextVar<T>(string name, out T value, Func<string, T> defaultValueProvider)
         {
             if (defaultValueProvider == null)
             {
@@ -367,20 +347,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         }
 
         /// <inheriteddoc />
-        public bool TryGetPreviousVar<T>(IEnumerable<char> name, out T value)
-        {
-            return this.TryGetPreviousVar<T>(name, out value, default(T));
-        }
-
-        /// <inheriteddoc />
-        public bool TryGetPreviousVar<T>(IEnumerable<char> name, out T value, T defaultValue)
+        public bool TryGetPreviousVar<T>(string name, out T value, T defaultValue = default(T))
         {
             return this.TryGetPreviousVar<T>(name, out value,
                                              defaultValueProvider: (varName) => defaultValue);
         }
 
         /// <inheriteddoc />
-        public bool TryGetPreviousVar<T>(IEnumerable<char> name, out T value, Func<string, T> defaultValueProvider)
+        public bool TryGetPreviousVar<T>(string name, out T value, Func<string, T> defaultValueProvider)
         {
             if (defaultValueProvider == null)
             {
@@ -408,20 +382,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         }
 
         /// <inheriteddoc />
-        public bool TryGetWorkflowVar<T>(IEnumerable<char> name, out T value)
-        {
-            return this.TryGetWorkflowVar<T>(name, out value, default(T));
-        }
-
-        /// <inheriteddoc />
-        public bool TryGetWorkflowVar<T>(IEnumerable<char> name, out T value, T defaultValue)
+        public bool TryGetWorkflowVar<T>(string name, out T value, T defaultValue = default(T))
         {
             return this.TryGetWorkflowVar<T>(name, out value,
                                              defaultValueProvider: (varName) => defaultValue);
         }
 
         /// <inheriteddoc />
-        public bool TryGetWorkflowVar<T>(IEnumerable<char> name, out T value, Func<string, T> defaultValueProvider)
+        public bool TryGetWorkflowVar<T>(string name, out T value, Func<string, T> defaultValueProvider)
         {
             if (defaultValueProvider == null)
             {

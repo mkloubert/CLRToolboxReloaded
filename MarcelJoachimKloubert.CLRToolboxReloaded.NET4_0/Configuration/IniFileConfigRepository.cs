@@ -24,7 +24,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
 
         #endregion Fields (3)
 
-        #region Constructors (4)
+        #region Constructors (2)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IniFileConfigRepository"/> class.
@@ -33,23 +33,22 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// <param name="isReadOnly">Repository is readonly or writable.</param>
         /// <exception cref="ArgumentNullException"><paramref name="filePath" /> is <see langword="null" />.</exception>
         /// <exception cref="ArgumentException"><paramref name="filePath" /> is invalid.</exception>
-        public IniFileConfigRepository(IEnumerable<char> filePath, bool isReadOnly)
+        public IniFileConfigRepository(string filePath, bool isReadOnly = true)
         {
             if (filePath == null)
             {
                 throw new ArgumentNullException("filePath");
             }
 
-            var fp = filePath.AsString();
-            if (string.IsNullOrWhiteSpace(fp))
+            if (string.IsNullOrWhiteSpace(filePath))
             {
                 throw new ArgumentException("filePath");
             }
 
             this._CAN_WRITE = isReadOnly == false;
 
-            this._FILE_PATH = global::System.IO.Path.GetFullPath(fp);
-            if (global::System.IO.File.Exists(this._FILE_PATH))
+            this._FILE_PATH = Path.GetFullPath(filePath);
+            if (File.Exists(this._FILE_PATH))
             {
                 this.LoadIniFile();
             }
@@ -58,36 +57,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// <summary>
         /// Initializes a new instance of the <see cref="IniFileConfigRepository"/> class.
         /// </summary>
-        /// <param name="filePath">The path of the INI file.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="filePath" /> is <see langword="null" />.</exception>
-        /// <exception cref="ArgumentException"><paramref name="filePath" /> is invalid.</exception>
-        /// <remarks>Repository becomes readonly.</remarks>
-        public IniFileConfigRepository(IEnumerable<char> filePath)
-            : this(filePath, true)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IniFileConfigRepository"/> class.
-        /// </summary>
         /// <param name="file">The INI file.</param>
         /// <param name="isReadOnly">Repository is readonly or writable.</param>
         /// <exception cref="NullReferenceException"><paramref name="file" /> is <see langword="null" />.</exception>
-        public IniFileConfigRepository(global::System.IO.FileInfo file, bool isReadOnly)
+        public IniFileConfigRepository(FileInfo file, bool isReadOnly = true)
             : this(file.FullName, isReadOnly)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IniFileConfigRepository"/> class.
-        /// </summary>
-        /// <param name="file">The INI file.</param>
-        /// <exception cref="NullReferenceException"><paramref name="file" /> is <see langword="null" />.</exception>
-        /// <remarks>Repository becomes readonly.</remarks>
-        public IniFileConfigRepository(global::System.IO.FileInfo file)
-            : this(file, true)
-        {
-        }
 
         #endregion Constructors
 
@@ -118,7 +95,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         /// </summary>
         /// <param name="input">The input value to convert.</param>
         /// <returns>The converted value.</returns>
-        protected virtual IEnumerable<char> FromIniSectionValue(string input)
+        protected virtual string FromIniSectionValue(string input)
         {
             var result = (input ?? string.Empty).Replace("\\\\", _TEMP_CHAR);
 
@@ -135,7 +112,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
 
             result = result.Replace(_TEMP_CHAR, "\\");
 
-            return (result != string.Empty ? result : null).AsChars();
+            return result != string.Empty ? result : null;
         }
 
         /// <summary>
@@ -459,7 +436,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
                             var valueWasSet = false;
                             this.OnSetValue<string>(category: configCat,
                                                     name: configName,
-                                                    value: this.FromIniSectionValue(value).AsString(),
+                                                    value: this.FromIniSectionValue(value),
                                                     valueWasSet: ref valueWasSet,
                                                     invokeOnUpdated: false);
                         }

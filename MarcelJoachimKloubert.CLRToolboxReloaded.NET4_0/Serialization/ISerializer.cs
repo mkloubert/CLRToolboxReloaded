@@ -19,14 +19,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
         /// <typeparam name="T">Type of the target object.</typeparam>
         /// <param name="json">The string from where to build the object from.</param>
         /// <returns>The target object.</returns>
-        T FromJson<T>(IEnumerable<char> json);
+        T FromJson<T>(string json);
 
         /// <summary>
         /// Deserializes an object from a JSON string as dictionary.
         /// </summary>
         /// <param name="json">The string from where to build the object from.</param>
         /// <returns>The dictionary with the data.</returns>
-        IDictionary<string, object> FromJson(IEnumerable<char> json);
+        IDictionary<string, object> FromJson(string json);
 
         /// <summary>
         /// Converts an object to a JSON string.
