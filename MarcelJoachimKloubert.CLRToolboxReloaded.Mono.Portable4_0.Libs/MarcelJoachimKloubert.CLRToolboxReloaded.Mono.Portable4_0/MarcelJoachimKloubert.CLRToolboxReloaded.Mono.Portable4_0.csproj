@@ -438,6 +438,12 @@
     <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\Html\Builders\IHtmlBuilder.cs">
       <Link>Text\Html\Builders\IHtmlBuilder.cs</Link>
     </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Sessions\ISession.cs">
+      <Link>Sessions\ISession.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Sessions\Session.cs">
+      <Link>Sessions\Session.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -460,5 +466,6 @@
     <Folder Include="Scripting\" />
     <Folder Include="Caching\" />
     <Folder Include="Text\" />
+    <Folder Include="Sessions\" />
   </ItemGroup>
 </Project>

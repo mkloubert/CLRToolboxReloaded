@@ -1,0 +1,29 @@
+﻿<!--
+   LICENSE: GPL 3 - https://www.gnu.org/licenses/gpl-3.0.txt
+
+   s. https://github.com/mkloubert/CLRToolboxReloaded
+-->
+<MahApps:MetroWindow x:Class="MarcelJoachimKloubert.FinancePlaner.Windows.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:MahApps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                     Title="Finance Planer"
+                     Width="800" Height="600"
+                     WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="192px" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <GroupBox Grid.Column="0" Header="Plans"
+                  Margin="0,8,4,8">
+            
+        </GroupBox>
+
+        <GroupBox Grid.Column="1" Header="Bookings"
+                  Margin="4,8,0,8">
+
+        </GroupBox>
+    </Grid>
+</MahApps:MetroWindow>

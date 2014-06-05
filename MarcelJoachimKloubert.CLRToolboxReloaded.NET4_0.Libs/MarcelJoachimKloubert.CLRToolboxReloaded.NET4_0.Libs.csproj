@@ -57,6 +57,7 @@
     <Compile Include="DotLiquid\Condition.cs" />
     <Compile Include="DotLiquid\Context.cs" />
     <Compile Include="DotLiquid\Document.cs" />
+    <Compile Include="DotLiquid\DotLiquidResourceManager.cs" />
     <Compile Include="DotLiquid\Drop.cs" />
     <Compile Include="DotLiquid\Exceptions\ArgumentException.cs" />
     <Compile Include="DotLiquid\Exceptions\ContextException.cs" />
@@ -82,9 +83,6 @@
     <Compile Include="DotLiquid\NamingConventions\RubyNamingConvention.cs" />
     <Compile Include="DotLiquid\Proc.cs" />
     <Compile Include="DotLiquid\RenderParameters.cs" />
-    <Compile Include="DotLiquid\Resources\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="DotLiquid\StandardFilters.cs" />
     <Compile Include="DotLiquid\Strainer.cs" />
     <Compile Include="DotLiquid\Tag.cs" />
@@ -743,7 +741,6 @@
     <None Include="MarcelJoachimKloubert.CLRToolboxReloaded.Libs.snk" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DotLiquid\Resources\Resources.resx" />
     <EmbeddedResource Include="Json.NET\license.txt" />
     <EmbeddedResource Include="Json.NET\readme.txt" />
   </ItemGroup>

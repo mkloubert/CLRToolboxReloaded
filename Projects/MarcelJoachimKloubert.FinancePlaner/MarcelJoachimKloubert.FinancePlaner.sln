@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.FinancePlaner", "MarcelJoachimKloubert.FinancePlaner\MarcelJoachimKloubert.FinancePlaner.csproj", "{9BF9F68A-0EAA-439F-898D-E106C4183BEE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External libs", "External libs", "{5BDA9509-2EC9-4EB4-B3C9-A138E9FDF5CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs", "..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs.csproj", "{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5", "..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.csproj", "{D15249C7-977D-4A74-B596-BE0E08DC9E7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.WPF", "..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.WPF\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.WPF.csproj", "{97244B18-8041-42EC-B5BC-464D3ED57CF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9BF9F68A-0EAA-439F-898D-E106C4183BEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BF9F68A-0EAA-439F-898D-E106C4183BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BF9F68A-0EAA-439F-898D-E106C4183BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BF9F68A-0EAA-439F-898D-E106C4183BEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3} = {5BDA9509-2EC9-4EB4-B3C9-A138E9FDF5CD}
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B} = {5BDA9509-2EC9-4EB4-B3C9-A138E9FDF5CD}
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4} = {5BDA9509-2EC9-4EB4-B3C9-A138E9FDF5CD}
+	EndGlobalSection
+EndGlobal

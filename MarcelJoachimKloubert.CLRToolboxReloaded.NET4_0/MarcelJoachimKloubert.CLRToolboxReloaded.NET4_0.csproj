@@ -315,6 +315,8 @@
     <Compile Include="ServiceLocation\ServiceActivationException.cs" />
     <Compile Include="ServiceLocation\ServiceLocator.cs" />
     <Compile Include="ServiceLocation\ServiceLocatorBase.cs" />
+    <Compile Include="Sessions\ISession.cs" />
+    <Compile Include="Sessions\Session.cs" />
     <Compile Include="Text\Html\Builders\HtmlBuilderBase.cs" />
     <Compile Include="Text\Html\Builders\IHtmlBuilder.cs" />
     <Compile Include="Text\Html\DotLiquidHtmlTemplate.cs" />

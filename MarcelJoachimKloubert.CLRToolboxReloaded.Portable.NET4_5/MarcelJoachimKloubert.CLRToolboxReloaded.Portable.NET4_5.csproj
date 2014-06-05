@@ -445,6 +445,12 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\servicelocation\ServiceLocatorBase.cs">
       <Link>ServiceLocation\ServiceLocatorBase.cs</Link>
     </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\sessions\ISession.cs">
+      <Link>Sessions\ISession.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\sessions\Session.cs">
+      <Link>Sessions\Session.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\Html\Builders\HtmlBuilderBase.cs">
       <Link>Text\Html\Builders\HtmlBuilderBase.cs</Link>
     </Compile>
