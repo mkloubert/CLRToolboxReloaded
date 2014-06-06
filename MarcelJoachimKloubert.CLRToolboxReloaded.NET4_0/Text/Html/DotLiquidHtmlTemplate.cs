@@ -48,8 +48,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html
         /// Describes a function or method that provides the source for an instance of that class.
         /// </summary>
         /// <param name="tpl">The underlying instance.</param>
-        /// <param name="builder">The builder where to write the template source to.</param>
-        public delegate void SourceProvider(DotLiquidHtmlTemplate tpl, StringBuilder builder);
+        /// <param name="target">The builder where to write the template source to.</param>
+        public delegate void SourceProvider(DotLiquidHtmlTemplate tpl,
+                                            StringBuilder target);
 
         #endregion Delegates and events (1)
 

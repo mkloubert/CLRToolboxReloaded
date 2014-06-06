@@ -25,7 +25,10 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Text
 <b>TM</b>
 {% endif %}");
 
-            var html = tpl.Render();
+            Assert.AreEqual(tpl.Render(), @"
+
+<b>TM</b>
+");
         }
 
         #endregion Methods (1)

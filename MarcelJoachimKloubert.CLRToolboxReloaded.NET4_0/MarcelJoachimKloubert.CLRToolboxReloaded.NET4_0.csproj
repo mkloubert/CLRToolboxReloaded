@@ -71,6 +71,7 @@
     <Compile Include="Collections\Generic\ReadOnlyDictionaryWrapper.cs" />
     <Compile Include="Collections\Generic\ReadOnlyListWrapper.cs" />
     <Compile Include="Collections\Generic\ForAllItemContext.cs" />
+    <Compile Include="Collections\ObjectModel\SynchronizedObservableCollection.cs" />
     <Compile Include="ComponentModel\INotifiable.cs" />
     <Compile Include="ComponentModel\IReceiveValueFromArgs.cs" />
     <Compile Include="ComponentModel\NotifiableBase.cs" />

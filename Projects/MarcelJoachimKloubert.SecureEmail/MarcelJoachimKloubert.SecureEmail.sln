@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.SecureEmail", "MarcelJoachimKloubert.SecureEmail\MarcelJoachimKloubert.SecureEmail.csproj", "{826CC813-2F83-4139-8980-F06B5E81D0C9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External libs", "External libs", "{2B3311DE-EF2F-4971-AE46-A7DC928D12DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs", "..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs.csproj", "{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5", "..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.csproj", "{D15249C7-977D-4A74-B596-BE0E08DC9E7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.WPF", "..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.WPF\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.WPF.csproj", "{97244B18-8041-42EC-B5BC-464D3ED57CF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{826CC813-2F83-4139-8980-F06B5E81D0C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{826CC813-2F83-4139-8980-F06B5E81D0C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{826CC813-2F83-4139-8980-F06B5E81D0C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{826CC813-2F83-4139-8980-F06B5E81D0C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3} = {2B3311DE-EF2F-4971-AE46-A7DC928D12DA}
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B} = {2B3311DE-EF2F-4971-AE46-A7DC928D12DA}
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4} = {2B3311DE-EF2F-4971-AE46-A7DC928D12DA}
+	EndGlobalSection
+EndGlobal

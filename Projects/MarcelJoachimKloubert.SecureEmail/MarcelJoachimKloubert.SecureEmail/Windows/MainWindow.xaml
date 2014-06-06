@@ -1,0 +1,85 @@
+﻿<!--
+   LICENSE: GPL 3 - https://www.gnu.org/licenses/gpl-3.0.txt
+
+   s. https://github.com/mkloubert/CLRToolboxReloaded
+-->
+<MahApps:MetroWindow x:Class="MarcelJoachimKloubert.SecureEmail.Windows.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:MahApps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                     xmlns:local="clr-namespace:MarcelJoachimKloubert.SecureEmail.Classes"
+                     Title="Secure Email"
+                     Width="900" Height="700"
+                     WindowStartupLocation="CenterScreen">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="224px" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="320px" />
+            </Grid.RowDefinitions>
+            
+            <GroupBox Grid.Row="0"
+                      Header="Accounts">
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0"
+                            BorderBrush="Transparent" BorderThickness="0"
+                            Margin="0,0,0,12">
+                        
+                        <TreeView>
+                            <TreeView.Resources>
+                                <HierarchicalDataTemplate DataType="{x:Type local:MailAccount}"
+                                                          ItemsSource="{Binding Path=Accounts, Mode=OneWay}">
+                                    <TextBlock Text="{Binding Row.Name}" />
+                                </HierarchicalDataTemplate>
+                            </TreeView.Resources>
+                        </TreeView>
+                    </Border>
+                    
+                    
+                    <WrapPanel Grid.Row="1">
+                        <Button Style="{DynamicResource SquareButtonStyle}" Margin="0,0,8,0">Add</Button>
+                    </WrapPanel>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Row="1"
+                      Header="Contacts">
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <ListBox Grid.Row="0"
+                             BorderBrush="Transparent" BorderThickness="0"
+                             Margin="0,0,0,12">
+
+                    </ListBox>
+                    
+                    <WrapPanel Grid.Row="1">
+                        <Button Style="{DynamicResource SquareButtonStyle}" Margin="0,0,8,0">Add</Button>
+                        <Button Style="{DynamicResource SquareButtonStyle}" Margin="0,0,8,0">Remove</Button>
+                    </WrapPanel>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        
+        <GroupBox Grid.Column="1"
+                  Header="Mails">
+            
+        </GroupBox>
+    </Grid>
+</MahApps:MetroWindow>

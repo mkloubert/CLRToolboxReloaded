@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9BF9F68A-0EAA-439F-898D-E106C4183BEE}</ProjectGuid>
+    <ProjectGuid>{826CC813-2F83-4139-8980-F06B5E81D0C9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MarcelJoachimKloubert.FinancePlaner</RootNamespace>
-    <AssemblyName>MarcelJoachimKloubert.FinancePlaner</AssemblyName>
+    <RootNamespace>MarcelJoachimKloubert.SecureEmail</RootNamespace>
+    <AssemblyName>MarcelJoachimKloubert.SecureEmail</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -34,6 +34,36 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ActiveUp.Net.Common">
+      <HintPath>..\packages\MailSystem.NET.2.0.1\lib\ActiveUp.Net.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveUp.Net.Dns">
+      <HintPath>..\packages\MailSystem.NET.2.0.1\lib\ActiveUp.Net.Dns.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveUp.Net.Groupware">
+      <HintPath>..\packages\MailSystem.NET.2.0.1\lib\ActiveUp.Net.Groupware.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveUp.Net.Imap4">
+      <HintPath>..\packages\MailSystem.NET.2.0.1\lib\ActiveUp.Net.Imap4.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveUp.Net.Mail">
+      <HintPath>..\packages\MailSystem.NET.2.0.1\lib\ActiveUp.Net.Mail.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveUp.Net.Nntp">
+      <HintPath>..\packages\MailSystem.NET.2.0.1\lib\ActiveUp.Net.Nntp.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveUp.Net.OpenPGP">
+      <HintPath>..\packages\MailSystem.NET.2.0.1\lib\ActiveUp.Net.OpenPGP.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveUp.Net.Pop3">
+      <HintPath>..\packages\MailSystem.NET.2.0.1\lib\ActiveUp.Net.Pop3.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveUp.Net.Smtp">
+      <HintPath>..\packages\MailSystem.NET.2.0.1\lib\ActiveUp.Net.Smtp.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveUp.Net.WhoIs">
+      <HintPath>..\packages\MailSystem.NET.2.0.1\lib\ActiveUp.Net.WhoIs.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.13.1.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -67,9 +97,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\Account.cs" />
-    <Compile Include="Classes\Booking.cs" />
-    <Compile Include="Classes\Plan.cs" />
+    <Compile Include="Classes\MailAccount.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

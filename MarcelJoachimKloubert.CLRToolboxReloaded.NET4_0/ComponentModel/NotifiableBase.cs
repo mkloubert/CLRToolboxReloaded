@@ -8,6 +8,10 @@
 #define KNOWS_PROPERTY_CHANGING
 #endif
 
+#if (WINRT)
+#define GETTER_AND_SETTER_FROM_PROPERTY
+#endif
+
 #if !(NET40 || MONO40 || PORTABLE || PORTABLE40)
 #define KNOWS_CALLER_MEMBER_NAME
 #endif
@@ -302,26 +306,37 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 
             receiveFromMembers.ForAll((ctx) =>
                 {
-                    MemberInfo m = ctx.Item;
+                    var m = ctx.Item;
+
+                    Func<bool, object> getMemberObj = (isStatic) => isStatic == false ? ctx.State.Sender : null;
 
                     if (m is FieldInfo)
                     {
-                        FieldInfo field = (FieldInfo)m;
+                        var field = (FieldInfo)m;
 
-                        field.SetValue(this, newValue);
+                        field.SetValue(getMemberObj(field.IsStatic),
+                                       newValue);
+                    }
+                    else if (m is PropertyInfo)
+                    {
+                        var property = (PropertyInfo)m;
+
+                        MethodInfo setter;
+#if GETTER_AND_SETTER_FROM_PROPERTY
+                        setter = property.SetMethod;
+#else
+                        setter = property.GetSetMethod(nonPublic: false) ?? property.GetSetMethod(nonPublic: true);
+#endif
+
+                        property.SetValue(getMemberObj(setter.IsStatic), newValue, null);
                     }
                     else if (m is MethodBase)
                     {
-                        MethodBase method = (MethodBase)m;
-                        object[] invokationParams;
+                        var method = (MethodBase)m;
+                        object[] invokationParams = null;
 
                         var methodParams = method.GetParameters();
-                        if (methodParams.Length < 1)
-                        {
-                            // no parameters
-                            invokationParams = new object[0];
-                        }
-                        else
+                        if (methodParams.Length > 0)
                         {
                             invokationParams = new object[]
                             {
@@ -341,7 +356,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
                             };
                         }
 
-                        method.Invoke(method.IsStatic == false ? ctx.State.Sender : null,
+                        method.Invoke(getMemberObj(method.IsStatic),
                                       invokationParams);
                     }
                 }, actionState: new
@@ -380,11 +395,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
         /// <returns>Event was raised or not.</returns>
         public bool OnPropertyChanging(string propertyName)
         {
-            if (propertyName == null)
-            {
-                throw new global::System.ArgumentNullException("propertyName");
-            }
-
             var handler = this.PropertyChanging;
             if (handler != null)
             {
@@ -435,17 +445,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 #endif
 )
         {
-            if (propertyName == null)
-            {
-                throw new ArgumentNullException("propertyName");
-            }
-
-            string pn = propertyName.AsString().Trim();
-            if (pn == string.Empty)
-            {
-                throw new ArgumentException("propertyName");
-            }
-
             object oldValue = null;
             var result = this.InvokeThreadSafe((obj, state) =>
                 {
@@ -454,7 +453,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 
                     var areDifferent = true;
 
-                    if (propertyValues.TryGetValue(pn, out oldValue))
+                    if (propertyValues.TryGetValue(state.PropertyName, out oldValue))
                     {
                         if (object.Equals(value, oldValue))
                         {
@@ -474,11 +473,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
                     return areDifferent;
                 }, funcState: new
                 {
-                    PropertyName = pn,
+                    PropertyName = propertyName,
                 });
 
-            this.Handle_ReceiveValueFrom<T>(pn, result, value, oldValue);
-            this.Handle_ReceiveNotificationFrom(pn, result);
+            this.Handle_ReceiveValueFrom<T>(propertyName, result, value, oldValue);
+            this.Handle_ReceiveNotificationFrom(propertyName, result);
 
             return result;
         }
