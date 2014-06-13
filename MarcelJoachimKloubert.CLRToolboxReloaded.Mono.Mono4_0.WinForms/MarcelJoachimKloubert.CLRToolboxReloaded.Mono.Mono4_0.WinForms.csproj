@@ -40,6 +40,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.WinForms\Execution\Jobs\AsyncWinFormsJobScheduler.cs">
+      <Link>Execution\Jobs\AsyncWinFormsJobScheduler.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.WinForms\Execution\Jobs\WinFormsJobScheduler.cs">
+      <Link>Execution\Jobs\WinFormsJobScheduler.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -51,5 +57,8 @@
       <Project>{4D6C4613-C470-4F5B-B348-545EABE20E73}</Project>
       <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Execution\" />
   </ItemGroup>
 </Project>

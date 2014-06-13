@@ -51,6 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.WinForms\Execution\Jobs\AsyncWinFormsJobScheduler.cs">
+      <Link>Execution\Jobs\AsyncWinFormsJobScheduler.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.WinForms\Execution\Jobs\WinFormsJobScheduler.cs">
+      <Link>Execution\Jobs\WinFormsJobScheduler.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

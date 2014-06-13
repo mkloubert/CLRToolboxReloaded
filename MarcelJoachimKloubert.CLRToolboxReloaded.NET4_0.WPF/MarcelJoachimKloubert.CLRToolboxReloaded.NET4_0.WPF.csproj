@@ -44,6 +44,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +53,21 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\ObjectModel\DispatcherObservableCollection.cs" />
+    <Compile Include="Execution\Jobs\AsyncDispatcherJobScheduler.cs" />
+    <Compile Include="Execution\Jobs\DispatcherJobScheduler.cs" />
+    <Compile Include="Extensions\ClrToolboxWpfExtensionMethods.cs" />
+    <Compile Include="Extensions\Dispatcher.BeginInvoke.cs" />
+    <Compile Include="Extensions\Dispatcher.cs" />
+    <Compile Include="Extensions\Dispatcher.Invoke.cs" />
+    <Compile Include="Extensions\Imaging.cs" />
+    <Compile Include="Extensions\Imaging.SaveAsBmp.cs" />
+    <Compile Include="Extensions\Imaging.SaveAsGif.cs" />
+    <Compile Include="Extensions\Imaging.SaveAsJpeg.cs" />
+    <Compile Include="Extensions\Imaging.SaveAsPng.cs" />
+    <Compile Include="Extensions\Imaging.SaveAsTiff.cs" />
+    <Compile Include="Extensions\Imaging.TakeScreenshot.cs" />
+    <Compile Include="Input\SimpleCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

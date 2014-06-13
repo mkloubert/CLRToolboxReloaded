@@ -256,6 +256,41 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\ExecutionErrorEventArgs.cs">
       <Link>Execution\ExecutionErrorEventArgs.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\AsyncJobScheduler.cs">
+      <Link>Execution\Jobs\AsyncJobScheduler.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\DelegateJob.cs">
+      <Link>Execution\Jobs\DelegateJob.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\IJob.cs">
+      <Link>Execution\Jobs\IJob.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\IJobExecutionContext.cs">
+      <Link>Execution\Jobs\IJobExecutionContext.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\IJobExecutionResult.cs">
+      <Link>Execution\Jobs\IJobExecutionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\IJobScheduler.cs">
+      <Link>Execution\Jobs\IJobScheduler.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\JobBase.cs">
+      <Link>Execution\Jobs\JobBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\JobExecutionResultEventArgs.cs">
+      <Link>Execution\Jobs\JobExecutionResultEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\JobScheduler.cs">
+      <Link>Execution\Jobs\JobScheduler.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\JobScheduler.JobExecutionContext.cs">
+      <Link>Execution\Jobs\JobScheduler.JobExecutionContext.cs</Link>
+      <DependentUpon>JobScheduler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\JobScheduler.JobExecutionResult.cs">
+      <Link>Execution\Jobs\JobScheduler.JobExecutionResult.cs</Link>
+      <DependentUpon>JobScheduler.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Workflows\AggregateWorkflow.cs">
       <Link>Execution\Workflows\AggregateWorkflow.cs</Link>
     </Compile>
@@ -406,8 +441,14 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IIdentifiable.cs">
       <Link>IIdentifiable.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IInitializable.cs">
+      <Link>IInitializable.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IObject.cs">
       <Link>IObject.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IRunnable.cs">
+      <Link>IRunnable.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ObjectBase.cs">
       <Link>ObjectBase.cs</Link>
@@ -509,6 +550,7 @@
       <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0.Libs</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

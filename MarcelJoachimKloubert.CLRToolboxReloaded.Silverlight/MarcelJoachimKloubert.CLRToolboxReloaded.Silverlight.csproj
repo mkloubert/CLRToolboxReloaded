@@ -66,6 +66,9 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.WPF\Input\SimpleCommand.cs">
+      <Link>Input\SimpleCommand.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +84,7 @@
   <ItemGroup>
     <None Include="MarcelJoachimKloubert.CLRToolboxReloaded.Silverlight.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

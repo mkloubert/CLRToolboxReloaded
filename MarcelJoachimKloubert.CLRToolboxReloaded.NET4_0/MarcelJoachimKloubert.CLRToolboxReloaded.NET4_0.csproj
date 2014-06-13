@@ -137,6 +137,21 @@
     <Compile Include="Execution\Commands\DelegateCommand.cs" />
     <Compile Include="Execution\Commands\ICommand.cs" />
     <Compile Include="Execution\ExecutionErrorEventArgs.cs" />
+    <Compile Include="Execution\Jobs\AsyncJobScheduler.cs" />
+    <Compile Include="Execution\Jobs\DelegateJob.cs" />
+    <Compile Include="Execution\Jobs\IJob.cs" />
+    <Compile Include="Execution\Jobs\IJobExecutionContext.cs" />
+    <Compile Include="Execution\Jobs\IJobExecutionResult.cs" />
+    <Compile Include="Execution\Jobs\IJobScheduler.cs" />
+    <Compile Include="Execution\Jobs\JobBase.cs" />
+    <Compile Include="Execution\Jobs\JobExecutionResultEventArgs.cs" />
+    <Compile Include="Execution\Jobs\JobScheduler.cs" />
+    <Compile Include="Execution\Jobs\JobScheduler.JobExecutionContext.cs">
+      <DependentUpon>JobScheduler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Execution\Jobs\JobScheduler.JobExecutionResult.cs">
+      <DependentUpon>JobScheduler.cs</DependentUpon>
+    </Compile>
     <Compile Include="Execution\Workflows\AggregateWorkflow.cs" />
     <Compile Include="Execution\Workflows\AttributeWorkflowBase.cs" />
     <Compile Include="Execution\Workflows\DelegateWorkflow.cs" />
@@ -279,7 +294,9 @@
     <Compile Include="IdentifiableBase.cs" />
     <Compile Include="IDisposableObject.cs" />
     <Compile Include="IIdentifiable.cs" />
+    <Compile Include="IInitializable.cs" />
     <Compile Include="IObject.cs" />
+    <Compile Include="IRunnable.cs" />
     <Compile Include="ObjectBase.cs" />
     <Compile Include="Objects\ObjectFactory.cs" />
     <Compile Include="Objects\ProxyBuilder.cs" />

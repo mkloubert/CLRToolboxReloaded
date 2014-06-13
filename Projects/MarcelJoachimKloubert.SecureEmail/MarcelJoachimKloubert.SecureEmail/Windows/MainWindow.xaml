@@ -37,13 +37,14 @@
                             BorderBrush="Transparent" BorderThickness="0"
                             Margin="0,0,0,12">
                         
-                        <TreeView>
-                            <TreeView.Resources>
-                                <HierarchicalDataTemplate DataType="{x:Type local:MailAccount}"
-                                                          ItemsSource="{Binding Path=Accounts, Mode=OneWay}">
-                                    <TextBlock Text="{Binding Row.Name}" />
-                                </HierarchicalDataTemplate>
-                            </TreeView.Resources>
+                        <Border.Resources>
+                            <HierarchicalDataTemplate DataType="{x:Type local:MailAccount}">
+                                <TextBlock Text="{Binding Path=Name, Mode=OneWay}" />
+                            </HierarchicalDataTemplate>
+                        </Border.Resources>
+
+                        <TreeView ItemsSource="{Binding Path=Accounts, Mode=OneWay}">
+                            
                         </TreeView>
                     </Border>
                     

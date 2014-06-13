@@ -566,6 +566,48 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Sessions\Session.cs">
       <Link>Sessions\Session.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\ObjectModel\SynchronizedObservableCollection.cs">
+      <Link>Collections\ObjectModel\SynchronizedObservableCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\AsyncJobScheduler.cs">
+      <Link>Execution\Jobs\AsyncJobScheduler.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\DelegateJob.cs">
+      <Link>Execution\Jobs\DelegateJob.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\IJob.cs">
+      <Link>Execution\Jobs\IJob.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\IJobExecutionContext.cs">
+      <Link>Execution\Jobs\IJobExecutionContext.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\IJobExecutionResult.cs">
+      <Link>Execution\Jobs\IJobExecutionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\IJobScheduler.cs">
+      <Link>Execution\Jobs\IJobScheduler.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\JobBase.cs">
+      <Link>Execution\Jobs\JobBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\JobExecutionResultEventArgs.cs">
+      <Link>Execution\Jobs\JobExecutionResultEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\JobScheduler.cs">
+      <Link>Execution\Jobs\JobScheduler.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\JobScheduler.JobExecutionContext.cs">
+      <Link>Execution\Jobs\JobScheduler.JobExecutionContext.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\JobScheduler.JobExecutionResult.cs">
+      <Link>Execution\Jobs\JobScheduler.JobExecutionResult.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IInitializable.cs">
+      <Link>IInitializable.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IRunnable.cs">
+      <Link>IRunnable.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -587,6 +629,8 @@
     <Folder Include="Caching\" />
     <Folder Include="Text\" />
     <Folder Include="Sessions\" />
+    <Folder Include="Collections\ObjectModel\" />
+    <Folder Include="Execution\Jobs\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs.csproj">
