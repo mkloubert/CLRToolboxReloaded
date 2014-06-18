@@ -46,7 +46,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Execution
         /// <exception cref="ArgumentNullException">
         /// <paramref name="provider" /> is <see langword="null" />.
         /// </exception>
-        public DispatcherMediator(DispatcherProvider provider, DispatcherPriority prio, bool runInBackground)
+        public DispatcherMediator(DispatcherProvider provider,
+                                  DispatcherPriority prio = DispatcherPriority.Normal, bool runInBackground = false)
             : this(provider: provider,
                    sync: new object(),
                    prio: prio,

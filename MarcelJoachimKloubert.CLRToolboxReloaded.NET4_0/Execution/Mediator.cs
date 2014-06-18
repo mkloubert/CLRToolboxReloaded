@@ -118,7 +118,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
 
         private void CleanupList()
         {
-            var livingItems = this._ITEMS.Where(i => i.IsAlive);
+            var livingItems = this._ITEMS
+                                  .Where(i => i.IsAlive)
+                                  .ToArray();
 
             this._ITEMS.Clear();
             this._ITEMS.AddRange(livingItems);
@@ -352,6 +354,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
                 {
                     var ex = ctx.State
                                 .Mediator.Publish<TPayload>(ctx.Item);
+
                     if (ex != null)
                     {
                         ctx.State
