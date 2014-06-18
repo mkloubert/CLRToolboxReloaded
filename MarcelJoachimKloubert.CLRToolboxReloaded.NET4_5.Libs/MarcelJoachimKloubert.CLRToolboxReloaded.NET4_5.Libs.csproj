@@ -2612,6 +2612,288 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\Zip\ZipOutputStream.cs">
       <Link>SharpZipLib\Zip\ZipOutputStream.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Common\Dimensions.cs">
+      <Link>WikiPlex\Common\Dimensions.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Common\Guard.cs">
+      <Link>WikiPlex\Common\Guard.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Common\ImagePart.cs">
+      <Link>WikiPlex\Common\ImagePart.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Common\ImagePartExtras.cs">
+      <Link>WikiPlex\Common\ImagePartExtras.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Common\Parameters.cs">
+      <Link>WikiPlex\Common\Parameters.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Common\RenderException.cs">
+      <Link>WikiPlex\Common\RenderException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Common\ScopeName.cs">
+      <Link>WikiPlex\Common\ScopeName.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Common\TextPart.cs">
+      <Link>WikiPlex\Common\TextPart.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Common\Utility.cs">
+      <Link>WikiPlex\Common\Utility.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\CompiledMacro.cs">
+      <Link>WikiPlex\Compilation\CompiledMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\MacroCompiler.cs">
+      <Link>WikiPlex\Compilation\MacroCompiler.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\MacroRule.cs">
+      <Link>WikiPlex\Compilation\MacroRule.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\BoldMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\BoldMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\ContentLeftAlignmentMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\ContentLeftAlignmentMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\ContentRightAlignmentMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\ContentRightAlignmentMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\EscapedMarkupMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\EscapedMarkupMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\HeadingsMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\HeadingsMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\HorizontalLineMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\HorizontalLineMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\IMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\IMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\ImageMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\ImageMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\IndentationMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\IndentationMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\ItalicsMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\ItalicsMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\LinkMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\LinkMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\ListMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\ListMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\SilverlightMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\SilverlightMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\SourceCodeMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\SourceCodeMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\StrikethroughMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\StrikethroughMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\SubscriptMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\SubscriptMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\SuperscriptMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\SuperscriptMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\SyndicatedFeedMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\SyndicatedFeedMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\TableMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\TableMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\UnderlineMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\UnderlineMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Compilation\Macros\VideoMacro.cs">
+      <Link>WikiPlex\Compilation\Macros\VideoMacro.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\EscapeRegexPatterns.cs">
+      <Link>WikiPlex\EscapeRegexPatterns.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Formatter.cs">
+      <Link>WikiPlex\Formatting\Formatter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\RenderedScopeEventArgs.cs">
+      <Link>WikiPlex\Formatting\RenderedScopeEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\ContentAlignmentRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\ContentAlignmentRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\FloatAlignment.cs">
+      <Link>WikiPlex\Formatting\Renderers\FloatAlignment.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\ImageRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\ImageRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\IndentationRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\IndentationRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\IRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\IRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\LinkRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\LinkRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\ListItemRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\ListItemRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\PlainTextRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\PlainTextRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\Renderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\Renderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\SilverlightRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\SilverlightRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\SilverlightRendering\BaseSilverlightRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\SilverlightRendering\BaseSilverlightRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\SilverlightRendering\BaseVersionedSilverlightRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\SilverlightRendering\BaseVersionedSilverlightRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\SilverlightRendering\ISilverlightRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\SilverlightRendering\ISilverlightRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\SilverlightRendering\Silverlight2Renderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\SilverlightRendering\Silverlight2Renderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\SilverlightRendering\Silverlight3Renderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\SilverlightRendering\Silverlight3Renderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\SilverlightRendering\Silverlight4Renderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\SilverlightRendering\Silverlight4Renderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\SilverlightRendering\Silverlight5Renderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\SilverlightRendering\Silverlight5Renderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\SourceCodeRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\SourceCodeRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\SyndicatedFeedRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\SyndicatedFeedRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\TableRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\TableRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\TextFormattingRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\TextFormattingRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\VideoRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\VideoRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\VideoRendering\Channel9VideoRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\VideoRendering\Channel9VideoRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\VideoRendering\EmbeddedVideoRender.cs">
+      <Link>WikiPlex\Formatting\Renderers\VideoRendering\EmbeddedVideoRender.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\VideoRendering\FlashVideoRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\VideoRendering\FlashVideoRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\VideoRendering\IVideoRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\VideoRendering\IVideoRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\VideoRendering\PluginVideoRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\VideoRendering\PluginVideoRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\VideoRendering\QuicktimeVideoRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\VideoRendering\QuicktimeVideoRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\VideoRendering\RealPlayerVideoRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\VideoRendering\RealPlayerVideoRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\VideoRendering\VimeoVideoRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\VideoRendering\VimeoVideoRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\VideoRendering\WindowsMediaPlayerVideoRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\VideoRendering\WindowsMediaPlayerVideoRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Formatting\Renderers\VideoRendering\YouTubeVideoRenderer.cs">
+      <Link>WikiPlex\Formatting\Renderers\VideoRendering\YouTubeVideoRenderer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\IWikiEngine.cs">
+      <Link>WikiPlex\IWikiEngine.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Macros.cs">
+      <Link>WikiPlex\Macros.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Parsing\Augmenters\IndentationScopeAugmenter.cs">
+      <Link>WikiPlex\Parsing\Augmenters\IndentationScopeAugmenter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Parsing\Augmenters\IScopeAugmenter.cs">
+      <Link>WikiPlex\Parsing\Augmenters\IScopeAugmenter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Parsing\Augmenters\ListScopeAugmenter.cs">
+      <Link>WikiPlex\Parsing\Augmenters\ListScopeAugmenter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Parsing\Augmenters\TableScopeAugmenter.cs">
+      <Link>WikiPlex\Parsing\Augmenters\TableScopeAugmenter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Parsing\Parser.cs">
+      <Link>WikiPlex\Parsing\Parser.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Parsing\Scope.cs">
+      <Link>WikiPlex\Parsing\Scope.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Renderers.cs">
+      <Link>WikiPlex\Renderers.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\ScopeAugmenters.cs">
+      <Link>WikiPlex\ScopeAugmenters.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\ScopeName.cs">
+      <Link>WikiPlex\ScopeName.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Syndication\FeedReaderFactory.cs">
+      <Link>WikiPlex\Syndication\FeedReaderFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Syndication\IFeedReaderFactory.cs">
+      <Link>WikiPlex\Syndication\IFeedReaderFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Syndication\ISyndicationReader.cs">
+      <Link>WikiPlex\Syndication\ISyndicationReader.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Syndication\IXmlDocumentReader.cs">
+      <Link>WikiPlex\Syndication\IXmlDocumentReader.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Syndication\Readers\AtomFeedReader.cs">
+      <Link>WikiPlex\Syndication\Readers\AtomFeedReader.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Syndication\Readers\FeedReader.cs">
+      <Link>WikiPlex\Syndication\Readers\FeedReader.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Syndication\Readers\GoogleAtomFeedReader.cs">
+      <Link>WikiPlex\Syndication\Readers\GoogleAtomFeedReader.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Syndication\Readers\IFeedReader.cs">
+      <Link>WikiPlex\Syndication\Readers\IFeedReader.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Syndication\Readers\RssFeedReader.cs">
+      <Link>WikiPlex\Syndication\Readers\RssFeedReader.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Syndication\SyndicationDate.cs">
+      <Link>WikiPlex\Syndication\SyndicationDate.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Syndication\SyndicationFeed.cs">
+      <Link>WikiPlex\Syndication\SyndicationFeed.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Syndication\SyndicationItem.cs">
+      <Link>WikiPlex\Syndication\SyndicationItem.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Syndication\SyndicationReader.cs">
+      <Link>WikiPlex\Syndication\SyndicationReader.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Syndication\XmlDocumentReaderWrapper.cs">
+      <Link>WikiPlex\Syndication\XmlDocumentReaderWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\WikiEngine.cs">
+      <Link>WikiPlex\WikiEngine.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2628,6 +2910,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\License.txt">
+      <Link>License.txt</Link>
+    </EmbeddedResource>
     <EmbeddedResource Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\LICENSE.TXT">
       <Link>antlr3\LICENSE.TXT</Link>
     </EmbeddedResource>
