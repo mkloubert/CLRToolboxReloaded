@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\ObjectModel\DispatcherObservableCollection.cs" />
+    <Compile Include="Execution\DispatcherMediator.cs" />
     <Compile Include="Execution\Jobs\AsyncDispatcherJobScheduler.cs" />
     <Compile Include="Execution\Jobs\DispatcherJobScheduler.cs" />
     <Compile Include="Extensions\ClrToolboxWpfExtensionMethods.cs" />

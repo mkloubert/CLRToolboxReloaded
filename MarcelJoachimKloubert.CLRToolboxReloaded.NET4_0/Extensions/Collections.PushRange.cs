@@ -11,8 +11,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
     {
         #region Methods (1)
 
-        // Public Methods (1) 
-
         /// <summary>
         /// Pushes a list of items to a stack collections.
         /// </summary>
@@ -29,18 +27,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                 throw new ArgumentNullException("stack");
             }
 
-            if (seq == null)
-            {
-                throw new ArgumentNullException("seq");
-            }
-
-            using (var e = seq.GetEnumerator())
-            {
-                while (e.MoveNext())
-                {
-                    stack.Push(e.Current);
-                }
-            }
+            ForEach(seq,
+                    action: (ctx) =>
+                    {
+                        ctx.State
+                           .Stack.Push(ctx.Item);
+                    }, actionState: new
+                    {
+                        Stack = stack,
+                    });
         }
 
         #endregion Methods

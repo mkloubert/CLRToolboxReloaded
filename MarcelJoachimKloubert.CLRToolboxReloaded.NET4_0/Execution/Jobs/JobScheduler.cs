@@ -100,13 +100,117 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
 
         #region Methods (18)
 
-        // Public Methods (5) 
-
         /// <inheriteddoc />
         public void Dispose()
         {
             this.DisposeInner(true);
             GC.SuppressFinalize(this);
+        }
+
+        private void DisposeInner(bool disposing)
+        {
+            lock (this._SYNC)
+            {
+                if (disposing && this.IsDisposed)
+                {
+                    return;
+                }
+
+                if (disposing)
+                {
+                    this.RaiseEventHandler(this.Disposing);
+                }
+
+                this.OnDispose(disposing);
+
+                if (disposing)
+                {
+                    this.RaiseEventHandler(this.Disposed);
+                    this.IsDisposed = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Disposes the underlying timer.
+        /// </summary>
+        protected virtual void DisposeTimer()
+        {
+            using (var t = this._timer)
+            {
+                this._timer = null;
+            }
+        }
+
+        /// <summary>
+        /// Returns all jobs that should be executed at a specific time.
+        /// </summary>
+        /// <param name="time">The time.</param>
+        /// <returns>The jobs.</returns>
+        protected IEnumerable<IJob> GetJobsToExecute(DateTimeOffset time)
+        {
+            var allJobs = this._PROVIDER(this) ?? Enumerable.Empty<IJob>();
+
+            return allJobs.OfType<IJob>()
+                          .Where(j => this.IsRunning &&
+                                      j.CanExecute(time));
+        }
+
+        /// <summary>
+        /// Handles a job item.
+        /// </summary>
+        /// <param name="ctx">The underlying item context.</param>
+        protected virtual void HandleJobItem(IForAllItemContext<IJob, DateTimeOffset> ctx)
+        {
+            var occuredErrors = new List<Exception>();
+
+            DateTimeOffset completedAt;
+            var execCtx = new JobExecutionContext();
+            try
+            {
+                execCtx.Job = ctx.Item;
+                execCtx.ResultVars = new Dictionary<string, object>(EqualityComparerFactory.CreateCaseInsensitiveStringComparer(true, true));
+                execCtx.Time = ctx.State;
+
+                execCtx.Job
+                       .Execute(execCtx);
+
+                completedAt = AppTime.Now;
+            }
+            catch (Exception ex)
+            {
+                completedAt = AppTime.Now;
+
+                var aggEx = ex as AggregateException;
+                if (aggEx != null)
+                {
+                    occuredErrors.AddRange(aggEx.InnerExceptions.OfType<Exception>());
+                }
+                else
+                {
+                    occuredErrors.Add(ex);
+                }
+            }
+
+            var result = new JobExecutionResult();
+            result.Context = execCtx;
+            result.Errors = occuredErrors.ToArray();
+            result.Vars = new ReadOnlyDictionaryWrapper<string, object>(execCtx.ResultVars);
+            result.Time = completedAt;
+
+            this.RaiseEventHandler(this.Executed,
+                                   new JobExecutionResultEventArgs(result));
+        }
+
+        /// <summary>
+        /// Handles jobs that should be executed at a specific time.
+        /// </summary>
+        /// <param name="time">The time.</param>
+        protected virtual void HandleJobs(DateTimeOffset time)
+        {
+            this.GetJobsToExecute(time)
+                .ForAll(this.HandleJobItem,
+                        time);
         }
 
         /// <inheriteddoc />
@@ -178,91 +282,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
             }
         }
 
-        // Protected Methods (10) 
-
-        /// <summary>
-        /// Disposes the underlying timer.
-        /// </summary>
-        protected virtual void DisposeTimer()
-        {
-            using (var t = this._timer)
-            {
-                this._timer = null;
-            }
-        }
-
-        /// <summary>
-        /// Handles a job item.
-        /// </summary>
-        /// <param name="ctx">The underlying item context.</param>
-        protected virtual void HandleJobItem(IForAllItemContext<IJob, DateTimeOffset> ctx)
-        {
-            var occuredErrors = new List<Exception>();
-
-            DateTimeOffset completedAt;
-            var execCtx = new JobExecutionContext();
-            try
-            {
-                execCtx.Job = ctx.Item;
-                execCtx.ResultVars = new Dictionary<string, object>(EqualityComparerFactory.CreateCaseInsensitiveStringComparer(true, true));
-                execCtx.Time = ctx.State;
-
-                execCtx.Job
-                       .Execute(execCtx);
-
-                completedAt = AppTime.Now;
-            }
-            catch (Exception ex)
-            {
-                completedAt = AppTime.Now;
-
-                var aggEx = ex as AggregateException;
-                if (aggEx != null)
-                {
-                    occuredErrors.AddRange(aggEx.InnerExceptions.OfType<Exception>());
-                }
-                else
-                {
-                    occuredErrors.Add(ex);
-                }
-            }
-
-            var result = new JobExecutionResult();
-            result.Context = execCtx;
-            result.Errors = occuredErrors.ToArray();
-            result.Vars = new ReadOnlyDictionaryWrapper<string, object>(execCtx.ResultVars);
-            result.Time = completedAt;
-
-            this.RaiseEventHandler(this.Executed,
-                                   new JobExecutionResultEventArgs(result));
-        }
-
-        /// <summary>
-        /// Returns all jobs that should be executed at a specific time.
-        /// </summary>
-        /// <param name="time">The time.</param>
-        /// <returns>The jobs.</returns>
-        protected IEnumerable<IJob> GetJobsToExecute(DateTimeOffset time)
-        {
-            var allJobs = this._PROVIDER(this) ?? Enumerable.Empty<IJob>();
-
-            var normalizedJobs = allJobs.OfType<IJob>();
-
-            return normalizedJobs.Where(j => this.IsRunning &&
-                                             j.CanExecute(time));
-        }
-
-        /// <summary>
-        /// Handles jobs that should be executed at a specific time.
-        /// </summary>
-        /// <param name="time">The time.</param>
-        protected virtual void HandleJobs(DateTimeOffset time)
-        {
-            this.GetJobsToExecute(time)
-                .ForAll(this.HandleJobItem,
-                        time);
-        }
-
         /// <summary>
         /// The logic for the <see cref="JobScheduler.Dispose()" /> method
         /// and the finalizer.
@@ -291,6 +310,47 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
         protected virtual void OnInitialize()
         {
             // dummy
+        }
+
+        private void OnStart()
+        {
+            if (this.IsRunning)
+            {
+                return;
+            }
+
+            try
+            {
+                var newSession = new Session<IJobScheduler>();
+                newSession.SetId(Guid.NewGuid());
+                newSession.Parent = this;
+                newSession.Time = AppTime.Now;
+
+                this.Session = newSession;
+                this.StartTimer();
+
+                this.RaiseEventHandler(this.Started);
+            }
+            catch
+            {
+                this.Session = null;
+                this.RaiseEventHandler(this.Stopped);
+
+                throw;
+            }
+        }
+
+        private void OnStop()
+        {
+            if (this.IsRunning == false)
+            {
+                return;
+            }
+
+            this.StopTimer();
+            this.Session = null;
+
+            this.RaiseEventHandler(this.Stopped);
         }
 
         /// <summary>
@@ -336,76 +396,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
             }
         }
 
-        // Private Methods (4) 
-
-        private void DisposeInner(bool disposing)
-        {
-            lock (this._SYNC)
-            {
-                lock (this._SYNC)
-                {
-                    if (disposing && this.IsDisposed)
-                    {
-                        return;
-                    }
-
-                    if (disposing)
-                    {
-                        this.RaiseEventHandler(this.Disposing);
-                    }
-
-                    this.OnDispose(disposing);
-
-                    if (disposing)
-                    {
-                        this.RaiseEventHandler(this.Disposed);
-                        this.IsDisposed = true;
-                    }
-                }
-            }
-        }
-
-        private void OnStart()
-        {
-            if (this.IsRunning)
-            {
-                return;
-            }
-
-            try
-            {
-                var newSession = new Session<IJobScheduler>();
-                newSession.SetId(Guid.NewGuid());
-                newSession.Parent = this;
-                newSession.Time = AppTime.Now;
-
-                this.Session = newSession;
-                this.StartTimer();
-
-                this.RaiseEventHandler(this.Started);
-            }
-            catch
-            {
-                this.Session = null;
-                this.RaiseEventHandler(this.Stopped);
-
-                throw;
-            }
-        }
-
-        private void OnStop()
-        {
-            if (this.IsRunning == false)
-            {
-                return;
-            }
-
-            this.StopTimer();
-            this.Session = null;
-
-            this.RaiseEventHandler(this.Stopped);
-        }
-
         private void Timer_Elapsed(object state)
         {
             lock (this._SYNC)
@@ -431,9 +421,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
 
         #endregion Methods
 
-        #region Properties (8)
-
-        // Public Properties (8) 
+        #region Properties (9)
 
         /// <inheriteddoc />
         public virtual bool CanRestart
@@ -497,8 +485,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
                 return session == null ? (DateTimeOffset?)null : session.Time;
             }
         }
-
-        // Protected Properties (1) 
 
         /// <summary>
         /// Gets the check interval for an underlying timer.

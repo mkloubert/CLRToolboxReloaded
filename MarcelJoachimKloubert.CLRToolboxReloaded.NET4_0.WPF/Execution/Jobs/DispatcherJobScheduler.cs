@@ -289,7 +289,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Execution.Jobs
                 this._timer = new DispatcherTimer(this._PRIORITY, dispatcher);
             }
 
-            this._timer.Interval = TimeSpan.FromMilliseconds(750);
             this._timer.Tick += this.Timer_Tick;
         }
 
@@ -317,7 +316,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Execution.Jobs
 
             t.Stop();
         }
-
 
         private void Timer_Tick(object sender, EventArgs e)
         {

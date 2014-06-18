@@ -56,6 +56,7 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Caching\DelegateCache.CacheItem.cs">
       <Link>Caching\DelegateCache.CacheItem.cs</Link>
+      <DependentUpon>DelegateCache.cs</DependentUpon>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Caching\DelegateCache.cs">
       <Link>Caching\DelegateCache.cs</Link>
@@ -314,6 +315,13 @@
       <Link>Execution\Jobs\JobScheduler.JobExecutionResult.cs</Link>
       <DependentUpon>JobScheduler.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Mediator.Classes.cs">
+      <Link>Execution\Mediator.Classes.cs</Link>
+      <DependentUpon>Mediator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Mediator.cs">
+      <Link>Execution\Mediator.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Workflows\AggregateWorkflow.cs">
       <Link>Execution\Workflows\AggregateWorkflow.cs</Link>
     </Compile>
@@ -379,6 +387,14 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.ForEach.cs">
       <Link>Extensions\Collections.ForEach.cs</Link>
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.IsEmpty.cs">
+      <Link>Extensions\Collections.IsEmpty.cs</Link>
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.IsNotEmpty.cs">
+      <Link>Extensions\Collections.IsNotEmpty.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.PeekOrDefault.cs">
@@ -499,6 +515,9 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Strings.cs">
       <Link>Extensions\Strings.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Strings.ToUnsecureString.cs">
+      <Link>Extensions\Strings.ToUnsecureString.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ValuesAndObjects.cs">
       <Link>Extensions\ValuesAndObjects.cs</Link>
@@ -661,6 +680,9 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\TemplateBase.cs">
       <Link>Text\TemplateBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Threading\ThreadOption.cs">
+      <Link>Threading\ThreadOption.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

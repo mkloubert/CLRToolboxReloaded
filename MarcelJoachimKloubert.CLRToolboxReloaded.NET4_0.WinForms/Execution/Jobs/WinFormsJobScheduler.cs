@@ -165,7 +165,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Forms.Execution.Jobs
                 this._timer = new Timer(container);
             }
 
-            this._timer.Interval = 750;
             this._timer.Tick += this.Timer_Tick;
         }
 

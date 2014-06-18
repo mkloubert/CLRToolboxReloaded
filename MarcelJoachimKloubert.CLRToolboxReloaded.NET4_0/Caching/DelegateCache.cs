@@ -46,8 +46,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Caching
 
         #region Delegates and Events (2)
 
-        // Delegates (2) 
-
         /// <summary>
         /// Describes a cached action.
         /// </summary>
@@ -61,9 +59,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Caching
 
         #endregion Delegates and Events
 
-        #region Methods (17)
-
-        // Public Methods (11) 
+        #region Methods (15)
 
         /// <summary>
         /// Removes all cached delegates.
@@ -103,6 +99,38 @@ namespace MarcelJoachimKloubert.CLRToolbox.Caching
                                   .ChangeType<T>(this.InvokeInner(func));
         }
 
+        private object InvokeInner(Delegate @delegate, params object[] args)
+        {
+            if (@delegate == null)
+            {
+                throw new ArgumentNullException("delegate");
+            }
+
+            CachedItem item;
+
+            lock (this._SYNC)
+            {
+                item = this.TryFindCachedItem(@delegate);
+            }
+
+            if (item != null)
+            {
+                return item.Invoke(args);
+            }
+
+            // not cached => simply invoke
+            return @delegate.Method
+                            .Invoke(@delegate.Target,
+                                    args ?? new object[] { null });
+        }
+
+        /// <inheriteddoc />
+        protected override void OnDispose(DisposableObjectBase.DisposeContext ctx)
+        {
+            this._ITEMS
+                .Clear();
+        }
+
         /// <summary>
         /// Removes an action from the cache.
         /// </summary>
@@ -128,6 +156,32 @@ namespace MarcelJoachimKloubert.CLRToolbox.Caching
         public bool RemoveFunc<T>(CachedFunc<T> func)
         {
             return this.RemoveInner(func);
+        }
+
+        private bool RemoveInner(Delegate @delegate)
+        {
+            if (@delegate == null)
+            {
+                throw new ArgumentNullException("delegate");
+            }
+
+            bool result;
+
+            lock (this._SYNC)
+            {
+                var item = this.TryFindCachedItem(@delegate);
+
+                if (item != null)
+                {
+                    result = this._ITEMS.Remove(item);
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -157,122 +211,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Caching
             return this.ResetInner(func);
         }
 
-        /// <summary>
-        /// Caches an action without a timeout.
-        /// </summary>
-        /// <param name="action">The action to cache.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="action" /> is <see langword="null" />.
-        /// </exception>
-        public void SaveAction(CachedAction action)
-        {
-            this.SaveInner(action, null);
-        }
-
-        /// <summary>
-        /// Caches an action.
-        /// </summary>
-        /// <param name="action">The action to cache.</param>
-        /// <param name="timeout">The timeout / update interval.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="action" /> is <see langword="null" />.
-        /// </exception>
-        public void SaveAction(CachedAction action, TimeSpan timeout)
-        {
-            this.SaveInner(action, timeout);
-        }
-
-        /// <summary>
-        /// Caches a function without a timeout.
-        /// </summary>
-        /// <typeparam name="T">Result type of the function.</typeparam>
-        /// <param name="func">The function to cache.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="func" /> is <see langword="null" />.
-        /// </exception>
-        public void SaveFunc<T>(CachedFunc<T> func)
-        {
-            this.SaveInner(func, null);
-        }
-
-        /// <summary>
-        /// Caches a function without a timeout.
-        /// </summary>
-        /// <typeparam name="T">Result type of the function.</typeparam>
-        /// <param name="func">The function to cache.</param>
-        /// <param name="timeout">The timeout / update interval.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="func" /> is <see langword="null" />.
-        /// </exception>
-        public void SaveFunc<T>(CachedFunc<T> func, TimeSpan timeout)
-        {
-            this.SaveInner(func, timeout);
-        }
-
-        // Protected Methods (1) 
-
-        /// <inheriteddoc />
-        protected override void OnDispose(DisposableObjectBase.DisposeContext ctx)
-        {
-            this._ITEMS
-                .Clear();
-        }
-
-        // Private Methods (5) 
-
-        private object InvokeInner(Delegate @delegate, params object[] args)
-        {
-            if (@delegate == null)
-            {
-                throw new ArgumentNullException("delegate");
-            }
-
-            CachedItem item;
-            lock (this._SYNC)
-            {
-                item = this.TryFindCachedItem(@delegate);
-            }
-
-            if (item != null)
-            {
-                return item.Invoke(args);
-            }
-            else
-            {
-                // not cached => simply invoke
-
-                return @delegate.Method
-                                .Invoke(@delegate.Target,
-                                        args ?? new object[] { null });
-            }
-        }
-
-        private bool RemoveInner(Delegate @delegate)
-        {
-            if (@delegate == null)
-            {
-                throw new ArgumentNullException("delegate");
-            }
-
-            bool result;
-
-            lock (this._SYNC)
-            {
-                CachedItem item = this.TryFindCachedItem(@delegate);
-
-                if (item != null)
-                {
-                    result = this._ITEMS.Remove(item);
-                }
-                else
-                {
-                    result = false;
-                }
-            }
-
-            return result;
-        }
-
         private bool ResetInner(Delegate @delegate)
         {
             if (@delegate == null)
@@ -281,6 +219,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Caching
             }
 
             CachedItem item;
+
             lock (this._SYNC)
             {
                 item = this.TryFindCachedItem(@delegate);
@@ -294,6 +233,33 @@ namespace MarcelJoachimKloubert.CLRToolbox.Caching
             return false;
         }
 
+        /// <summary>
+        /// Caches an action.
+        /// </summary>
+        /// <param name="action">The action to cache.</param>
+        /// <param name="timeout">The timeout / update interval.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="action" /> is <see langword="null" />.
+        /// </exception>
+        public void SaveAction(CachedAction action, TimeSpan? timeout = null)
+        {
+            this.SaveInner(action, timeout);
+        }
+
+        /// <summary>
+        /// Caches a function without a timeout.
+        /// </summary>
+        /// <typeparam name="T">Result type of the function.</typeparam>
+        /// <param name="func">The function to cache.</param>
+        /// <param name="timeout">The timeout / update interval.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="func" /> is <see langword="null" />.
+        /// </exception>
+        public void SaveFunc<T>(CachedFunc<T> func, TimeSpan? timeout = null)
+        {
+            this.SaveInner(func, timeout);
+        }
+
         private void SaveInner(Delegate @delegate, TimeSpan? timeout)
         {
             if (@delegate == null)
@@ -303,7 +269,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Caching
 
             lock (this._SYNC)
             {
-                CachedItem item = this.TryFindCachedItem(@delegate);
+                var item = this.TryFindCachedItem(@delegate);
 
                 if (item != null)
                 {

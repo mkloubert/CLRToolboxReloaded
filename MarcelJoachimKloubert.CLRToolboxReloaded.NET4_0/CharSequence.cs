@@ -237,7 +237,8 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// <returns>The output value.</returns>
         public static implicit operator CharSequence(string str)
         {
-            return str != null ? new CharSequence(str) : null;
+            return str != null ? new CharSequence(str)
+                               : null;
         }
 
         /// <summary>
@@ -247,7 +248,8 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// <returns>The output value.</returns>
         public static implicit operator string(CharSequence chars)
         {
-            return chars != null ? chars._STRING : null;
+            return chars != null ? chars._STRING
+                                 : null;
         }
 
         /// <summary>
@@ -257,7 +259,8 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// <returns>The output value.</returns>
         public static implicit operator char[](CharSequence chars)
         {
-            return chars != null ? chars.ToArray() : null;
+            return chars != null ? chars.ToArray()
+                                 : null;
         }
 
         /// <summary>
@@ -267,7 +270,8 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// <returns>The output value.</returns>
         public static implicit operator CharSequence(char[] array)
         {
-            return array != null ? new CharSequence(new string(array)) : null;
+            return array != null ? new CharSequence(new string(array))
+                                 : null;
         }
 
         /// <summary>
@@ -288,7 +292,8 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// <returns>The output value.</returns>
         public static implicit operator CharSequence(StringBuilder builder)
         {
-            return builder != null ? new CharSequence(builder.ToString()) : null;
+            return builder != null ? new CharSequence(builder.ToString())
+                                   : null;
         }
 
         #endregion Operators (10)

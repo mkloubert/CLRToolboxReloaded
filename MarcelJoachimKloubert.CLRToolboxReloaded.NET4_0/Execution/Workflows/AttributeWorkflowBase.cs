@@ -114,13 +114,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
                 currentMethod = methodsWithAttribs.SingleOrDefault();
             }
 
-            IDictionary<string, object> execVars = this.CreateVarStorage();
-            bool hasBeenCanceled = false;
+            var execVars = this.CreateVarStorage();
+            var hasBeenCanceled = false;
             long index = -1;
             IReadOnlyDictionary<string, object> previousVars = null;
             object result = null;
-            object sync = new object();
-            bool throwErrors = true;
+            var sync = new object();
+            var throwErrors = true;
             while ((hasBeenCanceled == false) &&
                    (currentMethod != null))
             {
@@ -216,12 +216,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         {
             try
             {
-                object[] methodParams;
-                if (method.GetParameters().Length < 1)
-                {
-                    methodParams = new object[0];
-                }
-                else
+                object[] methodParams = null;
+                if (method.GetParameters().Length > 0)
                 {
                     methodParams = new object[] { ctx };
                 }

@@ -329,6 +329,14 @@
       <Link>Extensions\Collections.ForEach.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.IsEmpty.cs">
+      <Link>Extensions\Collections.IsEmpty.cs</Link>
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.IsNotEmpty.cs">
+      <Link>Extensions\Collections.IsNotEmpty.cs</Link>
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.PeekOrDefault.cs">
       <Link>Extensions\Collections.PeekOrDefault.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
@@ -501,6 +509,9 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\TemplateBase.cs">
       <Link>Text\TemplateBase.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\threading\ThreadOption.cs">
+      <Link>Threading\ThreadOption.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0\__Compatibility\System\IO\ErrorEventArgs.cs">
       <Link>__Compatiblity\System\IO\ErrorEventArgs.cs</Link>

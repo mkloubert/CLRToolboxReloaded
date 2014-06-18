@@ -10,8 +10,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
     {
         #region Methods (3)
 
-        // Public Methods (3) 
-
         /// <summary>
         /// Creates an object from a data record.
         /// </summary>

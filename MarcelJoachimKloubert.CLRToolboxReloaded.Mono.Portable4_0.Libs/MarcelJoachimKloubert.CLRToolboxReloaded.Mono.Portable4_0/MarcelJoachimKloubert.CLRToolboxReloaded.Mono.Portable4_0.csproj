@@ -480,6 +480,15 @@
     <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IRunnable.cs">
       <Link>IRunnable.cs</Link>
     </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.IsEmpty.cs">
+      <Link>Extensions\Collections.IsEmpty.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.IsNotEmpty.cs">
+      <Link>Extensions\Collections.IsNotEmpty.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Threading\ThreadOption.cs">
+      <Link>Threading\ThreadOption.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -504,5 +513,6 @@
     <Folder Include="Text\" />
     <Folder Include="Sessions\" />
     <Folder Include="Execution\Jobs\" />
+    <Folder Include="Threading\" />
   </ItemGroup>
 </Project>

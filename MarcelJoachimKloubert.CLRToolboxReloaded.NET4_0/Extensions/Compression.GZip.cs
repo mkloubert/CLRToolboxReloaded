@@ -11,7 +11,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 {
     static partial class ClrToolboxExtensionMethods
     {
-        #region Methods (8)
+        #region Methods (5)
 
         /// <summary>
         /// Compresses binary data via GZIP.
@@ -33,27 +33,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// Compresses the data of a source stream via GZIP.
         /// </summary>
         /// <param name="src">The source stream.</param>
-        /// <returns>The compressed data.</returns>
-        /// <exception cref="ArgumentException">
-        /// <paramref name="src" /> cannot be read.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="src" /> is <see langword="null" />.
-        /// </exception>
-        public static byte[] GZip(this Stream src)
-        {
-            using (var dest = new MemoryStream())
-            {
-                GZip(src, dest);
-
-                return dest.ToArray();
-            }
-        }
-
-        /// <summary>
-        /// Compresses the data of a source stream via GZIP.
-        /// </summary>
-        /// <param name="src">The source stream.</param>
         /// <param name="bufferSize">The buffer size for read operation to use.</param>
         /// <returns>The compressed data.</returns>
         /// <exception cref="ArgumentException">
@@ -65,9 +44,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="bufferSize" /> is invalid.
         /// </exception>
-        public static byte[] GZip(this Stream src, int bufferSize)
+        public static byte[] GZip(this Stream src, int? bufferSize = null)
         {
-            return GZipInner(src, bufferSize);
+            using (var dest = new MemoryStream())
+            {
+                GZipInner(src, dest, bufferSize);
+
+                return dest.ToArray();
+            }
         }
 
         /// <summary>
@@ -94,22 +78,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// </summary>
         /// <param name="src">The source stream.</param>
         /// <param name="dest">The destination stream.</param>
-        /// <exception cref="ArgumentException">
-        /// <paramref name="src" /> cannot be read and/or <paramref name="dest" /> cannot be written.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="src" /> and/or <paramref name="dest" /> are <see langword="null" />.
-        /// </exception>
-        public static void GZip(this Stream src, Stream dest)
-        {
-            GZipInner(src, dest, null);
-        }
-
-        /// <summary>
-        /// Compresses the data of a source stream to a destination stream via GZIP.
-        /// </summary>
-        /// <param name="src">The source stream.</param>
-        /// <param name="dest">The destination stream.</param>
         /// <param name="bufferSize">The buffer size for read operation to use.</param>
         /// <exception cref="ArgumentException">
         /// <paramref name="src" /> cannot be read and/or <paramref name="dest" /> cannot be written.
@@ -120,19 +88,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="bufferSize" /> is invalid.
         /// </exception>
-        public static void GZip(this Stream src, Stream dest, int bufferSize)
+        public static void GZip(this Stream src, Stream dest, int? bufferSize = null)
         {
             GZipInner(src, dest, bufferSize);
-        }
-
-        private static byte[] GZipInner(Stream src, int? bufferSize)
-        {
-            using (var dest = new MemoryStream())
-            {
-                GZipInner(src, dest, bufferSize);
-
-                return dest.ToArray();
-            }
         }
 
         private static void GZipInner(Stream src, Stream dest, int? bufferSize)

@@ -93,8 +93,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                 throw new ArgumentNullException("actionStateProvider");
             }
 
-            List<Exception> errors = new List<Exception>();
-            object sync = new object();
+            var errors = new List<Exception>();
+            var sync = new object();
 
             using (var e = seq.GetEnumerator())
             {
@@ -108,11 +108,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
                             tuple.Invoke();
                         }, state: new ForAllAsyncTuple<T, TState>(action: action,
-                                                             actionStateProvider: actionStateProvider,
-                                                             index: ++index,
-                                                             item: e.Current,
-                                                             errors: errors,
-                                                             sync: sync));
+                                                                  actionStateProvider: actionStateProvider,
+                                                                  index: ++index,
+                                                                  item: e.Current,
+                                                                  errors: errors,
+                                                                  sync: sync));
                 }
             }
         }

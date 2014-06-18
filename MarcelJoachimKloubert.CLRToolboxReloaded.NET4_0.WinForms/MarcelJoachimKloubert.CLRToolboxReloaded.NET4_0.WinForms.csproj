@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Execution\Jobs\AsyncWinFormsJobScheduler.cs" />
     <Compile Include="Execution\Jobs\WinFormsJobScheduler.cs" />
+    <Compile Include="Execution\WinFormsMediator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
