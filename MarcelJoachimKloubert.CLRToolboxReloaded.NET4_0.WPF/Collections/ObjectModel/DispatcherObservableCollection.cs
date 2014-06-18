@@ -242,7 +242,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel
                 throw new ArgumentNullException("disp");
             }
 
-            return new DispatcherObservableCollection<T>((coll) => disp,
+            return new DispatcherObservableCollection<T>(provider: (coll) => disp,
                                                          syncRoot: syncRoot,
                                                          prio: prio,
                                                          isBackground: isBackground);
@@ -287,7 +287,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel
                 throw new ArgumentNullException("dispObj");
             }
 
-            return new DispatcherObservableCollection<T>((coll) => dispObj.Dispatcher,
+            return new DispatcherObservableCollection<T>(provider: (coll) => dispObj.Dispatcher,
                                                          syncRoot: syncRoot,
                                                          prio: prio,
                                                          isBackground: isBackground);

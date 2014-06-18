@@ -58,16 +58,32 @@
     <Compile Include="Execution\Jobs\AsyncDispatcherJobScheduler.cs" />
     <Compile Include="Execution\Jobs\DispatcherJobScheduler.cs" />
     <Compile Include="Extensions\ClrToolboxWpfExtensionMethods.cs" />
-    <Compile Include="Extensions\Dispatcher.BeginInvoke.cs" />
+    <Compile Include="Extensions\Dispatcher.BeginInvoke.cs">
+      <DependentUpon>Dispatcher.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Dispatcher.cs" />
-    <Compile Include="Extensions\Dispatcher.Invoke.cs" />
+    <Compile Include="Extensions\Dispatcher.Invoke.cs">
+      <DependentUpon>Dispatcher.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Imaging.cs" />
-    <Compile Include="Extensions\Imaging.SaveAsBmp.cs" />
-    <Compile Include="Extensions\Imaging.SaveAsGif.cs" />
-    <Compile Include="Extensions\Imaging.SaveAsJpeg.cs" />
-    <Compile Include="Extensions\Imaging.SaveAsPng.cs" />
-    <Compile Include="Extensions\Imaging.SaveAsTiff.cs" />
-    <Compile Include="Extensions\Imaging.TakeScreenshot.cs" />
+    <Compile Include="Extensions\Imaging.SaveAsBmp.cs">
+      <DependentUpon>Imaging.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Imaging.SaveAsGif.cs">
+      <DependentUpon>Imaging.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Imaging.SaveAsJpeg.cs">
+      <DependentUpon>Imaging.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Imaging.SaveAsPng.cs">
+      <DependentUpon>Imaging.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Imaging.SaveAsTiff.cs">
+      <DependentUpon>Imaging.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Imaging.TakeScreenshot.cs">
+      <DependentUpon>Imaging.cs</DependentUpon>
+    </Compile>
     <Compile Include="Input\SimpleCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

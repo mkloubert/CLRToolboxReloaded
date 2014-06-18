@@ -24,7 +24,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
         #endregion Fields
 
         #region Constructors (4)
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Mediator" /> class.
         /// </summary>
@@ -150,7 +150,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
         private static Action CreateAction<TPayload>(IMediatorActionItem<TPayload> item, TPayload payload,
                                                      ICollection<Exception> exceptions, object syncExceptions)
         {
-            return new Action(() =>
+            return () =>
                 {
                     try
                     {
@@ -161,7 +161,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
                         SaveException(ex: ex,
                                       coll: exceptions, sync: syncExceptions);
                     }
-                });
+                };
         }
 
         private void InvokeForItemList(Action<IList<IMediatorActionItem>> action)
@@ -210,22 +210,22 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
 
                     actionsCurrent = l.OfType<IMediatorActionItem<TPayload>>()
                                       .Where(i => (i.Option == ThreadOption.Current) &&
-                                                  ((i.Filter == null) || (i.Filter(s.Payload))))
+                                                  ((i.Filter == null) || i.Filter(s.Payload)))
                                       .ToArray();
 
                     actionsBg = l.OfType<IMediatorActionItem<TPayload>>()
                                  .Where(i => (i.Option == ThreadOption.Background) &&
-                                             ((i.Filter == null) || (i.Filter(s.Payload))))
+                                             ((i.Filter == null) || i.Filter(s.Payload)))
                                  .ToArray();
 
                     actionsBgNoWait = l.OfType<IMediatorActionItem<TPayload>>()
                                        .Where(i => (i.Option == ThreadOption.BackgroundNoWait) &&
-                                                   ((i.Filter == null) || (i.Filter(s.Payload))))
+                                                   ((i.Filter == null) || i.Filter(s.Payload)))
                                        .ToArray();
 
                     actionsUI = l.OfType<IMediatorActionItem<TPayload>>()
                                  .Where(i => (i.Option == ThreadOption.UserInterface) &&
-                                             ((i.Filter == null) || (i.Filter(s.Payload))))
+                                             ((i.Filter == null) || i.Filter(s.Payload)))
                                  .ToArray();
                 }, actionState: new
                 {
@@ -251,7 +251,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
                                                                   action: ctx => ctx.Item.Start()),
                                            exceptions: exceptions,
                                            syncExceptions: sync);
-                
+
                 // start tasks for actions
                 // that run in background but that method
                 // does not wait for them
@@ -368,7 +368,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
 
             return exceptions.Count < 1 ? null : new AggregateException(exceptions);
         }
-        
+
         /// <summary>
         /// Publishes a list of payload objects.
         /// </summary>
@@ -443,7 +443,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
 
             return this;
         }
-        
+
         /// <summary>
         /// Subscribes an action for a specific payload.
         /// </summary>
