@@ -56,6 +56,267 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\ANTLRFileStream.cs">
+      <Link>antlr3\runtime\ANTLRFileStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\ANTLRInputStream.cs">
+      <Link>antlr3\runtime\ANTLRInputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\ANTLRReaderStream.cs">
+      <Link>antlr3\runtime\ANTLRReaderStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\ANTLRStringStream.cs">
+      <Link>antlr3\runtime\ANTLRStringStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\AstParserRuleReturnScope`2.cs">
+      <Link>antlr3\runtime\AstParserRuleReturnScope`2.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\BaseRecognizer.cs">
+      <Link>antlr3\runtime\BaseRecognizer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\BitSet.cs">
+      <Link>antlr3\runtime\BitSet.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\BufferedTokenStream.cs">
+      <Link>antlr3\runtime\BufferedTokenStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\CharStreamConstants.cs">
+      <Link>antlr3\runtime\CharStreamConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\CharStreamState.cs">
+      <Link>antlr3\runtime\CharStreamState.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\ClassicToken.cs">
+      <Link>antlr3\runtime\ClassicToken.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\CommonToken.cs">
+      <Link>antlr3\runtime\CommonToken.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\CommonTokenStream.cs">
+      <Link>antlr3\runtime\CommonTokenStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Debug\IDebugEventListener.cs">
+      <Link>antlr3\runtime\Debug\IDebugEventListener.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\DFA.cs">
+      <Link>antlr3\runtime\DFA.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\EarlyExitException.cs">
+      <Link>antlr3\runtime\EarlyExitException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\FailedPredicateException.cs">
+      <Link>antlr3\runtime\FailedPredicateException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\GrammarRuleAttribute.cs">
+      <Link>antlr3\runtime\GrammarRuleAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\IAstRuleReturnScope.cs">
+      <Link>antlr3\runtime\IAstRuleReturnScope.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\IAstRuleReturnScope`1.cs">
+      <Link>antlr3\runtime\IAstRuleReturnScope`1.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\ICharStream.cs">
+      <Link>antlr3\runtime\ICharStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\IIntStream.cs">
+      <Link>antlr3\runtime\IIntStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\IRuleReturnScope.cs">
+      <Link>antlr3\runtime\IRuleReturnScope.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\IRuleReturnScope`1.cs">
+      <Link>antlr3\runtime\IRuleReturnScope`1.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\ITemplateRuleReturnScope.cs">
+      <Link>antlr3\runtime\ITemplateRuleReturnScope.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\ITemplateRuleReturnScope`1.cs">
+      <Link>antlr3\runtime\ITemplateRuleReturnScope`1.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\IToken.cs">
+      <Link>antlr3\runtime\IToken.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\ITokenSource.cs">
+      <Link>antlr3\runtime\ITokenSource.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\ITokenStream.cs">
+      <Link>antlr3\runtime\ITokenStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\ITokenStreamInformation.cs">
+      <Link>antlr3\runtime\ITokenStreamInformation.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\LegacyCommonTokenStream.cs">
+      <Link>antlr3\runtime\LegacyCommonTokenStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Lexer.cs">
+      <Link>antlr3\runtime\Lexer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Misc\FastQueue.cs">
+      <Link>antlr3\runtime\Misc\FastQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Misc\FunctionDelegates.cs">
+      <Link>antlr3\runtime\Misc\FunctionDelegates.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Misc\ListStack`1.cs">
+      <Link>antlr3\runtime\Misc\ListStack`1.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Misc\LookaheadStream.cs">
+      <Link>antlr3\runtime\Misc\LookaheadStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\MismatchedNotSetException.cs">
+      <Link>antlr3\runtime\MismatchedNotSetException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\MismatchedRangeException.cs">
+      <Link>antlr3\runtime\MismatchedRangeException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\MismatchedSetException.cs">
+      <Link>antlr3\runtime\MismatchedSetException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\MismatchedTokenException.cs">
+      <Link>antlr3\runtime\MismatchedTokenException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\MismatchedTreeNodeException.cs">
+      <Link>antlr3\runtime\MismatchedTreeNodeException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\MissingTokenException.cs">
+      <Link>antlr3\runtime\MissingTokenException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\NoViableAltException.cs">
+      <Link>antlr3\runtime\NoViableAltException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Parser.cs">
+      <Link>antlr3\runtime\Parser.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\ParserRuleReturnScope.cs">
+      <Link>antlr3\runtime\ParserRuleReturnScope.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\RecognitionException.cs">
+      <Link>antlr3\runtime\RecognitionException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\RecognizerSharedState.cs">
+      <Link>antlr3\runtime\RecognizerSharedState.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\TemplateParserRuleReturnScope`2.cs">
+      <Link>antlr3\runtime\TemplateParserRuleReturnScope`2.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\TokenChannels.cs">
+      <Link>antlr3\runtime\TokenChannels.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\TokenRewriteStream.cs">
+      <Link>antlr3\runtime\TokenRewriteStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tokens.cs">
+      <Link>antlr3\runtime\Tokens.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\TokenTypes.cs">
+      <Link>antlr3\runtime\TokenTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\AntlrRuntime_BaseTreeDebugView.cs">
+      <Link>antlr3\runtime\Tree\AntlrRuntime_BaseTreeDebugView.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\AstTreeRuleReturnScope`2.cs">
+      <Link>antlr3\runtime\Tree\AstTreeRuleReturnScope`2.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\BaseTree.cs">
+      <Link>antlr3\runtime\Tree\BaseTree.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\BaseTreeAdaptor.cs">
+      <Link>antlr3\runtime\Tree\BaseTreeAdaptor.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\BufferedTreeNodeStream.cs">
+      <Link>antlr3\runtime\Tree\BufferedTreeNodeStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\CommonErrorNode.cs">
+      <Link>antlr3\runtime\Tree\CommonErrorNode.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\CommonTree.cs">
+      <Link>antlr3\runtime\Tree\CommonTree.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\CommonTreeAdaptor.cs">
+      <Link>antlr3\runtime\Tree\CommonTreeAdaptor.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\CommonTreeNodeStream.cs">
+      <Link>antlr3\runtime\Tree\CommonTreeNodeStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\DotTreeGenerator.cs">
+      <Link>antlr3\runtime\Tree\DotTreeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\IPositionTrackingStream.cs">
+      <Link>antlr3\runtime\Tree\IPositionTrackingStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\ITree.cs">
+      <Link>antlr3\runtime\Tree\ITree.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\ITreeAdaptor.cs">
+      <Link>antlr3\runtime\Tree\ITreeAdaptor.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\ITreeNodeStream.cs">
+      <Link>antlr3\runtime\Tree\ITreeNodeStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\ITreeVisitorAction.cs">
+      <Link>antlr3\runtime\Tree\ITreeVisitorAction.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\ParseTree.cs">
+      <Link>antlr3\runtime\Tree\ParseTree.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\RewriteCardinalityException.cs">
+      <Link>antlr3\runtime\Tree\RewriteCardinalityException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\RewriteEarlyExitException.cs">
+      <Link>antlr3\runtime\Tree\RewriteEarlyExitException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\RewriteEmptyStreamException.cs">
+      <Link>antlr3\runtime\Tree\RewriteEmptyStreamException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\RewriteRuleElementStream.cs">
+      <Link>antlr3\runtime\Tree\RewriteRuleElementStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\RewriteRuleNodeStream.cs">
+      <Link>antlr3\runtime\Tree\RewriteRuleNodeStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\RewriteRuleSubtreeStream.cs">
+      <Link>antlr3\runtime\Tree\RewriteRuleSubtreeStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\RewriteRuleTokenStream.cs">
+      <Link>antlr3\runtime\Tree\RewriteRuleTokenStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\TemplateTreeRuleReturnScope`2.cs">
+      <Link>antlr3\runtime\Tree\TemplateTreeRuleReturnScope`2.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\TreeFilter.cs">
+      <Link>antlr3\runtime\Tree\TreeFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\TreeIterator.cs">
+      <Link>antlr3\runtime\Tree\TreeIterator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\TreeParser.cs">
+      <Link>antlr3\runtime\Tree\TreeParser.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\TreePatternLexer.cs">
+      <Link>antlr3\runtime\Tree\TreePatternLexer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\TreePatternParser.cs">
+      <Link>antlr3\runtime\Tree\TreePatternParser.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\TreeRewriter.cs">
+      <Link>antlr3\runtime\Tree\TreeRewriter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\TreeRuleReturnScope`1.cs">
+      <Link>antlr3\runtime\Tree\TreeRuleReturnScope`1.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\TreeVisitor.cs">
+      <Link>antlr3\runtime\Tree\TreeVisitor.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\Tree\TreeWizard.cs">
+      <Link>antlr3\runtime\Tree\TreeWizard.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\UnbufferedTokenStream.cs">
+      <Link>antlr3\runtime\UnbufferedTokenStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\UnwantedTokenException.cs">
+      <Link>antlr3\runtime\UnwantedTokenException.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Block.cs">
       <Link>DotLiquid\Block.cs</Link>
     </Compile>
@@ -2118,6 +2379,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\LICENSE.TXT">
+      <Link>antlr3\LICENSE.TXT</Link>
+    </EmbeddedResource>
     <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\LICENSE.txt">
       <Link>DotLiquid\LICENSE.txt</Link>
     </Content>
