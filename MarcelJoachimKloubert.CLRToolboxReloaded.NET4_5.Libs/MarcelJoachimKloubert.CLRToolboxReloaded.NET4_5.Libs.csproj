@@ -317,6 +317,156 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\runtime\UnwantedTokenException.cs">
       <Link>antlr3\runtime\UnwantedTokenException.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\CodeColorizer.cs">
+      <Link>ColorCode\CodeColorizer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Common\ExtensionMethods.cs">
+      <Link>ColorCode\Common\ExtensionMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Common\Guard.cs">
+      <Link>ColorCode\Common\Guard.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Common\ILanguageRepository.cs">
+      <Link>ColorCode\Common\ILanguageRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Common\LanguageId.cs">
+      <Link>ColorCode\Common\LanguageId.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Common\LanguageRepository.cs">
+      <Link>ColorCode\Common\LanguageRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Common\ScopeName.cs">
+      <Link>ColorCode\Common\ScopeName.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\CompiledLanguage.cs">
+      <Link>ColorCode\Compilation\CompiledLanguage.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\ILanguageCompiler.cs">
+      <Link>ColorCode\Compilation\ILanguageCompiler.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\LanguageCompiler.cs">
+      <Link>ColorCode\Compilation\LanguageCompiler.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\Asax.cs">
+      <Link>ColorCode\Compilation\Languages\Asax.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\Ashx.cs">
+      <Link>ColorCode\Compilation\Languages\Ashx.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\Aspx.cs">
+      <Link>ColorCode\Compilation\Languages\Aspx.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\AspxCs.cs">
+      <Link>ColorCode\Compilation\Languages\AspxCs.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\AspxVb.cs">
+      <Link>ColorCode\Compilation\Languages\AspxVb.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\Cpp.cs">
+      <Link>ColorCode\Compilation\Languages\Cpp.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\CSharp.cs">
+      <Link>ColorCode\Compilation\Languages\CSharp.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\Css.cs">
+      <Link>ColorCode\Compilation\Languages\Css.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\FSharp.cs">
+      <Link>ColorCode\Compilation\Languages\FSharp.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\Haskell.cs">
+      <Link>ColorCode\Compilation\Languages\Haskell.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\Html.cs">
+      <Link>ColorCode\Compilation\Languages\Html.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\Java.cs">
+      <Link>ColorCode\Compilation\Languages\Java.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\JavaScript.cs">
+      <Link>ColorCode\Compilation\Languages\JavaScript.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\Koka.cs">
+      <Link>ColorCode\Compilation\Languages\Koka.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\Markdown.cs">
+      <Link>ColorCode\Compilation\Languages\Markdown.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\Php.cs">
+      <Link>ColorCode\Compilation\Languages\Php.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\PowerShell.cs">
+      <Link>ColorCode\Compilation\Languages\PowerShell.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\Sql.cs">
+      <Link>ColorCode\Compilation\Languages\Sql.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\Typescript.cs">
+      <Link>ColorCode\Compilation\Languages\Typescript.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\VbDotNet.cs">
+      <Link>ColorCode\Compilation\Languages\VbDotNet.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\Languages\Xml.cs">
+      <Link>ColorCode\Compilation\Languages\Xml.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\RuleCaptures.cs">
+      <Link>ColorCode\Compilation\RuleCaptures.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Compilation\RuleFormats.cs">
+      <Link>ColorCode\Compilation\RuleFormats.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Formatters.cs">
+      <Link>ColorCode\Formatters.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Formatting\HtmlClassFormatter.cs">
+      <Link>ColorCode\Formatting\HtmlClassFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Formatting\HtmlFormatter.cs">
+      <Link>ColorCode\Formatting\HtmlFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Formatting\TextInsertion.cs">
+      <Link>ColorCode\Formatting\TextInsertion.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\ICodeColorizer.cs">
+      <Link>ColorCode\ICodeColorizer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\IFormatter.cs">
+      <Link>ColorCode\IFormatter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\ILanguage.cs">
+      <Link>ColorCode\ILanguage.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\IStyleSheet.cs">
+      <Link>ColorCode\IStyleSheet.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\LanguageRule.cs">
+      <Link>ColorCode\LanguageRule.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Languages.cs">
+      <Link>ColorCode\Languages.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Parsing\ILanguageParser.cs">
+      <Link>ColorCode\Parsing\ILanguageParser.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Parsing\LanguageParser.cs">
+      <Link>ColorCode\Parsing\LanguageParser.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Parsing\Scope.cs">
+      <Link>ColorCode\Parsing\Scope.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Style.cs">
+      <Link>ColorCode\Style.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\StyleDictionary.cs">
+      <Link>ColorCode\StyleDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\StyleSheets.cs">
+      <Link>ColorCode\StyleSheets.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\Styling\StyleSheets\DefaultStyleSheet.cs">
+      <Link>ColorCode\Styling\StyleSheets\DefaultStyleSheet.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\Block.cs">
       <Link>DotLiquid\Block.cs</Link>
     </Compile>
@@ -2480,6 +2630,9 @@
   <ItemGroup>
     <EmbeddedResource Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\antlr3\LICENSE.TXT">
       <Link>antlr3\LICENSE.TXT</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\ColorCode\LICENSE.txt">
+      <Link>ColorCode\LICENSE.txt</Link>
     </EmbeddedResource>
     <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\DotLiquid\LICENSE.txt">
       <Link>DotLiquid\LICENSE.txt</Link>
