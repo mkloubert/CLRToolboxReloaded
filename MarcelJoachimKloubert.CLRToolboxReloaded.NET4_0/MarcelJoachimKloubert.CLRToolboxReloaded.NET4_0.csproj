@@ -139,6 +139,7 @@
     <Compile Include="Execution\Commands\DelegateCommand.cs" />
     <Compile Include="Execution\Commands\ICommand.cs" />
     <Compile Include="Execution\ExecutionErrorEventArgs.cs" />
+    <Compile Include="Execution\IMediator.cs" />
     <Compile Include="Execution\Jobs\AsyncJobScheduler.cs" />
     <Compile Include="Execution\Jobs\DelegateJob.cs" />
     <Compile Include="Execution\Jobs\IJob.cs" />

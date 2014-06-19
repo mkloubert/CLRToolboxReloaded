@@ -2,6 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.CLRToolbox.Data.Conversion;
 using MarcelJoachimKloubert.CLRToolbox.Threading;
 using System;
 using System.Reflection;
@@ -10,7 +11,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
 {
     partial class Mediator
     {
-        #region Nested classes (6)
+        #region Nested classes (7)
 
         private interface IMediatorActionItem : IEquatable<Delegate>
         {
@@ -168,6 +169,63 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
             #endregion Methods
         }
 
+        private sealed class MediatorUIContext<TPayload> : ObjectBase, IMediatorUIContext<TPayload>
+        {
+            #region Properties (5)
+
+            internal Action Action
+            {
+                get;
+                set;
+            }
+
+            public IMediator Mediator
+            {
+                get;
+                internal set;
+            }
+
+            public TPayload Payload
+            {
+                get;
+                internal set;
+            }
+
+            object IMediatorUIContext.Payload
+            {
+                get { return this.Payload; }
+            }
+
+            public Type PayloadType
+            {
+                get { return typeof(TPayload); }
+            }
+
+            #endregion
+
+            #region Methods (3)
+
+            public IAsyncResult BeginInvoke(AsyncCallback cb)
+            {
+                return this.Action
+                           .BeginInvoke(callback: cb,
+                                        @object: this);
+            }
+
+            public M GetMediator<M>() where M : IMediator
+            {
+                return GlobalConverter.Current
+                                      .ChangeType<M>(value: this.Mediator);
+            }
+
+            public void Invoke()
+            {
+                this.Action();
+            }
+
+            #endregion
+        }
+
         private sealed class WeakReferenceActionItem<TPayload> : MediatorActionItemBase<TPayload>
         {
             #region Fields (2)
@@ -260,6 +318,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
             #endregion Methods
         }
 
-        #endregion Nested classes (6)
+        #endregion Nested classes
     }
 }

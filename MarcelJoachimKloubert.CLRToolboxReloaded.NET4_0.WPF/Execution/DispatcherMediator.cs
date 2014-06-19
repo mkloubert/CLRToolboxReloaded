@@ -170,17 +170,17 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Execution
                               .Dispatcher;
         }
 
-        private static UIAction ToUIAction(DispatcherProvider provider,
-                                           DispatcherPriority prio, bool runInBackground)
+        private static MediatorUIAction ToUIAction(DispatcherProvider provider,
+                                                   DispatcherPriority prio, bool runInBackground)
         {
             if (provider == null)
             {
                 return null;
             }
 
-            return (m, a) =>
+            return (ctx) =>
                 {
-                    var disp = provider((DispatcherMediator)m);
+                    var disp = provider(ctx.GetMediator<DispatcherMediator>());
 
                     Func<DispatcherPriority, Delegate, object> actionToInvoke;
                     if (runInBackground)
@@ -192,7 +192,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Execution
                         actionToInvoke = disp.Invoke;
                     }
 
-                    actionToInvoke(prio, a);
+                    actionToInvoke(prio, new Action(ctx.Invoke));
                 };
         }
 

@@ -24,7 +24,7 @@
     <DocumentationFile>bin\Debug\MarcelJoachimKloubert.CLRToolboxReloaded.Libs.XML</DocumentationFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
-    <NoWarn>3015 3005 3009 1574 3021 1591 1699 1616 1587 1573 3001 1572 1734 618 1570 3002 3003</NoWarn>
+    <NoWarn>3015 3005 3008 3009 1574 3021 1591 1699 1616 1587 1573 3001 1572 1734 618 1570 3002 3003</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -2426,6 +2426,261 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\StreamWrappers.cs">
       <Link>SevenZipSharp\StreamWrappers.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\CloudStorage.cs">
+      <Link>SharpBox\CloudStorage.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\CloudStorageAsyncFunctions.cs">
+      <Link>SharpBox\CloudStorageAsyncFunctions.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\CloudStorageComfortFunctions.cs">
+      <Link>SharpBox\CloudStorageComfortFunctions.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\CloudStorageLimits.cs">
+      <Link>SharpBox\CloudStorageLimits.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\CloudStorageSyncFramework.cs">
+      <Link>SharpBox\CloudStorageSyncFramework.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\AsyncObjectRequest.cs">
+      <Link>SharpBox\Common\AsyncObjectRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\AsyncResultEx.cs">
+      <Link>SharpBox\Common\AsyncResultEx.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Diagnostics\StopWatch.cs">
+      <Link>SharpBox\Common\Diagnostics\StopWatch.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\IO\PathHelper.cs">
+      <Link>SharpBox\Common\IO\PathHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\IO\StreamHelper.cs">
+      <Link>SharpBox\Common\IO\StreamHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\HttpUtilityEx.cs">
+      <Link>SharpBox\Common\Net\HttpUtilityEx.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Json\JsonDateTimeConverter.cs">
+      <Link>SharpBox\Common\Net\Json\JsonDateTimeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Json\JsonHelper.cs">
+      <Link>SharpBox\Common\Net\Json\JsonHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\oAuth\Context\OAuthConsumerContext.cs">
+      <Link>SharpBox\Common\Net\oAuth\Context\OAuthConsumerContext.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\oAuth\Context\OAuthServiceContext.cs">
+      <Link>SharpBox\Common\Net\oAuth\Context\OAuthServiceContext.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\oAuth\Impl\OAuthBase.cs">
+      <Link>SharpBox\Common\Net\oAuth\Impl\OAuthBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\oAuth\Impl\OAuthStreamParser.cs">
+      <Link>SharpBox\Common\Net\oAuth\Impl\OAuthStreamParser.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\oAuth\Impl\OAuthUrlGenerator.cs">
+      <Link>SharpBox\Common\Net\oAuth\Impl\OAuthUrlGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\oAuth\OAuthService.cs">
+      <Link>SharpBox\Common\Net\oAuth\OAuthService.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\oAuth\Token\OAuthToken.cs">
+      <Link>SharpBox\Common\Net\oAuth\Token\OAuthToken.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Web\Dav\DavService.cs">
+      <Link>SharpBox\Common\Net\Web\Dav\DavService.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Web\Ftp\FtpService.cs">
+      <Link>SharpBox\Common\Net\Web\Ftp\FtpService.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Web\Http\HttpService.cs">
+      <Link>SharpBox\Common\Net\Web\Http\HttpService.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Web\WebRequestExecutedEventArgs.cs">
+      <Link>SharpBox\Common\Net\Web\WebRequestExecutedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Web\WebRequestExecutingEventArgs.cs">
+      <Link>SharpBox\Common\Net\Web\WebRequestExecutingEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Web\WebRequestManager.cs">
+      <Link>SharpBox\Common\Net\Web\WebRequestManager.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Web\WebRequestManagerNullProxy.cs">
+      <Link>SharpBox\Common\Net\Web\WebRequestManagerNullProxy.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Web\WebRequestMethods.cs">
+      <Link>SharpBox\Common\Net\Web\WebRequestMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Web\WebRequestMultipartFormDataSupport.cs">
+      <Link>SharpBox\Common\Net\Web\WebRequestMultipartFormDataSupport.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Web\WebRequestService.cs">
+      <Link>SharpBox\Common\Net\Web\WebRequestService.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Web\WebRequestStream.cs">
+      <Link>SharpBox\Common\Net\Web\WebRequestStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Web\WebRequestStreamHelper.cs">
+      <Link>SharpBox\Common\Net\Web\WebRequestStreamHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Common\Net\Web\WebResponseStream.cs">
+      <Link>SharpBox\Common\Net\Web\WebResponseStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Exceptions\ErrorMessages.cs">
+      <Link>SharpBox\Exceptions\ErrorMessages.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Exceptions\SharpBoxErrorCodes.cs">
+      <Link>SharpBox\Exceptions\SharpBoxErrorCodes.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Exceptions\SharpBoxException.cs">
+      <Link>SharpBox\Exceptions\SharpBoxException.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\ICloudDirectoryEntry.cs">
+      <Link>SharpBox\ICloudDirectoryEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\ICloudFileDataTransfer.cs">
+      <Link>SharpBox\ICloudFileDataTransfer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\ICloudFileSystemEntry.cs">
+      <Link>SharpBox\ICloudFileSystemEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\ICloudStorageAccessToken.cs">
+      <Link>SharpBox\ICloudStorageAccessToken.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\ICloudStorageAsyncInterface.cs">
+      <Link>SharpBox\ICloudStorageAsyncInterface.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\ICloudStorageConfiguration.cs">
+      <Link>SharpBox\ICloudStorageConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\ICloudStorageProvider.cs">
+      <Link>SharpBox\ICloudStorageProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\ICloudStoragePublicAPI.cs">
+      <Link>SharpBox\ICloudStoragePublicAPI.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\API\GenericHelper.cs">
+      <Link>SharpBox\StorageProvider\API\GenericHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\API\GenericStorageProviderFactory.cs">
+      <Link>SharpBox\StorageProvider\API\GenericStorageProviderFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\API\IStorageProviderService.cs">
+      <Link>SharpBox\StorageProvider\API\IStorageProviderService.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\API\IStorageProviderSession.cs">
+      <Link>SharpBox\StorageProvider\API\IStorageProviderSession.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\BaseObjects\BaseDirectoryEntry.cs">
+      <Link>SharpBox\StorageProvider\BaseObjects\BaseDirectoryEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\BaseObjects\BaseFileEntry.cs">
+      <Link>SharpBox\StorageProvider\BaseObjects\BaseFileEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\BaseObjects\BaseFileEntryDataTransfer.cs">
+      <Link>SharpBox\StorageProvider\BaseObjects\BaseFileEntryDataTransfer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\BaseObjects\BaseFileEntryDownloadStream.cs">
+      <Link>SharpBox\StorageProvider\BaseObjects\BaseFileEntryDownloadStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\BoxNet\BoxNetConfiguration.cs">
+      <Link>SharpBox\StorageProvider\BoxNet\BoxNetConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\BoxNet\BoxNetStorageProvider.cs">
+      <Link>SharpBox\StorageProvider\BoxNet\BoxNetStorageProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\BoxNet\Logic\BoxNetStorageProviderService.cs">
+      <Link>SharpBox\StorageProvider\BoxNet\Logic\BoxNetStorageProviderService.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\CIFS\CIFSConfiguration.cs">
+      <Link>SharpBox\StorageProvider\CIFS\CIFSConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\CIFS\CIFSStorageProvider.cs">
+      <Link>SharpBox\StorageProvider\CIFS\CIFSStorageProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\CIFS\Logic\CIFSStorageProviderService.cs">
+      <Link>SharpBox\StorageProvider\CIFS\Logic\CIFSStorageProviderService.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\CIFS\Logic\CIFSStorageProviderSession.cs">
+      <Link>SharpBox\StorageProvider\CIFS\Logic\CIFSStorageProviderSession.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\DropBox\DropBoxAccountInfo.cs">
+      <Link>SharpBox\StorageProvider\DropBox\DropBoxAccountInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\DropBox\DropBoxBaseTokenInformation.cs">
+      <Link>SharpBox\StorageProvider\DropBox\DropBoxBaseTokenInformation.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\DropBox\DropBoxConfiguration.cs">
+      <Link>SharpBox\StorageProvider\DropBox\DropBoxConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\DropBox\DropBoxQuotaInfo.cs">
+      <Link>SharpBox\StorageProvider\DropBox\DropBoxQuotaInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\DropBox\DropBoxRequestToken.cs">
+      <Link>SharpBox\StorageProvider\DropBox\DropBoxRequestToken.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\DropBox\DropBoxStorageProvider.cs">
+      <Link>SharpBox\StorageProvider\DropBox\DropBoxStorageProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\DropBox\DropBoxStorageProviderTools.cs">
+      <Link>SharpBox\StorageProvider\DropBox\DropBoxStorageProviderTools.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\DropBox\DropBoxToken.cs">
+      <Link>SharpBox\StorageProvider\DropBox\DropBoxToken.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\DropBox\Logic\DropBoxRequestParser.cs">
+      <Link>SharpBox\StorageProvider\DropBox\Logic\DropBoxRequestParser.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\DropBox\Logic\DropBoxStorageProviderService.cs">
+      <Link>SharpBox\StorageProvider\DropBox\Logic\DropBoxStorageProviderService.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\DropBox\Logic\DropBoxStorageProviderSession.cs">
+      <Link>SharpBox\StorageProvider\DropBox\Logic\DropBoxStorageProviderSession.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\Ftp\FtpConfiguration.cs">
+      <Link>SharpBox\StorageProvider\Ftp\FtpConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\Ftp\FtpStorageProvider.cs">
+      <Link>SharpBox\StorageProvider\Ftp\FtpStorageProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\Ftp\Logic\FtpStorageProviderService.cs">
+      <Link>SharpBox\StorageProvider\Ftp\Logic\FtpStorageProviderService.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\Ftp\Logic\FtpStorageProviderSession.cs">
+      <Link>SharpBox\StorageProvider\Ftp\Logic\FtpStorageProviderSession.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\GenericCurrentCredentials.cs">
+      <Link>SharpBox\StorageProvider\GenericCurrentCredentials.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\GenericNetworkCredentials.cs">
+      <Link>SharpBox\StorageProvider\GenericNetworkCredentials.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\GenericStorageProvider.cs">
+      <Link>SharpBox\StorageProvider\GenericStorageProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\GenericStorageProviderService.cs">
+      <Link>SharpBox\StorageProvider\GenericStorageProviderService.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\WebDav\Logic\WebDavRequestParser.cs">
+      <Link>SharpBox\StorageProvider\WebDav\Logic\WebDavRequestParser.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\WebDav\Logic\WebDavStorageProviderService.cs">
+      <Link>SharpBox\StorageProvider\WebDav\Logic\WebDavStorageProviderService.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\WebDav\Logic\WebDavStorageProviderSession.cs">
+      <Link>SharpBox\StorageProvider\WebDav\Logic\WebDavStorageProviderSession.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\WebDav\WebDavConfiguration.cs">
+      <Link>SharpBox\StorageProvider\WebDav\WebDavConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\StorageProvider\WebDav\WebDavStorageProvider.cs">
+      <Link>SharpBox\StorageProvider\WebDav\WebDavStorageProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\SyncFramework\DirectoryDiff.cs">
+      <Link>SharpBox\SyncFramework\DirectoryDiff.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\SyncFramework\DirectoryDiffResultItem.cs">
+      <Link>SharpBox\SyncFramework\DirectoryDiffResultItem.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\BZip2\BZip2.cs">
       <Link>SharpZipLib\BZip2\BZip2.cs</Link>
     </Compile>
@@ -2949,6 +3204,9 @@
     <EmbeddedResource Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\lgpl.txt">
       <Link>SevenZipSharp\lgpl.txt</Link>
     </EmbeddedResource>
+    <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpBox\Readme.txt">
+      <Link>SharpBox\Readme.txt</Link>
+    </Content>
     <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SharpZipLib\COPYING.txt">
       <Link>SharpZipLib\COPYING.txt</Link>
     </Content>

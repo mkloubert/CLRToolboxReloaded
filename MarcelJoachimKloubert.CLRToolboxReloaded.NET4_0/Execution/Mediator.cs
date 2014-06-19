@@ -14,12 +14,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
     /// <summary>
     /// A simple mediator.
     /// </summary>
-    public partial class Mediator : ObjectBase
+    public partial class Mediator : ObjectBase, IMediator
     {
         #region Fields (2)
 
         private readonly IList<IMediatorActionItem> _ITEMS = new List<IMediatorActionItem>();
-        private readonly UIAction _UI_ACTION;
+        private readonly MediatorUIAction _UI_ACTION;
 
         #endregion Fields
 
@@ -29,7 +29,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
         /// Initializes a new instance of the <see cref="Mediator" /> class.
         /// </summary>
         public Mediator()
-            : this(uiAction: InvokeOnCurrentThread)
+            : this(uiAction: InvokeOnUIThread)
         {
         }
 
@@ -40,7 +40,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
         /// <exception cref="ArgumentNullException">
         /// <paramref name="uiAction" /> is <see langword="null" />.
         /// </exception>
-        public Mediator(UIAction uiAction)
+        public Mediator(MediatorUIAction uiAction)
             : this(uiAction: uiAction,
                    sync: new object())
         {
@@ -54,7 +54,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
         /// <paramref name="sync" /> is <see langword="null" />.
         /// </exception>
         public Mediator(object sync)
-            : this(uiAction: InvokeOnCurrentThread,
+            : this(uiAction: InvokeOnUIThread,
                    sync: sync)
         {
         }
@@ -67,7 +67,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
         /// <exception cref="ArgumentNullException">
         /// <paramref name="uiAction" /> and/or <paramref name="sync" /> are <see langword="null" />.
         /// </exception>
-        public Mediator(UIAction uiAction, object sync)
+        public Mediator(MediatorUIAction uiAction, object sync)
             : base(isSynchronized: false,
                    sync: sync)
         {
@@ -81,25 +81,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
 
         #endregion Constructors
 
-        #region Events and delegates (2)
-
-        /// <summary>
-        /// Describes a mediator action.
-        /// </summary>
-        /// <typeparam name="TPayload">The type of the payload action.</typeparam>
-        /// <param name="payload">The submitted payload.</param>
-        public delegate void MediatorAction<TPayload>(TPayload payload);
-
-        /// <summary>
-        /// Describes logic that runs an action on the UI thread.
-        /// </summary>
-        /// <param name="mediator">The underlying mediator.</param>
-        /// <param name="action">The action that should be invoked.</param>
-        public delegate void UIAction(Mediator mediator, Action action);
-
-        #endregion Events and delegates
-
-        #region Methods (17)
+        #region Methods (18)
 
         private static void AppendExceptionsIfPossible(AggregateException ex,
                                                        ICollection<Exception> exceptions, object syncExceptions)
@@ -180,9 +162,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
             }
         }
 
-        private static void InvokeOnCurrentThread(Mediator mediator, Action action)
+        private static void InvokeOnUIThread(IMediatorUIContext ctx)
         {
-            action();
+            ctx.BeginInvoke(InvokeOnUIThread_BeginInvoke);
+        }
+
+        private static void InvokeOnUIThread_BeginInvoke(IAsyncResult res)
+        {
+            ((IMediatorUIContext)res.AsyncState).Invoke();
         }
 
         private static bool NonNullFilter<TPayload>(TPayload payload)
@@ -288,10 +275,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
                                                                 {
                                                                     var m = ctx.State.Mediator;
 
-                                                                    m._UI_ACTION(m, CreateAction<TPayload>(item: ctx.Item,
-                                                                                                           payload: ctx.State.Payload,
-                                                                                                           exceptions: ctx.State.Exceptions,
-                                                                                                           syncExceptions: ctx.State.Sync));
+                                                                    var uiCtx = new MediatorUIContext<TPayload>();
+                                                                    uiCtx.Action = CreateAction<TPayload>(item: ctx.Item,
+                                                                                                          payload: ctx.State.Payload,
+                                                                                                          exceptions: ctx.State.Exceptions,
+                                                                                                          syncExceptions: ctx.State.Sync);
+                                                                    uiCtx.Mediator = m;
+                                                                    uiCtx.Payload = ctx.State.Payload;
+
+                                                                    m._UI_ACTION(uiCtx);
                                                                 },
                                                                 actionState: new
                                                                 {

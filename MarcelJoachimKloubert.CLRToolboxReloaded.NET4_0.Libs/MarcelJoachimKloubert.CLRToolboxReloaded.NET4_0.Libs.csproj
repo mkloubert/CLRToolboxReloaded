@@ -22,7 +22,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\MarcelJoachimKloubert.CLRToolboxReloaded.Libs.XML</DocumentationFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <NoWarn>3015 3005 3009 1574 3021 1591 1699 1616 1587 1573 3001 1572 1734 618 1570 3002 3003</NoWarn>
+    <NoWarn>3015 3005 3008 3009 1574 3021 1591 1699 1616 1587 1573 3001 1572 1734 618 1570 3002 3003</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -844,6 +844,91 @@
     <Compile Include="SevenZipSharp\SevenZipExtractor.cs" />
     <Compile Include="SevenZipSharp\SevenZipSfx.cs" />
     <Compile Include="SevenZipSharp\StreamWrappers.cs" />
+    <Compile Include="SharpBox\CloudStorage.cs" />
+    <Compile Include="SharpBox\CloudStorageAsyncFunctions.cs" />
+    <Compile Include="SharpBox\CloudStorageComfortFunctions.cs" />
+    <Compile Include="SharpBox\CloudStorageLimits.cs" />
+    <Compile Include="SharpBox\CloudStorageSyncFramework.cs" />
+    <Compile Include="SharpBox\Common\AsyncObjectRequest.cs" />
+    <Compile Include="SharpBox\Common\AsyncResultEx.cs" />
+    <Compile Include="SharpBox\Common\Diagnostics\StopWatch.cs" />
+    <Compile Include="SharpBox\Common\IO\PathHelper.cs" />
+    <Compile Include="SharpBox\Common\IO\StreamHelper.cs" />
+    <Compile Include="SharpBox\Common\Net\HttpUtilityEx.cs" />
+    <Compile Include="SharpBox\Common\Net\Json\JsonDateTimeConverter.cs" />
+    <Compile Include="SharpBox\Common\Net\Json\JsonHelper.cs" />
+    <Compile Include="SharpBox\Common\Net\oAuth\Context\OAuthConsumerContext.cs" />
+    <Compile Include="SharpBox\Common\Net\oAuth\Context\OAuthServiceContext.cs" />
+    <Compile Include="SharpBox\Common\Net\oAuth\Impl\OAuthBase.cs" />
+    <Compile Include="SharpBox\Common\Net\oAuth\Impl\OAuthStreamParser.cs" />
+    <Compile Include="SharpBox\Common\Net\oAuth\Impl\OAuthUrlGenerator.cs" />
+    <Compile Include="SharpBox\Common\Net\oAuth\OAuthService.cs" />
+    <Compile Include="SharpBox\Common\Net\oAuth\Token\OAuthToken.cs" />
+    <Compile Include="SharpBox\Common\Net\Web\Dav\DavService.cs" />
+    <Compile Include="SharpBox\Common\Net\Web\Ftp\FtpService.cs" />
+    <Compile Include="SharpBox\Common\Net\Web\Http\HttpService.cs" />
+    <Compile Include="SharpBox\Common\Net\Web\WebRequestExecutedEventArgs.cs" />
+    <Compile Include="SharpBox\Common\Net\Web\WebRequestExecutingEventArgs.cs" />
+    <Compile Include="SharpBox\Common\Net\Web\WebRequestManager.cs" />
+    <Compile Include="SharpBox\Common\Net\Web\WebRequestManagerNullProxy.cs" />
+    <Compile Include="SharpBox\Common\Net\Web\WebRequestMethods.cs" />
+    <Compile Include="SharpBox\Common\Net\Web\WebRequestMultipartFormDataSupport.cs" />
+    <Compile Include="SharpBox\Common\Net\Web\WebRequestService.cs" />
+    <Compile Include="SharpBox\Common\Net\Web\WebRequestStream.cs" />
+    <Compile Include="SharpBox\Common\Net\Web\WebRequestStreamHelper.cs" />
+    <Compile Include="SharpBox\Common\Net\Web\WebResponseStream.cs" />
+    <Compile Include="SharpBox\Exceptions\ErrorMessages.cs" />
+    <Compile Include="SharpBox\Exceptions\SharpBoxErrorCodes.cs" />
+    <Compile Include="SharpBox\Exceptions\SharpBoxException.cs" />
+    <Compile Include="SharpBox\ICloudDirectoryEntry.cs" />
+    <Compile Include="SharpBox\ICloudFileDataTransfer.cs" />
+    <Compile Include="SharpBox\ICloudFileSystemEntry.cs" />
+    <Compile Include="SharpBox\ICloudStorageAccessToken.cs" />
+    <Compile Include="SharpBox\ICloudStorageAsyncInterface.cs" />
+    <Compile Include="SharpBox\ICloudStorageConfiguration.cs" />
+    <Compile Include="SharpBox\ICloudStorageProvider.cs" />
+    <Compile Include="SharpBox\ICloudStoragePublicAPI.cs" />
+    <Compile Include="SharpBox\StorageProvider\API\GenericHelper.cs" />
+    <Compile Include="SharpBox\StorageProvider\API\GenericStorageProviderFactory.cs" />
+    <Compile Include="SharpBox\StorageProvider\API\IStorageProviderService.cs" />
+    <Compile Include="SharpBox\StorageProvider\API\IStorageProviderSession.cs" />
+    <Compile Include="SharpBox\StorageProvider\BaseObjects\BaseDirectoryEntry.cs" />
+    <Compile Include="SharpBox\StorageProvider\BaseObjects\BaseFileEntry.cs" />
+    <Compile Include="SharpBox\StorageProvider\BaseObjects\BaseFileEntryDataTransfer.cs" />
+    <Compile Include="SharpBox\StorageProvider\BaseObjects\BaseFileEntryDownloadStream.cs" />
+    <Compile Include="SharpBox\StorageProvider\BoxNet\BoxNetConfiguration.cs" />
+    <Compile Include="SharpBox\StorageProvider\BoxNet\BoxNetStorageProvider.cs" />
+    <Compile Include="SharpBox\StorageProvider\BoxNet\Logic\BoxNetStorageProviderService.cs" />
+    <Compile Include="SharpBox\StorageProvider\CIFS\CIFSConfiguration.cs" />
+    <Compile Include="SharpBox\StorageProvider\CIFS\CIFSStorageProvider.cs" />
+    <Compile Include="SharpBox\StorageProvider\CIFS\Logic\CIFSStorageProviderService.cs" />
+    <Compile Include="SharpBox\StorageProvider\CIFS\Logic\CIFSStorageProviderSession.cs" />
+    <Compile Include="SharpBox\StorageProvider\DropBox\DropBoxAccountInfo.cs" />
+    <Compile Include="SharpBox\StorageProvider\DropBox\DropBoxBaseTokenInformation.cs" />
+    <Compile Include="SharpBox\StorageProvider\DropBox\DropBoxConfiguration.cs" />
+    <Compile Include="SharpBox\StorageProvider\DropBox\DropBoxQuotaInfo.cs" />
+    <Compile Include="SharpBox\StorageProvider\DropBox\DropBoxRequestToken.cs" />
+    <Compile Include="SharpBox\StorageProvider\DropBox\DropBoxStorageProvider.cs" />
+    <Compile Include="SharpBox\StorageProvider\DropBox\DropBoxStorageProviderTools.cs" />
+    <Compile Include="SharpBox\StorageProvider\DropBox\DropBoxToken.cs" />
+    <Compile Include="SharpBox\StorageProvider\DropBox\Logic\DropBoxRequestParser.cs" />
+    <Compile Include="SharpBox\StorageProvider\DropBox\Logic\DropBoxStorageProviderService.cs" />
+    <Compile Include="SharpBox\StorageProvider\DropBox\Logic\DropBoxStorageProviderSession.cs" />
+    <Compile Include="SharpBox\StorageProvider\Ftp\FtpConfiguration.cs" />
+    <Compile Include="SharpBox\StorageProvider\Ftp\FtpStorageProvider.cs" />
+    <Compile Include="SharpBox\StorageProvider\Ftp\Logic\FtpStorageProviderService.cs" />
+    <Compile Include="SharpBox\StorageProvider\Ftp\Logic\FtpStorageProviderSession.cs" />
+    <Compile Include="SharpBox\StorageProvider\GenericCurrentCredentials.cs" />
+    <Compile Include="SharpBox\StorageProvider\GenericNetworkCredentials.cs" />
+    <Compile Include="SharpBox\StorageProvider\GenericStorageProvider.cs" />
+    <Compile Include="SharpBox\StorageProvider\GenericStorageProviderService.cs" />
+    <Compile Include="SharpBox\StorageProvider\WebDav\Logic\WebDavRequestParser.cs" />
+    <Compile Include="SharpBox\StorageProvider\WebDav\Logic\WebDavStorageProviderService.cs" />
+    <Compile Include="SharpBox\StorageProvider\WebDav\Logic\WebDavStorageProviderSession.cs" />
+    <Compile Include="SharpBox\StorageProvider\WebDav\WebDavConfiguration.cs" />
+    <Compile Include="SharpBox\StorageProvider\WebDav\WebDavStorageProvider.cs" />
+    <Compile Include="SharpBox\SyncFramework\DirectoryDiff.cs" />
+    <Compile Include="SharpBox\SyncFramework\DirectoryDiffResultItem.cs" />
     <Compile Include="SharpZipLib\BZip2\BZip2.cs" />
     <Compile Include="SharpZipLib\BZip2\BZip2Constants.cs" />
     <Compile Include="SharpZipLib\BZip2\BZip2Exception.cs" />
@@ -1012,6 +1097,7 @@
     <EmbeddedResource Include="NUnit\license.txt" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="SharpBox\Readme.txt" />
     <EmbeddedResource Include="WikiPlex\License.txt" />
     <None Include="SevenZipSharp\7z.dll" />
     <None Include="SevenZipSharp\7z64.dll" />

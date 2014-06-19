@@ -24,24 +24,24 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Execution
             var threadIds = new HashSet<int>();
 
             // same thread
-            var action1 = new Mediator.MediatorAction<int>((i) =>
+            var action1 = new MediatorAction<int>((i) =>
                 {
                     sum1 += i;
                     threadIds.Add(Thread.CurrentThread.ManagedThreadId);
                 });
-            var action2 = new Mediator.MediatorAction<int>((i) =>
+            var action2 = new MediatorAction<int>((i) =>
                 {
                     sum1 += i;
                     threadIds.Add(Thread.CurrentThread.ManagedThreadId);
                 });
 
             // background thread
-            var action3 = new Mediator.MediatorAction<int>((i) =>
+            var action3 = new MediatorAction<int>((i) =>
                 {
                     sum2 += i;
                     threadIds.Add(Thread.CurrentThread.ManagedThreadId);
                 });
-            var action4 = new Mediator.MediatorAction<int>((i) =>
+            var action4 = new MediatorAction<int>((i) =>
                 {
                     sum2 += i;
                     threadIds.Add(Thread.CurrentThread.ManagedThreadId);

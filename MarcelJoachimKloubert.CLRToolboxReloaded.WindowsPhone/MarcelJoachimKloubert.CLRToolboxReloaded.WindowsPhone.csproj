@@ -88,6 +88,16 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5.Libs.csproj">
+      <Project>{C1EFC4AD-35E9-4ED3-A555-04A68AF8F1AC}</Project>
+      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5.Libs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5.csproj">
+      <Project>{4E1276F2-8CDF-43C6-98ED-9C89CF66A9EE}</Project>
+      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <ProjectExtensions />

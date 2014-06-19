@@ -119,34 +119,33 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Forms.Execution
                                              .MainWindowHandle);
         }
 
-        private void InnerUIAction(ControlProvider provider, Action action)
+        private void InnerUIAction(ControlProvider provider, IMediatorUIContext ctx)
         {
             var ctrl = provider(this);
 
             if ((ctrl != null) &&
                 ctrl.InvokeRequired)
             {
-                ctrl.Invoke(new Action<ControlProvider, Action>(this.InnerUIAction),
-                            provider, action);
+                ctrl.Invoke(new Action<ControlProvider, IMediatorUIContext>(this.InnerUIAction),
+                            provider, ctx);
 
                 return;
             }
 
-            action();
+            ctx.Invoke();
         }
 
-        private static UIAction ToUIAction(ControlProvider provider)
+        private static MediatorUIAction ToUIAction(ControlProvider provider)
         {
             if (provider == null)
             {
                 return null;
             }
 
-            return (m, a) =>
+            return (ctx) =>
                 {
-                    var wfm = (WinFormsMediator)m;
-
-                    wfm.InnerUIAction(provider, a);
+                    ctx.GetMediator<WinFormsMediator>()
+                       .InnerUIAction(provider, ctx);
                 };
         }
 
