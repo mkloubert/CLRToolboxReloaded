@@ -14,12 +14,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting.Export
                     Inherited = false)]
     public sealed class ExportScriptFuncAttribute : Attribute
     {
-        #region Fields (1)
-
-        private string _alias;
-
-        #endregion Fields
-
         #region Constructors (2)
 
         /// <summary>
@@ -48,9 +42,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting.Export
         /// </summary>
         public string Alias
         {
-            get { return this._alias; }
-
-            private set { this._alias = value; }
+            get;
+            private set;
         }
 
         #endregion Properties

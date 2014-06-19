@@ -484,9 +484,6 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\scripting\IScriptExecutor.cs">
       <Link>Scripting\IScriptExecutor.cs</Link>
     </Compile>
-    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\scripting\ScriptExecutorBase.Collections.cs">
-      <Link>Scripting\ScriptExecutorBase.Collections.cs</Link>
-    </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\serialization\CommonSerializer.cs">
       <Link>Serialization\CommonSerializer.cs</Link>
     </Compile>

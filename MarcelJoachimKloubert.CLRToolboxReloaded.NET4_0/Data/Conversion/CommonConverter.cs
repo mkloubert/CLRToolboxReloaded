@@ -61,10 +61,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
 
         private static bool IsAssignableFrom(Type type, Type c)
         {
-#if !(PORTABLE || PORTABLE40)
+#if MONO_PORTABLE40 || !(PORTABLE || PORTABLE40 || PORTABLE45)
             return type.IsAssignableFrom(c);
 #else
+    #if PORTABLE45
+            return type.GetTypeInfo().IsAssignableFrom(c.GetTypeInfo());
+    #else
             return false;
+    #endif
 #endif
         }
 
