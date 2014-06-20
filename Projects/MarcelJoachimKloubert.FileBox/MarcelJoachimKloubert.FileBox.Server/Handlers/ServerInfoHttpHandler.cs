@@ -35,34 +35,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 
         #endregion Constrcutors (1)
 
-        #region Methods (4)
-
-        private static object AssemblyToJson(Assembly asm)
-        {
-            if (asm == null)
-            {
-                return null;
-            }
-
-            return new
-                {
-                    name = asm.FullName,
-                };
-        }
-
-        private static object MethodToJson(MethodBase method)
-        {
-            if (method == null)
-            {
-                return null;
-            }
-
-            return new
-                {
-                    name = method.Name,
-                    type = TypeToJson(method.DeclaringType),
-                };
-        }
+        #region Methods (2)
 
         /// <inheriteddoc />
         protected override void OnProcessRequest_Authorized(IHttpRequestContext context)
@@ -80,62 +53,12 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
             }
             catch (Exception ex)
             {
-                var innerEx = ex.GetBaseException() ?? ex;
-
-                object stacktrace;
-                try
-                {
-                    StackTrace st;
-#if DEBUG
-                    st = new StackTrace(e: ex, fNeedFileInfo: true);
-#else
-                    st = new StackTrace(e: ex);
-#endif
-
-                    stacktrace = st.GetFrames()
-                                   .Select(f =>
-                                       {
-                                           return new
-                                           {
-                                               column = f.GetFileColumnNumber(),
-                                               file = f.GetFileName(),
-                                               line = f.GetFileLineNumber(),
-                                               method = MethodToJson(f.GetMethod()),
-                                           };
-                                       }).ToArray();
-                }
-                catch
-                {
-                    stacktrace = innerEx.StackTrace;
-                }
-
-                result.code = -1;
-                result.msg = innerEx.Message;
-                result.data = new
-                    {
-                        fullMsg = ex.ToString(),
-                        stackTrace = stacktrace,
-                        type = TypeToJson(innerEx.GetType()),
-                    };
+                SetupJsonResultByException(result, ex);
             }
 
             context.Http.Response.WriteJson(result);
         }
 
-        private static object TypeToJson(Type type)
-        {
-            if (type == null)
-            {
-                return null;
-            }
-
-            return new
-                {
-                    assembly = AssemblyToJson(type.Assembly),
-                    name = type.FullName,
-                };
-        }
-
-        #endregion Methods (4)
+        #endregion Methods (2)
     }
 }

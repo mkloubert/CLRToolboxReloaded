@@ -4,6 +4,7 @@
 
 using MarcelJoachimKloubert.FileBox.Client.Windows;
 using System;
+using System.Net;
 using System.Windows;
 
 namespace MarcelJoachimKloubert.FileBox.Client
@@ -44,6 +45,12 @@ namespace MarcelJoachimKloubert.FileBox.Client
         {
             var a = new App();
             a.InitializeComponent();
+
+            //TODO: handle whitelist by user!!!
+            ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
+                {
+                    return true;
+                };
 
             return a.Run(new MainWindow());
         }

@@ -3,10 +3,12 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using MarcelJoachimKloubert.CLRToolbox.Configuration;
+using MarcelJoachimKloubert.CLRToolbox.ServiceLocation;
 using MarcelJoachimKloubert.FileBox.Server.Handlers;
 using MarcelJoachimKloubert.FileBox.Server.Security;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -24,9 +26,9 @@ namespace MarcelJoachimKloubert.FileBox.Server
 
         private const string _CONFIG_CATEGORY_DIRS = "directories";
 
-        #endregion
+        #endregion Fields (1)
 
-        #region Properties (3)
+        #region Properties (6)
 
         /// <summary>
         /// Gets the root of the bin files.
@@ -46,6 +48,33 @@ namespace MarcelJoachimKloubert.FileBox.Server
         }
 
         /// <summary>
+        /// Gets the global MEF catalog.
+        /// </summary>
+        public AggregateCatalog GlobalCompositionCatalog
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the global MEF composition container.
+        /// </summary>
+        public CompositionContainer GlobalCompositionContainer
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets the global service locator.
+        /// </summary>
+        public DelegateServiceLocator GlobalServiceLocator
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Gets the root of the user files.
         /// </summary>
         public string UserFileDirectory
@@ -53,14 +82,14 @@ namespace MarcelJoachimKloubert.FileBox.Server
             get
             {
                 string dir;
-                this.Config.TryGetValue<string>(category: _CONFIG_CATEGORY_DIRS, name:"userFiles",
+                this.Config.TryGetValue<string>(category: _CONFIG_CATEGORY_DIRS, name: "userFiles",
                                                 value: out dir);
 
                 return this.GetFullPath(dir);
             }
         }
 
-        #endregion Properties
+        #endregion Properties (6)
 
         #region Methods (9)
 
@@ -88,25 +117,36 @@ namespace MarcelJoachimKloubert.FileBox.Server
         protected void Application_Start(object sender, EventArgs e)
         {
             var binDir = new DirectoryInfo(this.BinDirectory);
-            
+
             var configFile = new FileInfo(Path.Combine(binDir.FullName, "config.json"));
             this.Config = new JsonFileConfigRepository(file: configFile,
                                                        isReadOnly: true);
 
-            var userFiles = this.UserFileDirectory;
+            // service locator
+            {
+                this.GlobalCompositionCatalog = new AggregateCatalog();
+                this.GlobalCompositionCatalog.Catalogs.Add(new AssemblyCatalog(typeof(__IDummyObject).Assembly));
+
+                this.GlobalCompositionContainer = new CompositionContainer(this.GlobalCompositionCatalog,
+                                                                           isThreadSafe: true);
+                this.GlobalCompositionContainer.ComposeExportedValue(this);
+
+                this.GlobalServiceLocator = new DelegateServiceLocator(baseLocator: new ExportProviderServiceLocator(this.GlobalCompositionContainer));
+                ServiceLocator.SetLocator(this.GlobalServiceLocator);
+            }
+
+            // list inbox
+            RouteTable.Routes.Add(new Route
+                       (
+                           "inbox",
+                           new InboxHttpHandler(handler: this.CheckLogin)
+                       ));
 
             // (server) info
             RouteTable.Routes.Add(new Route
                        (
                            "info",
                            new ServerInfoHttpHandler(handler: this.CheckLogin)
-                       ));
-
-            // list (directory)
-            RouteTable.Routes.Add(new Route
-                       (
-                           "list",
-                           new ListHttpHandler(handler: this.CheckLogin)
                        ));
         }
 
@@ -172,6 +212,6 @@ namespace MarcelJoachimKloubert.FileBox.Server
         {
         }
 
-        #endregion Methods (7)
+        #endregion Methods (9)
     }
 }

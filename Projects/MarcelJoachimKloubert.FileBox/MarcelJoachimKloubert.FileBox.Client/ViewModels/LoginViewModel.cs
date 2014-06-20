@@ -149,7 +149,7 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
         internal void Reset()
         {
             this.HostAddress = "localhost";
-            this.Port = "57937";
+            this.Port = "44302";
 
             this.Username = "mkloubert";
 

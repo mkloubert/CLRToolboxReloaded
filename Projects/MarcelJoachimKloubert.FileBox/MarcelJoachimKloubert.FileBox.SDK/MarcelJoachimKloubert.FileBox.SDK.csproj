@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileBoxConnection.cs" />
-    <Compile Include="IO\File.cs" />
+    <Compile Include="IO\FileItem.cs" />
     <Compile Include="JSON.NET\Bson\BsonBinaryType.cs" />
     <Compile Include="JSON.NET\Bson\BsonBinaryWriter.cs" />
     <Compile Include="JSON.NET\Bson\BsonObjectId.cs" />

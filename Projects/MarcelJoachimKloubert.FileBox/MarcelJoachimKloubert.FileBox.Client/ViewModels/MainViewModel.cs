@@ -4,9 +4,7 @@
 
 using MarcelJoachimKloubert.CLRToolbox.ComponentModel;
 using MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel;
-using MarcelJoachimKloubert.FileBox.Client.Classes;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
@@ -42,16 +40,7 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
 
         #endregion Events (2)
 
-        #region Properties (2)
-
-        /// <summary>
-        /// Gets the list of inbox items.
-        /// </summary>
-        public DispatcherObservableCollection<FileSystemItem> Inbox
-        {
-            get;
-            private set;
-        }
+        #region Properties (3)
 
         /// <summary>
         /// Gets if the application is currently busy or not.
@@ -136,11 +125,13 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
                         conn.Host = vm.Login.HostAddress;
                         conn.Port = int.Parse(vm.Login.Port.Trim());
                         conn.User = vm.Login.Username.Trim();
-                        conn.IsSecure = false;
 
+                        // test connection
                         var info = conn.GetServerInfo();
 
                         this.Server = new ServerViewModel(this, conn);
+
+
                         vm.RaiseEventHandler(vm.LoggedIn);
                     }
                     catch (Exception ex)

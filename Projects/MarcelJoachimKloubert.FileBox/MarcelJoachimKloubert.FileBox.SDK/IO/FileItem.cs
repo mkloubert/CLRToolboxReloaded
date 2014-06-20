@@ -2,14 +2,14 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-namespace MarcelJoachimKloubert.FileBox
+namespace MarcelJoachimKloubert.FileBox.IO
 {
     /// <summary>
-    /// Stores information about the current server.
+    /// Stores the data of a file (item).
     /// </summary>
-    public sealed class ServerInfo
+    public sealed class FileItem
     {
-        #region Properties (2)
+        #region Properties (3)
 
         /// <summary>
         /// Gets the (machine) name of the server.
@@ -29,6 +29,15 @@ namespace MarcelJoachimKloubert.FileBox
             internal set;
         }
 
-        #endregion Properties (2)
+        /// <summary>
+        /// Gets the size of the file.
+        /// </summary>
+        public long Size
+        {
+            get;
+            internal set;
+        }
+
+        #endregion Properties (3)
     }
 }

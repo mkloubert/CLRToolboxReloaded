@@ -4,10 +4,14 @@
 
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using MarcelJoachimKloubert.CLRToolbox.Web.Security;
+using MarcelJoachimKloubert.FileBox.Server.Json;
 using MarcelJoachimKloubert.FileBox.Server.Security;
 using System;
+using System.Diagnostics;
 using System.Security;
 using System.Security.Principal;
+using System.Linq;
+using System.Reflection;
 
 namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 {
@@ -69,7 +73,27 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 
         #endregion
 
-        #region Methods (1)
+        #region Methods (5)
+        
+        /// <summary>
+        /// Creates a JSON object from an assembly.
+        /// </summary>
+        /// <param name="asm">The assembly.</param>
+        /// <returns>
+        /// The JSON object or <see langword="null" /> if <paramref name="asm" /> is also <see langword="null" />.
+        /// </returns>
+        protected static object AssemblyToJson(Assembly asm)
+        {
+            if (asm == null)
+            {
+                return null;
+            }
+
+            return new
+            {
+                name = asm.FullName,
+            };
+        }
 
         /// <inheriteddoc />
         protected override sealed void CheckLogin(string username, SecureString pwd,
@@ -95,6 +119,111 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
             {
                 strPwd = null;
             }
+        }
+        
+        /// <summary>
+        /// Creates a JSON object from a method.
+        /// </summary>
+        /// <param name="method">The method.</param>
+        /// <returns>
+        /// The JSON object or <see langword="null" /> if <paramref name="method" /> is also <see langword="null" />.
+        /// </returns>
+        protected static object MethodToJson(MethodBase method)
+        {
+            if (method == null)
+            {
+                return null;
+            }
+
+            return new
+            {
+                name = method.Name,
+                type = TypeToJson(method.DeclaringType),
+            };
+        }
+
+        /// <summary>
+        /// Sets up a <see cref="JsonResult" /> from an <see cref="Exception" /> object.
+        /// </summary>
+        /// <param name="result">The object to setup.</param>
+        /// <param name="ex">The exception from where to get the data from.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="result" /> is <see langword="null" />.
+        /// </exception>
+        protected static void SetupJsonResultByException(JsonResult result, Exception ex)
+        {
+            if (result == null)
+            {
+                throw new ArgumentNullException("result");
+            }
+
+            result.code = -1;
+            result.msg = null;
+            result.data = null;
+
+            if (ex == null)
+            {
+                return;
+            }
+
+            var innerEx = ex.GetBaseException() ?? ex;
+
+            object stacktrace;
+            try
+            {
+                StackTrace st;
+#if DEBUG
+                st = new StackTrace(e: ex, fNeedFileInfo: true);
+#else
+                    st = new StackTrace(e: ex);
+#endif
+
+                stacktrace = st.GetFrames()
+                               .Select(f =>
+                               {
+                                   return new
+                                   {
+                                       column = f.GetFileColumnNumber(),
+                                       file = f.GetFileName(),
+                                       line = f.GetFileLineNumber(),
+                                       method = MethodToJson(f.GetMethod()),
+                                   };
+                               }).ToArray();
+            }
+            catch
+            {
+                stacktrace = innerEx.StackTrace;
+            }
+
+            
+            result.msg = innerEx.Message;
+            result.data = new
+                {
+                    fullMsg = ex.ToString(),
+                    stackTrace = stacktrace,
+                    type = TypeToJson(innerEx.GetType()),
+                };
+        }
+        
+        /// <summary>
+        /// Creates a JSON object from a type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// The JSON object or <see langword="null" /> if <paramref name="type" /> is also <see langword="null" />.
+        /// </returns>
+        protected static object TypeToJson(Type type)
+        {
+            if (type == null)
+            {
+                return null;
+            }
+
+            return new
+            {
+                assembly = AssemblyToJson(type.Assembly),
+                name = type.FullName,
+            };
         }
 
         #endregion Methods (1)

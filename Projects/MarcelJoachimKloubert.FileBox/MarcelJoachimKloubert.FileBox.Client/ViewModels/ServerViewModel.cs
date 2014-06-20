@@ -4,7 +4,7 @@
 
 using MarcelJoachimKloubert.CLRToolbox.ComponentModel;
 using MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel;
-using MarcelJoachimKloubert.FileBox.Client.Classes;
+using MarcelJoachimKloubert.FileBox.IO;
 using System.Windows.Threading;
 
 namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
@@ -37,7 +37,7 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
         /// <summary>
         /// Gets the list of outbox items.
         /// </summary>
-        public DispatcherObservableCollection<FileSystemItem> Inbox
+        public DispatcherObservableCollection<FileItem> Inbox
         {
             get;
             private set;
@@ -55,23 +55,23 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
         /// <summary>
         /// Gets the list of outbox items.
         /// </summary>
-        public DispatcherObservableCollection<FileSystemItem> Outbox
+        public DispatcherObservableCollection<FileItem> Outbox
         {
             get;
             private set;
         }
 
-        #endregion Properties (3)
+        #endregion Properties (4)
 
         #region Methods (1)
 
         private void Initialize()
         {
-            this.Inbox = DispatcherObservableCollection.Create<FileSystemItem>(prio: DispatcherPriority.Background,
-                                                                               isBackground: true);
+            this.Inbox = DispatcherObservableCollection.Create<FileItem>(prio: DispatcherPriority.Background,
+                                                                         isBackground: true);
 
-            this.Outbox = DispatcherObservableCollection.Create<FileSystemItem>(prio: DispatcherPriority.Background,
-                                                                                isBackground: true);
+            this.Outbox = DispatcherObservableCollection.Create<FileItem>(prio: DispatcherPriority.Background,
+                                                                          isBackground: true);
         }
 
         #endregion Methods (1)

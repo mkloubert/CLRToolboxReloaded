@@ -2,13 +2,13 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.FileBox.IO;
 using MarcelJoachimKloubert.FileBox.Serialization;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -31,7 +31,7 @@ namespace MarcelJoachimKloubert.FileBox
             this.IsSecure = true;
         }
 
-        #endregion
+        #endregion Constructors (1)
 
         #region Properties (5)
 
@@ -80,9 +80,9 @@ namespace MarcelJoachimKloubert.FileBox
             set;
         }
 
-        #endregion Properties
+        #endregion Properties (5)
 
-        #region Methods (7)
+        #region Methods (8)
 
         /// <summary>
         /// Creates a basic and setupped HTTP web request client.
@@ -250,6 +250,59 @@ namespace MarcelJoachimKloubert.FileBox
         }
 
         /// <summary>
+        /// Returns the files from the INBOX folder.
+        /// </summary>
+        /// <param name="startAt"></param>
+        /// <param name="maxItems"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="startAt" /> and/or <paramref name="maxItems" /> are invalid.
+        /// </exception>
+        public List<FileItem> GetInbox(int startAt = 0, int? maxItems = null)
+        {
+            if (startAt < 0)
+            {
+                throw new ArgumentOutOfRangeException("startAt");
+            }
+
+            if (maxItems < 0)
+            {
+                throw new ArgumentOutOfRangeException("maxItems");
+            }
+
+            var result = new List<FileItem>();
+
+            var request = this.CreateWebRequest("inbox");
+            request.Method = "GET";
+
+            request.Headers["X-FileBox-StartAt"] = startAt.ToString();
+
+            if (maxItems.HasValue)
+            {
+                request.Headers["X-FileBox-MaxItems"] = maxItems.ToString();
+            }
+
+            var response = (HttpWebResponse)request.GetResponse();
+
+            var jsonResult = this.GetJsonObject(response);
+            if (jsonResult != null &&
+                jsonResult.data != null)
+            {
+                foreach (dynamic item in jsonResult.data)
+                {
+                    var newItem = new FileItem();
+                    newItem.Name = item.name;
+                    newItem.Server = this;
+                    newItem.Size = Convert.ToInt64(item.size);
+
+                    result.Add(newItem);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Sets the value of <see cref="FileBoxConnection.Password" /> via a string.
         /// </summary>
         /// <param name="pwd">The new value.</param>
@@ -268,6 +321,6 @@ namespace MarcelJoachimKloubert.FileBox
             this.Password = newValue;
         }
 
-        #endregion Methods
+        #endregion Methods (8)
     }
 }

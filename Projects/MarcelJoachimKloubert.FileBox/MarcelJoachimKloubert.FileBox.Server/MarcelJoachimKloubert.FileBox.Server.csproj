@@ -15,8 +15,7 @@
     <AssemblyName>MarcelJoachimKloubert.FileBox.Server</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44302</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -41,6 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -65,6 +65,8 @@
       <DependentUpon>Json.cs</DependentUpon>
     </Compile>
     <Compile Include="Handlers\ServerInfoHttpHandler.cs" />
+    <Compile Include="IO\Directories.cs" />
+    <Compile Include="IO\IDirectories.cs" />
     <Compile Include="Json\JsonParamResult.cs" />
     <Compile Include="Json\JsonResult.cs" />
     <Compile Include="Security\IServerIdentity.cs" />
@@ -73,10 +75,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handlers\FileBoxHttpHandlerBase.cs" />
-    <Compile Include="Handlers\ListHttpHandler.cs" />
+    <Compile Include="Handlers\InboxHttpHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ServerIdentity.cs" />
     <Compile Include="Security\ServerPrincipal.cs" />
+    <Compile Include="__IDummyObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs.csproj">
@@ -93,7 +96,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="files\mkloubert\dummy.txt">
+    <None Include="files\mkloubert\EdwardSnowden.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="files\mkloubert\MEPHISTOPHELES.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="Global.asax" />
