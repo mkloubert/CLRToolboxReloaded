@@ -10,25 +10,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
 {
     static partial class ClrToolboxWpfExtensionMethods
     {
-        #region Methods (12)
-
-        // Public Methods (12) 
-
-        /// <summary>
-        /// Directly invokes the <see cref="Dispatcher.Invoke(Delegate, DispatcherPriority, object[])" /> method
-        /// of a <see cref="Dispatcher" /> instance that is provides by a <see cref="DispatcherObject.Dispatcher" /> property.
-        /// </summary>
-        /// <typeparam name="TDisp">Type of the dispatcher object.</typeparam>
-        /// <param name="obj">The dispatcher object.</param>
-        /// <param name="action">The action to invoke.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="obj" /> and/or <paramref name="action" /> are <see langword="null" />.
-        /// </exception>
-        public static void Invoke<TDisp>(this TDisp obj, Action<TDisp> action)
-            where TDisp : global::System.Windows.Threading.DispatcherObject
-        {
-            Invoke<TDisp>(obj, action, DispatcherPriority.Normal);
-        }
+        #region Methods (6)
 
         /// <summary>
         /// Directly invokes the <see cref="Dispatcher.Invoke(Delegate, DispatcherPriority, object[])" /> method
@@ -41,7 +23,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
         /// <exception cref="ArgumentNullException">
         /// <paramref name="obj" /> and/or <paramref name="action" /> are <see langword="null" />.
         /// </exception>
-        public static void Invoke<TDisp>(this TDisp obj, Action<TDisp> action, DispatcherPriority prio)
+        public static void Invoke<TDisp>(this TDisp obj, Action<TDisp> action,
+                                         DispatcherPriority prio = DispatcherPriority.Normal)
             where TDisp : global::System.Windows.Threading.DispatcherObject
         {
             if (action == null)
@@ -49,13 +32,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
                 throw new ArgumentNullException("action");
             }
 
-            Invoke<TDisp, Action<TDisp>>(obj,
-                                         delegate(TDisp o, Action<TDisp> a)
-                                         {
-                                             a(o);
-                                         },
-                                         action,
-                                         prio);
+            Invoke<TDisp, Action<TDisp>>(obj: obj,
+                                         action: (o, a) => a(o),
+                                         actionState: action,
+                                         prio: prio);
         }
 
         /// <summary>
@@ -63,48 +43,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
         /// of a <see cref="Dispatcher" /> instance that is provides by a <see cref="DispatcherObject.Dispatcher" /> property.
         /// </summary>
         /// <typeparam name="TDisp">Type of the dispatcher object.</typeparam>
-        /// <typeparam name="S">Type of the state object.</typeparam>
-        /// <param name="obj">The dispatcher object.</param>
-        /// <param name="action">The action to invoke.</param>
-        /// <param name="actionState">The function that provides the state object for <paramref name="action" />.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="obj" /> and/or <paramref name="action" /> are <see langword="null" />.
-        /// </exception>
-        public static void Invoke<TDisp, S>(this TDisp obj, Action<TDisp, S> action, S actionState)
-            where TDisp : global::System.Windows.Threading.DispatcherObject
-        {
-            Invoke<TDisp, S>(obj,
-                             action, actionState,
-                             DispatcherPriority.Normal);
-        }
-
-        /// <summary>
-        /// Directly invokes the <see cref="Dispatcher.Invoke(Delegate, DispatcherPriority, object[])" /> method
-        /// of a <see cref="Dispatcher" /> instance that is provides by a <see cref="DispatcherObject.Dispatcher" /> property.
-        /// </summary>
-        /// <typeparam name="TDisp">Type of the dispatcher object.</typeparam>
-        /// <typeparam name="S">Type of the state object.</typeparam>
-        /// <param name="obj">The dispatcher object.</param>
-        /// <param name="action">The action to invoke.</param>
-        /// <param name="actionStateFactory">The function that provides the state object for <paramref name="action" />.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="obj" />, <paramref name="action" /> and/or <paramref name="actionStateFactory" />
-        /// are <see langword="null" />.
-        /// </exception>
-        public static void Invoke<TDisp, S>(this TDisp obj, Action<TDisp, S> action, Func<TDisp, S> actionStateFactory)
-            where TDisp : global::System.Windows.Threading.DispatcherObject
-        {
-            Invoke<TDisp, S>(obj,
-                             action, actionStateFactory,
-                             DispatcherPriority.Normal);
-        }
-
-        /// <summary>
-        /// Directly invokes the <see cref="Dispatcher.Invoke(Delegate, DispatcherPriority, object[])" /> method
-        /// of a <see cref="Dispatcher" /> instance that is provides by a <see cref="DispatcherObject.Dispatcher" /> property.
-        /// </summary>
-        /// <typeparam name="TDisp">Type of the dispatcher object.</typeparam>
-        /// <typeparam name="S">Type of the state object.</typeparam>
+        /// <typeparam name="TState">Type of the state object.</typeparam>
         /// <param name="obj">The dispatcher object.</param>
         /// <param name="action">The action to invoke.</param>
         /// <param name="actionState">The function that provides the state object for <paramref name="action" />.</param>
@@ -112,16 +51,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
         /// <exception cref="ArgumentNullException">
         /// <paramref name="obj" /> and/or <paramref name="action" /> are <see langword="null" />.
         /// </exception>
-        public static void Invoke<TDisp, S>(this TDisp obj, Action<TDisp, S> action, S actionState, DispatcherPriority prio)
+        public static void Invoke<TDisp, TState>(this TDisp obj, Action<TDisp, TState> action, TState actionState,
+                                                 DispatcherPriority prio = DispatcherPriority.Normal)
             where TDisp : global::System.Windows.Threading.DispatcherObject
         {
-            Invoke<TDisp, S>(obj,
-                             action,
-                             delegate(TDisp o)
-                             {
-                                 return actionState;
-                             },
-                             prio);
+            Invoke<TDisp, TState>(obj: obj,
+                                  action: action,
+                                  actionStateFactory: o => actionState,
+                                  prio: prio);
         }
 
         /// <summary>
@@ -129,7 +66,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
         /// of a <see cref="Dispatcher" /> instance that is provides by a <see cref="DispatcherObject.Dispatcher" /> property.
         /// </summary>
         /// <typeparam name="TDisp">Type of the dispatcher object.</typeparam>
-        /// <typeparam name="S">Type of the state object.</typeparam>
+        /// <typeparam name="TState">Type of the state object.</typeparam>
         /// <param name="obj">The dispatcher object.</param>
         /// <param name="action">The action to invoke.</param>
         /// <param name="actionStateFactory">The function that provides the state object for <paramref name="action" />.</param>
@@ -138,14 +75,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
         /// <paramref name="obj" />, <paramref name="action" /> and/or <paramref name="actionStateFactory" />
         /// are <see langword="null" />.
         /// </exception>
-        public static void Invoke<TDisp, S>(this TDisp obj, Action<TDisp, S> action, Func<TDisp, S> actionStateFactory, DispatcherPriority prio)
+        public static void Invoke<TDisp, TState>(this TDisp obj, Action<TDisp, TState> action, Func<TDisp, TState> actionStateFactory,
+                                                 DispatcherPriority prio = DispatcherPriority.Normal)
             where TDisp : global::System.Windows.Threading.DispatcherObject
         {
-            if (obj == null)
-            {
-                throw new ArgumentNullException("obj");
-            }
-
             if (action == null)
             {
                 throw new ArgumentNullException("action");
@@ -156,33 +89,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
                 throw new ArgumentNullException("actionStateFactory");
             }
 
-            Invoke<TDisp, S, object>(obj,
-                                     delegate(TDisp o, S s)
-                                     {
-                                         action(o, s);
-                                         return null;
-                                     }, actionStateFactory
-                                      , prio);
-        }
-
-        /// <summary>
-        /// Directly invokes the <see cref="Dispatcher.Invoke(Delegate, DispatcherPriority, object[])" /> method
-        /// of a <see cref="Dispatcher" /> instance that is provides by a <see cref="DispatcherObject.Dispatcher" /> property.
-        /// </summary>
-        /// <typeparam name="TDisp">Type of the dispatcher object.</typeparam>
-        /// <typeparam name="TResult">Type of the result.</typeparam>
-        /// <param name="obj">The dispatcher object.</param>
-        /// <param name="func">The function to invoke.</param>
-        /// <returns>The result of <paramref name="func" />.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="obj" /> and/or <paramref name="func" /> are <see langword="null" />.
-        /// </exception>
-        public static TResult Invoke<TDisp, TResult>(this TDisp obj, Func<TDisp, TResult> func)
-            where TDisp : global::System.Windows.Threading.DispatcherObject
-        {
-            return Invoke<TDisp, TResult>(obj,
-                                          func,
-                                          DispatcherPriority.Normal);
+            Invoke<TDisp, TState, object>(obj: obj,
+                                          func: (o, s) =>
+                                          {
+                                              action(o, s);
+                                              return null;
+                                          }, funcStateFactory: actionStateFactory
+                                           , prio: prio);
         }
 
         /// <summary>
@@ -198,7 +111,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
         /// <exception cref="ArgumentNullException">
         /// <paramref name="obj" /> and/or <paramref name="func" /> are <see langword="null" />.
         /// </exception>
-        public static TResult Invoke<TDisp, TResult>(this TDisp obj, Func<TDisp, TResult> func, DispatcherPriority prio)
+        public static TResult Invoke<TDisp, TResult>(this TDisp obj, Func<TDisp, TResult> func,
+                                                     DispatcherPriority prio = DispatcherPriority.Normal)
             where TDisp : global::System.Windows.Threading.DispatcherObject
         {
             if (func == null)
@@ -206,13 +120,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
                 throw new ArgumentNullException("func");
             }
 
-            return Invoke<TDisp, Func<TDisp, TResult>, TResult>(obj,
-                                                                delegate(TDisp o, Func<TDisp, TResult> f)
-                                                                {
-                                                                    return f(o);
-                                                                },
-                                                                func,
-                                                                prio);
+            return Invoke<TDisp, Func<TDisp, TResult>, TResult>(obj: obj,
+                                                                func: (o, f) => f(o),
+                                                                funcState: func,
+                                                                prio: prio);
         }
 
         /// <summary>
@@ -220,52 +131,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
         /// of a <see cref="Dispatcher" /> instance that is provides by a <see cref="DispatcherObject.Dispatcher" /> property.
         /// </summary>
         /// <typeparam name="TDisp">Type of the dispatcher object.</typeparam>
-        /// <typeparam name="S">Type of the state object.</typeparam>
-        /// <typeparam name="TResult">Type of the result.</typeparam>
-        /// <param name="obj">The dispatcher object.</param>
-        /// <param name="func">The function to invoke.</param>
-        /// <param name="funcState">The state object for <paramref name="func" />.</param>
-        /// <returns>The result of <paramref name="func" />.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="obj" /> and/or <paramref name="func" /> are <see langword="null" />.
-        /// </exception>
-        public static TResult Invoke<TDisp, S, TResult>(this TDisp obj, Func<TDisp, S, TResult> func, S funcState)
-            where TDisp : global::System.Windows.Threading.DispatcherObject
-        {
-            return Invoke<TDisp, S, TResult>(obj,
-                                             func, funcState,
-                                             DispatcherPriority.Normal);
-        }
-
-        /// <summary>
-        /// Directly invokes the <see cref="Dispatcher.Invoke(Delegate, DispatcherPriority, object[])" /> method
-        /// of a <see cref="Dispatcher" /> instance that is provides by a <see cref="DispatcherObject.Dispatcher" /> property.
-        /// </summary>
-        /// <typeparam name="TDisp">Type of the dispatcher object.</typeparam>
-        /// <typeparam name="S">Type of the state object.</typeparam>
-        /// <typeparam name="TResult">Type of the result.</typeparam>
-        /// <param name="obj">The dispatcher object.</param>
-        /// <param name="func">The function to invoke.</param>
-        /// <param name="funcStateFactory">The function that provides the state object for <paramref name="func" />.</param>
-        /// <returns>The result of <paramref name="func" />.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="obj" />, <paramref name="func" /> and/or <paramref name="funcStateFactory" />
-        /// are <see langword="null" />.
-        /// </exception>
-        public static TResult Invoke<TDisp, S, TResult>(this TDisp obj, Func<TDisp, S, TResult> func, Func<TDisp, S> funcStateFactory)
-            where TDisp : global::System.Windows.Threading.DispatcherObject
-        {
-            return Invoke<TDisp, S, TResult>(obj,
-                                             func, funcStateFactory,
-                                             DispatcherPriority.Normal);
-        }
-
-        /// <summary>
-        /// Directly invokes the <see cref="Dispatcher.Invoke(Delegate, DispatcherPriority, object[])" /> method
-        /// of a <see cref="Dispatcher" /> instance that is provides by a <see cref="DispatcherObject.Dispatcher" /> property.
-        /// </summary>
-        /// <typeparam name="TDisp">Type of the dispatcher object.</typeparam>
-        /// <typeparam name="S">Type of the state object.</typeparam>
+        /// <typeparam name="TState">Type of the state object.</typeparam>
         /// <typeparam name="TResult">Type of the result.</typeparam>
         /// <param name="obj">The dispatcher object.</param>
         /// <param name="func">The function to invoke.</param>
@@ -275,16 +141,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
         /// <exception cref="ArgumentNullException">
         /// <paramref name="obj" /> and/or <paramref name="func" /> are <see langword="null" />.
         /// </exception>
-        public static TResult Invoke<TDisp, S, TResult>(this TDisp obj, Func<TDisp, S, TResult> func, S funcState, DispatcherPriority prio)
+        public static TResult Invoke<TDisp, TState, TResult>(this TDisp obj, Func<TDisp, TState, TResult> func, TState funcState,
+                                                             DispatcherPriority prio = DispatcherPriority.Normal)
             where TDisp : global::System.Windows.Threading.DispatcherObject
         {
-            return Invoke<TDisp, S, TResult>(obj,
-                                             func,
-                                             delegate(TDisp o)
-                                             {
-                                                 return funcState;
-                                             },
-                                             prio);
+            return Invoke<TDisp, TState, TResult>(obj: obj,
+                                                  func: func,
+                                                  funcStateFactory: o => funcState,
+                                                  prio: prio);
         }
 
         /// <summary>
@@ -292,7 +156,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
         /// of a <see cref="Dispatcher" /> instance that is provides by a <see cref="DispatcherObject.Dispatcher" /> property.
         /// </summary>
         /// <typeparam name="TDisp">Type of the dispatcher object.</typeparam>
-        /// <typeparam name="S">Type of the state object.</typeparam>
+        /// <typeparam name="TState">Type of the state object.</typeparam>
         /// <typeparam name="TResult">Type of the result.</typeparam>
         /// <param name="obj">The dispatcher object.</param>
         /// <param name="func">The function to invoke.</param>
@@ -303,7 +167,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
         /// <paramref name="obj" />, <paramref name="func" /> and/or <paramref name="funcStateFactory" />
         /// are <see langword="null" />.
         /// </exception>
-        public static TResult Invoke<TDisp, S, TResult>(this TDisp obj, Func<TDisp, S, TResult> func, Func<TDisp, S> funcStateFactory, DispatcherPriority prio)
+        public static TResult Invoke<TDisp, TState, TResult>(this TDisp obj, Func<TDisp, TState, TResult> func, Func<TDisp, TState> funcStateFactory,
+                                                             DispatcherPriority prio = DispatcherPriority.Normal)
             where TDisp : global::System.Windows.Threading.DispatcherObject
         {
             if (obj == null)
@@ -321,21 +186,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
                 throw new ArgumentNullException("funcStateFactory");
             }
 
-            Func<TResult> funcToInvoke = () =>
-                {
-                    return func(obj,
-                                funcStateFactory(obj));
-                };
-
-            var dispatcher = obj.Dispatcher;
-            if (dispatcher == null)
-            {
-                return funcToInvoke();
-            }
-
             return GlobalConverter.Current
-                                  .ChangeType<TResult>(dispatcher.Invoke(funcToInvoke,
-                                                                         prio));
+                                  .ChangeType<TResult>(obj.Dispatcher
+                                                          .Invoke(func,
+                                                                  prio,
+                                                                  obj, funcStateFactory(obj)));
         }
 
         #endregion Methods

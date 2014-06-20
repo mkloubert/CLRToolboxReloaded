@@ -1,0 +1,94 @@
+﻿<!--
+   LICENSE: GPL 3 - https://www.gnu.org/licenses/gpl-3.0.txt
+
+   s. https://github.com/mkloubert/CLRToolboxReloaded
+-->
+<UserControl x:Class="MarcelJoachimKloubert.FileBox.Client.Controls.LoginControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="512px" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions> 
+        
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="16px" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" FontSize="24">Connect to...</TextBlock>
+
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    
+                    <RowDefinition Height="8px" />
+                    
+                    <RowDefinition />
+                    <RowDefinition />
+                    
+                    <RowDefinition Height="8px" />
+
+                    <RowDefinition />
+                    <RowDefinition />
+
+                    <RowDefinition Height="25px" />
+
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0">Server</TextBlock>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="64px" />
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox Grid.Column="0"
+                              IsEditable="True"
+                              Text="{Binding Path=HostAddress, Mode=TwoWay}" />
+                    <TextBox Grid.Column="1"
+                             Margin="8,0,0,0"
+                             Text="{Binding Path=Port, Mode=TwoWay}" />
+                </Grid>
+                
+                <TextBlock Grid.Row="3">User</TextBlock>
+                <TextBox Grid.Row="4"
+                         Text="{Binding Path=Username, Mode=TwoWay}" />
+
+                <TextBlock Grid.Row="6">Password</TextBlock>
+                <Grid Grid.Row="7">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="64px" />
+                    </Grid.ColumnDefinitions>
+
+                    <PasswordBox Grid.Column="0"></PasswordBox>
+                    <CheckBox Grid.Column="1"
+                              Margin="8,0,0,0"
+                              IsChecked="{Binding Path=SavePassword, Mode=TwoWay}">Save?</CheckBox>
+                </Grid>
+                
+                <WrapPanel Grid.Row="9" FlowDirection="RightToLeft">
+                    <Button Margin="8,0,0,0"
+                            Command="{Binding Path=CancelCommand, Mode=OneWay}">Cancel</Button>
+                    <Button Margin="8,0,0,0"
+                            Command="{Binding Path=LoginCommand, Mode=OneWay}">Log in</Button>
+                </WrapPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

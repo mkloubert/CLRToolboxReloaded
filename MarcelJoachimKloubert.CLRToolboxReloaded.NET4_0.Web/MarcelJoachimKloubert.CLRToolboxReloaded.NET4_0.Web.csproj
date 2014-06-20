@@ -7,7 +7,7 @@
     <ProjectGuid>{AA28E758-21CC-47F8-A011-87AE340ED2FE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MarcelJoachimKloubert.CLRToolbox.Libs</RootNamespace>
+    <RootNamespace>MarcelJoachimKloubert.CLRToolbox.Web</RootNamespace>
     <AssemblyName>MarcelJoachimKloubert.CLRToolboxReloaded.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -51,7 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HttpHandlerBase.cs" />
+    <Compile Include="HttpRequestContext.cs" />
+    <Compile Include="IHttpRequestContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\BasicAuthHttpHandlerBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs.csproj">

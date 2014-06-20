@@ -5,6 +5,7 @@
 using MarcelJoachimKloubert.CLRToolbox.Data.Conversion;
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -85,9 +86,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
 
         #endregion Properties
 
-        #region Methods (5)
-
-        // Protected Methods (4) 
+        #region Methods (6)
 
         /// <summary>
         /// Creates a new <see cref="JsonSerializer" /> instance.
@@ -116,6 +115,43 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         protected virtual JsonSerializerSettings GetJsonSerializerSettings()
         {
             return null;
+        }
+
+        private void LoadJsonFile()
+        {
+            lock (this._SYNC)
+            {
+                using (var jsonFile = File.OpenRead(this._FILE_PATH))
+                {
+                    using (var reader = new StreamReader(jsonFile, this.GetEncoding()))
+                    {
+                        using (var jsonReader = new JsonTextReader(reader))
+                        {
+                            var serializer = this.CreateJsonSerializer();
+
+                            this._VALUES.Clear();
+                            {
+                                var values = serializer.Deserialize<IDictionary<string, object>>(jsonReader);
+                                if (values != null)
+                                {
+                                    values.ForEach((ctx) =>
+                                    {
+                                        var repo = ctx.State.Repo;
+                                        var category = ctx.Item.Key;
+                                        var jObj = GlobalConverter.Current
+                                                                  .ChangeType<JObject>(ctx.Item.Value);
+
+                                        repo._VALUES[category ?? string.Empty] = ToDictionary(jObj);
+                                    }, actionState: new
+                                    {
+                                        Repo = this,
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         /// <inheriteddoc />
@@ -155,47 +191,63 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
             }
         }
 
-        // Private Methods (1) 
-
-        private void LoadJsonFile()
+        private IDictionary<string, object> ToDictionary(JObject obj,
+                                                         int level = 0,
+                                                         int maxLevel = 64)
         {
-            lock (this._SYNC)
+            if (obj == null)
             {
-                using (var jsonFile = File.OpenRead(this._FILE_PATH))
+                return null;
+            }
+
+            var result = new Dictionary<string, object>();
+            
+            if (level <= maxLevel)
+            {
+                foreach (var property in obj.Properties())
                 {
-                    using (var reader = new StreamReader(jsonFile, this.GetEncoding()))
+                    string cat;
+                    string name;
+                    this.PrepareCategoryAndName(null, property.Name,
+                                                out cat, out name);
+
+                    object valueToSet = null;
+
+                    var token = property.Value;
+                    if (token != null)
                     {
-                        using (var jsonReader = new JsonTextReader(reader))
-                        {
-                            var serializer = this.CreateJsonSerializer();
+                        valueToSet = token.ToObject<object>();
+                    }
 
-                            this._VALUES.Clear();
-                            {
-                                var values = serializer.Deserialize<IDictionary<string, object>>(jsonReader);
-                                if (values != null)
-                                {
-                                    values.ForEach((ctx) =>
-                                                   {
-                                                       var repo = ctx.State.Repo;
-                                                       var category = ctx.Item.Key;
-                                                       var keyValues = GlobalConverter.Current
-                                                                                      .ChangeType<IDictionary<string, object>>(ctx.Item.Value);
+                    var jObj = token as JObject;
+                    if (jObj != null)
+                    {
+                        valueToSet = this.ToDictionary(obj: jObj,
+                                                       level: level + 1,
+                                                       maxLevel: maxLevel);
+                    }
 
-                                                       var valuesEntry = keyValues ?? repo.CreateEmptyDictionaryForCategory(category);
-                                                       if (valuesEntry != null)
-                                                       {
-                                                           repo._VALUES[category ?? string.Empty] = valuesEntry;
-                                                       }
-                                                   }, actionState: new
-                                                   {
-                                                       Repo = this,
-                                                   });
-                                }
-                            }
-                        }
+                    result.Add(name ?? string.Empty,
+                               valueToSet);
+                }
+            }
+            else
+            {
+                // maximum level reached
+
+                using (var e = obj.GetEnumerator())
+                {
+                    while (e.MoveNext())
+                    {
+                        var i = e.Current;
+
+                        result.Add(i.Key ?? string.Empty,
+                                   i.Value);
                     }
                 }
             }
+
+            return result;
         }
 
         #endregion Methods

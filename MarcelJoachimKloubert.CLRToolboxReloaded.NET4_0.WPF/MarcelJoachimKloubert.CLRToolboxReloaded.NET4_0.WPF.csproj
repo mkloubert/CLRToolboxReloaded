@@ -54,6 +54,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\ObjectModel\DispatcherObservableCollection.cs" />
+    <Compile Include="Data\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Data\CommandValueConverter.cs" />
+    <Compile Include="Data\CommandValueConverterBase.cs" />
+    <Compile Include="Data\DelegateToCommandValueConverter.cs" />
+    <Compile Include="Data\MultiParamValueConverterBase.cs" />
+    <Compile Include="Data\ValueConverterBase.cs" />
     <Compile Include="Execution\DispatcherMediator.cs" />
     <Compile Include="Execution\Jobs\AsyncDispatcherJobScheduler.cs" />
     <Compile Include="Execution\Jobs\DispatcherJobScheduler.cs" />

@@ -166,14 +166,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel
                 throw new ArgumentNullException("action");
             }
 
-            Action syncAction = () =>
-                {
-                    lock (this._SYNC)
-                    {
-                        action(this, actionState);
-                    }
-                };
-
             var disp = this._PROVIDER(this);
 
             Func<DispatcherPriority, Delegate, object> dispAction;
@@ -186,7 +178,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel
                 dispAction = disp.Invoke;
             }
 
-            dispAction(this._PRIO, syncAction);
+            dispAction(this._PRIO,
+                       this.CreateSyncAction<S>(action, actionState));
         }
 
         #endregion Methods
@@ -201,7 +194,40 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel
     /// </summary>
     public static class DispatcherObservableCollection
     {
-        #region Methods (4)
+        #region Methods (6)
+        
+        /// <summary>
+        /// Creates new and empty instance of the <see cref="DispatcherObservableCollection{T}" /> class
+        /// for a specific <see cref="Dispatcher" />.
+        /// </summary>
+        /// <param name="prio">The value for the <see cref="DispatcherObservableCollection{T}.Priority" /> property.</param>
+        /// <param name="isBackground">The value for the <see cref="DispatcherObservableCollection{T}.IsBackground" /> property.</param>
+        public static DispatcherObservableCollection<T> Create<T>(DispatcherPriority prio = DispatcherPriority.Normal,
+                                                                  bool isBackground = false)
+        {
+            return Create<T>(syncRoot: new object(),
+                             prio: prio,
+                             isBackground: isBackground);
+        }
+
+        /// <summary>
+        /// Creates new and empty instance of the <see cref="DispatcherObservableCollection{T}" /> class
+        /// for a specific <see cref="Dispatcher" />.
+        /// </summary>
+        /// <param name="syncRoot">The value for the <see cref="SynchronizedObservableCollection{T}._SYNC" /> field.</param>
+        /// <param name="prio">The value for the <see cref="DispatcherObservableCollection{T}.Priority" /> property.</param>
+        /// <param name="isBackground">The value for the <see cref="DispatcherObservableCollection{T}.IsBackground" /> property.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="syncRoot" /> is <see langword="null" />.
+        /// </exception>
+        public static DispatcherObservableCollection<T> Create<T>(object syncRoot, 
+                                                                  DispatcherPriority prio = DispatcherPriority.Normal,
+                                                                  bool isBackground = false)
+        {
+            return new DispatcherObservableCollection<T>(syncRoot: syncRoot,
+                                                         prio: prio,
+                                                         isBackground: isBackground);
+        }
 
         /// <summary>
         /// Creates new instance of the <see cref="DispatcherObservableCollection{T}" /> class
@@ -214,7 +240,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel
         /// <paramref name="disp" /> is <see langword="null" />.
         /// </exception>
         public static DispatcherObservableCollection<T> Create<T>(Dispatcher disp,
-                                                                  DispatcherPriority prio = DispatcherPriority.Normal, bool isBackground = true)
+                                                                  DispatcherPriority prio = DispatcherPriority.Normal, bool isBackground = false)
         {
             return Create<T>(disp: disp,
                              syncRoot: new object(),
@@ -227,15 +253,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel
         /// for a specific <see cref="Dispatcher" />.
         /// </summary>
         /// <param name="disp">The dispatcher object from where to get the dispatcher from.</param>
+        /// <param name="syncRoot">The value for the <see cref="SynchronizedObservableCollection{T}._SYNC" /> field.</param>
         /// <param name="prio">The value for the <see cref="DispatcherObservableCollection{T}.Priority" /> property.</param>
         /// <param name="isBackground">The value for the <see cref="DispatcherObservableCollection{T}.IsBackground" /> property.</param>
-        /// <param name="syncRoot">The value for the <see cref="SynchronizedObservableCollection{T}._SYNC" /> field.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="disp" /> and/or <paramref name="syncRoot" /> are <see langword="null" />.
         /// </exception>
         public static DispatcherObservableCollection<T> Create<T>(Dispatcher disp,
                                                                   object syncRoot,
-                                                                  DispatcherPriority prio = DispatcherPriority.Normal, bool isBackground = true)
+                                                                  DispatcherPriority prio = DispatcherPriority.Normal, bool isBackground = false)
         {
             if (disp == null)
             {
@@ -272,9 +298,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel
         /// for a specific <see cref="DispatcherObject" />.
         /// </summary>
         /// <param name="dispObj">The dispatcher object from where to get the dispatcher from.</param>
+        /// <param name="syncRoot">The value for the <see cref="SynchronizedObservableCollection{T}._SYNC" /> field.</param>
         /// <param name="prio">The value for the <see cref="DispatcherObservableCollection{T}.Priority" /> property.</param>
         /// <param name="isBackground">The value for the <see cref="DispatcherObservableCollection{T}.IsBackground" /> property.</param>
-        /// <param name="syncRoot">The value for the <see cref="SynchronizedObservableCollection{T}._SYNC" /> field.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="dispObj" /> and/or <paramref name="syncRoot" /> are <see langword="null" />.
         /// </exception>

@@ -1,0 +1,86 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_External libs", "_External libs", "{E0FDE17D-A7DA-4B1A-B940-5F4CE2AC1888}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs", "..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs.csproj", "{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5", "..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.csproj", "{D15249C7-977D-4A74-B596-BE0E08DC9E7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.WPF", "..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.WPF\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.WPF.csproj", "{97244B18-8041-42EC-B5BC-464D3ED57CF4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET 4.5", ".NET 4.5", "{C420E642-B73B-4524-863D-62B4FCAD76AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET 4.0", ".NET 4.0", "{6A93A532-3AF6-4738-B633-3E7A37A93133}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs", "..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs.csproj", "{A34446FC-8852-4A48-BE16-BF9337825AAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0", "..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.csproj", "{BC43D1A1-D8B5-4632-9150-F945AF5390C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Web", "..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Web\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Web.csproj", "{AA28E758-21CC-47F8-A011-87AE340ED2FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.FileBox.Client", "MarcelJoachimKloubert.FileBox.Client\MarcelJoachimKloubert.FileBox.Client.csproj", "{2CEEDBED-9CBE-4A9A-9049-781B37CF4541}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.FileBox.Server", "MarcelJoachimKloubert.FileBox.Server\MarcelJoachimKloubert.FileBox.Server.csproj", "{E7EA2AB5-71F2-4525-8A6F-49ACDEEE5941}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.FileBox.SDK", "MarcelJoachimKloubert.FileBox.SDK\MarcelJoachimKloubert.FileBox.SDK.csproj", "{2798CB5B-E29F-4D0E-BE4A-BCE8590CFC4C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A34446FC-8852-4A48-BE16-BF9337825AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A34446FC-8852-4A48-BE16-BF9337825AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A34446FC-8852-4A48-BE16-BF9337825AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A34446FC-8852-4A48-BE16-BF9337825AAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC43D1A1-D8B5-4632-9150-F945AF5390C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC43D1A1-D8B5-4632-9150-F945AF5390C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC43D1A1-D8B5-4632-9150-F945AF5390C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC43D1A1-D8B5-4632-9150-F945AF5390C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA28E758-21CC-47F8-A011-87AE340ED2FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA28E758-21CC-47F8-A011-87AE340ED2FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA28E758-21CC-47F8-A011-87AE340ED2FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA28E758-21CC-47F8-A011-87AE340ED2FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CEEDBED-9CBE-4A9A-9049-781B37CF4541}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CEEDBED-9CBE-4A9A-9049-781B37CF4541}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CEEDBED-9CBE-4A9A-9049-781B37CF4541}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CEEDBED-9CBE-4A9A-9049-781B37CF4541}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7EA2AB5-71F2-4525-8A6F-49ACDEEE5941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7EA2AB5-71F2-4525-8A6F-49ACDEEE5941}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7EA2AB5-71F2-4525-8A6F-49ACDEEE5941}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7EA2AB5-71F2-4525-8A6F-49ACDEEE5941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2798CB5B-E29F-4D0E-BE4A-BCE8590CFC4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2798CB5B-E29F-4D0E-BE4A-BCE8590CFC4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2798CB5B-E29F-4D0E-BE4A-BCE8590CFC4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2798CB5B-E29F-4D0E-BE4A-BCE8590CFC4C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3} = {C420E642-B73B-4524-863D-62B4FCAD76AB}
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B} = {C420E642-B73B-4524-863D-62B4FCAD76AB}
+		{97244B18-8041-42EC-B5BC-464D3ED57CF4} = {C420E642-B73B-4524-863D-62B4FCAD76AB}
+		{C420E642-B73B-4524-863D-62B4FCAD76AB} = {E0FDE17D-A7DA-4B1A-B940-5F4CE2AC1888}
+		{6A93A532-3AF6-4738-B633-3E7A37A93133} = {E0FDE17D-A7DA-4B1A-B940-5F4CE2AC1888}
+		{A34446FC-8852-4A48-BE16-BF9337825AAE} = {6A93A532-3AF6-4738-B633-3E7A37A93133}
+		{BC43D1A1-D8B5-4632-9150-F945AF5390C7} = {6A93A532-3AF6-4738-B633-3E7A37A93133}
+		{AA28E758-21CC-47F8-A011-87AE340ED2FE} = {6A93A532-3AF6-4738-B633-3E7A37A93133}
+	EndGlobalSection
+EndGlobal

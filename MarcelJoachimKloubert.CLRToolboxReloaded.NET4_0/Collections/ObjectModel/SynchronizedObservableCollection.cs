@@ -53,9 +53,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.ObjectModel
 
         #endregion Constructors
 
-        #region Methods (8)
-
-        // Public Methods (1) 
+        #region Methods (9)
 
         /// <summary>
         /// Adds a list of items.
@@ -82,12 +80,35 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.ObjectModel
                                });
         }
 
-        // Protected Methods (7) 
-
         /// <inheriteddoc />
         protected override void ClearItems()
         {
             this.InvokeForCollection((coll) => base.ClearItems());
+        }
+        
+        /// <summary>
+        /// Creates the logic for <see cref="SynchronizedObservableCollection{T}.CreateSyncAction{S}(Action{SynchronizedObservableCollection{T}, S}, S)" /> method.
+        /// </summary>
+        /// <typeparam name="S">Type of the state object for <paramref name="action" />.</typeparam>
+        /// <param name="action">The action to invoke.</param>
+        /// <param name="actionState">The additional object for <paramref name="action" />.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="action" /> is <see langword="null" />.
+        /// </exception>
+        protected Action CreateSyncAction<S>(Action<SynchronizedObservableCollection<T>, S> action, S actionState)
+        {
+            if (action == null)
+            {
+                throw new ArgumentNullException("action");
+            }
+
+            return () =>
+                {
+                    lock (this._SYNC)
+                    {
+                        action(this, actionState);
+                    }
+                };
         }
 
         /// <inheriteddoc />
@@ -115,8 +136,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.ObjectModel
                 throw new ArgumentNullException("action");
             }
 
-            this.InvokeForCollection<object>((coll, state) => action(coll),
-                                             (object)null);
+            this.InvokeForCollection<Action<SynchronizedObservableCollection<T>>>(action: (coll, a) => a(coll),
+                                                                                  actionState: action);
         }
 
         /// <summary>
@@ -130,15 +151,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.ObjectModel
         /// </exception>
         protected virtual void InvokeForCollection<S>(Action<SynchronizedObservableCollection<T>, S> action, S actionState)
         {
-            if (action == null)
-            {
-                throw new ArgumentNullException("action");
-            }
-
-            lock (this._SYNC)
-            {
-                action(this, actionState);
-            }
+            this.CreateSyncAction<S>(action, actionState)();
         }
 
         /// <inheriteddoc />

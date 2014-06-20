@@ -1,0 +1,42 @@
+﻿<!--
+   LICENSE: GPL 3 - https://www.gnu.org/licenses/gpl-3.0.txt
+
+   s. https://github.com/mkloubert/CLRToolboxReloaded
+-->
+<MahApps:MetroWindow x:Class="MarcelJoachimKloubert.FileBox.Client.Windows.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:ctrls="clr-namespace:MarcelJoachimKloubert.FileBox.Client.Controls"
+                     xmlns:MahApps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                     xmlns:data="clr-namespace:MarcelJoachimKloubert.CLRToolbox.Windows.Data;assembly=MarcelJoachimKloubert.CLRToolboxReloaded.WPF"
+                     Title="FileBox Client"
+                     ResizeMode="NoResize"
+                     Width="700" Height="500"
+                     WindowStartupLocation="CenterScreen">
+
+    <MahApps:MetroWindow.Resources>
+        <data:BooleanToVisibilityConverter x:Key="tmBooleanToVisibilityConverter" />
+    </MahApps:MetroWindow.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <Border Background="Transparent" Grid.Row="0" Grid.Column="0">
+            <MahApps:TransitioningContentControl x:Name="TransitioningContentControl_Main" Transition="RightReplace">
+                <ctrls:LoginControl DataContext="{Binding Path=Login, Mode=OneWay}" />
+            </MahApps:TransitioningContentControl>
+        </Border>
+        
+        <Border Background="Transparent" Grid.Row="0" Grid.Column="0"
+                Visibility="{Binding Path=IsBusy, Mode=OneWay, Converter={StaticResource tmBooleanToVisibilityConverter}}">
+            
+            <MahApps:ProgressRing IsActive="{Binding Path=IsBusy, Mode=OneWay}" />
+        </Border>
+    </Grid>
+</MahApps:MetroWindow>
