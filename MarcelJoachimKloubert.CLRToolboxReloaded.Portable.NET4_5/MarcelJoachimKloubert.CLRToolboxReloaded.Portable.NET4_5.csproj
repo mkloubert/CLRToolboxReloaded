@@ -271,6 +271,9 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\execution\jobs\JobBase.cs">
       <Link>Execution\Jobs\JobBase.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\JobException.cs">
+      <Link>Execution\Jobs\JobException.cs</Link>
+    </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\execution\jobs\JobExecutionResultEventArgs.cs">
       <Link>Execution\Jobs\JobExecutionResultEventArgs.cs</Link>
     </Compile>

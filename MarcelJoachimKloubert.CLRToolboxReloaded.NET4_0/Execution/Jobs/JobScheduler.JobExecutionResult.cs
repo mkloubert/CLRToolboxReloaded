@@ -27,7 +27,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
             }
 
             /// <inheriteddoc />
-            public IList<Exception> Errors
+            public IList<JobException> Errors
             {
                 get;
                 set;

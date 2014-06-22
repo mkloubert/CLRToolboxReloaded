@@ -22,7 +22,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
         /// <summary>
         /// Gets the list of occured errors.
         /// </summary>
-        IList<Exception> Errors { get; }
+        IList<JobException> Errors { get; }
 
         /// <summary>
         /// Gets if the execution has been failed or not.

@@ -6,16 +6,33 @@
 <UserControl x:Class="MarcelJoachimKloubert.FileBox.Client.Controls.ServerViewControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             DataContext="{Binding Path=Server, Mode=OneWay}">
     
     <Grid>
         <TabControl>
             <TabItem Header="Inbox">
+                
                 <Border BorderThickness="1" BorderBrush="LightGray"
-                                Margin="16">
+                        Margin="16">
 
                     <ListBox ItemsSource="{Binding Path=Inbox, Mode=OneWay}">
-
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,6,0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="104px" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Border Grid.Column="0" BorderBrush="LightGray" BorderThickness="1"
+                                            Width="96px" Height="96px"
+                                            HorizontalAlignment="Center" VerticalAlignment="Top">
+                                        
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                 </Border>
             </TabItem>

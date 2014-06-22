@@ -9,13 +9,18 @@ namespace MarcelJoachimKloubert.FileBox.Server.IO
     /// </summary>
     public interface IDirectories
     {
-        #region Properties (1)
+        #region Properties (2)
 
         /// <summary>
-        /// Gets the root directory if the files.
+        /// Gets the root directoryóf the user files.
         /// </summary>
         string Files { get; }
 
-        #endregion Properties (1)
+        /// <summary>
+        /// Gets the root directory of the temp files.
+        /// </summary>
+        string Temp { get; }
+
+        #endregion Properties (2)
     }
 }

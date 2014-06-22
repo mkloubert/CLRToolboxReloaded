@@ -3,22 +3,23 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
+using MarcelJoachimKloubert.CLRToolbox.Web;
 using MarcelJoachimKloubert.CLRToolbox.Web.Security;
 using MarcelJoachimKloubert.FileBox.Server.Json;
 using MarcelJoachimKloubert.FileBox.Server.Security;
 using System;
 using System.Diagnostics;
-using System.Security;
-using System.Security.Principal;
 using System.Linq;
 using System.Reflection;
+using System.Security;
+using System.Security.Principal;
 
 namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 {
     /// <summary>
     /// A basic HTTP handler.
     /// </summary>
-    public abstract class FileBoxHttpHandlerBase : BasicAuthHttpHandlerBase
+    public abstract class FileBoxHttpHandlerBase : BasicAuthHttpHandlerBase, IDisposable
     {
         #region Fields (1)
 
@@ -26,10 +27,10 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 
         #endregion Fields (1)
 
-        #region Constrcutors (1)
+        #region Constrcutors (2)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="" /> class.
+        /// Initializes a new instance of the <see cref="FileBoxHttpHandlerBase" /> class.
         /// </summary>
         /// <param name="handler">
         /// The handler for the <see cref="FileBoxHttpHandlerBase.CheckLogin(string, SecureString, ref bool, ref IPrincipal)" /> method.
@@ -48,7 +49,12 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
             this._CHECK_LOGIN_HANDLER = handler;
         }
 
-        #endregion Constrcutors (1)
+        ~FileBoxHttpHandlerBase()
+        {
+            this.Dispose(false);
+        }
+
+        #endregion Constrcutors (2)
 
         #region Events and delegates (1)
 
@@ -64,17 +70,17 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
         #endregion Events and delegates (1)
 
         #region Properties (1)
-        
+
         /// <inheriteddoc />
         public override string RealmName
         {
             get { return "FileBox"; }
         }
 
-        #endregion
+        #endregion Properties (1)
 
-        #region Methods (5)
-        
+        #region Methods (9)
+
         /// <summary>
         /// Creates a JSON object from an assembly.
         /// </summary>
@@ -120,7 +126,22 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                 strPwd = null;
             }
         }
-        
+
+        /// <inheriteddoc />
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            lock (this._SYNC)
+            {
+                this.OnDispose(disposing);
+            }
+        }
+
         /// <summary>
         /// Creates a JSON object from a method.
         /// </summary>
@@ -140,6 +161,15 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                 name = method.Name,
                 type = TypeToJson(method.DeclaringType),
             };
+        }
+
+        /// <summary>
+        /// Stores the logic for the <see cref="FileBoxHttpHandlerBase.Dispose()" /> method and the finalizer.
+        /// </summary>
+        /// <param name="disposing"><see cref="FileBoxHttpHandlerBase.Dispose()" /> method or the finalizer.</param>
+        protected virtual void OnDispose(bool disposing)
+        {
+            // dummy
         }
 
         /// <summary>
@@ -195,7 +225,6 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                 stacktrace = innerEx.StackTrace;
             }
 
-            
             result.msg = innerEx.Message;
             result.data = new
                 {
@@ -204,7 +233,75 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                     type = TypeToJson(innerEx.GetType()),
                 };
         }
-        
+
+        /// <summary>
+        /// Tries to extract values for selecting a range of items from a HTTP request.
+        /// </summary>
+        /// <param name="context">The underlying HTTP context from where to get the data from.</param>
+        /// <param name="startAt">The variable where to write the zero based start index to.</param>
+        /// <param name="maxItems">
+        /// The variable where to write the zero based number of maximum items to.
+        /// <see langword="null" /> indicates that there is no limit.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="context" /> is <see langword="null" />.
+        /// </exception>
+        protected static void TryExtractStartAtAndMaxItemsValues(IHttpRequestContext context, out int startAt, out int? maxItems)
+        {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+
+            startAt = 0;
+            maxItems = null;
+
+            try
+            {
+                // startAt
+                try
+                {
+                    var str = context.Http.Request.Headers["X-FileBox-StartAt"];
+                    if (string.IsNullOrWhiteSpace(str) == false)
+                    {
+                        startAt = int.Parse(str.Trim());
+                    }
+                }
+                catch
+                {
+                    startAt = 0;
+                }
+
+                // maxItems
+                try
+                {
+                    var str = context.Http.Request.Headers["X-FileBox-MaxItems"];
+                    if (string.IsNullOrWhiteSpace(str) == false)
+                    {
+                        maxItems = int.Parse(str.Trim());
+                    }
+                }
+                catch
+                {
+                    maxItems = null;
+                }
+            }
+            catch
+            {
+                // ignore errors
+            }
+
+            if (startAt < 0)
+            {
+                startAt = 0;
+            }
+
+            if (maxItems < 0)
+            {
+                maxItems = 0;
+            }
+        }
+
         /// <summary>
         /// Creates a JSON object from a type.
         /// </summary>
@@ -226,6 +323,6 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
             };
         }
 
-        #endregion Methods (1)
+        #endregion Methods (9)
     }
 }

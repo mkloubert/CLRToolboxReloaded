@@ -3,9 +3,12 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using MarcelJoachimKloubert.CLRToolbox.ComponentModel;
-using MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel;
 using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
 {
@@ -40,7 +43,15 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
 
         #endregion Events (2)
 
-        #region Properties (3)
+        #region Properties (4)
+
+        /// <summary>
+        /// Gets the full path of the application directory.
+        /// </summary>
+        public string ApplicationDirectory
+        {
+            get { return Environment.CurrentDirectory; }
+        }
 
         /// <summary>
         /// Gets if the application is currently busy or not.
@@ -72,9 +83,95 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
             private set { this.Set(value); }
         }
 
-        #endregion Properties (2)
+        #endregion Properties (3)
 
-        #region Methods (5)
+        #region Methods (10)
+
+        [ReceiveValueFrom("Server")]
+        [ReceiveValueFrom("Login")]
+        private void ChildViewModel_Changed(IReceiveValueFromArgs e)
+        {
+            if (e.OldValue != null)
+            {
+                e.GetOldValue<NotifiableBase>().ErrorsReceived -= this.ChildViewModel_ErrorsReceived;
+            }
+
+            if (e.NewValue != null)
+            {
+                e.GetNewValue<NotifiableBase>().ErrorsReceived += this.ChildViewModel_ErrorsReceived;
+            }
+        }
+
+        private void ChildViewModel_ErrorsReceived(object sender, ErrorEventArgs e)
+        {
+            this.OnErrorsReceived(e.GetException());
+        }
+
+        /// <summary>
+        /// Returns the key file.
+        /// </summary>
+        /// <returns>The key file.</returns>
+        public FileInfo GetKeyFile()
+        {
+            bool isNew;
+            return this.GetKeyFile(out isNew);
+        }
+
+        /// <summary>
+        /// Returns the key file.
+        /// </summary>
+        /// <param name="isNew">The variable that defines if key file has to be created (is new) or not.</param>
+        /// <returns>The key file.</returns>
+        public FileInfo GetKeyFile(out bool isNew)
+        {
+            FileInfo result;
+            isNew = false;
+
+            lock (this._SYNC)
+            {
+                result = new FileInfo(Path.Combine(this.ApplicationDirectory, "key.xml"));
+
+                if (result.Exists)
+                {
+                    // test key file
+                    string xml;
+                    try
+                    {
+                        xml = File.ReadAllText(result.FullName,
+                                               encoding: Encoding.UTF8);
+
+                        var rsa = new RSACryptoServiceProvider();
+                        rsa.FromXmlString(xml);
+
+                        // seems to work
+                    }
+                    catch
+                    {
+                        // failed => delete old file
+
+                        result.Delete();
+                        result.Refresh();
+                    }
+                    finally
+                    {
+                        xml = null;
+                    }
+                }
+
+                if (result.Exists == false)
+                {
+                    isNew = true;
+
+                    // generate new key and save
+                    var rsa = new RSACryptoServiceProvider(2048);
+                    File.WriteAllText(result.FullName,
+                                      contents: rsa.ToXmlString(includePrivateParameters: true),
+                                      encoding: Encoding.UTF8);
+                }
+            }
+
+            return result;
+        }
 
         private void Initialize()
         {
@@ -126,11 +223,56 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
                         conn.Port = int.Parse(vm.Login.Port.Trim());
                         conn.User = vm.Login.Username.Trim();
 
-                        // test connection
+                        // test connection by loading server information
                         var info = conn.GetServerInfo();
 
-                        this.Server = new ServerViewModel(this, conn);
+                        // check if a new key file has been created
+                        bool isKeyFileNew;
+                        var keyFile = vm.GetKeyFile(out isKeyFileNew);
 
+                        Func<string> readKeyXml = () =>
+                            {
+                                return File.ReadAllText(keyFile.FullName,
+                                                         encoding: Encoding.UTF8);
+                            };
+
+                        var updateKey = false;
+                        if (isKeyFileNew)
+                        {
+                            // key file is new
+                            updateKey = true;
+                        }
+                        else
+                        {
+                            var serverRsa = info.TryGetRsaCrypter();
+                            if (serverRsa == null)
+                            {
+                                // server has no key
+                                updateKey = true;
+                            }
+                            else
+                            {
+                                // check id keys are the same
+
+                                var myRsa = new RSACryptoServiceProvider();
+                                myRsa.FromXmlString(readKeyXml());
+
+                                if (serverRsa.ExportCspBlob(false)
+                                             .SequenceEqual(myRsa.ExportCspBlob(false)) == false)
+                                {
+                                    // different keys
+                                    updateKey = true;
+                                }
+                            }
+                        }
+
+                        if (updateKey)
+                        {
+                            // update key on server bewfore continue
+                            conn.UpdateKey(xml: readKeyXml());
+                        }
+
+                        this.Server = new ServerViewModel(this, info);
 
                         vm.RaiseEventHandler(vm.LoggedIn);
                     }
@@ -143,6 +285,18 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
                 });
         }
 
-        #endregion Methods (5)
+        [ReceiveValueFrom("Server")]
+        private void Server_Changed(IReceiveValueFromArgs e)
+        {
+            var vm = e.GetNewValue<ServerViewModel>();
+            if (vm == null)
+            {
+                return;
+            }
+
+            vm.ReloadInbox();
+        }
+
+        #endregion Methods (8)
     }
 }

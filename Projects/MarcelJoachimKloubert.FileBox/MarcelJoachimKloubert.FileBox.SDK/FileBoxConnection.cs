@@ -9,9 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace MarcelJoachimKloubert.FileBox
@@ -33,7 +35,16 @@ namespace MarcelJoachimKloubert.FileBox
 
         #endregion Constructors (1)
 
-        #region Properties (5)
+        #region Properties (6)
+
+        /// <summary>
+        /// Gets or sets the default data encoding.
+        /// </summary>
+        public Encoding DefaultEncoding
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Gets or sets the host address.
@@ -80,9 +91,9 @@ namespace MarcelJoachimKloubert.FileBox
             set;
         }
 
-        #endregion Properties (5)
+        #endregion Properties (6)
 
-        #region Methods (8)
+        #region Methods (13)
 
         /// <summary>
         /// Creates a basic and setupped HTTP web request client.
@@ -125,6 +136,18 @@ namespace MarcelJoachimKloubert.FileBox
         }
 
         /// <summary>
+        /// Returns the encoder based on <see cref="FileBoxConnection.DefaultEncoding" />.
+        /// </summary>
+        /// <returns>
+        /// The encoder. Returns an <see cref="UTF8Encoding" /> if <see cref="FileBoxConnection.DefaultEncoding" />
+        /// is <see langword="null" />.
+        /// </returns>
+        public Encoding GetEncoding()
+        {
+            return this.DefaultEncoding ?? new UTF8Encoding();
+        }
+
+        /// <summary>
         /// Gets information about the server.
         /// </summary>
         /// <returns>The server information.</returns>
@@ -140,10 +163,18 @@ namespace MarcelJoachimKloubert.FileBox
             var jsonResult = this.GetJsonObject(response);
             if (jsonResult != null)
             {
+                var info = jsonResult.data;
+
                 result = new ServerInfo();
                 result.Server = this;
 
-                result.Name = jsonResult.data.name;
+                result.Name = info.name;
+
+                result.Key = (info.user.key ?? string.Empty).Trim();
+                if (result.Key == string.Empty)
+                {
+                    result.Key = null;
+                }
             }
 
             return result;
@@ -202,9 +233,10 @@ namespace MarcelJoachimKloubert.FileBox
         /// <exception cref="ArgumentNullException">
         /// <paramref name="response" /> is <see langword="null" />.
         /// </exception>
+        /// <remarks>UTF-8 encoding is used.</remarks>
         public JsonResult GetJsonObject(HttpWebResponse response)
         {
-            return this.GetJsonObject(response, new UTF8Encoding());
+            return this.GetJsonObject(response, this.GetEncoding());
         }
 
         /// <summary>
@@ -321,6 +353,116 @@ namespace MarcelJoachimKloubert.FileBox
             this.Password = newValue;
         }
 
-        #endregion Methods (8)
+        /// <summary>
+        /// Send a file.
+        /// </summary>
+        /// <param name="path">The path of the file to send.</param>
+        /// <param name="recipients">The list of recipients.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="recipients" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="FileNotFoundException">
+        /// File in <paramref name="path" /> does not exist.
+        /// </exception>
+        public void Send(string path, IEnumerable<string> recipients)
+        {
+            if (recipients == null)
+            {
+                throw new ArgumentNullException("recipients");
+            }
+
+            var file = new FileInfo(path);
+            if (file.Exists == false)
+            {
+                throw new FileNotFoundException();
+            }
+
+            var request = this.CreateWebRequest("send");
+            request.Method = "POST";
+
+            request.Headers["X-FileBox-Filename"] = file.Name.Trim();
+            request.Headers["X-FileBox-To"] = string.Join(";", recipients.Where(r => string.IsNullOrWhiteSpace(r) == false)
+                                                                         .Select(r => r.ToLower().Trim())
+                                                                         .Distinct());
+            request.ContentType = "application/octet-stream";
+
+            using (var stream = file.OpenRead())
+            {
+                using (var reqStream = request.GetRequestStream())
+                {
+                    stream.CopyTo(reqStream);
+
+                    reqStream.Flush();
+                    reqStream.Close();
+                }
+            }
+
+            var response = request.GetResponse();
+            response.Close();
+        }
+
+        /// <summary>
+        /// Send a file.
+        /// </summary>
+        /// <param name="path">The path of the file to send.</param>
+        /// <param name="recipients">The list of recipients.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="recipients" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="FileNotFoundException">
+        /// File in <paramref name="path" /> does not exist.
+        /// </exception>
+        public void Send(string path, params string[] recipients)
+        {
+            this.Send(path, (IEnumerable<string>)recipients);
+        }
+
+        /// <summary>
+        /// Updates the public RSA key on the server.
+        /// </summary>
+        /// <param name="xml">The RSA key as XML data.</param>
+        /// <remarks>UTF-8 encoding is used.</remarks>
+        public void UpdateKey(string xml)
+        {
+            this.UpdateKey(xml, this.GetEncoding());
+        }
+
+        /// <summary>
+        /// Updates the public RSA key on the server.
+        /// </summary>
+        /// <param name="xml">The RSA key as XML data.</param>
+        /// <param name="enc">The encoding to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="enc" /> is <see langword="null" />.
+        /// </exception>
+        public void UpdateKey(string xml, Encoding enc)
+        {
+            if (enc == null)
+            {
+                throw new ArgumentNullException("enc");
+            }
+
+            var rsa = new RSACryptoServiceProvider();
+            rsa.FromXmlString(xml);
+
+            var request = this.CreateWebRequest("updatekey");
+            request.Method = "POST";
+
+            request.ContentType = "text/xml; charset=" + enc.WebName;
+            using (var stream = request.GetRequestStream())
+            {
+                var blob = enc.GetBytes(rsa.ToXmlString(includePrivateParameters: false));
+
+                stream.Write(blob, 0, blob.Length);
+
+                stream.Flush();
+                stream.Close();
+            }
+
+            var response = request.GetResponse();
+            response.Close();
+        }
+
+        #endregion Methods (13)
     }
 }

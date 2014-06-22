@@ -11,10 +11,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
     /// </summary>
     public abstract class JobBase : IdentifiableBase, IJob
     {
-        #region Fields (3)
+        #region Fields (5)
 
         private readonly Func<DateTimeOffset, bool> _CAN_EXECUTE_ACTION;
+        private readonly Action<IJobExecutionContext> _COMPLETED_ACTION;
         private readonly Action<IJobExecutionContext> _EXECUTE_ACTION;
+        private readonly Action<IJobExecutionContext, Exception> _ERROR_ACTION;
         private readonly Guid _ID;
 
         #endregion Fields
@@ -39,11 +41,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
             if (this._IS_SYNCHRONIZED)
             {
                 this._CAN_EXECUTE_ACTION = this.OnCanExecute_ThreadSafe;
+                this._COMPLETED_ACTION = this.OnCompleted_ThreadSafe; 
+                this._ERROR_ACTION = this.OnError_ThreadSafe;
                 this._EXECUTE_ACTION = this.OnExecute_ThreadSafe;
             }
             else
             {
                 this._CAN_EXECUTE_ACTION = this.OnCanExecute_NonThreadSafe;
+                this._COMPLETED_ACTION = this.OnCompleted; 
+                this._ERROR_ACTION = this.OnError;
                 this._EXECUTE_ACTION = this.OnExecute;
             }
         }
@@ -94,12 +100,39 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
 
         #endregion Properties
 
-        #region Methods (7)
+        #region Methods (13)
 
         /// <inheriteddoc />
         public bool CanExecute(DateTimeOffset time)
         {
             return this._CAN_EXECUTE_ACTION(time);
+        }
+
+        /// <inheriteddoc />
+        public void Completed(IJobExecutionContext ctx)
+        {
+            if (ctx == null)
+            {
+                throw new ArgumentNullException("ctx");
+            }
+
+            this._COMPLETED_ACTION(ctx);
+        }
+
+        /// <inheriteddoc />
+        public void Error(IJobExecutionContext ctx, Exception ex)
+        {
+            if (ctx == null)
+            {
+                throw new ArgumentNullException("ctx");
+            }
+
+            if (ex == null)
+            {
+                throw new ArgumentNullException("ex");
+            }
+
+            this._ERROR_ACTION(ctx, ex);
         }
 
         /// <inheriteddoc />
@@ -141,6 +174,41 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
             }
 
             return result;
+        }
+        
+        /// <summary>
+        /// The logic for the <see cref="JobBase.Completed(IJobExecutionContext)" /> method.
+        /// </summary>
+        /// <param name="ctx">The underlying context.</param>
+        protected virtual void OnCompleted(IJobExecutionContext ctx)
+        {
+            // dummy
+        }
+
+        private void OnCompleted_ThreadSafe(IJobExecutionContext ctx)
+        {
+            lock (this._SYNC)
+            {
+                this.OnCompleted(ctx);
+            }
+        }
+
+        /// <summary>
+        /// The logic for the <see cref="JobBase.Error(IJobExecutionContext, Exception)" /> method.
+        /// </summary>
+        /// <param name="ctx">The underlying context.</param>
+        /// <param name="ex">The occured exception(s).</param>
+        protected virtual void OnError(IJobExecutionContext ctx, Exception ex)
+        {
+            // dummy
+        }
+
+        private void OnError_ThreadSafe(IJobExecutionContext ctx, Exception ex)
+        {
+            lock (this._SYNC)
+            {
+                this.OnError(ctx, ex);
+            }
         }
 
         /// <summary>

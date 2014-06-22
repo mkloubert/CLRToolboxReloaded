@@ -98,7 +98,17 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
 
         #endregion Events and delegates
 
-        #region Methods (18)
+        #region Methods (19)
+
+        private static void AppendErrors(Exception ex, IList<JobException> occuredErrors, JobExceptionContext context)
+        {
+            if (ex == null)
+            {
+                return;
+            }
+
+            occuredErrors.Add(new JobException(ex, context));
+        }
 
         /// <inheriteddoc />
         public void Dispose()
@@ -162,13 +172,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
         /// <param name="ctx">The underlying item context.</param>
         protected virtual void HandleJobItem(IForAllItemContext<IJob, DateTimeOffset> ctx)
         {
-            var occuredErrors = new List<Exception>();
+            var job = ctx.Item;
+            var occuredErrors = new List<JobException>();
 
             DateTimeOffset completedAt;
             var execCtx = new JobExecutionContext();
             try
             {
-                execCtx.Job = ctx.Item;
+                execCtx.Job = job;
                 execCtx.ResultVars = new Dictionary<string, object>(EqualityComparerFactory.CreateCaseInsensitiveStringComparer(true, true));
                 execCtx.Time = ctx.State;
 
@@ -181,14 +192,28 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
             {
                 completedAt = AppTime.Now;
 
-                var aggEx = ex as AggregateException;
-                if (aggEx != null)
+                AppendErrors(ex, occuredErrors, JobExceptionContext.Execute);
+
+                // error callback
+                try
                 {
-                    occuredErrors.AddRange(aggEx.InnerExceptions.OfType<Exception>());
+                    job.Error(execCtx, ex);
                 }
-                else
+                catch (Exception ex2)
                 {
-                    occuredErrors.Add(ex);
+                    AppendErrors(ex2, occuredErrors, JobExceptionContext.Error);
+                }
+            }
+            finally
+            {
+                // completed callback
+                try
+                {
+                    job.Completed(execCtx);
+                }
+                catch (Exception ex)
+                {
+                    AppendErrors(ex, occuredErrors, JobExceptionContext.Completed);
                 }
             }
 

@@ -29,7 +29,7 @@
         
         <Border Background="Transparent" Grid.Row="0" Grid.Column="0">
             <MahApps:TransitioningContentControl x:Name="TransitioningContentControl_Main" Transition="RightReplace">
-                <ctrls:LoginControl DataContext="{Binding Path=Login, Mode=OneWay}" />
+                <ctrls:LoginControl />
             </MahApps:TransitioningContentControl>
         </Border>
         

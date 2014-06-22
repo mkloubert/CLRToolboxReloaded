@@ -59,12 +59,26 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Execution\Jobs\IJobQueue.cs" />
+    <Compile Include="Execution\Jobs\JobQueue.cs" />
     <Compile Include="Extensions\FileBoxServerExtensionMethods.cs" />
     <Compile Include="Extensions\Json.cs" />
     <Compile Include="Extensions\Json.WriteJson.cs">
       <DependentUpon>Json.cs</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\BoxHttpHandlerBase.cs" />
+    <Compile Include="Handlers\SendHttpHandler.CopyToOutboxJob.cs">
+      <DependentUpon>SendHttpHandler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\SendHttpHandler.cs" />
+    <Compile Include="Handlers\SendHttpHandler.SendJob.cs">
+      <DependentUpon>SendHttpHandler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\SendHttpHandler.SendJobBase.cs">
+      <DependentUpon>SendHttpHandler.cs</DependentUpon>
+    </Compile>
     <Compile Include="Handlers\ServerInfoHttpHandler.cs" />
+    <Compile Include="Handlers\UpdateKeyHttpHandler.cs" />
     <Compile Include="IO\Directories.cs" />
     <Compile Include="IO\IDirectories.cs" />
     <Compile Include="Json\JsonParamResult.cs" />
@@ -96,18 +110,33 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="files\mkloubert\EdwardSnowden.jpg">
+    <Content Include="files\mkloubert\i\dummy.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="files\mkloubert\MEPHISTOPHELES.txt">
+    </Content>
+    <Content Include="files\mkloubert\o\dummy.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="files\mkloubert\t\dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\tm\i\dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\tm\o\dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\tm\t\dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Global.asax" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="LICENSE" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="temp\dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="web.config" />
     <None Include="config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

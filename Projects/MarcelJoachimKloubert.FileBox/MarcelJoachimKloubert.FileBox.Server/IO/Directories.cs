@@ -33,6 +33,11 @@ namespace MarcelJoachimKloubert.FileBox.Server.IO
             get { return this._GLOBAL.UserFileDirectory; }
         }
 
+        public string Temp
+        {
+            get { return this._GLOBAL.TempDirectory; }
+        }
+
         #endregion Properties (1)
     }
 }

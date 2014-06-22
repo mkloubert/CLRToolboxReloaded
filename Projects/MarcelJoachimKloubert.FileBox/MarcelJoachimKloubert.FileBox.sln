@@ -27,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.FileB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.FileBox.SDK", "MarcelJoachimKloubert.FileBox.SDK\MarcelJoachimKloubert.FileBox.SDK.csproj", "{2798CB5B-E29F-4D0E-BE4A-BCE8590CFC4C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{3B5FD80D-C74D-4D68-8F5D-A31BF857AA4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.FileBox", "MarcelJoachimKloubert.FileBox\MarcelJoachimKloubert.FileBox.csproj", "{5961B67E-E7B6-43C3-97E7-BB92BEDDDEB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,10 @@ Global
 		{2798CB5B-E29F-4D0E-BE4A-BCE8590CFC4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2798CB5B-E29F-4D0E-BE4A-BCE8590CFC4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2798CB5B-E29F-4D0E-BE4A-BCE8590CFC4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5961B67E-E7B6-43C3-97E7-BB92BEDDDEB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5961B67E-E7B6-43C3-97E7-BB92BEDDDEB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5961B67E-E7B6-43C3-97E7-BB92BEDDDEB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5961B67E-E7B6-43C3-97E7-BB92BEDDDEB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,5 +90,7 @@ Global
 		{A34446FC-8852-4A48-BE16-BF9337825AAE} = {6A93A532-3AF6-4738-B633-3E7A37A93133}
 		{BC43D1A1-D8B5-4632-9150-F945AF5390C7} = {6A93A532-3AF6-4738-B633-3E7A37A93133}
 		{AA28E758-21CC-47F8-A011-87AE340ED2FE} = {6A93A532-3AF6-4738-B633-3E7A37A93133}
+		{2CEEDBED-9CBE-4A9A-9049-781B37CF4541} = {3B5FD80D-C74D-4D68-8F5D-A31BF857AA4E}
+		{5961B67E-E7B6-43C3-97E7-BB92BEDDDEB6} = {3B5FD80D-C74D-4D68-8F5D-A31BF857AA4E}
 	EndGlobalSection
 EndGlobal

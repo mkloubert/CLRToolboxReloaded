@@ -5,6 +5,7 @@
 using MarcelJoachimKloubert.CLRToolbox.Web;
 using MarcelJoachimKloubert.FileBox.Server.Extensions;
 using MarcelJoachimKloubert.FileBox.Server.Json;
+using MarcelJoachimKloubert.FileBox.Server.Security;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
         #region Constrcutors (1)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="" /> class.
+        /// Initializes a new instance of the <see cref="ServerInfoHttpHandler" /> class.
         /// </summary>
         /// <param name="handler">
         /// The handler for the <see cref="FileBoxHttpHandlerBase.CheckLogin(string, SecureString, ref bool, ref IPrincipal)" /> method.
@@ -45,10 +46,19 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
             try
             {
                 result.code = 0;
+                
+                var user = context.GetUser<IServerPrincipal>();
+                var rsa = user.TryGetRsaCrypter();
 
                 result.data = new
                     {
                         name = Environment.MachineName,
+
+                        user = new
+                        {
+                            key = rsa != null ? rsa.ToXmlString(includePrivateParameters: false) : null,
+                            name = user.Identity.Name,
+                        },
                     };
             }
             catch (Exception ex)

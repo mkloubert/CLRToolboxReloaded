@@ -14,7 +14,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
 #if !(PORTABLE || PORTABLE40)
         global::System.MarshalByRefObject,
 #endif
- IObject
+        IObject
     {
         #region Fields (2)
 
