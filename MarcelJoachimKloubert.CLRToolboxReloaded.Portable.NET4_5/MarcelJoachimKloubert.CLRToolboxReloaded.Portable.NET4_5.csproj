@@ -525,10 +525,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5.Libs.csproj">
-      <Project>{c1efc4ad-35e9-4ed3-a555-04a68af8f1ac}</Project>
-      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5.Libs</Name>
-    </ProjectReference>
+    <None Include="__Libs\Newtonsoft.Json.dll" />
+    <None Include="__Libs\Newtonsoft.Json.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>__Libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

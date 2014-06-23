@@ -572,13 +572,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="__Compatibility\System\IO\ErrorEventArgs.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0.Libs.csproj">
-      <Project>{e2d1ad58-b249-459e-9f89-9fe05628b0d2}</Project>
-      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0.Libs</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <None Include="__Libs\Newtonsoft.Json.dll" />
+    <None Include="__Libs\Newtonsoft.Json.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>__Libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

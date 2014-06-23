@@ -504,12 +504,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs.csproj">
-      <Project>{C9390E48-3EBF-4C46-B4D2-92F0ADB2FF77}</Project>
-      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="__Compatibility\System\Collections\Generic\" />
     <Folder Include="__Compatibility\System\IO\" />
     <Folder Include="Data\" />
@@ -527,5 +521,19 @@
     <Folder Include="Execution\Jobs\" />
     <Folder Include="Threading\" />
     <Folder Include="IO\" />
+    <Folder Include="__Libs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0\__Libs\Newtonsoft.Json.dll">
+      <Link>__Libs\Newtonsoft.Json.dll</Link>
+    </None>
+    <None Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0\__Libs\Newtonsoft.Json.xml">
+      <Link>__Libs\Newtonsoft.Json.xml</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0\__Libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

@@ -38,6 +38,12 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
+    <Reference Include="AppLimit.CloudComputing.SharpBox">
+      <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\AppLimit.CloudComputing.SharpBox.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -663,6 +669,18 @@
     <Folder Include="Execution\Jobs\" />
     <Folder Include="Threading\" />
     <Folder Include="IO\" />
+    <Folder Include="__Libs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\AppLimit.CloudComputing.SharpBox.dll">
+      <Link>__Libs\AppLimit.CloudComputing.SharpBox.dll</Link>
+    </None>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\Newtonsoft.Json.dll">
+      <Link>__Libs\Newtonsoft.Json.dll</Link>
+    </None>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\Newtonsoft.Json.xml">
+      <Link>__Libs\Newtonsoft.Json.xml</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Mono4_0.Libs.csproj">

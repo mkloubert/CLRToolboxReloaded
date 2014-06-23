@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRTo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portable 4.0", "Portable 4.0", "{8EDF5B42-899B-4D69-B080-B2019A639DFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs", "MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs.csproj", "{C9390E48-3EBF-4C46-B4D2-92F0ADB2FF77}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0", "MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0\MarcelJoachimKloubert.CLRToolboxReloaded.Mono.Portable4_0.csproj", "{AAD84746-0328-45CB-B727-9F26E29AEDEC}"
 EndProject
 Global
@@ -41,10 +39,6 @@ Global
 		{AAD84746-0328-45CB-B727-9F26E29AEDEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAD84746-0328-45CB-B727-9F26E29AEDEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAD84746-0328-45CB-B727-9F26E29AEDEC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C9390E48-3EBF-4C46-B4D2-92F0ADB2FF77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9390E48-3EBF-4C46-B4D2-92F0ADB2FF77}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9390E48-3EBF-4C46-B4D2-92F0ADB2FF77}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9390E48-3EBF-4C46-B4D2-92F0ADB2FF77}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CCB556D6-FB51-4A51-B0DF-825BD2A4103D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CCB556D6-FB51-4A51-B0DF-825BD2A4103D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCB556D6-FB51-4A51-B0DF-825BD2A4103D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -60,7 +54,6 @@ Global
 		{A09AD07F-0670-4620-AB52-8377E0749BCF} = {85FD25BC-65F6-4430-B543-35B2AA3197F2}
 		{CCB556D6-FB51-4A51-B0DF-825BD2A4103D} = {85FD25BC-65F6-4430-B543-35B2AA3197F2}
 		{CE8EECBE-D024-41A4-A346-A88D5DFF6493} = {85FD25BC-65F6-4430-B543-35B2AA3197F2}
-		{C9390E48-3EBF-4C46-B4D2-92F0ADB2FF77} = {8EDF5B42-899B-4D69-B080-B2019A639DFC}
 		{AAD84746-0328-45CB-B727-9F26E29AEDEC} = {8EDF5B42-899B-4D69-B080-B2019A639DFC}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
