@@ -4,13 +4,14 @@
 
 using MarcelJoachimKloubert.CLRToolbox.ComponentModel;
 using MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel;
-using MarcelJoachimKloubert.FileBox.IO;
 using System;
-using System.IO;
 using System.Windows.Threading;
 
 namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
 {
+    /// <summary>
+    /// The model for the server view.
+    /// </summary>
     public sealed class ServerViewModel : NotifiableBase
     {
         #region Constructors (1)
@@ -71,7 +72,7 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
             private set;
         }
 
-        #endregion Properties (4)
+        #endregion Properties (5)
 
         #region Methods (3)
 
@@ -88,12 +89,10 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
         {
             try
             {
+                // var files = this.Connection.GetInbox();
 
-
-                var files = this.Connection.GetInbox();
-
-                this.Inbox.Clear();
-                this.Inbox.AddRange(files);
+                // this.Inbox.Clear();
+                // this.Inbox.AddRange(files);
             }
             catch (Exception ex)
             {
@@ -101,6 +100,6 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
             }
         }
 
-        #endregion Methods (1)
+        #endregion Methods (3)
     }
 }

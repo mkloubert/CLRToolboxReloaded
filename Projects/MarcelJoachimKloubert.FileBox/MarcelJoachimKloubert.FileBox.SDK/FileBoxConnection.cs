@@ -2,8 +2,6 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-using MarcelJoachimKloubert.FileBox.IO;
-using MarcelJoachimKloubert.FileBox.Serialization;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,15 +13,16 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Cryptography;
 using System.Text;
+using System.Xml.Linq;
 
 namespace MarcelJoachimKloubert.FileBox
 {
     /// <summary>
     /// Handles a FileBox (server) connection.
     /// </summary>
-    public sealed class FileBoxConnection
+    public sealed class FileBoxConnection : FileBoxObjectBase
     {
-        #region Constructors (1)
+        #region Constructors (2)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileBoxConnection" /> class.
@@ -33,7 +32,18 @@ namespace MarcelJoachimKloubert.FileBox
             this.IsSecure = true;
         }
 
-        #endregion Constructors (1)
+        /// <summary>
+        /// Frees the resources of that object.
+        /// </summary>
+        ~FileBoxConnection()
+        {
+            using (var pwd = this.Password)
+            {
+                this.Password = null;
+            }
+        }
+
+        #endregion Constructors (2)
 
         #region Properties (6)
 
@@ -93,7 +103,7 @@ namespace MarcelJoachimKloubert.FileBox
 
         #endregion Properties (6)
 
-        #region Methods (13)
+        #region Methods (15)
 
         /// <summary>
         /// Creates a basic and setupped HTTP web request client.
@@ -188,6 +198,130 @@ namespace MarcelJoachimKloubert.FileBox
                                  this.Port);
         }
 
+        private List<FileItem> GetBox(Location loc, RSACryptoServiceProvider rsa, int startAt, int? maxItems)
+        {
+            if (rsa == null)
+            {
+                throw new ArgumentNullException("rsa");
+            }
+
+            if (startAt < 0)
+            {
+                throw new ArgumentOutOfRangeException("startAt");
+            }
+
+            if (maxItems < 0)
+            {
+                throw new ArgumentOutOfRangeException("maxItems");
+            }
+
+            string path;
+            switch (loc)
+            {
+                case Location.Inbox:
+                    path = "inbox";
+                    break;
+
+                case Location.Outbox:
+                    path = "outbox";
+                    break;
+
+                default:
+                    throw new NotSupportedException(loc.ToString());
+            }
+
+            var result = new List<FileItem>();
+
+            var request = this.CreateWebRequest(path);
+            request.Method = "GET";
+
+            request.Headers["X-FileBox-StartAt"] = startAt.ToString();
+
+            if (maxItems.HasValue)
+            {
+                request.Headers["X-FileBox-MaxItems"] = maxItems.ToString();
+            }
+
+            var response = (HttpWebResponse)request.GetResponse();
+
+            var jsonResult = this.GetJsonObject(response);
+            if (jsonResult != null &&
+                jsonResult.data != null)
+            {
+                var files = jsonResult.data.files;
+                foreach (dynamic item in files)
+                {
+                    var newItem = new FileItem();
+                    newItem.Server = this;
+                    newItem.Location = loc;
+                    newItem.IsCorrupted = true;
+                    try
+                    {
+                        newItem.RealName = item.name.Trim();
+                        if (newItem.RealName != string.Empty)
+                        {
+                            var meta = item.meta;
+
+                            byte[] metaPwdAndSalt = rsa.Decrypt(Convert.FromBase64String(meta.sec.Trim()),
+                                                                false);
+                            
+                            using (var cryptedMetaStream = new MemoryStream(buffer: Convert.FromBase64String(meta.dat.Trim()),
+                                                                            writable: false))
+                            {
+                                using (var decryptedMetaStream = new MemoryStream())
+                                {
+                                    var cryptoMetaStream = new CryptoStream(cryptedMetaStream,
+                                                                            CreateRijndael(pwd: metaPwdAndSalt.Take(48).ToArray(),
+                                                                                           salt: metaPwdAndSalt.Skip(48).ToArray()).CreateDecryptor(),
+                                                                            CryptoStreamMode.Read);
+
+                                    cryptoMetaStream.CopyTo(decryptedMetaStream);
+
+                                    decryptedMetaStream.Position = 0;
+                                    var xml = XDocument.Load(decryptedMetaStream).Root;
+                                    try
+                                    {
+                                        newItem.Name = xml.Attribute("name").Value.Trim();
+
+                                        newItem.CryptedMetaXml = new SecureString();
+                                        foreach (var c in xml.ToString())
+                                        {
+                                            newItem.CryptedMetaXml.AppendChar(c);
+                                        }
+                                        newItem.CryptedMetaXml.MakeReadOnly();
+                                    }
+                                    finally
+                                    {
+                                        xml = null;
+                                    }
+
+                                    newItem.CryptedMeta = decryptedMetaStream.ToArray();
+                                }
+                            }
+
+                            newItem.IsCorrupted = false;
+                        }
+                    }
+                    catch
+                    {
+                        newItem.CryptedMeta = null;
+                    }
+
+                    if (newItem.CryptedMeta == null)
+                    {
+                        newItem.CryptedMetaXml = null;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(newItem.RealName) == false)
+                    {
+                        result.Add(newItem);
+                    }
+                }
+            }
+
+            return result;
+        }
+
         private NetworkCredential GetCredentials()
         {
             NetworkCredential result = null;
@@ -243,6 +377,7 @@ namespace MarcelJoachimKloubert.FileBox
         /// Reads a JSON object from a response.
         /// </summary>
         /// <param name="response">The HTTP response context.</param>
+        /// <param name="enc">The encoding to use.</param>
         /// <returns>The JSON object.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="response" /> and/or <paramref name="enc" /> are <see langword="null" />.
@@ -284,54 +419,41 @@ namespace MarcelJoachimKloubert.FileBox
         /// <summary>
         /// Returns the files from the INBOX folder.
         /// </summary>
-        /// <param name="startAt"></param>
-        /// <param name="maxItems"></param>
+        /// <param name="rsa">The crypter for encrypting the meta data of the files.</param>
+        /// <param name="startAt">The zero based index of the first item.</param>
+        /// <param name="maxItems">The maximum number of items to return.</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="rsa" /> is <see langword="null" />.
+        /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="startAt" /> and/or <paramref name="maxItems" /> are invalid.
         /// </exception>
-        public List<FileItem> GetInbox(int startAt = 0, int? maxItems = null)
+        public List<FileItem> GetInbox(RSACryptoServiceProvider rsa, int startAt = 0, int? maxItems = null)
         {
-            if (startAt < 0)
-            {
-                throw new ArgumentOutOfRangeException("startAt");
-            }
+            return this.GetBox(loc: Location.Inbox,
+                               rsa: rsa,
+                               startAt: startAt, maxItems: maxItems);
+        }
 
-            if (maxItems < 0)
-            {
-                throw new ArgumentOutOfRangeException("maxItems");
-            }
-
-            var result = new List<FileItem>();
-
-            var request = this.CreateWebRequest("inbox");
-            request.Method = "GET";
-
-            request.Headers["X-FileBox-StartAt"] = startAt.ToString();
-
-            if (maxItems.HasValue)
-            {
-                request.Headers["X-FileBox-MaxItems"] = maxItems.ToString();
-            }
-
-            var response = (HttpWebResponse)request.GetResponse();
-
-            var jsonResult = this.GetJsonObject(response);
-            if (jsonResult != null &&
-                jsonResult.data != null)
-            {
-                foreach (dynamic item in jsonResult.data)
-                {
-                    var newItem = new FileItem();
-                    newItem.Name = item.name;
-                    newItem.Server = this;
-                    newItem.Size = Convert.ToInt64(item.size);
-
-                    result.Add(newItem);
-                }
-            }
-
-            return result;
+        /// <summary>
+        /// Returns the files from the OUTBOX folder.
+        /// </summary>
+        /// <param name="rsa">The crypter for encrypting the meta data of the files.</param>
+        /// <param name="startAt">The zero based index of the first item.</param>
+        /// <param name="maxItems">The maximum number of items to return.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="rsa" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="startAt" /> and/or <paramref name="maxItems" /> are invalid.
+        /// </exception>
+        public List<FileItem> GetOutbox(RSACryptoServiceProvider rsa, int startAt = 0, int? maxItems = null)
+        {
+            return this.GetBox(loc: Location.Outbox,
+                               rsa: rsa,
+                               startAt: startAt, maxItems: maxItems);
         }
 
         /// <summary>
@@ -340,16 +462,16 @@ namespace MarcelJoachimKloubert.FileBox
         /// <param name="pwd">The new value.</param>
         public void SetPassword(string pwd)
         {
-            SecureString newValue = null;
+            var newValue = new SecureString();
             if (pwd != null)
             {
-                newValue = new SecureString();
                 foreach (var c in pwd)
                 {
                     newValue.AppendChar(c);
                 }
             }
 
+            newValue.MakeReadOnly();
             this.Password = newValue;
         }
 

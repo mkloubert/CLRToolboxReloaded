@@ -2,7 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-namespace MarcelJoachimKloubert.FileBox.Serialization
+namespace MarcelJoachimKloubert.FileBox
 {
     /// <summary>
     /// Stores the data of a JSON result.

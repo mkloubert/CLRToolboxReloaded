@@ -4,6 +4,7 @@
 
 using MarcelJoachimKloubert.CLRToolbox;
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
+using MarcelJoachimKloubert.CLRToolbox.IO;
 using MarcelJoachimKloubert.CLRToolbox.ServiceLocation;
 using MarcelJoachimKloubert.CLRToolbox.Web;
 using MarcelJoachimKloubert.FileBox.Server.Execution.Jobs;
@@ -12,6 +13,7 @@ using MarcelJoachimKloubert.FileBox.Server.IO;
 using MarcelJoachimKloubert.FileBox.Server.Json;
 using MarcelJoachimKloubert.FileBox.Server.Security;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -84,7 +86,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                         var rand = new CryptoRandom();
 
                         // copy to temporary file
-                        using (var stream = context.Http.Request.GetBufferlessInputStream())
+                        using (var stream = new EventStream(context.Http.Request.GetBufferlessInputStream()))
                         {
                             // define unique temp file
                             FileInfo tempFile;
@@ -100,16 +102,42 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 
                             try
                             {
-                                // generate password
+                                var fileId = Guid.NewGuid();
+                                var fileDate = context.Time.ToUniversalTime();
+
+                                var fileLastWriteTime = fileDate;
+                                var fileCreationTime = fileDate;
+
+                                long fileSize = 0;
+                                stream.DataTransfered += (s, e) =>
+                                    {
+                                        switch (e.Context)
+                                        {
+                                            case EventStreamDataTransferedContext.Read:
+                                                fileSize += e.Buffer.Length;
+                                                break;
+                                        }
+                                    };
+
+                                // generate password for the temp file
                                 var pwd = new byte[48];
                                 rand.NextBytes(pwd);
 
-                                // generate salt
+                                // generate salt for the temp file
                                 var salt = new byte[16];
                                 rand.NextBytes(salt);
 
                                 var meta = new XElement("file");
                                 meta.SetAttributeValue("name", fileName);
+                                meta.SetAttributeValue("id", fileId.ToString("N"));
+
+                                // file dates
+                                meta.Add(new XElement("date",
+                                                      fileDate.ToString("u", CultureInfo.InvariantCulture)));
+                                meta.Add(new XElement("lastWriteTime",
+                                                      fileLastWriteTime.ToString("u", CultureInfo.InvariantCulture)));
+                                meta.Add(new XElement("creationTime",
+                                                      fileCreationTime.ToString("u", CultureInfo.InvariantCulture)));
 
                                 // crypt data
                                 using (var tempStream = new FileStream(tempFile.FullName,
@@ -124,6 +152,10 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                                     cryptStream.Flush();
                                     cryptStream.Close();
                                 }
+
+                                // file size
+                                meta.Add(new XElement("size",
+                                                      fileSize));
 
                                 var queue = ServiceLocator.Current.GetInstance<IJobQueue>();
 

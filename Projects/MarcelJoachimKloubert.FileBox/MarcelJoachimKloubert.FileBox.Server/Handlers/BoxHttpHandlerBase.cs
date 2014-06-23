@@ -15,11 +15,11 @@ using System.Text;
 namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 {
     /// <summary>
-    /// A basic HTTP handler.
+    /// A basic HTTP handler for listening the files of a box.
     /// </summary>
     public abstract class BoxHttpHandlerBase : FileBoxHttpHandlerBase
     {
-        #region Constrcutors (2)
+        #region Constrcutors (1)
 
         /// <inheriteddoc />
         protected BoxHttpHandlerBase(CheckLoginHandler handler)
@@ -27,10 +27,15 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
         {
         }
 
-        #endregion Constrcutors (2)
+        #endregion Constrcutors (1)
 
         #region Methods (2)
 
+        /// <summary>
+        /// Returns the full path of the underlying box.
+        /// </summary>
+        /// <param name="context">The underlying request context.</param>
+        /// <returns>The full path of the box.</returns>
         protected abstract string GetBoxPath(IHttpRequestContext context);
 
         /// <inheriteddoc />
@@ -48,20 +53,27 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                 var boxDir = new DirectoryInfo(this.GetBoxPath(context));
                 if (boxDir.Exists)
                 {
-                    boxDir.GetFiles(".dat")
+                    boxDir.GetFiles("*.dat")
                           .ForAll(throwExceptions: false,
                                   action: ctx =>
                                   {
                                       var metaFile = ctx.Item;
 
                                       ulong index;
-                                      if (ulong.TryParse(metaFile.Name, out index) == false)
+                                      if (ulong.TryParse(Path.GetFileNameWithoutExtension(metaFile.Name), out index) == false)
                                       {
                                           // must be a valid number
                                           return;
                                       }
 
-                                      var dataFile = new FileInfo(Path.Combine(metaFile.DirectoryName, index.ToString()));
+                                      var metaPwdFile = new FileInfo(Path.Combine(metaFile.DirectoryName, index.ToString() + ".asc"));
+                                      if (metaPwdFile.Exists == false)
+                                      {
+                                          // no password file for meta data found
+                                          return;
+                                      }
+
+                                      var dataFile = new FileInfo(Path.Combine(metaFile.DirectoryName, index.ToString() + ".bin"));
                                       if (dataFile.Exists == false)
                                       {
                                           // no data file found
@@ -70,11 +82,12 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 
                                       ctx.State.FileList.Add(new
                                           {
-                                              metaFile = new
+                                              name = index.ToString(),
+
+                                              meta = new
                                               {
-                                                  data = File.ReadAllText(metaFile.FullName,
-                                                                          ctx.State.MetaFileEncoding),
-                                                  name = index.ToString(),
+                                                  dat = Convert.ToBase64String(File.ReadAllBytes(metaFile.FullName)),
+                                                  sec = Convert.ToBase64String(File.ReadAllBytes(metaPwdFile.FullName)),
                                               },
                                           });
                                   }, actionState: new

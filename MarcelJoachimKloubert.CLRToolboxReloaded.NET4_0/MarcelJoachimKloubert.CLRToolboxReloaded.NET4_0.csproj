@@ -29,7 +29,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;NET40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -277,7 +277,9 @@
       <DependentUpon>Strings.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Strings.cs" />
-    <Compile Include="Extensions\Strings.ToUnsecureString.cs" />
+    <Compile Include="Extensions\Strings.ToUnsecureString.cs">
+      <DependentUpon>Strings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\ValuesAndObjects.cs" />
     <Compile Include="Extensions\ValuesAndObjects.DisposeEx.cs">
       <DependentUpon>ValuesAndObjects.cs</DependentUpon>
@@ -311,6 +313,8 @@
     <Compile Include="IIdentifiable.cs" />
     <Compile Include="IInitializable.cs" />
     <Compile Include="IObject.cs" />
+    <Compile Include="IO\EventStream.cs" />
+    <Compile Include="IO\StreamWrapperBase.cs" />
     <Compile Include="IRunnable.cs" />
     <Compile Include="ObjectBase.cs" />
     <Compile Include="Objects\ObjectFactory.cs" />

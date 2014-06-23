@@ -66,7 +66,11 @@
     <Compile Include="Extensions\Json.WriteJson.cs">
       <DependentUpon>Json.cs</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\ReceiveInboxHttpHandler.cs" />
+    <Compile Include="Handlers\ReceiveOutboxHttpHandler.cs" />
+    <Compile Include="Handlers\ReceiveHttpHandlerBase.cs" />
     <Compile Include="Handlers\BoxHttpHandlerBase.cs" />
+    <Compile Include="Handlers\OutboxHttpHandler.cs" />
     <Compile Include="Handlers\SendHttpHandler.CopyToOutboxJob.cs">
       <DependentUpon>SendHttpHandler.cs</DependentUpon>
     </Compile>

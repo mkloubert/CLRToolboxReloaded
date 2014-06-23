@@ -9,9 +9,9 @@ namespace MarcelJoachimKloubert.FileBox
     /// <summary>
     /// Stores information about the current server.
     /// </summary>
-    public sealed class ServerInfo
+    public sealed class ServerInfo : ServerObjectBase
     {
-        #region Properties (4)
+        #region Properties (3)
 
         /// <summary>
         /// Gets if the server has stored the public key for the underlying user or not.
@@ -34,15 +34,6 @@ namespace MarcelJoachimKloubert.FileBox
         /// Gets the (machine) name of the server.
         /// </summary>
         public string Name
-        {
-            get;
-            internal set;
-        }
-
-        /// <summary>
-        /// Gets the underlying server.
-        /// </summary>
-        public FileBoxConnection Server
         {
             get;
             internal set;
@@ -76,6 +67,6 @@ namespace MarcelJoachimKloubert.FileBox
             return result;
         }
 
-        #endregion
+        #endregion Methods (1)
     }
 }

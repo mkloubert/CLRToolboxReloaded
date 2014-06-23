@@ -3,13 +3,13 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using System.Collections.Generic;
-using System.Security;
+using System.Security.Cryptography;
 
 namespace MarcelJoachimKloubert.FileBox
 {
     internal sealed class ExecutionContext
     {
-        #region Properties (6)
+        #region Properties (7)
 
         internal List<string> Arguments { get; set; }
 
@@ -21,9 +21,11 @@ namespace MarcelJoachimKloubert.FileBox
 
         internal int Port { get; set; }
 
+        internal RSACryptoServiceProvider RSA { get; set; }
+
         internal string Username { get; set; }
 
-        #endregion Properties (6)
+        #endregion Properties (7)
 
         #region Methods (1)
 
@@ -34,20 +36,8 @@ namespace MarcelJoachimKloubert.FileBox
             result.Port = Port;
             result.IsSecure = this.IsSecure;
 
-            SecureString pwd = null;
-            if (string.IsNullOrEmpty(this.Password) == false)
-            {
-                pwd = new SecureString();
-                foreach (var c in this.Password)
-                {
-                    pwd.AppendChar(c);
-                }
-
-                pwd.MakeReadOnly();
-            }
-
             result.User = this.Username;
-            result.Password = pwd;
+            result.SetPassword(this.Password);
 
             return result;
         }

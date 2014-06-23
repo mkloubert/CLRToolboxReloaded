@@ -181,6 +181,27 @@ namespace MarcelJoachimKloubert.FileBox.Server
                            "info",
                            new ServerInfoHttpHandler(handler: this.CheckLogin)
                        ));
+            
+            // list outbox
+            RouteTable.Routes.Add(new Route
+                       (
+                           "outbox",
+                           new OutboxHttpHandler(handler: this.CheckLogin)
+                       ));
+            
+            // receive file (inbox)
+            RouteTable.Routes.Add(new Route
+                       (
+                           "receiveinbox",
+                           new ReceiveInboxHttpHandler(handler: this.CheckLogin)
+                       ));
+
+            // receive file (outbox)
+            RouteTable.Routes.Add(new Route
+                       (
+                           "receiveoutbox",
+                           new ReceiveOutboxHttpHandler(handler: this.CheckLogin)
+                       ));
 
             // send file
             this._sendHttpHandler = new SendHttpHandler(handler: this.CheckLogin);

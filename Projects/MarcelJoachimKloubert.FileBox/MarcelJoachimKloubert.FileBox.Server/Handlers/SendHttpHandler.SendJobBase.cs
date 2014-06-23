@@ -68,18 +68,20 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
             }
 
             protected internal void FindUniqueDataAndMetaFileNames(DirectoryInfo targetDir,
-                                                                   out FileInfo dataFile, out FileInfo metaFile)
+                                                                   out FileInfo dataFile, out FileInfo metaFile, out FileInfo metaPwdFile)
             {
                 dataFile = null;
                 metaFile = null;
+                metaPwdFile = null;
 
                 ulong i = 0;
                 do
                 {
                     dataFile = new FileInfo(Path.Combine(targetDir.FullName, i + ".bin"));
                     metaFile = new FileInfo(Path.Combine(targetDir.FullName, i + ".dat"));
+                    metaPwdFile = new FileInfo(Path.Combine(targetDir.FullName, i + ".asc"));
 
-                    if (dataFile.Exists || metaFile.Exists)
+                    if (dataFile.Exists || metaFile.Exists || metaPwdFile.Exists)
                     {
                         ++i;
                     }

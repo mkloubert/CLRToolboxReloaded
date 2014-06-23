@@ -26,12 +26,12 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <DefineConstants>PORTABLE;PORTABLE40;MONO_PORTABLE;MONO_PORTABLE40</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -495,6 +495,12 @@
     <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\JobException.cs">
       <Link>Execution\Jobs\JobException.cs</Link>
     </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\EventStream.cs">
+      <Link>IO\EventStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\StreamWrapperBase.cs">
+      <Link>IO\StreamWrapperBase.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -520,5 +526,6 @@
     <Folder Include="Sessions\" />
     <Folder Include="Execution\Jobs\" />
     <Folder Include="Threading\" />
+    <Folder Include="IO\" />
   </ItemGroup>
 </Project>

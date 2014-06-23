@@ -9,6 +9,7 @@ using MarcelJoachimKloubert.FileBox.Server.Execution.Jobs;
 using MarcelJoachimKloubert.FileBox.Server.Security;
 using System;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Linq;
@@ -60,15 +61,36 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                         // find filenames that are NOT in use yet
                         FileInfo targetDataFile;
                         FileInfo targetMetaFile;
+                        FileInfo targetMetaPwdFile;
                         FindUniqueDataAndMetaFileNames(targetDir,
                                                         dataFile: out targetDataFile,
-                                                        metaFile: out targetMetaFile);
+                                                        metaFile: out targetMetaFile,
+                                                        metaPwdFile: out targetMetaPwdFile);
 
                         using (var tempStream = new FileStream(this._tempFile.FullName,
                                                                FileMode.Open, FileAccess.Read))
                         {
                             try
                             {
+                                // meta password
+                                Rijndael metaCrypter;
+                                using (var metaPwdStream = new FileStream(targetMetaPwdFile.FullName,
+                                                                          FileMode.CreateNew, FileAccess.ReadWrite))
+                                {
+                                    var metaPwdAndSalt = new byte[64];
+                                    rand.NextBytes(metaPwdAndSalt);
+
+                                    metaCrypter = CreateRijndael(pwd: metaPwdAndSalt.Take(48).ToArray(),
+                                                                 salt: metaPwdAndSalt.Skip(48).ToArray());
+
+                                    // save crypted meta data
+                                    {
+                                        var cryptedMetaBlob = rsa.Encrypt(metaPwdAndSalt, false);
+
+                                        metaPwdStream.Write(cryptedMetaBlob, 0, cryptedMetaBlob.Length);
+                                    }
+                                }
+
                                 using (var metaStream = new FileStream(targetMetaFile.FullName,
                                                                        FileMode.CreateNew, FileAccess.ReadWrite))
                                 {
@@ -88,11 +110,17 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                                                           Convert.ToBase64String(fileSalt)));
 
                                     // save crypted meta data
+                                    using (var metaDataStream = new MemoryStream(buffer: new UTF8Encoding().GetBytes(meta.ToString()),
+                                                                                 writable: false))
                                     {
-                                        var metaBlob = new UTF8Encoding().GetBytes(meta.ToString());
-                                        var cryptedMetaBlob = rsa.Encrypt(metaBlob, false);
+                                        var cryptedMetaStream = new CryptoStream(metaStream,
+                                                                                 metaCrypter.CreateEncryptor(),
+                                                                                 CryptoStreamMode.Write);
+                                        
+                                        metaDataStream.CopyTo(cryptedMetaStream);
 
-                                        metaStream.Write(cryptedMetaBlob, 0, cryptedMetaBlob.Length);
+                                        cryptedMetaStream.Flush();
+                                        cryptedMetaStream.Close();
                                     }
 
                                     using (var dataStream = new FileStream(targetDataFile.FullName,
@@ -106,17 +134,15 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                                             // copy from temp file to target file
                                             var cryptoTempStream = new CryptoStream(tempStream,
                                                                                     CreateRijndael(pwd: this._pwd,
-                                                                                                    salt: this._salt).CreateDecryptor(),
+                                                                                                   salt: this._salt).CreateDecryptor(),
                                                                                     CryptoStreamMode.Read);
+                                            
                                             cryptoTempStream.CopyTo(cryptedDataStream);
 
                                             cryptedDataStream.Flush();
                                             cryptedDataStream.Close();
                                         }
                                     }
-
-                                    metaStream.Flush();
-                                    metaStream.Close();
                                 }
 
                                 // write to outbox of sender
@@ -124,6 +150,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                                     var queue = ServiceLocator.Current.GetInstance<IJobQueue>();
 
                                     queue.Enqueue(new CopyToOutboxJob(sync: this._SYNC,
+                                                                      fileId: this._fileId,
                                                                       tempFile: this._tempFile.FullName,
                                                                       pwd: this._pwd, salt: this._salt,
                                                                       sender: this._sender, recipient: this._recipient,
@@ -135,6 +162,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                                 // delete files before rethrow exception
                                 TryDeleteFile(targetDataFile);
                                 TryDeleteFile(targetMetaFile);
+                                TryDeleteFile(targetMetaPwdFile);
 
                                 throw;
                             }
