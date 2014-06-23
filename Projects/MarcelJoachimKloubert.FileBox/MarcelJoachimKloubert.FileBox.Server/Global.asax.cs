@@ -171,35 +171,35 @@ namespace MarcelJoachimKloubert.FileBox.Server
             // list inbox
             RouteTable.Routes.Add(new Route
                        (
-                           "inbox",
-                           new InboxHttpHandler(handler: this.CheckLogin)
+                           "list-inbox",
+                           new ListInboxHttpHandler(handler: this.CheckLogin)
+                       ));
+
+            // list outbox
+            RouteTable.Routes.Add(new Route
+                       (
+                           "list-outbox",
+                           new ListOutboxHttpHandler(handler: this.CheckLogin)
                        ));
 
             // (server) info
             RouteTable.Routes.Add(new Route
                        (
-                           "info",
+                           "server-info",
                            new ServerInfoHttpHandler(handler: this.CheckLogin)
                        ));
-            
-            // list outbox
-            RouteTable.Routes.Add(new Route
-                       (
-                           "outbox",
-                           new OutboxHttpHandler(handler: this.CheckLogin)
-                       ));
-            
+
             // receive file (inbox)
             RouteTable.Routes.Add(new Route
                        (
-                           "receiveinbox",
+                           "receive-file-inbox",
                            new ReceiveInboxHttpHandler(handler: this.CheckLogin)
                        ));
 
             // receive file (outbox)
             RouteTable.Routes.Add(new Route
                        (
-                           "receiveoutbox",
+                           "receive-file-outbox",
                            new ReceiveOutboxHttpHandler(handler: this.CheckLogin)
                        ));
 
@@ -207,14 +207,14 @@ namespace MarcelJoachimKloubert.FileBox.Server
             this._sendHttpHandler = new SendHttpHandler(handler: this.CheckLogin);
             RouteTable.Routes.Add(new Route
                        (
-                           "send",
+                           "send-file",
                            this._sendHttpHandler
                        ));
 
             // update RSA key
             RouteTable.Routes.Add(new Route
                        (
-                           "updatekey",
+                           "update-key",
                            new UpdateKeyHttpHandler(handler: this.CheckLogin)
                        ));
 

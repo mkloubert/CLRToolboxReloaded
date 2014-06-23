@@ -32,7 +32,16 @@ namespace MarcelJoachimKloubert.FileBox
 
         #endregion Constructors (1)
 
-        #region Properties (6)
+        #region Properties (11)
+        
+        /// <summary>
+        /// Gets the creation date.
+        /// </summary>
+        public DateTimeOffset CreationDate
+        {
+            get;
+            internal set;
+        }
 
         /// <summary>
         /// Gets the crypted meta data of the item.
@@ -51,11 +60,29 @@ namespace MarcelJoachimKloubert.FileBox
             get;
             internal set;
         }
+        
+        /// <summary>
+        /// Gets the ID of the file.
+        /// </summary>
+        public Guid Id
+        {
+            get;
+            internal set;
+        }
 
         /// <summary>
         /// Gets if the data of that data is corrupted or not.
         /// </summary>
         public bool IsCorrupted
+        {
+            get;
+            internal set;
+        }
+        
+        /// <summary>
+        /// Gets the last write time.
+        /// </summary>
+        public DateTimeOffset LastWriteTime
         {
             get;
             internal set;
@@ -88,6 +115,24 @@ namespace MarcelJoachimKloubert.FileBox
             internal set;
         }
 
+        /// <summary>
+        /// Gets time the file was send.
+        /// </summary>
+        public DateTimeOffset SendTime
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
+        /// Gets the size of the file.
+        /// </summary>
+        public long Size
+        {
+            get;
+            internal set;
+        }
+
         #endregion Properties (6)
 
         #region Methods (1)
@@ -113,11 +158,11 @@ namespace MarcelJoachimKloubert.FileBox
             switch (this.Location)
             {
                 case LocationEnum.Inbox:
-                    path = "receiveinbox";
+                    path = "receive-file-inbox";
                     break;
 
                 case LocationEnum.Outbox:
-                    path = "receiveoutbox";
+                    path = "receive-file-outbox";
                     break;
 
                 default:
@@ -139,15 +184,9 @@ namespace MarcelJoachimKloubert.FileBox
 
                 var response = request.GetResponse();
 
-                var pdb = new Rfc2898DeriveBytes(pwd, salt,
-                                                 1000);
-
-                var alg = Rijndael.Create();
-                alg.Key = pdb.GetBytes(32);
-                alg.IV = pdb.GetBytes(16);
-
                 return new CryptoStream(response.GetResponseStream(),
-                                        alg.CreateDecryptor(),
+                                        CreateRijndael(pwd: pwd,
+                                                       salt: salt).CreateDecryptor(),
                                         CryptoStreamMode.Read);
             }
             finally

@@ -114,7 +114,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                                         var cryptedMetaStream = new CryptoStream(metaStream,
                                                                                  metaCrypter.CreateEncryptor(),
                                                                                  CryptoStreamMode.Write);
-                                        
+
                                         metaDataStream.CopyTo(cryptedMetaStream);
 
                                         cryptedMetaStream.Flush();
@@ -134,7 +134,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                                                                                     CreateRijndael(pwd: this._pwd,
                                                                                                    salt: this._salt).CreateDecryptor(),
                                                                                     CryptoStreamMode.Read);
-                                            
+
                                             cryptoTempStream.CopyTo(cryptedDataStream);
 
                                             cryptedDataStream.Flush();

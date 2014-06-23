@@ -77,9 +77,12 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                 ulong i = 0;
                 do
                 {
-                    dataFile = new FileInfo(Path.Combine(targetDir.FullName, i + ".bin"));
-                    metaFile = new FileInfo(Path.Combine(targetDir.FullName, i + ".dat"));
-                    metaPwdFile = new FileInfo(Path.Combine(targetDir.FullName, i + ".asc"));
+                    dataFile = new FileInfo(Path.Combine(targetDir.FullName,
+                                                         i + "." + GlobalConstants.FileExtensions.DATA_FILE));
+                    metaFile = new FileInfo(Path.Combine(targetDir.FullName,
+                                                         i + "." + GlobalConstants.FileExtensions.META_FILE));
+                    metaPwdFile = new FileInfo(Path.Combine(targetDir.FullName,
+                                                            i + "." + GlobalConstants.FileExtensions.META_PASSWORD_FILE));
 
                     if (dataFile.Exists || metaFile.Exists || metaPwdFile.Exists)
                     {

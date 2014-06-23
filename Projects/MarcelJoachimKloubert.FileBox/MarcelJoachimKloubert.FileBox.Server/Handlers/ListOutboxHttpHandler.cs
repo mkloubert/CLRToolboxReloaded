@@ -10,12 +10,12 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
     /// <summary>
     /// The HTTP handler that lists the OUTBOX of the connected user.
     /// </summary>
-    public sealed class OutboxHttpHandler : BoxHttpHandlerBase
+    public sealed class ListOutboxHttpHandler : ListBoxHttpHandlerBase
     {
         #region Constrcutors (1)
 
         /// <inheriteddoc />
-        public OutboxHttpHandler(CheckLoginHandler handler)
+        public ListOutboxHttpHandler(CheckLoginHandler handler)
             : base(handler: handler)
         {
         }

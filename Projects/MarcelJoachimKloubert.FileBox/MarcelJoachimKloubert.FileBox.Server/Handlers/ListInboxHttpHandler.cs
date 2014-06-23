@@ -10,12 +10,12 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
     /// <summary>
     /// The HTTP handler that lists the INBOX of the connected user.
     /// </summary>
-    public sealed class InboxHttpHandler : BoxHttpHandlerBase
+    public sealed class ListInboxHttpHandler : ListBoxHttpHandlerBase
     {
         #region Constrcutors (1)
 
         /// <inheriteddoc />
-        public InboxHttpHandler(CheckLoginHandler handler)
+        public ListInboxHttpHandler(CheckLoginHandler handler)
             : base(handler: handler)
         {
         }

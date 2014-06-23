@@ -4,13 +4,14 @@
 
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 {
     static partial class ClrToolboxExtensionMethods
     {
-        #region Methods (6)
+        #region Methods (3)
 
         /// <summary>
         /// Deserializes a JSON string to a dictionary.
@@ -19,27 +20,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// <returns>
         /// The deserialized data as dictionary or <see langword="null" />.
         /// </returns>
-        public static IDictionary<string, object> FromJson(this IEnumerable<char> json)
+        public static dynamic FromJson(this IEnumerable<char> json)
         {
-            return FromJson(json,
-                            settings: null);
-        }
-
-        /// <summary>
-        /// Deserializes a JSON string to a dictionary.
-        /// </summary>
-        /// <param name="json">The JSON string.</param>
-        /// <param name="settings">
-        /// The optional settings to use.
-        /// If <see langword="null" /> the default settings are used (s. <see cref="JsonSerializer.CreateDefault()" />).
-        /// </param>
-        /// <returns>
-        /// The deserialized data as dictionary or <see langword="null" />.
-        /// </returns>
-        public static IDictionary<string, object> FromJson(this IEnumerable<char> json, JsonSerializerSettings settings)
-        {
-            return FromJson<IDictionary<string, object>>(jsonStr: AsString(json),
-                                                         settings: settings);
+            return FromJson<ExpandoObject>(jsonStr: AsString(json));
         }
 
         /// <summary>
@@ -52,26 +35,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// </returns>
         public static T FromJson<T>(this IEnumerable<char> json)
         {
-            return FromJson<T>(json,
-                               settings: null);
-        }
-
-        /// <summary>
-        /// Deserializes a JSON string to an object.
-        /// </summary>
-        /// <typeparam name="T">The target type.</typeparam>
-        /// <param name="json">The JSON string.</param>
-        /// <param name="settings">
-        /// The optional settings to use.
-        /// If <see langword="null" /> the default settings are used (s. <see cref="JsonSerializer.CreateDefault()" />).
-        /// </param>
-        /// <returns>
-        /// The deserialized instance or <see langword="null" />.
-        /// </returns>
-        public static T FromJson<T>(this IEnumerable<char> json, JsonSerializerSettings settings)
-        {
-            return FromJson<T>(jsonStr: AsString(json),
-                               settings: settings);
+            return FromJson<T>(jsonStr: AsString(json));
         }
 
         /// <summary>
@@ -84,30 +48,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// </returns>
         public static T FromJson<T>(this string jsonStr)
         {
-            return FromJson<T>(jsonStr,
-                               settings: null);
-        }
-
-        /// <summary>
-        /// Deserializes a JSON string to an object.
-        /// </summary>
-        /// <typeparam name="T">The target type.</typeparam>
-        /// <param name="jsonStr">The JSON string.</param>
-        /// <param name="settings">
-        /// The optional settings to use.
-        /// If <see langword="null" /> the default settings are used (s. <see cref="JsonSerializer.CreateDefault()" />).
-        /// </param>
-        /// <returns>
-        /// The deserialized instance or <see langword="null" />.
-        /// </returns>
-        public static T FromJson<T>(this string jsonStr, JsonSerializerSettings settings)
-        {
-			if (string.IsNullOrWhiteSpace(jsonStr))
+            if (string.IsNullOrWhiteSpace(jsonStr))
             {
                 return default(T);
             }
 
-            JsonSerializer serializer = settings != null ? JsonSerializer.Create(settings) : JsonSerializer.CreateDefault();
+            var serializer = JsonSerializer.CreateDefault();
 
             using (var reader = new StringReader(jsonStr))
             {
@@ -120,6 +66,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
             }
         }
 
-        #endregion Methods (6)
+        #endregion Methods (3)
     }
 }

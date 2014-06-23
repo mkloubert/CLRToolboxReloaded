@@ -20,14 +20,41 @@ namespace MarcelJoachimKloubert.FileBox
         {
             var allFiles = func(ctx.RSA, 0, null);
 
-            int maxLength = allFiles.Select(f => f.RealName != null ? f.RealName.Length : 0)
-                                    .Max();
+            int? maxLength = allFiles.Select(f => f.RealName != null ? f.RealName.Length : 0)
+                                     .Cast<int?>()
+                                     .Max();
 
             foreach (var file in func(ctx.RSA, 0, null).OrderBy(f => f.Name))
             {
-                Console.WriteLine("[{0}] {1}",
-                                  (file.RealName ?? string.Empty).PadLeft(maxLength, ' '),
-                                  file.IsCorrupted ? "?????" : file.Name);
+                var prefix = string.Format("[{0}] ",
+                                           (file.RealName ?? string.Empty).PadLeft(maxLength.Value, ' '));
+                var prefix2 = "".PadLeft(prefix.Length, ' ');
+
+                // file name and
+                // prefix if file item is marked as "corrupted"
+                Invoke(() => Console.Write(prefix));
+                if (file.IsCorrupted)
+                {
+                    Invoke(() => Console.Write("[CORRUPT] "),
+                           foreColor: ConsoleColor.Yellow);
+                }
+                Invoke(() => Console.Write(file.IsCorrupted ? "???" : file.Name),
+                       foreColor: ConsoleColor.White);
+                Invoke(() => Console.WriteLine());
+
+                // send date
+                Invoke(() => Console.Write(prefix2));
+                Invoke(() => Console.Write("Date: {0}",
+                                           file.IsCorrupted ? "???" : file.SendTime.ToString("yyyy'-'MM'-'dd HH':'mm':'ss")));
+                Invoke(() => Console.WriteLine());
+
+                // size
+                Invoke(() => Console.Write(prefix2));
+                Invoke(() => Console.Write("Size: {0}",
+                                           file.IsCorrupted ? "???" : file.Size.ToString()));
+                Invoke(() => Console.WriteLine());
+
+                Invoke(() => Console.WriteLine());
             }
         }
 

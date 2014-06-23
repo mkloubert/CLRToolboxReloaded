@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -103,7 +104,7 @@ namespace MarcelJoachimKloubert.FileBox
 
         #endregion Properties (6)
 
-        #region Methods (15)
+        #region Methods (16)
 
         /// <summary>
         /// Creates a basic and setupped HTTP web request client.
@@ -145,51 +146,6 @@ namespace MarcelJoachimKloubert.FileBox
             return result;
         }
 
-        /// <summary>
-        /// Returns the encoder based on <see cref="FileBoxConnection.DefaultEncoding" />.
-        /// </summary>
-        /// <returns>
-        /// The encoder. Returns an <see cref="UTF8Encoding" /> if <see cref="FileBoxConnection.DefaultEncoding" />
-        /// is <see langword="null" />.
-        /// </returns>
-        public Encoding GetEncoding()
-        {
-            return this.DefaultEncoding ?? new UTF8Encoding();
-        }
-
-        /// <summary>
-        /// Gets information about the server.
-        /// </summary>
-        /// <returns>The server information.</returns>
-        public ServerInfo GetServerInfo()
-        {
-            ServerInfo result = null;
-
-            var request = this.CreateWebRequest("info");
-            request.Method = "GET";
-
-            var response = (HttpWebResponse)request.GetResponse();
-
-            var jsonResult = this.GetJsonObject(response);
-            if (jsonResult != null)
-            {
-                var info = jsonResult.data;
-
-                result = new ServerInfo();
-                result.Server = this;
-
-                result.Name = info.name;
-
-                result.Key = (info.user.key ?? string.Empty).Trim();
-                if (result.Key == string.Empty)
-                {
-                    result.Key = null;
-                }
-            }
-
-            return result;
-        }
-
         private string GetBaseUrl()
         {
             return string.Format("http{0}://{1}:{2}/",
@@ -215,108 +171,140 @@ namespace MarcelJoachimKloubert.FileBox
                 throw new ArgumentOutOfRangeException("maxItems");
             }
 
-            string path;
-            switch (loc)
+            List<FileItem> result;
+
+            try
             {
-                case Location.Inbox:
-                    path = "inbox";
-                    break;
-
-                case Location.Outbox:
-                    path = "outbox";
-                    break;
-
-                default:
-                    throw new NotSupportedException(loc.ToString());
-            }
-
-            var result = new List<FileItem>();
-
-            var request = this.CreateWebRequest(path);
-            request.Method = "GET";
-
-            request.Headers["X-FileBox-StartAt"] = startAt.ToString();
-
-            if (maxItems.HasValue)
-            {
-                request.Headers["X-FileBox-MaxItems"] = maxItems.ToString();
-            }
-
-            var response = (HttpWebResponse)request.GetResponse();
-
-            var jsonResult = this.GetJsonObject(response);
-            if (jsonResult != null &&
-                jsonResult.data != null)
-            {
-                var files = jsonResult.data.files;
-                foreach (dynamic item in files)
+                string path;
+                switch (loc)
                 {
-                    var newItem = new FileItem();
-                    newItem.Server = this;
-                    newItem.Location = loc;
-                    newItem.IsCorrupted = true;
-                    try
-                    {
-                        newItem.RealName = item.name.Trim();
-                        if (newItem.RealName != string.Empty)
+                    case Location.Inbox:
+                        path = "inbox";
+                        break;
+
+                    case Location.Outbox:
+                        path = "outbox";
+                        break;
+
+                    default:
+                        throw new NotSupportedException(loc.ToString());
+                }
+
+                var request = this.CreateWebRequest(path);
+                request.Method = "GET";
+
+                request.Headers["X-FileBox-StartAt"] = startAt.ToString();
+
+                if (maxItems.HasValue)
+                {
+                    request.Headers["X-FileBox-MaxItems"] = maxItems.ToString();
+                }
+
+                var jsonResult = this.GetJsonObject(request.GetResponse());
+                result = new List<FileItem>();
+
+                switch (jsonResult.code)
+                {
+                    case 0:
+                        if (jsonResult.data != null)
                         {
-                            var meta = item.meta;
-
-                            byte[] metaPwdAndSalt = rsa.Decrypt(Convert.FromBase64String(meta.sec.Trim()),
-                                                                false);
-                            
-                            using (var cryptedMetaStream = new MemoryStream(buffer: Convert.FromBase64String(meta.dat.Trim()),
-                                                                            writable: false))
+                            var files = jsonResult.data.files;
+                            foreach (dynamic item in files)
                             {
-                                using (var decryptedMetaStream = new MemoryStream())
+                                var newItem = new FileItem();
+                                newItem.IsCorrupted = true;
+                                newItem.Location = loc;
+                                newItem.Server = this;
+                                newItem.Size = -1;
+                                try
                                 {
-                                    var cryptoMetaStream = new CryptoStream(cryptedMetaStream,
-                                                                            CreateRijndael(pwd: metaPwdAndSalt.Take(48).ToArray(),
-                                                                                           salt: metaPwdAndSalt.Skip(48).ToArray()).CreateDecryptor(),
-                                                                            CryptoStreamMode.Read);
-
-                                    cryptoMetaStream.CopyTo(decryptedMetaStream);
-
-                                    decryptedMetaStream.Position = 0;
-                                    var xml = XDocument.Load(decryptedMetaStream).Root;
-                                    try
+                                    newItem.RealName = item.name.Trim();
+                                    if (newItem.RealName != string.Empty)
                                     {
-                                        newItem.Name = xml.Attribute("name").Value.Trim();
+                                        var meta = item.meta;
 
-                                        newItem.CryptedMetaXml = new SecureString();
-                                        foreach (var c in xml.ToString())
+                                        byte[] metaPwdAndSalt = rsa.Decrypt(Convert.FromBase64String(meta.sec.Trim()),
+                                                                            false);
+
+                                        using (var cryptedMetaStream = new MemoryStream(buffer: Convert.FromBase64String(meta.dat.Trim()),
+                                                                                        writable: false))
                                         {
-                                            newItem.CryptedMetaXml.AppendChar(c);
-                                        }
-                                        newItem.CryptedMetaXml.MakeReadOnly();
-                                    }
-                                    finally
-                                    {
-                                        xml = null;
-                                    }
+                                            using (var decryptedMetaStream = new MemoryStream())
+                                            {
+                                                var cryptoMetaStream = new CryptoStream(cryptedMetaStream,
+                                                                                        CreateRijndael(pwd: metaPwdAndSalt.Take(48).ToArray(),
+                                                                                                       salt: metaPwdAndSalt.Skip(48).ToArray()).CreateDecryptor(),
+                                                                                        CryptoStreamMode.Read);
 
-                                    newItem.CryptedMeta = decryptedMetaStream.ToArray();
+                                                cryptoMetaStream.CopyTo(decryptedMetaStream);
+
+                                                decryptedMetaStream.Position = 0;
+                                                var xml = XDocument.Load(decryptedMetaStream).Root;
+                                                try
+                                                {
+                                                    newItem.Id = Guid.Parse(xml.Attribute("id").Value.Trim());
+                                                    newItem.Name = xml.Attribute("name").Value.Trim();
+                                                    newItem.Size = long.Parse(xml.Elements("size").Single().Value.Trim(),
+                                                                              CultureInfo.InvariantCulture);
+
+                                                    newItem.CreationDate = DateTimeOffset.ParseExact(xml.Elements("creationTime").Single().Value.Trim(),
+                                                                                                     "u",
+                                                                                                     CultureInfo.InvariantCulture).ToLocalTime();
+                                                    newItem.LastWriteTime = DateTimeOffset.ParseExact(xml.Elements("lastWriteTime").Single().Value.Trim(),
+                                                                                                      "u",
+                                                                                                      CultureInfo.InvariantCulture).ToLocalTime();
+                                                    newItem.SendTime = DateTimeOffset.ParseExact(xml.Elements("date").Single().Value.Trim(),
+                                                                                                 "u",
+                                                                                                 CultureInfo.InvariantCulture).ToLocalTime();
+
+                                                    newItem.CryptedMetaXml = new SecureString();
+                                                    foreach (var c in xml.ToString())
+                                                    {
+                                                        newItem.CryptedMetaXml.AppendChar(c);
+                                                    }
+                                                    newItem.CryptedMetaXml.MakeReadOnly();
+                                                }
+                                                finally
+                                                {
+                                                    xml = null;
+                                                }
+
+                                                newItem.CryptedMeta = decryptedMetaStream.ToArray();
+                                            }
+                                        }
+
+                                        newItem.IsCorrupted = false;
+                                    }
+                                }
+                                catch
+                                {
+                                    newItem.CryptedMeta = null;
+                                }
+
+                                if (newItem.CryptedMeta == null)
+                                {
+                                    newItem.CryptedMetaXml = null;
+                                }
+
+                                if (string.IsNullOrWhiteSpace(newItem.RealName) == false)
+                                {
+                                    result.Add(newItem);
                                 }
                             }
-
-                            newItem.IsCorrupted = false;
                         }
-                    }
-                    catch
-                    {
-                        newItem.CryptedMeta = null;
-                    }
+                        break;
 
-                    if (newItem.CryptedMeta == null)
-                    {
-                        newItem.CryptedMetaXml = null;
-                    }
-
-                    if (string.IsNullOrWhiteSpace(newItem.RealName) == false)
-                    {
-                        result.Add(newItem);
-                    }
+                    default:
+                        throw new FileBoxException(result: jsonResult);
                 }
+            }
+            catch (FileBoxException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new FileBoxException(innerException: ex);
             }
 
             return result;
@@ -360,29 +348,45 @@ namespace MarcelJoachimKloubert.FileBox
         }
 
         /// <summary>
-        /// Reads a JSON object from a response.
+        /// Returns the encoder based on <see cref="FileBoxConnection.DefaultEncoding" />.
         /// </summary>
-        /// <param name="response">The HTTP response context.</param>
-        /// <returns>The JSON object.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="response" /> is <see langword="null" />.
-        /// </exception>
-        /// <remarks>UTF-8 encoding is used.</remarks>
-        public JsonResult GetJsonObject(HttpWebResponse response)
+        /// <returns>
+        /// The encoder. Returns an <see cref="UTF8Encoding" /> if <see cref="FileBoxConnection.DefaultEncoding" />
+        /// is <see langword="null" />.
+        /// </returns>
+        public Encoding GetEncoding()
         {
-            return this.GetJsonObject(response, this.GetEncoding());
+            return this.DefaultEncoding ?? new UTF8Encoding();
         }
 
         /// <summary>
         /// Reads a JSON object from a response.
         /// </summary>
         /// <param name="response">The HTTP response context.</param>
+        /// <param name="closeResponse">Close <paramref name="response" /> after reading or not.</param>
+        /// <returns>The JSON object.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="response" /> is <see langword="null" />.
+        /// </exception>
+        /// <remarks>UTF-8 encoding is used.</remarks>
+        public JsonResult GetJsonObject(WebResponse response, bool closeResponse = true)
+        {
+            return this.GetJsonObject(response: response,
+                                      enc: this.GetEncoding(),
+                                      closeResponse: closeResponse);
+        }
+
+        /// <summary>
+        /// Reads a JSON object from a response.
+        /// </summary>
+        /// <param name="response">The HTTP response context.</param>
+        /// <param name="closeResponse">Close <paramref name="response" /> after reading or not.</param>
         /// <param name="enc">The encoding to use.</param>
         /// <returns>The JSON object.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="response" /> and/or <paramref name="enc" /> are <see langword="null" />.
         /// </exception>
-        public JsonResult GetJsonObject(HttpWebResponse response, Encoding enc)
+        public JsonResult GetJsonObject(WebResponse response, Encoding enc, bool closeResponse = true)
         {
             if (response == null)
             {
@@ -394,7 +398,7 @@ namespace MarcelJoachimKloubert.FileBox
                 throw new ArgumentNullException("enc");
             }
 
-            dynamic result = null;
+            dynamic jsonResult;
 
             using (var respStream = response.GetResponseStream())
             {
@@ -403,17 +407,24 @@ namespace MarcelJoachimKloubert.FileBox
                     using (var reader = new JsonTextReader(txtReader))
                     {
                         var serializer = new JsonSerializer();
-                        result = serializer.Deserialize<ExpandoObject>(reader);
+                        jsonResult = serializer.Deserialize<ExpandoObject>(reader);
                     }
                 }
             }
 
-            return result != null ? new JsonResult()
+            var result = jsonResult != null ? new JsonResult()
+                {
+                    code = jsonResult.code != null ? Convert.ToInt32(jsonResult.code) : null,
+                    data = jsonResult.data,
+                    msg = Convert.ChangeType(jsonResult.msg, typeof(string)),
+                } : null;
+
+            if (closeResponse)
             {
-                code = result.code != null ? Convert.ToInt32(result.code) : null,
-                data = result.data,
-                msg = Convert.ChangeType(result.msg, typeof(string)),
-            } : null;
+                response.Close();
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -457,6 +468,39 @@ namespace MarcelJoachimKloubert.FileBox
         }
 
         /// <summary>
+        /// Gets information about the server.
+        /// </summary>
+        /// <returns>The server information.</returns>
+        public ServerInfo GetServerInfo()
+        {
+            ServerInfo result = null;
+
+            var request = this.CreateWebRequest("server-info");
+            request.Method = "GET";
+
+            var response = (HttpWebResponse)request.GetResponse();
+
+            var jsonResult = this.GetJsonObject(response);
+            if (jsonResult != null)
+            {
+                var info = jsonResult.data;
+
+                result = new ServerInfo();
+                result.Server = this;
+
+                result.Name = info.name;
+
+                result.Key = (info.user.key ?? string.Empty).Trim();
+                if (result.Key == string.Empty)
+                {
+                    result.Key = null;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Sets the value of <see cref="FileBoxConnection.Password" /> via a string.
         /// </summary>
         /// <param name="pwd">The new value.</param>
@@ -486,41 +530,9 @@ namespace MarcelJoachimKloubert.FileBox
         /// <exception cref="FileNotFoundException">
         /// File in <paramref name="path" /> does not exist.
         /// </exception>
-        public void Send(string path, IEnumerable<string> recipients)
+        public void Send(string path, params string[] recipients)
         {
-            if (recipients == null)
-            {
-                throw new ArgumentNullException("recipients");
-            }
-
-            var file = new FileInfo(path);
-            if (file.Exists == false)
-            {
-                throw new FileNotFoundException();
-            }
-
-            var request = this.CreateWebRequest("send");
-            request.Method = "POST";
-
-            request.Headers["X-FileBox-Filename"] = file.Name.Trim();
-            request.Headers["X-FileBox-To"] = string.Join(";", recipients.Where(r => string.IsNullOrWhiteSpace(r) == false)
-                                                                         .Select(r => r.ToLower().Trim())
-                                                                         .Distinct());
-            request.ContentType = "application/octet-stream";
-
-            using (var stream = file.OpenRead())
-            {
-                using (var reqStream = request.GetRequestStream())
-                {
-                    stream.CopyTo(reqStream);
-
-                    reqStream.Flush();
-                    reqStream.Close();
-                }
-            }
-
-            var response = request.GetResponse();
-            response.Close();
+            this.Send(path, (IEnumerable<string>)recipients);
         }
 
         /// <summary>
@@ -534,9 +546,60 @@ namespace MarcelJoachimKloubert.FileBox
         /// <exception cref="FileNotFoundException">
         /// File in <paramref name="path" /> does not exist.
         /// </exception>
-        public void Send(string path, params string[] recipients)
+        public void Send(string path, IEnumerable<string> recipients)
         {
-            this.Send(path, (IEnumerable<string>)recipients);
+            if (recipients == null)
+            {
+                throw new ArgumentNullException("recipients");
+            }
+
+            var file = new FileInfo(path);
+            if (file.Exists == false)
+            {
+                throw new FileNotFoundException();
+            }
+
+            try
+            {
+                var request = this.CreateWebRequest("send-file");
+                request.Method = "POST";
+
+                request.Headers["X-FileBox-Filename"] = file.Name.Trim();
+                request.Headers["X-FileBox-To"] = string.Join(";", recipients.Where(r => string.IsNullOrWhiteSpace(r) == false)
+                                                                             .Select(r => r.ToLower().Trim())
+                                                                             .Distinct());
+                request.ContentType = "application/octet-stream";
+
+                using (var stream = file.OpenRead())
+                {
+                    using (var reqStream = request.GetRequestStream())
+                    {
+                        stream.CopyTo(reqStream);
+
+                        reqStream.Flush();
+                        reqStream.Close();
+                    }
+                }
+
+                var json = this.GetJsonObject(request.GetResponse());
+                switch (json.code)
+                {
+                    case 0:
+                        // OK
+                        break;
+
+                    default:
+                        throw new FileBoxException(result: json);
+                }
+            }
+            catch (FileBoxException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new FileBoxException(innerException: ex);
+            }
         }
 
         /// <summary>
@@ -567,7 +630,7 @@ namespace MarcelJoachimKloubert.FileBox
             var rsa = new RSACryptoServiceProvider();
             rsa.FromXmlString(xml);
 
-            var request = this.CreateWebRequest("updatekey");
+            var request = this.CreateWebRequest("update-key");
             request.Method = "POST";
 
             request.ContentType = "text/xml; charset=" + enc.WebName;
@@ -585,6 +648,6 @@ namespace MarcelJoachimKloubert.FileBox
             response.Close();
         }
 
-        #endregion Methods (13)
+        #endregion Methods (16)
     }
 }

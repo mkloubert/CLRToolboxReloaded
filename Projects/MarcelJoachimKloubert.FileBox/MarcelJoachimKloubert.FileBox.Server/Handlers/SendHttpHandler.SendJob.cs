@@ -63,9 +63,9 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                         FileInfo targetMetaFile;
                         FileInfo targetMetaPwdFile;
                         FindUniqueDataAndMetaFileNames(targetDir,
-                                                        dataFile: out targetDataFile,
-                                                        metaFile: out targetMetaFile,
-                                                        metaPwdFile: out targetMetaPwdFile);
+                                                       dataFile: out targetDataFile,
+                                                       metaFile: out targetMetaFile,
+                                                       metaPwdFile: out targetMetaPwdFile);
 
                         using (var tempStream = new FileStream(this._tempFile.FullName,
                                                                FileMode.Open, FileAccess.Read))
@@ -116,7 +116,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                                         var cryptedMetaStream = new CryptoStream(metaStream,
                                                                                  metaCrypter.CreateEncryptor(),
                                                                                  CryptoStreamMode.Write);
-                                        
+
                                         metaDataStream.CopyTo(cryptedMetaStream);
 
                                         cryptedMetaStream.Flush();
@@ -136,7 +136,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                                                                                     CreateRijndael(pwd: this._pwd,
                                                                                                    salt: this._salt).CreateDecryptor(),
                                                                                     CryptoStreamMode.Read);
-                                            
+
                                             cryptoTempStream.CopyTo(cryptedDataStream);
 
                                             cryptedDataStream.Flush();
@@ -150,7 +150,6 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                                     var queue = ServiceLocator.Current.GetInstance<IJobQueue>();
 
                                     queue.Enqueue(new CopyToOutboxJob(sync: this._SYNC,
-                                                                      fileId: this._fileId,
                                                                       tempFile: this._tempFile.FullName,
                                                                       pwd: this._pwd, salt: this._salt,
                                                                       sender: this._sender, recipient: this._recipient,
