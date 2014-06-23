@@ -104,10 +104,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5.Libs.csproj">
-      <Project>{c1efc4ad-35e9-4ed3-a555-04a68af8f1ac}</Project>
-      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5.Libs</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5.csproj">
       <Project>{4e1276f2-8cdf-43c6-98ed-9c89cf66a9ee}</Project>
       <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_5</Name>

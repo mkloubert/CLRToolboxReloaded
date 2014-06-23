@@ -36,6 +36,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -85,6 +89,12 @@
     <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\Newtonsoft.Json.dll">
       <Link>__Libs\Newtonsoft.Json.dll</Link>
     </Content>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\nunit.framework.dll">
+      <Link>__Libs\nunit.framework.dll</Link>
+    </None>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\nunit.framework.xml">
+      <Link>__Libs\nunit.framework.xml</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

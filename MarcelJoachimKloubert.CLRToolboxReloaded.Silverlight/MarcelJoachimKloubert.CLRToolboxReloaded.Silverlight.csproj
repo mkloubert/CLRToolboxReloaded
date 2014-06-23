@@ -72,10 +72,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0.Libs.csproj">
-      <Project>{e2d1ad58-b249-459e-9f89-9fe05628b0d2}</Project>
-      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0.Libs</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0.csproj">
       <Project>{9308b602-658b-4bd2-900f-bea107a50b17}</Project>
       <Name>MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0</Name>
