@@ -75,11 +75,11 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
                             using (var metaPwdStream = new FileStream(targetMetaPwdFile.FullName,
                                                                       FileMode.CreateNew, FileAccess.ReadWrite))
                             {
-                                var metaPwdAndSalt = new byte[64];
+                                var metaPwdAndSalt = new byte[120];
                                 rand.NextBytes(metaPwdAndSalt);
 
-                                metaCrypter = CryptoHelper.CreateRijndael(pwd: metaPwdAndSalt.Take(48).ToArray(),
-                                                                          salt: metaPwdAndSalt.Skip(48).ToArray());
+                                metaCrypter = CryptoHelper.CreateRijndael(pwd: metaPwdAndSalt.Skip(7).Take(48).ToArray(),
+                                                                          salt: metaPwdAndSalt.Skip(7 + 48).Take(16).ToArray());
 
                                 // save crypted meta data
                                 {

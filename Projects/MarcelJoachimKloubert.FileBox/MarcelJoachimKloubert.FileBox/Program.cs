@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Xml.Linq;
 
@@ -58,6 +59,52 @@ namespace MarcelJoachimKloubert.FileBox
             }
         }
 
+        private static void Help(ExecutionContext ctx)
+        {
+            Action<ExecutionContext> actionToInvoke = null;
+
+            if (ctx.Arguments.Count > 0)
+            {
+                var command = ctx.Arguments[0].ToLower().Trim();
+
+                switch (command)
+                {
+                    case "inbox":
+                        actionToInvoke = Help_Inbox;
+                        break;
+
+                    case "outbox":
+                        actionToInvoke = Help_Outbox;
+                        break;
+
+                    case "send":
+                        actionToInvoke = Help_Send;
+                        break;
+                }
+            }
+
+            if (actionToInvoke != null)
+            {
+                actionToInvoke(ctx);
+            }
+            else
+            {
+                ShowShortHelp();
+            }
+        }
+
+        private static void Help_Inbox(ExecutionContext ctx)
+        {
+        }
+
+        private static void Help_Outbox(ExecutionContext ctx)
+        {
+        }
+
+        private static void Help_Send(ExecutionContext ctx)
+        {
+        }
+
         private static void Inbox(ExecutionContext ctx)
         {
             var conn = ctx.CreateConnection();
@@ -102,6 +149,8 @@ namespace MarcelJoachimKloubert.FileBox
 
         private static int Main(string[] args)
         {
+            PrintHeader();
+
             int result;
 
             try
@@ -116,6 +165,11 @@ namespace MarcelJoachimKloubert.FileBox
                 {
                     switch (normalizedArgs.First().ToLower().Trim())
                     {
+                        case "help":
+                            actionArgs = actionArgs.Skip(1);
+                            actionToInvoke = Help;
+                            break;
+
                         case "inbox":
                             actionArgs = actionArgs.Skip(1);
                             actionToInvoke = Inbox;
@@ -233,6 +287,16 @@ namespace MarcelJoachimKloubert.FileBox
             Box(conn.GetOutbox, ctx);
         }
 
+        private static void PrintHeader()
+        {
+            var asm = Assembly.GetExecutingAssembly();
+            var asmName = asm.GetName();
+
+            Console.WriteLine("FileBox  {0}, for .NET 4 and Mono", asmName.Version);
+            Console.WriteLine("Created by Marcel Joachim Kloubert");
+            Console.WriteLine();
+        }
+
         private static void Send(ExecutionContext ctx)
         {
             var files = new HashSet<string>();
@@ -311,6 +375,13 @@ namespace MarcelJoachimKloubert.FileBox
 
         private static void ShowShortHelp()
         {
+            Console.WriteLine();
+            Console.WriteLine("Usage: filebox [COMMAND] [OPTIONS*]");
+            Console.WriteLine();
+            Console.WriteLine("  help [COMMAND]        Shows details of a command.");
+            Console.WriteLine("  inbox [OPTIONS+]      Shows the box with the RECEIVED files.");
+            Console.WriteLine("  outbox [OPTIONS+]     Shows the box with the SEND files.");
+            Console.WriteLine("  send [OPTIONS+]       Sends one or more files.");
         }
 
         #endregion Methods (9)

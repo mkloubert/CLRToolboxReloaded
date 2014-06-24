@@ -39,7 +39,9 @@ namespace MarcelJoachimKloubert.FileBox.Server
                 result.code = 0;
 
                 var syncRoot = new object();
+
                 var sender = (IServerPrincipal)e.Request.User;
+                var senderRsa = sender.TryGetRsaCrypter();
 
                 var targetDir = new DirectoryInfo(sender.Inbox);
                 if (targetDir.Exists == false)
@@ -62,24 +64,15 @@ namespace MarcelJoachimKloubert.FileBox.Server
                     using (var stream = new EventStream(e.Request.GetBody()))
                     {
                         // define unique temp file
-                        FileInfo tempFile;
-                        do
-                        {
-                            var fBlob = new byte[4];
-                            rand.NextBytes(fBlob);
-
-                            tempFile = new FileInfo(Path.Combine(sender.Temp,
-                                                                 fBlob.AsHexString() + GlobalConstants.FileExtensions.TEMP_FILE));
-                        }
-                        while (tempFile.Exists);
+                        var tempFile = FileHelper.CreateTempFile(tempDir: sender.Temp);
 
                         try
                         {
                             var fileId = Guid.NewGuid();
-                            var fileDate = e.Request.Time.ToUniversalTime();
+                            var fileDate = e.Request.Time;
 
-                            var fileLastWriteTime = fileDate;
-                            var fileCreationTime = fileDate;
+                            var fileLastWriteTime = TryParseTime(e.Request.Headers["X-FileBox-LastWriteTime"]) ?? fileDate;
+                            var fileCreationTime = TryParseTime(e.Request.Headers["X-FileBox-CreationTime"]) ?? fileDate;
 
                             long fileSize = 0;
                             stream.DataTransfered += (s, e2) =>
@@ -102,19 +95,35 @@ namespace MarcelJoachimKloubert.FileBox.Server
 
                             var meta = new XElement("file");
                             meta.SetAttributeValue("name", fileName);
-                            meta.SetAttributeValue("id", fileId.ToString("N"));
+                            meta.SetAttributeValue("id", fileId.ToString(GUID_FORMAT));
+
+                            // sender
+                            {
+                                var fromElement = new XElement("from",
+                                                               sender.Identity.Name);
+                                fromElement.SetAttributeValue("id",
+                                                              sender.Identity.Id.ToString(GUID_FORMAT));
+
+                                if (senderRsa != null)
+                                {
+                                    fromElement.SetAttributeValue("publicKey",
+                                                                  Convert.ToBase64String(senderRsa.ExportCspBlob(includePrivateParameters: false)));
+                                }
+
+                                meta.Add(fromElement);
+                            }
 
                             // file dates
                             meta.Add(new XElement("date",
-                                                  fileDate.ToString("u", CultureInfo.InvariantCulture)));
+                                                  fileDate.ToString(LONG_TIME_FORMAT, CultureInfo.InvariantCulture)));
                             meta.Add(new XElement("lastWriteTime",
-                                                  fileLastWriteTime.ToString("u", CultureInfo.InvariantCulture)));
+                                                  fileLastWriteTime.ToString(LONG_TIME_FORMAT, CultureInfo.InvariantCulture)));
                             meta.Add(new XElement("creationTime",
-                                                  fileCreationTime.ToString("u", CultureInfo.InvariantCulture)));
+                                                  fileCreationTime.ToString(LONG_TIME_FORMAT, CultureInfo.InvariantCulture)));
 
                             // crypt data
                             using (var tempStream = new FileStream(tempFile.FullName,
-                                                                   FileMode.CreateNew, FileAccess.ReadWrite))
+                                                                   FileMode.Create, FileAccess.ReadWrite))
                             {
                                 var cryptStream = new CryptoStream(tempStream,
                                                                    CryptoHelper.CreateRijndael(pwd: pwd,
@@ -133,17 +142,27 @@ namespace MarcelJoachimKloubert.FileBox.Server
 
                             recipients.ForAll((ctx) =>
                                 {
+                                    var r = ctx.Item;
+
+                                    var metaCopy = new XElement(ctx.State.Meta);
+                                    metaCopy.Add(new XElement("to", r));
+
                                     ctx.State
                                        .Host
-                                       .EnqueueJob(new SendJob(sync: syncRoot,
+                                       .EnqueueJob(new SendJob(sync: ctx.State.Sync,
                                                                host: ctx.State.Host,
                                                                tempFile: tempFile.FullName,
-                                                               pwd: pwd, salt: salt,
-                                                               sender: sender, recipient: ctx.Item,
-                                                               meta: new XElement(meta)));
+                                                               pwd: ctx.State.Password, salt: ctx.State.Salt,
+                                                               sender: ctx.State.Sender, recipient: r,
+                                                               meta: metaCopy));
                                 }, new
                                 {
                                     Host = this,
+                                    Meta = meta,
+                                    Password = pwd,
+                                    Salt = salt,
+                                    Sender = sender,
+                                    Sync = syncRoot,
                                 });
                         }
                         catch

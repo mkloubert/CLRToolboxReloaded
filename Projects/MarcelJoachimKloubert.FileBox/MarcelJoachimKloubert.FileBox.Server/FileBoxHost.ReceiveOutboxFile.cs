@@ -15,8 +15,8 @@ namespace MarcelJoachimKloubert.FileBox.Server
         {
             var sender = (IServerPrincipal)e.Request.User;
 
-            this.ListBox(e,
-                         boxPath: sender.Outbox);
+            this.ReceiveBoxFile(e,
+                                boxPath: sender.Outbox);
         }
 
         #endregion Methods (1)

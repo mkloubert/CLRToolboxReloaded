@@ -15,6 +15,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -29,14 +30,24 @@ namespace MarcelJoachimKloubert.FileBox.Server
     /// </summary>
     public sealed partial class FileBoxHost : DisposableObjectBase, IRunnable, IInitializable
     {
-        #region Fields (4)
+        #region Fields (5)
 
         private const string _CONFIG_CATEGORY_DIRS = "directories";
         private ConcurrentQueue<IJob> _jobs;
         private FileBoxHttpServer _server;
         private JobScheduler _scheduler;
 
-        #endregion Fields (4)
+        /// <summary>
+        /// .NET format for a long time string.
+        /// </summary>
+        public const string LONG_TIME_FORMAT = "u";
+
+        /// <summary>
+        /// String format for GUIDs.
+        /// </summary>
+        public const string GUID_FORMAT = "N";
+
+        #endregion Fields (5)
 
         #region Constructors (2)
 
@@ -128,7 +139,12 @@ namespace MarcelJoachimKloubert.FileBox.Server
                 string dir;
                 this.Config.TryGetValue<string>(category: _CONFIG_CATEGORY_DIRS, name: "temp",
                                                 value: out dir,
-                                                defaultVal: "./temp");
+                                                defaultVal: null);
+
+                if (string.IsNullOrWhiteSpace(dir))
+                {
+                    dir = Path.GetTempPath();
+                }
 
                 return this.GetFullPath(dir);
             }
@@ -187,7 +203,7 @@ namespace MarcelJoachimKloubert.FileBox.Server
 
         #endregion Properties (11)
 
-        #region Methods (23)
+        #region Methods (24)
 
         private static object AssemblyToJson(Assembly asm)
         {
@@ -709,6 +725,29 @@ namespace MarcelJoachimKloubert.FileBox.Server
             this.TryDeleteFile(path: file.FullName);
         }
 
+        private static DateTimeOffset? TryParseTime(string str)
+        {
+            DateTimeOffset? result = null;
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(str) == false)
+                {
+                    DateTimeOffset temp;
+                    if (DateTimeOffset.TryParseExact(str.Trim(), LONG_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, out temp))
+                    {
+                        result = temp;
+                    }
+                }
+            }
+            catch
+            {
+                result = null;
+            }
+
+            return result;
+        }
+
         private static object TypeToJson(Type type)
         {
             if (type == null)
@@ -723,6 +762,6 @@ namespace MarcelJoachimKloubert.FileBox.Server
                 };
         }
 
-        #endregion Methods (23)
+        #endregion Methods (24)
     }
 }

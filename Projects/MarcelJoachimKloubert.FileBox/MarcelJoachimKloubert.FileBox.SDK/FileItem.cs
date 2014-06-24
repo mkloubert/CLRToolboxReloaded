@@ -4,11 +4,11 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Security;
+using System.Security.Cryptography;
 using System.Xml.Linq;
 using LocationEnum = MarcelJoachimKloubert.FileBox.Location;
-using System.Linq;
-using System.Security.Cryptography;
 
 namespace MarcelJoachimKloubert.FileBox
 {
@@ -33,7 +33,7 @@ namespace MarcelJoachimKloubert.FileBox
         #endregion Constructors (1)
 
         #region Properties (11)
-        
+
         /// <summary>
         /// Gets the creation date.
         /// </summary>
@@ -60,7 +60,7 @@ namespace MarcelJoachimKloubert.FileBox
             get;
             internal set;
         }
-        
+
         /// <summary>
         /// Gets the ID of the file.
         /// </summary>
@@ -78,7 +78,7 @@ namespace MarcelJoachimKloubert.FileBox
             get;
             internal set;
         }
-        
+
         /// <summary>
         /// Gets the last write time.
         /// </summary>
@@ -133,7 +133,7 @@ namespace MarcelJoachimKloubert.FileBox
             internal set;
         }
 
-        #endregion Properties (6)
+        #endregion Properties (11)
 
         #region Methods (1)
 
@@ -169,7 +169,6 @@ namespace MarcelJoachimKloubert.FileBox
                     throw new NotSupportedException();
             }
 
-            
             byte[] pwd;
             byte[] salt;
             var xml = XDocument.Parse(ToUnsecureString(this.CryptedMetaXml)).Root;
@@ -179,6 +178,7 @@ namespace MarcelJoachimKloubert.FileBox
                 salt = Convert.FromBase64String(xml.Elements("salt").Single().Value.Trim());
 
                 var request = this.Server.CreateWebRequest(path);
+                request.Method = "GET";
 
                 request.Headers["X-FileBox-File"] = this.RealName;
 

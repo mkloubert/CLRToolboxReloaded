@@ -45,7 +45,7 @@
     <Compile Include="Execution\Jobs\DeleteFileJob.cs" />
     <Compile Include="Execution\Jobs\SendJob.cs" />
     <Compile Include="Execution\Jobs\SendJobBase.cs" />
-    <Compile Include="FileBox.ServerInfo.cs">
+    <Compile Include="FileBoxHost.ServerInfo.cs">
       <DependentUpon>FileBoxHost.cs</DependentUpon>
     </Compile>
     <Compile Include="FileBoxHost.cs" />
@@ -64,7 +64,7 @@
     <Compile Include="FileBoxHost.SendFile.cs">
       <DependentUpon>FileBoxHost.cs</DependentUpon>
     </Compile>
-    <Compile Include="FileHost.UpdateKey.cs">
+    <Compile Include="FileBoxHost.UpdateKey.cs">
       <DependentUpon>FileBoxHost.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalConstants.cs" />

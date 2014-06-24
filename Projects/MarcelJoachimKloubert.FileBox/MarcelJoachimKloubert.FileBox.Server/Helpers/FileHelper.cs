@@ -11,7 +11,18 @@ namespace MarcelJoachimKloubert.FileBox.Server.Helpers
 {
     internal static class FileHelper
     {
-        #region Methods (1)
+        #region Methods (4)
+
+        internal static FileInfo CreateTempFile(string tempDir)
+        {
+            return CreateTempFile(dir: new DirectoryInfo(tempDir));
+        }
+
+        internal static FileInfo CreateTempFile(string tempDir, Random rand)
+        {
+            return CreateTempFile(dir: new DirectoryInfo(tempDir),
+                                  rand: rand);
+        }
 
         internal static FileInfo CreateTempFile(DirectoryInfo dir)
         {
@@ -36,6 +47,6 @@ namespace MarcelJoachimKloubert.FileBox.Server.Helpers
             return result;
         }
 
-        #endregion Methods (1)
+        #endregion Methods (4)
     }
 }

@@ -23,6 +23,15 @@ namespace MarcelJoachimKloubert.FileBox
     /// </summary>
     public sealed class FileBoxConnection : FileBoxObjectBase
     {
+        #region Fields (1)
+
+        /// <summary>
+        /// .NET format for a long time string.
+        /// </summary>
+        public const string LONG_TIME_FORMAT = "u";
+
+        #endregion Fields (1)
+
         #region Constructors (2)
 
         /// <summary>
@@ -104,7 +113,7 @@ namespace MarcelJoachimKloubert.FileBox
 
         #endregion Properties (6)
 
-        #region Methods (16)
+        #region Methods (18)
 
         /// <summary>
         /// Creates a basic and setupped HTTP web request client.
@@ -232,8 +241,8 @@ namespace MarcelJoachimKloubert.FileBox
                                             using (var decryptedMetaStream = new MemoryStream())
                                             {
                                                 var cryptoMetaStream = new CryptoStream(cryptedMetaStream,
-                                                                                        CreateRijndael(pwd: metaPwdAndSalt.Take(48).ToArray(),
-                                                                                                       salt: metaPwdAndSalt.Skip(48).ToArray()).CreateDecryptor(),
+                                                                                        CreateRijndael(pwd: metaPwdAndSalt.Skip(7).Take(48).ToArray(),
+                                                                                                       salt: metaPwdAndSalt.Skip(7 + 48).Take(16).ToArray()).CreateDecryptor(),
                                                                                         CryptoStreamMode.Read);
 
                                                 cryptoMetaStream.CopyTo(decryptedMetaStream);
@@ -248,13 +257,13 @@ namespace MarcelJoachimKloubert.FileBox
                                                                               CultureInfo.InvariantCulture);
 
                                                     newItem.CreationDate = DateTimeOffset.ParseExact(xml.Elements("creationTime").Single().Value.Trim(),
-                                                                                                     "u",
+                                                                                                     LONG_TIME_FORMAT,
                                                                                                      CultureInfo.InvariantCulture).ToLocalTime();
                                                     newItem.LastWriteTime = DateTimeOffset.ParseExact(xml.Elements("lastWriteTime").Single().Value.Trim(),
-                                                                                                      "u",
+                                                                                                      LONG_TIME_FORMAT,
                                                                                                       CultureInfo.InvariantCulture).ToLocalTime();
                                                     newItem.SendTime = DateTimeOffset.ParseExact(xml.Elements("date").Single().Value.Trim(),
-                                                                                                 "u",
+                                                                                                 LONG_TIME_FORMAT,
                                                                                                  CultureInfo.InvariantCulture).ToLocalTime();
 
                                                     newItem.CryptedMetaXml = new SecureString();
@@ -500,6 +509,18 @@ namespace MarcelJoachimKloubert.FileBox
             return result;
         }
 
+        private static void InvokeSafe(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch
+            {
+
+            }
+        }
+
         /// <summary>
         /// Sets the value of <see cref="FileBoxConnection.Password" /> via a string.
         /// </summary>
@@ -564,12 +585,14 @@ namespace MarcelJoachimKloubert.FileBox
                 var request = this.CreateWebRequest("send-file");
                 request.Method = "PUT";
 
+                TrySetHeaderValue(request.Headers, "X-FileBox-CreationTime", () => file.CreationTime.ToString(LONG_TIME_FORMAT));
                 request.Headers["X-FileBox-Filename"] = file.Name.Trim();
+                TrySetHeaderValue(request.Headers, "X-FileBox-LastWriteTime", () => file.LastWriteTime.ToString(LONG_TIME_FORMAT));
                 request.Headers["X-FileBox-To"] = string.Join(";", recipients.Where(r => string.IsNullOrWhiteSpace(r) == false)
                                                                              .Select(r => r.ToLower().Trim())
                                                                              .Distinct());
                 request.ContentType = "application/octet-stream";
-                request.ContentLength = file.Length;
+                InvokeSafe(() => request.ContentLength = file.Length);
 
                 using (var stream = file.OpenRead())
                 {
@@ -600,6 +623,18 @@ namespace MarcelJoachimKloubert.FileBox
             catch (Exception ex)
             {
                 throw new FileBoxException(innerException: ex);
+            }
+        }
+
+        private static void TrySetHeaderValue(WebHeaderCollection coll, string name, Func<string> valueProvider)
+        {
+            try
+            {
+                coll[name] = valueProvider();
+            }
+            catch
+            {
+                // ignore
             }
         }
 
@@ -670,6 +705,6 @@ namespace MarcelJoachimKloubert.FileBox
             }
         }
 
-        #endregion Methods (16)
+        #endregion Methods (17)
     }
 }
