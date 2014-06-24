@@ -19,7 +19,7 @@ namespace MarcelJoachimKloubert.FileBox.Server
 
         private void UpdateKey(HttpRequestEventArgs e)
         {
-            if (e.Request.TryGetKnownMethod() != HttpMethod.POST)
+            if (e.Request.TryGetKnownMethod() != HttpMethod.PUT)
             {
                 e.Response.StatusCode = HttpStatusCode.MethodNotAllowed;
                 return;

@@ -628,25 +628,46 @@ namespace MarcelJoachimKloubert.FileBox
                 throw new ArgumentNullException("enc");
             }
 
-            var rsa = new RSACryptoServiceProvider();
-            rsa.FromXmlString(xml);
-
-            var request = this.CreateWebRequest("update-key");
-            request.Method = "POST";
-
-            request.ContentType = "text/xml; charset=" + enc.WebName;
-            using (var stream = request.GetRequestStream())
+            try
             {
+                var rsa = new RSACryptoServiceProvider();
+                rsa.FromXmlString(xml);
+
+                var request = this.CreateWebRequest("update-key");
+                request.Method = "PUT";
+
                 var blob = enc.GetBytes(rsa.ToXmlString(includePrivateParameters: false));
 
-                stream.Write(blob, 0, blob.Length);
+                request.ContentType = "text/xml; charset=" + enc.WebName;
+                request.ContentLength = blob.Length;
 
-                stream.Flush();
-                stream.Close();
+                using (var stream = request.GetRequestStream())
+                {
+                    stream.Write(blob, 0, blob.Length);
+
+                    stream.Flush();
+                    stream.Close();
+                }
+
+                var json = this.GetJsonObject(request.GetResponse());
+                switch (json.code)
+                {
+                    case 0:
+                        // OK
+                        break;
+
+                    default:
+                        throw new FileBoxException(result: json);
+                }
             }
-
-            var response = request.GetResponse();
-            response.Close();
+            catch (FileBoxException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new FileBoxException(innerException: ex);
+            }
         }
 
         #endregion Methods (16)
