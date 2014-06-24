@@ -2,6 +2,10 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+#if !(NET40)
+#define KNOWS_ASYNC_PATTERN
+#endif
+
 using System;
 using System.IO;
 using System.Linq;
@@ -84,10 +88,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
         #region Methods (13)
 
         /// <summary>
-        ///
+        /// Is used to add prefix entries to a <see cref="HttpListener" /> based on the current data of that object.
         /// </summary>
-        /// <param name="listener"></param>
-        /// <param name="useHttps"></param>
+        /// <param name="listener">The listener where the prefixes should be added to.</param>
+        /// <param name="useHttps">User secure HTTP (https) or not.</param>
         protected virtual void AddPrefixes(HttpListener listener, bool useHttps)
         {
             listener.Prefixes.Add(string.Format("http{0}://+:{1}/",
@@ -357,6 +361,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 
                 HandleContext(ctx: listener.EndGetContext(ar));
             }
+            catch (Exception ex)
+            {
+                this.OnErrorsReceived(ex);
+            }
             finally
             {
                 if (listener != null)
@@ -434,7 +442,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 }
 
                 newListener.Start();
-                StartListening(newListener, true);
+                this.StartListening(newListener, true);
 
                 this._listener = newListener;
             }
@@ -453,12 +461,36 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
             this.DisposeOldListener();
         }
 
+#if (KNOWS_ASYNC_PATTERN)
+        private async void StartListening(HttpListener listener, bool throwException)
+#else
         private void StartListening(HttpListener listener, bool throwException)
+#endif
         {
             if (listener == null)
             {
                 return;
             }
+
+#if (KNOWS_ASYNC_PATTERN)
+
+            while (this.IsRunning)
+            {
+                try
+                {
+                    var ctx = await listener.GetContextAsync();
+
+                    HandleContext(ctx: ctx);
+                }
+                catch (global::System.Exception ex)
+                {
+                    this.OnErrorsReceived(ex);
+
+                    DisposeListener(listener: listener);
+                }
+            }
+
+#else
 
             try
             {
@@ -472,6 +504,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                     throw;
                 }
             }
+
+#endif
         }
 
         private static void SendResponse(HttpListenerContext ctx, HttpRequest req, HttpResponse resp)
