@@ -45,6 +45,9 @@
     <Compile Include="Execution\Jobs\DeleteFileJob.cs" />
     <Compile Include="Execution\Jobs\SendJob.cs" />
     <Compile Include="Execution\Jobs\SendJobBase.cs" />
+    <Compile Include="FileBox.ServerInfo.cs">
+      <DependentUpon>FileBoxHost.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileBoxHost.cs" />
     <Compile Include="FileBoxHost.ListOutbox.cs">
       <DependentUpon>FileBoxHost.cs</DependentUpon>

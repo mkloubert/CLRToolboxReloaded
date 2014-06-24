@@ -295,6 +295,10 @@ namespace MarcelJoachimKloubert.FileBox.Server
                         actionToInvoke = this.SendFile;
                         break;
 
+                    case "server-info":
+                        actionToInvoke = this.ServerInfo;
+                        break;
+
                     case "update-key":
                         actionToInvoke = this.UpdateKey;
                         break;
