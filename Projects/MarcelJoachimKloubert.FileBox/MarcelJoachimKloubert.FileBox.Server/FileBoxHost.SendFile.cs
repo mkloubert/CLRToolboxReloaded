@@ -26,7 +26,7 @@ namespace MarcelJoachimKloubert.FileBox.Server
 
         private void SendFile(HttpRequestEventArgs e)
         {
-            if (e.Request.TryGetKnownMethod() != HttpMethod.POST)
+            if (e.Request.TryGetKnownMethod() != HttpMethod.PUT)
             {
                 e.Response.StatusCode = HttpStatusCode.MethodNotAllowed;
                 return;
@@ -120,6 +120,7 @@ namespace MarcelJoachimKloubert.FileBox.Server
                                                                    CryptoHelper.CreateRijndael(pwd: pwd,
                                                                                                salt: salt).CreateEncryptor(),
                                                                    CryptoStreamMode.Write);
+
                                 stream.CopyTo(cryptStream);
 
                                 cryptStream.Flush();

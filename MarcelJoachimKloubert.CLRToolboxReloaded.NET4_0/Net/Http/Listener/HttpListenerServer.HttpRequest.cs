@@ -4,6 +4,7 @@
 
 using MarcelJoachimKloubert.CLRToolbox.Collections.Generic;
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
+using MarcelJoachimKloubert.CLRToolbox.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,9 +20,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
     {
         #region Nested classes (1)
 
-        private sealed class HttpRequest : HttpRequestBase
+        private sealed class HttpRequest : HttpRequestBase, IDisposable
         {
-            #region Fields (9)
+            #region Fields (11)
 
             private readonly HttpListenerContext _CONTEXT;
             private readonly IReadOnlyDictionary<string, string> _GET_VARS;
@@ -30,19 +31,24 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
             private readonly IReadOnlyDictionary<string, string> _REQUEST_VARS;
             private readonly IReadOnlyDictionary<string, string> _POST_VARS;
             private readonly ITcpAddress _REMOTE_ADDR;
+            private readonly HttpListenerServer _SERVER;
+            private readonly Stream _STREAM;
             private readonly DateTimeOffset _TIME;
             private readonly IPrincipal _USER;
 
-            #endregion Fields (8)
+            #endregion Fields (11)
 
-            #region Constrcutors (1)
+            #region Constrcutors (2)
 
-            internal HttpRequest(HttpListenerContext ctx,
+            internal HttpRequest(HttpListenerServer server,
+                                 HttpListenerContext ctx,
                                  IPrincipal user)
             {
                 this._TIME = AppTime.Now;
 
                 this._CONTEXT = ctx;
+                this._SERVER = server;
+                this._STREAM = server.CreateRequestStream(ctx);
                 this._USER = user;
 
                 // remote address
@@ -97,7 +103,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                     {
                         using (var temp = new MemoryStream())
                         {
-                            ctx.Request.InputStream.CopyTo(temp);
+                            this._STREAM.CopyTo(temp);
 
                             temp.Position = 0;
                             using (var reader = new StreamReader(temp, Encoding.ASCII))
@@ -199,9 +205,19 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 {
                     this._HEADERS = new ReadOnlyDictionaryWrapper<string, string>(dict: headers);
                 }
+
+                if (this._STREAM.CanSeek)
+                {
+                    this._STREAM.Position = 0;
+                }
             }
 
-            #endregion Constrcutors (1)
+            ~HttpRequest()
+            {
+                this.Dispose(false);
+            }
+
+            #endregion Constrcutors (2)
 
             #region Properties (10)
 
@@ -257,11 +273,35 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 
             #endregion Properties (10)
 
-            #region Methods (2)
+            #region Methods (3)
+
+            public void Dispose()
+            {
+                this.Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            private void Dispose(bool disposing)
+            {
+                try
+                {
+                    this._SERVER
+                        .CloseRequestStream(this._CONTEXT,
+                                            this._STREAM);
+                }
+                catch
+                {
+                    if (disposing)
+                    {
+                        throw;
+                    }
+                }
+            }
 
             protected override Stream OnGetBody()
             {
-                return this._CONTEXT.Request.InputStream;
+                return new NonDisposableStream(baseStream: this._STREAM,
+                                               callBehaviour: NonDisposableStream.CallBehaviour.Nothing);
             }
 
             private static void SetVar(IDictionary<string, string> vars, string key, string value)
@@ -274,7 +314,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 vars[key ?? string.Empty] = value;
             }
 
-            #endregion Methods (2)
+            #endregion Methods (3)
         }
 
         #endregion Nested classes (1)

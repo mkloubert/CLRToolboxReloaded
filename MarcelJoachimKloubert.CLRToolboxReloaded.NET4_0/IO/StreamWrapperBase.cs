@@ -172,7 +172,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
 
 
         /// <inheriteddoc />
-        protected override sealed void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             this.InvokeDispose(disposing);
         }

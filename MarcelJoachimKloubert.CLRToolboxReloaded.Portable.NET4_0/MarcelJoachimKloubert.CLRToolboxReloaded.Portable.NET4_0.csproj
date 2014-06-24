@@ -475,6 +475,13 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\io\EventStream.cs">
       <Link>IO\EventStream.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\NonDisposableStream.CallBehaviour.cs">
+      <Link>IO\NonDisposableStream.CallBehaviour.cs</Link>
+      <DependentUpon>NonDisposableStream.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\NonDisposableStream.cs">
+      <Link>IO\NonDisposableStream.cs</Link>
+    </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\io\StreamWrapperBase.cs">
       <Link>IO\StreamWrapperBase.cs</Link>
     </Compile>

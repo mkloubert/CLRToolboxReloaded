@@ -6,6 +6,7 @@ using MarcelJoachimKloubert.CLRToolbox.Net.Http;
 using MarcelJoachimKloubert.FileBox.Server.Json;
 using MarcelJoachimKloubert.FileBox.Server.Security;
 using System;
+using System.Net;
 
 namespace MarcelJoachimKloubert.FileBox.Server
 {
@@ -15,6 +16,12 @@ namespace MarcelJoachimKloubert.FileBox.Server
 
         private void ServerInfo(HttpRequestEventArgs e)
         {
+            if (e.Request.TryGetKnownMethod() != HttpMethod.GET)
+            {
+                e.Response.StatusCode = HttpStatusCode.MethodNotAllowed;
+                return;
+            }
+
             var result = new JsonResult();
 
             try
@@ -29,10 +36,10 @@ namespace MarcelJoachimKloubert.FileBox.Server
                     name = Environment.MachineName,
 
                     user = new
-                    {
-                        key = rsa != null ? rsa.ToXmlString(includePrivateParameters: false) : null,
-                        name = user.Identity.Name,
-                    },
+                        {
+                            key = rsa != null ? rsa.ToXmlString(includePrivateParameters: false) : null,
+                            name = user.Identity.Name,
+                        },
                 };
             }
             catch (Exception ex)

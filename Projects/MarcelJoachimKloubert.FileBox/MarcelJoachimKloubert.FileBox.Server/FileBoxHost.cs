@@ -7,9 +7,9 @@ using MarcelJoachimKloubert.CLRToolbox.Configuration;
 using MarcelJoachimKloubert.CLRToolbox.Execution.Jobs;
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using MarcelJoachimKloubert.CLRToolbox.Net.Http;
-using MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener;
 using MarcelJoachimKloubert.FileBox.Server.Execution.Jobs;
 using MarcelJoachimKloubert.FileBox.Server.Json;
+using MarcelJoachimKloubert.FileBox.Server.Net.Http;
 using MarcelJoachimKloubert.FileBox.Server.Security;
 using System;
 using System.Collections.Concurrent;
@@ -33,7 +33,7 @@ namespace MarcelJoachimKloubert.FileBox.Server
 
         private const string _CONFIG_CATEGORY_DIRS = "directories";
         private ConcurrentQueue<IJob> _jobs;
-        private HttpListenerServer _server;
+        private FileBoxHttpServer _server;
         private JobScheduler _scheduler;
 
         #endregion Fields (4)
@@ -68,7 +68,7 @@ namespace MarcelJoachimKloubert.FileBox.Server
 
         #endregion Events (1)
 
-        #region Properties (14)
+        #region Properties (11)
 
         /// <inheriteddoc />
         public bool CanRestart
@@ -119,6 +119,22 @@ namespace MarcelJoachimKloubert.FileBox.Server
         }
 
         /// <summary>
+        /// Gets the root of the temporary files.
+        /// </summary>
+        public string TempDirectory
+        {
+            get
+            {
+                string dir;
+                this.Config.TryGetValue<string>(category: _CONFIG_CATEGORY_DIRS, name: "temp",
+                                                value: out dir,
+                                                defaultVal: "./temp");
+
+                return this.GetFullPath(dir);
+            }
+        }
+
+        /// <summary>
         /// Gets the root of the user files.
         /// </summary>
         public string UserFileDirectory
@@ -149,15 +165,27 @@ namespace MarcelJoachimKloubert.FileBox.Server
             get
             {
                 string dir;
-                this.Config.TryGetValue<string>(category: _CONFIG_CATEGORY_DIRS, name: "workDir",
+                this.Config.TryGetValue<string>(category: _CONFIG_CATEGORY_DIRS, name: "work",
                                                 value: out dir,
                                                 defaultVal: null);
 
-                return Path.GetFullPath(string.IsNullOrWhiteSpace(dir) ? Environment.CurrentDirectory : dir);
+                if (string.IsNullOrWhiteSpace(dir))
+                {
+                    dir = Environment.CurrentDirectory;
+                }
+                else
+                {
+                    if (Path.IsPathRooted(dir) == false)
+                    {
+                        dir = Path.Combine(Environment.CurrentDirectory, dir);
+                    }
+                }
+
+                return Path.GetFullPath(dir);
             }
         }
 
-        #endregion Properties (14)
+        #endregion Properties (11)
 
         #region Methods (23)
 
@@ -607,7 +635,7 @@ namespace MarcelJoachimKloubert.FileBox.Server
                     newScheduler.Initialize();
                 }
 
-                var newServer = this._server = new HttpListenerServer();
+                var newServer = this._server = new FileBoxHttpServer(host: this);
                 newServer.PrincipalFinder = this.HttpListenerServer_PrincipalFinder;
                 newServer.CredentialValidator = this.HttpListenerServer_UsernamePasswordValidator;
                 newServer.Port = this.Port;

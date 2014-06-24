@@ -1,5 +1,7 @@
 ﻿{
     "directories":  {
-        "userFiles": "./files"
+        "temp": "./temp",
+        "userFiles": "./files",
+        "work":  "C:\\fileBox"
     }
 }

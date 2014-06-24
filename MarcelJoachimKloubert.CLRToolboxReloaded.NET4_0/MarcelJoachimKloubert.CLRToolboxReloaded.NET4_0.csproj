@@ -328,6 +328,10 @@
     <Compile Include="IInitializable.cs" />
     <Compile Include="IObject.cs" />
     <Compile Include="IO\EventStream.cs" />
+    <Compile Include="IO\NonDisposableStream.CallBehaviour.cs">
+      <DependentUpon>NonDisposableStream.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IO\NonDisposableStream.cs" />
     <Compile Include="IO\StreamWrapperBase.cs" />
     <Compile Include="IRunnable.cs" />
     <Compile Include="Net\Http\HttpMethod.cs" />

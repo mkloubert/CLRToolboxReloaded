@@ -562,13 +562,14 @@ namespace MarcelJoachimKloubert.FileBox
             try
             {
                 var request = this.CreateWebRequest("send-file");
-                request.Method = "POST";
+                request.Method = "PUT";
 
                 request.Headers["X-FileBox-Filename"] = file.Name.Trim();
                 request.Headers["X-FileBox-To"] = string.Join(";", recipients.Where(r => string.IsNullOrWhiteSpace(r) == false)
                                                                              .Select(r => r.ToLower().Trim())
                                                                              .Distinct());
                 request.ContentType = "application/octet-stream";
+                request.ContentLength = file.Length;
 
                 using (var stream = file.OpenRead())
                 {

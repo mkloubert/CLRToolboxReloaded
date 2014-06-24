@@ -64,7 +64,7 @@ namespace MarcelJoachimKloubert.FileBox
 
             Box(conn.GetInbox, ctx);
         }
-       
+
         private static void Invoke(Action action,
                                    ConsoleColor? foreColor = null, ConsoleColor? bgColor = null)
         {
@@ -313,6 +313,6 @@ namespace MarcelJoachimKloubert.FileBox
         {
         }
 
-        #endregion Methods (8)
+        #endregion Methods (9)
     }
 }

@@ -2,7 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-#if !(NET40)
+#if !(MONO40 || NET40)
 #define KNOWS_ASYNC_PATTERN
 #endif
 
@@ -85,7 +85,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 
         #endregion
 
-        #region Methods (13)
+        #region Methods (16)
 
         /// <summary>
         /// Is used to add prefix entries to a <see cref="HttpListener" /> based on the current data of that object.
@@ -134,10 +134,41 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 }
             }
 
-            req = new HttpRequest(ctx,
+            req = new HttpRequest(server: this,
+                                  ctx: ctx,
                                   user: user);
-            resp = new HttpResponse(ctx: ctx,
-                                    stream: this.CreateResponseStream(ctx));
+            resp = new HttpResponse(server: this,
+                                    ctx: ctx);
+        }
+
+        /// <summary>
+        /// Closes a request stream.
+        /// </summary>
+        /// <param name="ctx">The underlying HTTP context.</param>
+        /// <param name="stream">The stream to close.</param>
+        protected virtual void CloseRequestStream(HttpListenerContext ctx, Stream stream)
+        {
+            stream.Dispose();
+        }
+
+        /// <summary>
+        /// Closes a response stream.
+        /// </summary>
+        /// <param name="ctx">The underlying HTTP context.</param>
+        /// <param name="stream">The stream to close.</param>
+        protected virtual void CloseResponseStream(HttpListenerContext ctx, Stream stream)
+        {
+            stream.Dispose();
+        }
+
+        /// <summary>
+        /// Creates an stream for the body of a request context.
+        /// </summary>
+        /// <param name="ctx">The underlying HTTP context.</param>
+        /// <returns>The initial stream.</returns>
+        protected virtual Stream CreateRequestStream(HttpListenerContext ctx)
+        {
+            return new MemoryStream();
         }
 
         /// <summary>
@@ -230,123 +261,127 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
             this.CreateRequestAndResponse(ctx: ctx,
                                           req: out req, resp: out resp);
 
-            try
-            {
-                resp.StatusCode = HttpStatusCode.OK;
-                resp.StatusDescription = null;
-
-                var isRequestValid = true;
-
-                var reqValidator = this.RequestValidator;
-                if (reqValidator != null)
-                {
-                    isRequestValid = reqValidator(req);
-                }
-
-                if (isRequestValid)
-                {
-                    var isAuthroized = true;
-
-                    var credValidator = this.CredentialValidator;
-                    if (credValidator != null)
-                    {
-                        string username = null;
-                        string password = null;
-                        try
-                        {
-                            ExtractUsernameAndPassword(req: ctx.Request,
-                                                       username: out username, password: out password);
-
-                            isAuthroized = credValidator(username, password);
-                        }
-                        finally
-                        {
-                            username = null;
-                            password = null;
-                        }
-                    }
-
-                    if (isAuthroized)
-                    {
-                        if (this.OnHandleRequest(req, resp) == false)
-                        {
-                            // 501 - NotImplemented
-
-                            resp.StatusCode = HttpStatusCode.NotImplemented;
-                            resp.StatusDescription = null;
-
-                            this.OnHandleNotImplemented(req, resp);
-                        }
-                    }
-                    else
-                    {
-                        // 401 - Unauthorized
-
-                        resp.StatusCode = HttpStatusCode.Unauthorized;
-                        resp.StatusDescription = null;
-
-                        if (credValidator != null)
-                        {
-                            /*
-                            ctx.Response.Headers[HttpResponseHeader.WwwAuthenticate] =
-                                string.Format("Basic realm=\"{0}\"",
-                                              this.RealmName);*/
-                        }
-
-                        this.OnHandleUnauthorized(req, resp);
-                    }
-
-                    if (resp.IsForbidden == false)
-                    {
-                        if (resp.DocumentNotFound)
-                        {
-                            // 404 - NotFound
-
-                            resp.StatusCode = HttpStatusCode.NotFound;
-                            resp.StatusDescription = null;
-
-                            this.OnHandleDocumentNotFound(req, resp);
-                        }
-                    }
-                    else
-                    {
-                        // 403 - Forbidden
-
-                        resp.StatusCode = HttpStatusCode.Forbidden;
-                        resp.StatusDescription = null;
-
-                        this.OnHandleForbidden(req, resp);
-                    }
-                }
-                else
-                {
-                    // 400 - BadRequest
-
-                    resp.StatusCode = HttpStatusCode.BadRequest;
-                    resp.StatusDescription = null;
-
-                    this.OnHandleBadRequest(req, resp);
-                }
-            }
-            catch (Exception ex)
-            {
-                // 500 - InternalServerError
-
-                resp.StatusCode = HttpStatusCode.InternalServerError;
-                resp.StatusDescription = (ex.GetBaseException() ?? ex).Message;
-
-                this.OnHandleError(req, resp, ex);
-            }
-            finally
+            using (req)
+            using (resp)
             {
                 try
                 {
-                    SendResponse(ctx: ctx,
-                                 req: req, resp: resp);
+                    resp.StatusCode = HttpStatusCode.OK;
+                    resp.StatusDescription = null;
+
+                    var isRequestValid = true;
+
+                    var reqValidator = this.RequestValidator;
+                    if (reqValidator != null)
+                    {
+                        isRequestValid = reqValidator(req);
+                    }
+
+                    if (isRequestValid)
+                    {
+                        var isAuthroized = true;
+
+                        var credValidator = this.CredentialValidator;
+                        if (credValidator != null)
+                        {
+                            string username = null;
+                            string password = null;
+                            try
+                            {
+                                ExtractUsernameAndPassword(req: ctx.Request,
+                                                            username: out username, password: out password);
+
+                                isAuthroized = credValidator(username, password);
+                            }
+                            finally
+                            {
+                                username = null;
+                                password = null;
+                            }
+                        }
+
+                        if (isAuthroized)
+                        {
+                            if (this.OnHandleRequest(req, resp) == false)
+                            {
+                                // 501 - NotImplemented
+
+                                resp.StatusCode = HttpStatusCode.NotImplemented;
+                                resp.StatusDescription = null;
+
+                                this.OnHandleNotImplemented(req, resp);
+                            }
+                        }
+                        else
+                        {
+                            // 401 - Unauthorized
+
+                            resp.StatusCode = HttpStatusCode.Unauthorized;
+                            resp.StatusDescription = null;
+
+                            if (credValidator != null)
+                            {
+                                /* TODO
+                                ctx.Response.Headers[HttpResponseHeader.WwwAuthenticate] =
+                                    string.Format("Basic realm=\"{0}\"",
+                                                    this.RealmName);*/
+                            }
+
+                            this.OnHandleUnauthorized(req, resp);
+                        }
+
+                        if (resp.IsForbidden == false)
+                        {
+                            if (resp.DocumentNotFound)
+                            {
+                                // 404 - NotFound
+
+                                resp.StatusCode = HttpStatusCode.NotFound;
+                                resp.StatusDescription = null;
+
+                                this.OnHandleDocumentNotFound(req, resp);
+                            }
+                        }
+                        else
+                        {
+                            // 403 - Forbidden
+
+                            resp.StatusCode = HttpStatusCode.Forbidden;
+                            resp.StatusDescription = null;
+
+                            this.OnHandleForbidden(req, resp);
+                        }
+                    }
+                    else
+                    {
+                        // 400 - BadRequest
+
+                        resp.StatusCode = HttpStatusCode.BadRequest;
+                        resp.StatusDescription = null;
+
+                        this.OnHandleBadRequest(req, resp);
+                    }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // ignore here
+                    // 500 - InternalServerError
+
+                    resp.StatusCode = HttpStatusCode.InternalServerError;
+                    resp.StatusDescription = (ex.GetBaseException() ?? ex).Message;
+
+                    this.OnHandleError(req, resp, ex);
+                }
+                finally
+                {
+                    try
+                    {
+                        SendResponse(ctx: ctx,
+                                        req: req, resp: resp);
+                    }
+                    catch
+                    {
+                        // ignore here
+                    }
                 }
             }
         }
