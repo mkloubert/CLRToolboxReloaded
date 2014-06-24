@@ -9,6 +9,7 @@ using MarcelJoachimKloubert.CLRToolbox.ServiceLocation;
 using MarcelJoachimKloubert.CLRToolbox.Web;
 using MarcelJoachimKloubert.FileBox.Server.Execution.Jobs;
 using MarcelJoachimKloubert.FileBox.Server.Extensions;
+using MarcelJoachimKloubert.FileBox.Server.Helpers;
 using MarcelJoachimKloubert.FileBox.Server.IO;
 using MarcelJoachimKloubert.FileBox.Server.Json;
 using MarcelJoachimKloubert.FileBox.Server.Security;
@@ -102,7 +103,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                             rand.NextBytes(fBlob);
 
                             tempFile = new FileInfo(Path.Combine(dirs.Temp,
-                                                                    fBlob.AsHexString() + ".tmp"));
+                                                                 fBlob.AsHexString() + GlobalConstants.FileExtensions.TEMP_FILE));
                         }
                         while (tempFile.Exists);
 
@@ -147,12 +148,12 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 
                             // crypt data
                             using (var tempStream = new FileStream(tempFile.FullName,
-                                                                    FileMode.CreateNew, FileAccess.ReadWrite))
+                                                                   FileMode.CreateNew, FileAccess.ReadWrite))
                             {
                                 var cryptStream = new CryptoStream(tempStream,
-                                                                    CreateRijndael(pwd: pwd,
-                                                                                    salt: salt).CreateEncryptor(),
-                                                                    CryptoStreamMode.Write);
+                                                                   CryptoHelper.CreateRijndael(pwd: pwd,
+                                                                                               salt: salt).CreateEncryptor(),
+                                                                   CryptoStreamMode.Write);
                                 stream.CopyTo(cryptStream);
 
                                 cryptStream.Flush();
@@ -161,33 +162,23 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 
                             // file size
                             meta.Add(new XElement("size",
-                                                    fileSize));
+                                                  fileSize));
 
                             var queue = ServiceLocator.Current.GetInstance<IJobQueue>();
 
                             foreach (var r in recipients)
                             {
                                 queue.Enqueue(new SendJob(sync: syncRoot,
-                                                            tempFile: tempFile.FullName,
-                                                            pwd: pwd, salt: salt,
-                                                            sender: sender, recipient: r,
-                                                            meta: new XElement(meta)));
+                                                          tempFile: tempFile.FullName,
+                                                          pwd: pwd, salt: salt,
+                                                          sender: sender, recipient: r,
+                                                          meta: new XElement(meta)));
                             }
                         }
                         catch
                         {
                             // delete temp file before rethrow exception
-                            try
-                            {
-                                if (File.Exists(tempFile.FullName))
-                                {
-                                    File.Delete(tempFile.FullName);
-                                }
-                            }
-                            catch
-                            {
-                                // ignore here
-                            }
+                            FileHelper.TryDeleteFile(tempFile);
 
                             throw;
                         }

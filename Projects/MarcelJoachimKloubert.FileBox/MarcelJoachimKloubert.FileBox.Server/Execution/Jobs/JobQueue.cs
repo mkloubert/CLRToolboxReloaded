@@ -17,7 +17,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
 
         #endregion Fields (1)
 
-        #region Method (2)
+        #region Method (1)
 
         public void Enqueue(IJob job)
         {
@@ -29,6 +29,6 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
             this.JOBS.Enqueue(job);
         }
 
-        #endregion Method (2)
+        #endregion Method (1)
     }
 }

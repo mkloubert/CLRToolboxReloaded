@@ -10,9 +10,14 @@ namespace MarcelJoachimKloubert.FileBox.Server
 
         internal static class FileExtensions
         {
-            internal const string DATA_FILE = "bin";
-            internal const string META_FILE = "dat";
-            internal const string META_PASSWORD_FILE = "asc";
+            #region Fields (4)
+
+            internal const string DATA_FILE = ".bin";
+            internal const string META_FILE = ".dat";
+            internal const string META_PASSWORD_FILE = ".asc";
+            internal const string TEMP_FILE = ".tmp";
+
+            #endregion Fields (4)
         }
 
         #endregion Nested classes (1)

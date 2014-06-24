@@ -179,11 +179,11 @@ namespace MarcelJoachimKloubert.FileBox
                 switch (loc)
                 {
                     case Location.Inbox:
-                        path = "inbox";
+                        path = "list-inbox";
                         break;
 
                     case Location.Outbox:
-                        path = "outbox";
+                        path = "list-outbox";
                         break;
 
                     default:

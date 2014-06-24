@@ -59,30 +59,36 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Execution\Jobs\CopyToOutboxJob.cs" />
+    <Compile Include="Execution\Jobs\DeleteFileJob.cs" />
+    <Compile Include="Execution\Jobs\FileBoxJobScheduler.cs" />
     <Compile Include="Execution\Jobs\IJobQueue.cs" />
     <Compile Include="Execution\Jobs\JobQueue.cs" />
+    <Compile Include="Execution\Jobs\SendJob.cs" />
+    <Compile Include="Execution\Jobs\SendJobBase.cs" />
     <Compile Include="Extensions\FileBoxServerExtensionMethods.cs" />
     <Compile Include="Extensions\Json.cs" />
     <Compile Include="Extensions\Json.WriteJson.cs">
       <DependentUpon>Json.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalConstants.cs" />
     <Compile Include="Handlers\ReceiveInboxHttpHandler.cs" />
     <Compile Include="Handlers\ReceiveOutboxHttpHandler.cs" />
     <Compile Include="Handlers\ReceiveHttpHandlerBase.cs" />
-    <Compile Include="Handlers\BoxHttpHandlerBase.cs" />
-    <Compile Include="Handlers\OutboxHttpHandler.cs" />
-    <Compile Include="Handlers\SendHttpHandler.CopyToOutboxJob.cs">
-      <DependentUpon>SendHttpHandler.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Handlers\ListBoxHttpHandlerBase.cs" />
+    <Compile Include="Handlers\ListOutboxHttpHandler.cs" />
     <Compile Include="Handlers\SendHttpHandler.cs" />
-    <Compile Include="Handlers\SendHttpHandler.SendJob.cs">
-      <DependentUpon>SendHttpHandler.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\SendHttpHandler.SendJobBase.cs">
-      <DependentUpon>SendHttpHandler.cs</DependentUpon>
-    </Compile>
     <Compile Include="Handlers\ServerInfoHttpHandler.cs" />
     <Compile Include="Handlers\UpdateKeyHttpHandler.cs" />
+    <Compile Include="Helpers\CryptoHelper.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="IO\Directories.cs" />
     <Compile Include="IO\IDirectories.cs" />
     <Compile Include="Json\JsonParamResult.cs" />
@@ -93,7 +99,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handlers\FileBoxHttpHandlerBase.cs" />
-    <Compile Include="Handlers\InboxHttpHandler.cs" />
+    <Compile Include="Handlers\ListInboxHttpHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ServerIdentity.cs" />
     <Compile Include="Security\ServerPrincipal.cs" />
@@ -114,6 +120,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Default.aspx" />
     <Content Include="files\mkloubert\i\dummy.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -146,12 +153,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="config.sample.json" />
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

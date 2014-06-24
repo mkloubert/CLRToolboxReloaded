@@ -53,7 +53,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                 var boxDir = new DirectoryInfo(this.GetBoxPath(context));
                 if (boxDir.Exists)
                 {
-                    boxDir.GetFiles("*." + GlobalConstants.FileExtensions.META_FILE)
+                    boxDir.GetFiles("*" + GlobalConstants.FileExtensions.META_FILE)
                           .ForAll(throwExceptions: false,
                                   action: ctx =>
                                   {
@@ -66,14 +66,14 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
                                           return;
                                       }
 
-                                      var metaPwdFile = new FileInfo(Path.Combine(metaFile.DirectoryName, index.ToString() + "." + GlobalConstants.FileExtensions.META_PASSWORD_FILE));
+                                      var metaPwdFile = new FileInfo(Path.Combine(metaFile.DirectoryName, index.ToString() + GlobalConstants.FileExtensions.META_PASSWORD_FILE));
                                       if (metaPwdFile.Exists == false)
                                       {
                                           // no password file for meta data found
                                           return;
                                       }
 
-                                      var dataFile = new FileInfo(Path.Combine(metaFile.DirectoryName, index.ToString() + "." + GlobalConstants.FileExtensions.DATA_FILE));
+                                      var dataFile = new FileInfo(Path.Combine(metaFile.DirectoryName, index.ToString() + GlobalConstants.FileExtensions.DATA_FILE));
                                       if (dataFile.Exists == false)
                                       {
                                           // no data file found

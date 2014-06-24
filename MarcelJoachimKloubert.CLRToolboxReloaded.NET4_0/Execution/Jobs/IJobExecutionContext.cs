@@ -12,7 +12,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
     /// </summary>
     public interface IJobExecutionContext : IIdentifiable
     {
-        #region Properties (4)
+        #region Properties (5)
+
+        /// <summary>
+        /// Gets if the underlying scheduler wants to cancel the execution of the current job.
+        /// </summary>
+        bool IsCancelling { get; }
 
         /// <summary>
         /// Gets the underlying job.
@@ -23,6 +28,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
         /// Gets the dictionary that stores the parameters / values for the result.
         /// </summary>
         IDictionary<string, object> ResultVars { get; }
+
+        /// <summary>
+        /// Gets the current state.
+        /// </summary>
+        JobExecutionState State { get; }
 
         /// <summary>
         /// Gets the execution / start time.

@@ -45,7 +45,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
 
             #endregion
 
-            #region Properties (4)
+            #region Properties (6)
+            
+            /// <inheriteddoc />
+            public bool IsCancelling
+            {
+                get { return this.State == JobExecutionState.Cancelling; }
+            }
 
             /// <inheriteddoc />
             public IJob Job
@@ -69,6 +75,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
 
             /// <inheriteddoc />
             public DateTimeOffset Time
+            {
+                get;
+                set;
+            }
+
+            /// <inheriteddoc />
+            public JobExecutionState State
             {
                 get;
                 set;

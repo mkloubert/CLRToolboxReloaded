@@ -277,6 +277,9 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\execution\jobs\JobExecutionResultEventArgs.cs">
       <Link>Execution\Jobs\JobExecutionResultEventArgs.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Jobs\JobExecutionState.cs">
+      <Link>Execution\Jobs\JobExecutionState.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Workflows\AggregateWorkflow.cs">
       <Link>Execution\Workflows\AggregateWorkflow.cs</Link>
     </Compile>

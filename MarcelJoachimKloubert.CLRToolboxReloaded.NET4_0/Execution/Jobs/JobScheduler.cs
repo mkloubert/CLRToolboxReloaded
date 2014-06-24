@@ -177,20 +177,29 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
 
             DateTimeOffset completedAt;
             var execCtx = new JobExecutionContext();
+            execCtx.State = JobExecutionState.NotRunning;
             try
             {
                 execCtx.Job = job;
                 execCtx.ResultVars = new Dictionary<string, object>(EqualityComparerFactory.CreateCaseInsensitiveStringComparer(true, true));
-                execCtx.Time = ctx.State;
 
-                execCtx.Job
-                       .Execute(execCtx);
+                // execute
+                execCtx.State = JobExecutionState.Running;
+                {
+                    execCtx.Time = ctx.State;
+                    
+                    execCtx.Job
+                           .Execute(execCtx);
 
-                completedAt = AppTime.Now;
+                    completedAt = AppTime.Now;
+                }
+                execCtx.State = JobExecutionState.Finished;
             }
             catch (Exception ex)
             {
                 completedAt = AppTime.Now;
+
+                execCtx.State = JobExecutionState.Faulted;
 
                 AppendErrors(ex, occuredErrors, JobExceptionContext.Execute);
 
@@ -384,7 +393,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
         protected virtual void StartTimer()
         {
             this._timer = new Timer(this.Timer_Elapsed, null,
-                                    this.TimerInterval, TimeSpan.FromMilliseconds(-1));
+                                    (int)this.TimerInterval.TotalMilliseconds, Timeout.Infinite);
         }
 
         /// <summary>
@@ -423,23 +432,25 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
 
         private void Timer_Elapsed(object state)
         {
-            lock (this._SYNC)
+            try
             {
-                try
-                {
-                    var now = AppTime.Now;
+                var now = AppTime.Now;
 
-                    this.HandleJobs(now);
-                }
-                catch
+                this.HandleJobs(now);
+            }
+            catch (Exception ex)
+            {
+                this.OnErrorsReceived(ex);
+            }
+            finally
+            {
+                if (this.IsRunning)
                 {
+                    this.StartTimer();
                 }
-                finally
+                else
                 {
-                    if (this.IsRunning)
-                    {
-                        this.StartTimer();
-                    }
+
                 }
             }
         }

@@ -12,7 +12,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Security;
-using System.Security.Cryptography;
 using System.Security.Principal;
 
 namespace MarcelJoachimKloubert.FileBox.Server.Handlers
@@ -80,7 +79,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 
         #endregion Properties (1)
 
-        #region Methods (10)
+        #region Methods (9)
 
         /// <summary>
         /// Creates a JSON object from an assembly.
@@ -126,24 +125,6 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
             {
                 strPwd = null;
             }
-        }
-
-        /// <summary>
-        /// Creates a Rijndael crypter from a password and a salt.
-        /// </summary>
-        /// <param name="pwd">The password.</param>
-        /// <param name="salt">The salt.</param>
-        /// <returns>The Rijndael crypter.</returns>
-        protected static Rijndael CreateRijndael(byte[] pwd, byte[] salt)
-        {
-            var pdb = new Rfc2898DeriveBytes(pwd, salt,
-                                             1000);
-
-            var result = Rijndael.Create();
-            result.Key = pdb.GetBytes(32);
-            result.IV = pdb.GetBytes(16);
-
-            return result;
         }
 
         /// <inheriteddoc />
@@ -342,6 +323,6 @@ namespace MarcelJoachimKloubert.FileBox.Server.Handlers
             };
         }
 
-        #endregion Methods (10)
+        #endregion Methods (9)
     }
 }
