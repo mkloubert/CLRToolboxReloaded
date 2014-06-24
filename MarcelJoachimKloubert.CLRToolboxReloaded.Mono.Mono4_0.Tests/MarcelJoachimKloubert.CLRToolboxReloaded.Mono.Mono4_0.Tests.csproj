@@ -97,6 +97,9 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Tests\Text\DotLiquid.cs">
       <Link>Text\DotLiquid.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Tests\Net\HttpServer.cs">
+      <Link>Net\HttpServer.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -117,6 +120,7 @@
   <ItemGroup>
     <Folder Include="Text\" />
     <Folder Include="__Libs\" />
+    <Folder Include="Net\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\Newtonsoft.Json.dll">

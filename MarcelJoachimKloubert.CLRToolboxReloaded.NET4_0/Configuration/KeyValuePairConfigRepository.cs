@@ -25,7 +25,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         #region Constructors (2)
 
         /// <inheriteddoc />
-        protected KeyValuePairConfigRepository(object sync)
+        public KeyValuePairConfigRepository(object sync)
             : base(isSynchronized: true,
                    sync: sync)
         {
@@ -33,7 +33,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         }
 
         /// <inheriteddoc />
-        protected KeyValuePairConfigRepository()
+        public KeyValuePairConfigRepository()
             : this(sync: new object())
         {
         }

@@ -1,4 +1,4 @@
-﻿// LICENSE: GPL 3 - https://www.gnu.org/licenses/gpl-3.0.txt
+﻿// LICENSE: LGPL 3 - https://www.gnu.org/licenses/lgpl-3.0.txt
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
@@ -27,18 +27,18 @@ namespace MarcelJoachimKloubert.FileBox.Server.Security
         /// Gets the root directory of the user's inbox files.
         /// </summary>
         string Inbox { get; }
-        
+
         /// <summary>
         /// Gets the root directory of the user's outbox files.
         /// </summary>
         string Outbox { get; }
-        
+
         /// <summary>
         /// Gets the root directory of the user's temp files.
         /// </summary>
         string Temp { get; }
 
-        #endregion Properties
+        #endregion Properties (5)
 
         #region Methods (1)
 
@@ -50,6 +50,6 @@ namespace MarcelJoachimKloubert.FileBox.Server.Security
         /// </returns>
         RSACryptoServiceProvider TryGetRsaCrypter();
 
-        #endregion Methods
+        #endregion Methods (1)
     }
 }

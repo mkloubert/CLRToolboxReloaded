@@ -1,4 +1,4 @@
-﻿// LICENSE: GPL 3 - https://www.gnu.org/licenses/gpl-3.0.txt
+﻿// LICENSE: LGPL 3 - https://www.gnu.org/licenses/lgpl-3.0.txt
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
@@ -13,8 +13,9 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
 {
     internal abstract class SendJobBase : JobBase
     {
-        #region Fields (6)
+        #region Fields (7)
 
+        protected FileBoxHost _host;
         protected XElement _meta;
         protected byte[] _pwd;
         protected string _recipient;
@@ -22,11 +23,12 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
         protected IServerPrincipal _sender;
         protected FileInfo _tempFile;
 
-        #endregion Fields (6)
+        #endregion Fields (7)
 
         #region Constructors (2)
 
         protected internal SendJobBase(Guid id,
+                                       FileBoxHost host,
                                        object sync,
                                        string tempFile,
                                        byte[] pwd, byte[] salt,
@@ -35,6 +37,8 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
             : base(id: id,
                    isSynchronized: true, sync: sync)
         {
+            this._host = host;
+
             this._tempFile = new FileInfo(Path.GetFullPath(tempFile));
 
             this._pwd = pwd;
@@ -48,6 +52,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
 
         ~SendJobBase()
         {
+            this._host = null;
             this._meta = null;
             this._pwd = null;
             this._recipient = null;
@@ -58,7 +63,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
 
         #endregion Constructors (2)
 
-        #region Methods (3)
+        #region Methods (4)
 
         protected internal static Encoding CreateXmlEncoder()
         {
@@ -99,6 +104,12 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
             while (true);
         }
 
-        #endregion Methods (3)
+        protected internal void TryDeleteFile(FileInfo file)
+        {
+            this._host
+                .TryDeleteFile(file: file);
+        }
+
+        #endregion Methods (4)
     }
 }

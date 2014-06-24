@@ -1,10 +1,9 @@
-﻿// LICENSE: GPL 3 - https://www.gnu.org/licenses/gpl-3.0.txt
+﻿// LICENSE: LGPL 3 - https://www.gnu.org/licenses/lgpl-3.0.txt
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using MarcelJoachimKloubert.CLRToolbox;
 using MarcelJoachimKloubert.CLRToolbox.Execution.Jobs;
-using MarcelJoachimKloubert.CLRToolbox.ServiceLocation;
 using MarcelJoachimKloubert.FileBox.Server.Helpers;
 using MarcelJoachimKloubert.FileBox.Server.Security;
 using System;
@@ -19,12 +18,14 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
     {
         #region Constructors (1)
 
-        internal SendJob(object sync,
+        internal SendJob(FileBoxHost host,
+                         object sync,
                          string tempFile,
                          byte[] pwd, byte[] salt,
                          IServerPrincipal sender, string recipient,
                          XElement meta)
             : base(id: new Guid("{11AC2E44-0122-4BBB-A883-CF6BD8678C7D}"),
+                   host: host,
                    sync: sync,
                    tempFile: tempFile,
                    pwd: pwd, salt: salt,
@@ -39,14 +40,15 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
 
         protected override void OnError(IJobExecutionContext ctx, Exception ex)
         {
-            FileHelper.TryDeleteFile(this._tempFile);
+            this.TryDeleteFile(this._tempFile);
         }
 
         protected override void OnExecute(IJobExecutionContext ctx)
         {
             var rand = new CryptoRandom();
 
-            IServerPrincipal recipient = ServerPrincipal.FromUsername(this._recipient);
+            IServerPrincipal recipient = ServerPrincipal.FromUsername(this._host,
+                                                                      this._recipient);
 
             var targetDir = new DirectoryInfo(recipient.Inbox);
             if (targetDir.Exists)
@@ -143,22 +145,22 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
 
                             // write to outbox of sender
                             {
-                                var queue = ServiceLocator.Current.GetInstance<IJobQueue>();
-
-                                queue.Enqueue(new CopyToOutboxJob(sync: this._SYNC,
-                                                                  tempFile: this._tempFile.FullName,
-                                                                  pwd: this._pwd, salt: this._salt,
-                                                                  sender: this._sender, recipient: this._recipient,
-                                                                  meta: new XElement(this._meta)));
+                                this._host
+                                    .EnqueueJob(new CopyToOutboxJob(sync: this._SYNC,
+                                                                    host: this._host,
+                                                                    tempFile: this._tempFile.FullName,
+                                                                    pwd: this._pwd, salt: this._salt,
+                                                                    sender: this._sender, recipient: this._recipient,
+                                                                    meta: new XElement(this._meta)));
                             }
                         }
                         catch
                         {
                             // delete files before rethrow exception
 
-                            FileHelper.TryDeleteFile(targetDataFile);
-                            FileHelper.TryDeleteFile(targetMetaFile);
-                            FileHelper.TryDeleteFile(targetMetaPwdFile);
+                            this.TryDeleteFile(targetDataFile);
+                            this.TryDeleteFile(targetMetaFile);
+                            this.TryDeleteFile(targetMetaPwdFile);
 
                             throw;
                         }

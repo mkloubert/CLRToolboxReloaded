@@ -56,6 +56,7 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -329,6 +330,29 @@
     <Compile Include="IO\EventStream.cs" />
     <Compile Include="IO\StreamWrapperBase.cs" />
     <Compile Include="IRunnable.cs" />
+    <Compile Include="Net\Http\HttpMethod.cs" />
+    <Compile Include="Net\Http\HttpRequestBase.cs" />
+    <Compile Include="Net\Http\HttpRequestContext.cs" />
+    <Compile Include="Net\Http\HttpRequestErrorEventArgs.cs" />
+    <Compile Include="Net\Http\HttpRequestEventArgs.cs" />
+    <Compile Include="Net\Http\HttpResponseBase.cs" />
+    <Compile Include="Net\Http\HttpServerBase.cs" />
+    <Compile Include="Net\Http\HttpServerBase.StartStopContext.cs" />
+    <Compile Include="Net\Http\HttpTransferMode.cs" />
+    <Compile Include="Net\Http\IHttpRequest.cs" />
+    <Compile Include="Net\Http\IHttpRequestContext.cs" />
+    <Compile Include="Net\Http\IHttpResponse.cs" />
+    <Compile Include="Net\Http\IHttpServer.cs" />
+    <Compile Include="Net\Http\Listener\HttpListenerServer.cs" />
+    <Compile Include="Net\Http\Listener\HttpListenerServer.DummyIdentity.cs" />
+    <Compile Include="Net\Http\Listener\HttpListenerServer.HttpResponse.cs">
+      <DependentUpon>HttpListenerServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Net\Http\Listener\HttpListenerServer.HttpRequest.cs">
+      <DependentUpon>HttpListenerServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Net\ITcpAddress.cs" />
+    <Compile Include="Net\TcpAddress.cs" />
     <Compile Include="ObjectBase.cs" />
     <Compile Include="Objects\ObjectFactory.cs" />
     <Compile Include="Objects\ProxyBuilder.cs" />
@@ -351,6 +375,7 @@
     <Compile Include="Scripting\ScriptExecutorBase.ScriptExecutionContext.cs">
       <DependentUpon>ScriptExecutorBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Security\UsernamePasswordValidator.cs" />
     <Compile Include="Serialization\CommonSerializer.cs" />
     <Compile Include="ServiceLocation\DelegateServiceLocator.Classes.cs">
       <DependentUpon>DelegateServiceLocator.cs</DependentUpon>

@@ -63,6 +63,7 @@
     <Compile Include="Extensions\CompressionExtensions.cs" />
     <Compile Include="Extensions\Serialization.cs" />
     <Compile Include="Extensions\ValuesAndObjects.cs" />
+    <Compile Include="Net\HttpServer.cs" />
     <Compile Include="Objects\ObjectProxyTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

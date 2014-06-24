@@ -481,6 +481,51 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IRunnable.cs">
       <Link>IRunnable.cs</Link>
     </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\net\http\HttpMethod.cs">
+      <Link>Net\Http\HttpMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\net\http\HttpRequestBase.cs">
+      <Link>Net\Http\HttpRequestBase.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\net\http\HttpRequestContext.cs">
+      <Link>Net\Http\HttpRequestContext.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\net\http\HttpRequestErrorEventArgs.cs">
+      <Link>Net\Http\HttpRequestErrorEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\net\http\HttpRequestEventArgs.cs">
+      <Link>Net\Http\HttpRequestEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\net\http\HttpResponseBase.cs">
+      <Link>Net\Http\HttpResponseBase.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\net\http\HttpServerBase.cs">
+      <Link>Net\Http\HttpServerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\net\http\HttpServerBase.StartStopContext.cs">
+      <Link>Net\Http\HttpServerBase.StartStopContext.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\net\http\HttpTransferMode.cs">
+      <Link>Net\Http\HttpTransferMode.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\net\http\IHttpRequest.cs">
+      <Link>Net\Http\IHttpRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\net\http\IHttpRequestContext.cs">
+      <Link>Net\Http\IHttpRequestContext.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\net\http\IHttpResponse.cs">
+      <Link>Net\Http\IHttpResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\net\http\IHttpServer.cs">
+      <Link>Net\Http\IHttpServer.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\net\ITcpAddress.cs">
+      <Link>Net\ITcpAddress.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\TcpAddress.cs">
+      <Link>Net\TcpAddress.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ObjectBase.cs">
       <Link>ObjectBase.cs</Link>
     </Compile>
@@ -495,6 +540,9 @@
     </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\scripting\IScriptExecutor.cs">
       <Link>Scripting\IScriptExecutor.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\security\UsernamePasswordValidator.cs">
+      <Link>Security\UsernamePasswordValidator.cs</Link>
     </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\serialization\CommonSerializer.cs">
       <Link>Serialization\CommonSerializer.cs</Link>

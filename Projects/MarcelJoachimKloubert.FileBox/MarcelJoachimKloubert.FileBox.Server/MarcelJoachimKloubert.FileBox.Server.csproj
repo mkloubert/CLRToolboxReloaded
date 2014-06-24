@@ -4,115 +4,80 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>
-    </ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E7EA2AB5-71F2-4525-8A6F-49ACDEEE5941}</ProjectGuid>
-    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{F796B5FE-5DC5-4D3C-A564-FBCEBA5E0E68}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MarcelJoachimKloubert.FileBox.Server</RootNamespace>
     <AssemblyName>MarcelJoachimKloubert.FileBox.Server</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>44302</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
-    <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Services" />
-    <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Execution\Jobs\CopyToOutboxJob.cs" />
     <Compile Include="Execution\Jobs\DeleteFileJob.cs" />
-    <Compile Include="Execution\Jobs\FileBoxJobScheduler.cs" />
-    <Compile Include="Execution\Jobs\IJobQueue.cs" />
-    <Compile Include="Execution\Jobs\JobQueue.cs" />
     <Compile Include="Execution\Jobs\SendJob.cs" />
     <Compile Include="Execution\Jobs\SendJobBase.cs" />
-    <Compile Include="Extensions\FileBoxServerExtensionMethods.cs" />
-    <Compile Include="Extensions\Json.cs" />
-    <Compile Include="Extensions\Json.WriteJson.cs">
-      <DependentUpon>Json.cs</DependentUpon>
+    <Compile Include="FileBoxHost.cs" />
+    <Compile Include="FileBoxHost.ListOutbox.cs">
+      <DependentUpon>FileBoxHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileBoxHost.ListInbox.cs">
+      <DependentUpon>FileBoxHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileBoxHost.ReceiveOutboxFile.cs">
+      <DependentUpon>FileBoxHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileBoxHost.ReceiveInboxFile.cs">
+      <DependentUpon>FileBoxHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileBoxHost.SendFile.cs">
+      <DependentUpon>FileBoxHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileHost.UpdateKey.cs">
+      <DependentUpon>FileBoxHost.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalConstants.cs" />
-    <Compile Include="Handlers\ReceiveInboxHttpHandler.cs" />
-    <Compile Include="Handlers\ReceiveOutboxHttpHandler.cs" />
-    <Compile Include="Handlers\ReceiveHttpHandlerBase.cs" />
-    <Compile Include="Handlers\ListBoxHttpHandlerBase.cs" />
-    <Compile Include="Handlers\ListOutboxHttpHandler.cs" />
-    <Compile Include="Handlers\SendHttpHandler.cs" />
-    <Compile Include="Handlers\ServerInfoHttpHandler.cs" />
-    <Compile Include="Handlers\UpdateKeyHttpHandler.cs" />
     <Compile Include="Helpers\CryptoHelper.cs" />
-    <Compile Include="Helpers\FileHelper.cs" />
-    <Compile Include="IO\Directories.cs" />
-    <Compile Include="IO\IDirectories.cs" />
-    <Compile Include="Json\JsonParamResult.cs" />
     <Compile Include="Json\JsonResult.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\IServerIdentity.cs" />
     <Compile Include="Security\IServerPrincipal.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\FileBoxHttpHandlerBase.cs" />
-    <Compile Include="Handlers\ListInboxHttpHandler.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ServerIdentity.cs" />
     <Compile Include="Security\ServerPrincipal.cs" />
-    <Compile Include="__IDummyObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs.csproj">
       <Project>{a34446fc-8852-4a48-be16-bf9337825aae}</Project>
       <Name>MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Web\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Web.csproj">
-      <Project>{aa28e758-21cc-47f8-a011-87ae340ed2fe}</Project>
-      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.csproj">
       <Project>{bc43d1a1-d8b5-4632-9150-f945af5390c7}</Project>
@@ -120,66 +85,46 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Default.aspx" />
-    <Content Include="files\mkloubert\i\dummy.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\mkloubert\o\dummy.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\mkloubert\t\dummy.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\tm\i\dummy.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\tm\o\dummy.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\tm\t\dummy.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Global.asax" />
+    <EmbeddedResource Include="LICENSE" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="LICENSE" />
+    <None Include="config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="config.sample.json" />
+    <None Include="files\mkloubert\i\dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="files\mkloubert\o\dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="files\mkloubert\t\dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="files\tm\i\dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="files\tm\o\dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="files\tm\t\dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="temp\dummy.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="web.config" />
-    <None Include="config.json">
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="files\mkloubert\key.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="config.sample.json" />
+    <None Include="files\tm\key.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <ItemGroup />
-  <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-  </PropertyGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
-        <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>57945</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:57937/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-        </WebProjectProperties>
-      </FlavorProperties>
-    </VisualStudio>
-  </ProjectExtensions>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

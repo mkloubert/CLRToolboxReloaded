@@ -23,13 +23,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRTo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.FileBox.Client", "MarcelJoachimKloubert.FileBox.Client\MarcelJoachimKloubert.FileBox.Client.csproj", "{2CEEDBED-9CBE-4A9A-9049-781B37CF4541}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.FileBox.Server", "MarcelJoachimKloubert.FileBox.Server\MarcelJoachimKloubert.FileBox.Server.csproj", "{E7EA2AB5-71F2-4525-8A6F-49ACDEEE5941}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.FileBox.SDK", "MarcelJoachimKloubert.FileBox.SDK\MarcelJoachimKloubert.FileBox.SDK.csproj", "{2798CB5B-E29F-4D0E-BE4A-BCE8590CFC4C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{3B5FD80D-C74D-4D68-8F5D-A31BF857AA4E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.FileBox", "MarcelJoachimKloubert.FileBox\MarcelJoachimKloubert.FileBox.csproj", "{5961B67E-E7B6-43C3-97E7-BB92BEDDDEB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.FileBox.Server", "MarcelJoachimKloubert.FileBox.Server\MarcelJoachimKloubert.FileBox.Server.csproj", "{F796B5FE-5DC5-4D3C-A564-FBCEBA5E0E68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,10 +65,6 @@ Global
 		{2CEEDBED-9CBE-4A9A-9049-781B37CF4541}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CEEDBED-9CBE-4A9A-9049-781B37CF4541}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CEEDBED-9CBE-4A9A-9049-781B37CF4541}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E7EA2AB5-71F2-4525-8A6F-49ACDEEE5941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E7EA2AB5-71F2-4525-8A6F-49ACDEEE5941}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E7EA2AB5-71F2-4525-8A6F-49ACDEEE5941}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7EA2AB5-71F2-4525-8A6F-49ACDEEE5941}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2798CB5B-E29F-4D0E-BE4A-BCE8590CFC4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2798CB5B-E29F-4D0E-BE4A-BCE8590CFC4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2798CB5B-E29F-4D0E-BE4A-BCE8590CFC4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,6 +73,10 @@ Global
 		{5961B67E-E7B6-43C3-97E7-BB92BEDDDEB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5961B67E-E7B6-43C3-97E7-BB92BEDDDEB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5961B67E-E7B6-43C3-97E7-BB92BEDDDEB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F796B5FE-5DC5-4D3C-A564-FBCEBA5E0E68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F796B5FE-5DC5-4D3C-A564-FBCEBA5E0E68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F796B5FE-5DC5-4D3C-A564-FBCEBA5E0E68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F796B5FE-5DC5-4D3C-A564-FBCEBA5E0E68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

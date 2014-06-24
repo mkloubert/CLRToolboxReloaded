@@ -1,10 +1,8 @@
-﻿// LICENSE: GPL 3 - https://www.gnu.org/licenses/gpl-3.0.txt
+﻿// LICENSE: LGPL 3 - https://www.gnu.org/licenses/lgpl-3.0.txt
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using MarcelJoachimKloubert.CLRToolbox;
-using MarcelJoachimKloubert.CLRToolbox.ServiceLocation;
-using MarcelJoachimKloubert.FileBox.Server.IO;
 using System;
 using System.IO;
 using System.Security.Cryptography;
@@ -44,7 +42,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Security
             get;
             set;
         }
-        
+
         public string Outbox
         {
             get { return Path.GetFullPath(Path.Combine(this.Files, "o")); }
@@ -55,15 +53,14 @@ namespace MarcelJoachimKloubert.FileBox.Server.Security
             get { return Path.GetFullPath(Path.Combine(this.Files, "t")); }
         }
 
-        #endregion Properties (5)
+        #endregion Properties (7)
 
         #region Methods (3)
 
-        internal static ServerPrincipal FromUsername(string username)
+        internal static ServerPrincipal FromUsername(FileBoxHost host, string username)
         {
-            var dirs = ServiceLocator.Current.GetInstance<IDirectories>();
-
-            var dir = new DirectoryInfo(Path.Combine(dirs.Files, username.ToLower().Trim()));
+            var dir = new DirectoryInfo(Path.Combine(host.UserFileDirectory,
+                                                     username.ToLower().Trim()));
 
             Guid id;
             using (var md5 = new MD5CryptoServiceProvider())
@@ -76,11 +73,11 @@ namespace MarcelJoachimKloubert.FileBox.Server.Security
                     Files = Path.GetFullPath(dir.FullName),
 
                     Identity = new ServerIdentity(id: id)
-                    {
-                        AuthenticationType = "HttpBasicAuth",
-                        IsAuthenticated = true,
-                        Name = username.ToLower().Trim(),
-                    },
+                        {
+                            AuthenticationType = "HttpBasicAuth",
+                            IsAuthenticated = true,
+                            Name = username.ToLower().Trim(),
+                        },
 
                     IsInRolePredicate = (role) => false,
                 };
@@ -113,6 +110,6 @@ namespace MarcelJoachimKloubert.FileBox.Server.Security
             return result;
         }
 
-        #endregion Methods (2)
+        #endregion Methods (3)
     }
 }

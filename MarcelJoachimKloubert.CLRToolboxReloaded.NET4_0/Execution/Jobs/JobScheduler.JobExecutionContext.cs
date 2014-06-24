@@ -45,12 +45,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
 
             #endregion
 
-            #region Properties (6)
+            #region Properties (7)
             
             /// <inheriteddoc />
             public bool IsCancelling
             {
-                get { return this.State == JobExecutionState.Cancelling; }
+                get { return this.IsCancellingPredicate(this); }
+            }
+
+            /// <summary>
+            /// Gets or sets the predicate that provides the value for <see cref="JobExecutionContext.IsCancelling" />.
+            /// </summary>
+            public Func<JobExecutionContext, bool> IsCancellingPredicate
+            {
+                get;
+                set;
             }
 
             /// <inheriteddoc />

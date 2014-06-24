@@ -55,6 +55,7 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -594,6 +595,62 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IRunnable.cs">
       <Link>IRunnable.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\HttpMethod.cs">
+      <Link>Net\Http\HttpMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\HttpRequestBase.cs">
+      <Link>Net\Http\HttpRequestBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\HttpRequestContext.cs">
+      <Link>Net\Http\HttpRequestContext.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\HttpRequestErrorEventArgs.cs">
+      <Link>Net\Http\HttpRequestErrorEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\HttpRequestEventArgs.cs">
+      <Link>Net\Http\HttpRequestEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\HttpResponseBase.cs">
+      <Link>Net\Http\HttpResponseBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\HttpServerBase.cs">
+      <Link>Net\Http\HttpServerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\HttpServerBase.StartStopContext.cs">
+      <Link>Net\Http\HttpServerBase.StartStopContext.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\HttpTransferMode.cs">
+      <Link>Net\Http\HttpTransferMode.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\IHttpRequest.cs">
+      <Link>Net\Http\IHttpRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\IHttpRequestContext.cs">
+      <Link>Net\Http\IHttpRequestContext.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\IHttpResponse.cs">
+      <Link>Net\Http\IHttpResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\IHttpServer.cs">
+      <Link>Net\Http\IHttpServer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\Listener\HttpListenerServer.cs">
+      <Link>Net\Http\Listener\HttpListenerServer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\Listener\HttpListenerServer.HttpRequest.cs">
+      <Link>Net\Http\Listener\HttpListenerServer.HttpRequest.cs</Link>
+      <DependentUpon>HttpListenerServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\Http\Listener\HttpListenerServer.HttpResponse.cs">
+      <Link>Net\Http\Listener\HttpListenerServer.HttpResponse.cs</Link>
+      <DependentUpon>HttpListenerServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\ITcpAddress.cs">
+      <Link>Net\ITcpAddress.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Net\TcpAddress.cs">
+      <Link>Net\TcpAddress.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ObjectBase.cs">
       <Link>ObjectBase.cs</Link>
     </Compile>
@@ -636,6 +693,9 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Scripting\ScriptExecutorBase.ScriptExecutionContext.cs">
       <Link>Scripting\ScriptExecutorBase.ScriptExecutionContext.cs</Link>
       <DependentUpon>ScriptExecutorBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\UsernamePasswordValidator.cs">
+      <Link>Security\UsernamePasswordValidator.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\CommonSerializer.cs">
       <Link>Serialization\CommonSerializer.cs</Link>

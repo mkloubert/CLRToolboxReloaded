@@ -172,28 +172,61 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
         /// <param name="ctx">The underlying item context.</param>
         protected virtual void HandleJobItem(IForAllItemContext<IJob, DateTimeOffset> ctx)
         {
+            var isCancelling = this.IsRunning == false;
+
             var job = ctx.Item;
             var occuredErrors = new List<JobException>();
 
             DateTimeOffset completedAt;
             var execCtx = new JobExecutionContext();
             execCtx.State = JobExecutionState.NotRunning;
+
             try
             {
                 execCtx.Job = job;
                 execCtx.ResultVars = new Dictionary<string, object>(EqualityComparerFactory.CreateCaseInsensitiveStringComparer(true, true));
 
                 // execute
-                execCtx.State = JobExecutionState.Running;
+                execCtx.Time = ctx.State;
+
+                execCtx.IsCancellingPredicate = (c) =>
+                    {
+                        if ((isCancelling == false) &&
+                            (this.IsRunning == false))
+                        {
+                            isCancelling = true;
+                        }
+
+                        if (isCancelling)
+                        {
+                            switch (c.State)
+                            {
+                                case JobExecutionState.NotRunning:
+                                case JobExecutionState.Running:
+                                    c.State = JobExecutionState.Cancelling;
+                                    break;
+                            }
+                        }
+
+                        return c.State == JobExecutionState.Cancelling;
+                    };
+
+                if (this.IsRunning)
                 {
-                    execCtx.Time = ctx.State;
-                    
+                    execCtx.State = JobExecutionState.Running;
+
                     execCtx.Job
                            .Execute(execCtx);
 
-                    completedAt = AppTime.Now;
+                    execCtx.State = isCancelling ? JobExecutionState.Canceled
+                                                 : JobExecutionState.Finished;
                 }
-                execCtx.State = JobExecutionState.Finished;
+                else
+                {
+                    execCtx.State = JobExecutionState.Canceled;
+                }
+
+                completedAt = AppTime.Now;
             }
             catch (Exception ex)
             {
@@ -432,25 +465,24 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
 
         private void Timer_Elapsed(object state)
         {
-            try
+            lock (this._SYNC)
             {
-                var now = AppTime.Now;
-
-                this.HandleJobs(now);
-            }
-            catch (Exception ex)
-            {
-                this.OnErrorsReceived(ex);
-            }
-            finally
-            {
-                if (this.IsRunning)
+                try
                 {
-                    this.StartTimer();
+                    var now = AppTime.Now;
+
+                    this.HandleJobs(now);
                 }
-                else
+                catch (Exception ex)
                 {
-
+                    this.OnErrorsReceived(ex);
+                }
+                finally
+                {
+                    if (this.IsRunning)
+                    {
+                        this.StartTimer();
+                    }
                 }
             }
         }

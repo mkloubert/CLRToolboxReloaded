@@ -1,4 +1,4 @@
-﻿// LICENSE: GPL 3 - https://www.gnu.org/licenses/gpl-3.0.txt
+﻿// LICENSE: LGPL 3 - https://www.gnu.org/licenses/lgpl-3.0.txt
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
@@ -61,27 +61,27 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
                     }
 
                     Action<int> writeBlock = (sizeOfBlock) =>
+                    {
+                        if (sizeOfBlock < 1)
                         {
-                            if (sizeOfBlock < 1)
-                            {
-                                return;
-                            }
+                            return;
+                        }
 
-                            byte[] buffer;
+                        byte[] buffer;
 
-                            if (i != 1)
-                            {
-                                buffer = new byte[sizeOfBlock];
-                                rand.NextBytes(buffer);
-                            }
-                            else
-                            {
-                                buffer = Enumerable.Repeat((byte)0, sizeOfBlock)
-                                                   .ToArray();
-                            }
+                        if (i != 1)
+                        {
+                            buffer = new byte[sizeOfBlock];
+                            rand.NextBytes(buffer);
+                        }
+                        else
+                        {
+                            buffer = Enumerable.Repeat((byte)0, sizeOfBlock)
+                                               .ToArray();
+                        }
 
-                            stream.Write(buffer, 0, buffer.Length);
-                        };
+                        stream.Write(buffer, 0, buffer.Length);
+                    };
 
                     stream.Position = 0;
 
