@@ -30,7 +30,7 @@ namespace MarcelJoachimKloubert.FileBox.Server
     /// </summary>
     public sealed partial class FileBoxHost : DisposableObjectBase, IRunnable, IInitializable
     {
-        #region Fields (5)
+        #region Fields (6)
 
         private const string _CONFIG_CATEGORY_DIRS = "directories";
         private ConcurrentQueue<IJob> _jobs;
@@ -47,7 +47,7 @@ namespace MarcelJoachimKloubert.FileBox.Server
         /// </summary>
         public const string GUID_FORMAT = "N";
 
-        #endregion Fields (5)
+        #endregion Fields (6)
 
         #region Constructors (2)
 
@@ -203,7 +203,7 @@ namespace MarcelJoachimKloubert.FileBox.Server
 
         #endregion Properties (11)
 
-        #region Methods (24)
+        #region Methods (25)
 
         private static object AssemblyToJson(Assembly asm)
         {
@@ -241,15 +241,21 @@ namespace MarcelJoachimKloubert.FileBox.Server
                 {
                     if (srv != null)
                     {
+                        srv.RequestValidator = (r) => false;
+                        srv.CredentialValidator = (u, p) => false;
+                        srv.PrincipalFinder = (i) => null;
+
+                        srv.Stop();
+
                         srv.HandleRequest -= this.HttpListenerServer_HandleRequest;
                     }
 
                     this._server = null;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // ignore here
+                this.OnErrorsReceived(ex);
             }
         }
 
@@ -382,6 +388,11 @@ namespace MarcelJoachimKloubert.FileBox.Server
             return null;
         }
 
+        private bool HttpListenerServer_RequestValidator(IHttpRequest request)
+        {
+            return true;
+        }
+
         private bool HttpListenerServer_UsernamePasswordValidator(string username, string password)
         {
             var id = new ServerIdentity()
@@ -465,15 +476,15 @@ namespace MarcelJoachimKloubert.FileBox.Server
                                           }
 
                                           ctx.State.FileList.Add(new
-                                          {
-                                              name = index.ToString(),
-
-                                              meta = new
                                               {
-                                                  dat = Convert.ToBase64String(File.ReadAllBytes(metaFile.FullName)),
-                                                  sec = Convert.ToBase64String(File.ReadAllBytes(metaPwdFile.FullName)),
-                                              },
-                                          });
+                                                  name = index.ToString(),
+
+                                                  meta = new
+                                                      {
+                                                          dat = Convert.ToBase64String(File.ReadAllBytes(metaFile.FullName)),
+                                                          sec = Convert.ToBase64String(File.ReadAllBytes(metaPwdFile.FullName)),
+                                                      },
+                                              });
                                       },
                                   actionState: new
                                       {
@@ -654,6 +665,7 @@ namespace MarcelJoachimKloubert.FileBox.Server
                 var newServer = this._server = new FileBoxHttpServer(host: this);
                 newServer.PrincipalFinder = this.HttpListenerServer_PrincipalFinder;
                 newServer.CredentialValidator = this.HttpListenerServer_UsernamePasswordValidator;
+                newServer.RequestValidator = this.HttpListenerServer_RequestValidator;
                 newServer.Port = this.Port;
                 newServer.UseSecureHttp = this.UseSecureConnections;
                 newServer.HandleRequest += this.HttpListenerServer_HandleRequest;
@@ -762,6 +774,6 @@ namespace MarcelJoachimKloubert.FileBox.Server
                 };
         }
 
-        #endregion Methods (24)
+        #endregion Methods (25)
     }
 }

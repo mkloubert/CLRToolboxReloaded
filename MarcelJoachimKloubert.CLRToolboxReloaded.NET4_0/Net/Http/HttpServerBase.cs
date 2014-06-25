@@ -43,7 +43,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
 
         #endregion Constructors
 
-        #region Properties (11)
+        #region Properties (13)
 
         /// <inheriteddoc />
         public virtual bool CanRestart
@@ -120,10 +120,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
 
         #endregion Properties
 
-        #region Delegates and Events (7)
-        
+        #region Delegates and Events (8)
+
         /// <inheriteddoc />
         public event EventHandler<HttpRequestEventArgs> HandleBadRequest;
+
+        /// <inheriteddoc />
+        public event EventHandler<HttpRequestEventArgs> HandleClientError;
 
         /// <inheriteddoc />
         public event EventHandler<HttpRequestEventArgs> HandleDocumentNotFound;
@@ -139,13 +142,16 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
 
         /// <inheriteddoc />
         public event EventHandler<HttpRequestEventArgs> HandleRequest;
-        
+
+        /// <inheriteddoc />
+        public event EventHandler<HttpRequestEventArgs> HandleServerError;
+
         /// <inheriteddoc />
         public event EventHandler<HttpRequestEventArgs> HandleUnauthorized;
 
         #endregion Delegates and Events
 
-        #region Methods (20)
+        #region Methods (22)
 
         /// <summary>
         /// The logic that disposes that server.
@@ -187,7 +193,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
 
             return e.Handled;
         }
-        
+
         /// <summary>
         /// Raises the <see cref="HttpServerBase.HandleBadRequest" /> event.
         /// </summary>
@@ -200,6 +206,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
         protected bool OnHandleBadRequest(IHttpRequest req, IHttpResponse resp)
         {
             return this.OnHandle(this.HandleBadRequest,
+                                 req, resp);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="HttpServerBase.HandleClientError" /> event.
+        /// </summary>
+        /// <param name="req">The request context.</param>
+        /// <param name="resp">The response context.</param>
+        /// <returns>Event handler was raised or not.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="req" /> and/or <paramref name="resp" /> are <see langword="null" />.
+        /// </exception>
+        protected bool OnHandleClientError(IHttpRequest req, IHttpResponse resp)
+        {
+            return this.OnHandle(this.HandleClientError,
                                  req, resp);
         }
 
@@ -272,7 +293,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
             return this.OnHandle(this.HandleForbidden,
                                  req, resp);
         }
-        
+
         /// <summary>
         /// Raises the <see cref="HttpServerBase.HandleNotImplemented" /> event.
         /// </summary>
@@ -302,7 +323,22 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
             return this.OnHandle(this.HandleRequest,
                                  req, resp);
         }
-        
+
+        /// <summary>
+        /// Raises the <see cref="HttpServerBase.HandleServerError" /> event.
+        /// </summary>
+        /// <param name="req">The request context.</param>
+        /// <param name="resp">The response context.</param>
+        /// <returns>Event handler was raised or not.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="req" /> and/or <paramref name="resp" /> are <see langword="null" />.
+        /// </exception>
+        protected bool OnHandleServerError(IHttpRequest req, IHttpResponse resp)
+        {
+            return this.OnHandle(this.HandleServerError,
+                                 req, resp);
+        }
+
         /// <summary>
         /// Raises the <see cref="HttpServerBase.HandleUnauthorized" /> event.
         /// </summary>

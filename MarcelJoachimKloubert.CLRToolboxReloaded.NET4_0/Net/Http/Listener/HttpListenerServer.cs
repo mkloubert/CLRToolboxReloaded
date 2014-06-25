@@ -6,6 +6,7 @@
 #define KNOWS_ASYNC_PATTERN
 #endif
 
+using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.IO;
 using System.Linq;
@@ -121,6 +122,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                         var id = new DummyIdentity()
                             {
                                 AuthenticationType = "HttpBasicAuth",
+                                IsAuthenticated = false,
                                 Name = username,
                             };
 
@@ -214,12 +216,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 {
                     if (data.ToLower().StartsWith("basic "))
                     {
-                        var base64EncodedData = data.Substring(data.IndexOf(" ")).Trim();
+                        var base64EncodedData = data.Substring(data.IndexOf(' ')).Trim();
                         var blobData = Convert.FromBase64String(base64EncodedData);
 
                         var strData = new UTF8Encoding().GetString(blobData);
 
-                        var semicolon = strData.IndexOf(":");
+                        var semicolon = strData.IndexOf(':');
                         if (semicolon > -1)
                         {
                             username = strData.Substring(0, semicolon).ToLower().Trim();
@@ -268,6 +270,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 {
                     resp.StatusCode = HttpStatusCode.OK;
                     resp.StatusDescription = null;
+                    resp.Compress = false;
 
                     var isRequestValid = true;
 
@@ -279,7 +282,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 
                     if (isRequestValid)
                     {
-                        var isAuthroized = true;
+                        var isAuthorized = true;
 
                         var credValidator = this.CredentialValidator;
                         if (credValidator != null)
@@ -289,9 +292,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                             try
                             {
                                 ExtractUsernameAndPassword(req: ctx.Request,
-                                                            username: out username, password: out password);
+                                                           username: out username, password: out password);
 
-                                isAuthroized = credValidator(username, password);
+                                isAuthorized = credValidator(username, password);
                             }
                             finally
                             {
@@ -300,12 +303,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                             }
                         }
 
-                        if (isAuthroized)
+                        if (isAuthorized)
                         {
                             if (this.OnHandleRequest(req, resp) == false)
                             {
                                 // 501 - NotImplemented
 
+                                resp.Compress = false;
                                 resp.StatusCode = HttpStatusCode.NotImplemented;
                                 resp.StatusDescription = null;
 
@@ -316,6 +320,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                         {
                             // 401 - Unauthorized
 
+                            resp.Compress = false;
                             resp.StatusCode = HttpStatusCode.Unauthorized;
                             resp.StatusDescription = null;
 
@@ -336,6 +341,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                             {
                                 // 404 - NotFound
 
+                                resp.Compress = false;
                                 resp.StatusCode = HttpStatusCode.NotFound;
                                 resp.StatusDescription = null;
 
@@ -346,6 +352,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                         {
                             // 403 - Forbidden
 
+                            resp.Compress = false;
                             resp.StatusCode = HttpStatusCode.Forbidden;
                             resp.StatusDescription = null;
 
@@ -356,6 +363,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                     {
                         // 400 - BadRequest
 
+                        resp.Compress = false;
                         resp.StatusCode = HttpStatusCode.BadRequest;
                         resp.StatusDescription = null;
 
@@ -366,6 +374,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 {
                     // 500 - InternalServerError
 
+                    resp.Compress = false;
                     resp.StatusCode = HttpStatusCode.InternalServerError;
                     resp.StatusDescription = (ex.GetBaseException() ?? ex).Message;
 
@@ -375,8 +384,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 {
                     try
                     {
+                        if (((int)resp.StatusCode >= 400) && ((int)resp.StatusCode < 500))
+                        {
+                            // client error
+
+                            this.OnHandleClientError(req, resp);
+                        }
+                        else if (((int)resp.StatusCode >= 500) && ((int)resp.StatusCode < 600))
+                        {
+                            // server error
+
+                            this.OnHandleServerError(req, resp);
+                        }
+
                         SendResponse(ctx: ctx,
-                                        req: req, resp: resp);
+                                     req: req, resp: resp);
                     }
                     catch
                     {
@@ -499,6 +521,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 #if (KNOWS_ASYNC_PATTERN)
         private async void StartListening(HttpListener listener, bool throwException)
 #else
+
         private void StartListening(HttpListener listener, bool throwException)
 #endif
         {
@@ -513,9 +536,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
             {
                 try
                 {
-                    var ctx = await listener.GetContextAsync();
+                    if (listener.IsListening)
+                    {
+                        var ctx = await listener.GetContextAsync();
 
-                    HandleContext(ctx: ctx);
+                        HandleContext(ctx: ctx);
+                    }
                 }
                 catch (global::System.Exception ex)
                 {
@@ -532,11 +558,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 listener.BeginGetContext(callback: this.HttpListener_BeginGetContext,
                                          state: listener);
             }
-            catch
+            catch (global::System.Exception ex)
             {
                 if (throwException)
                 {
                     throw;
+                }
+                else
+                {
+                    this.OnErrorsReceived(ex);
                 }
             }
 
@@ -549,10 +579,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
             try
             {
                 // headers
-                foreach (var item in resp.Headers)
-                {
-                    response.Headers[item.Key] = item.Value;
-                }
+                resp.Headers.ForAll(faCtx =>
+                    {
+                        faCtx.State
+                             .Response.Headers[faCtx.Item.Key] = faCtx.Item.Value;
+                    }, new
+                    {
+                        Response = resp,
+                    });
 
                 var outputStream = resp.Stream;
                 if (outputStream != null)

@@ -14,10 +14,128 @@ namespace MarcelJoachimKloubert.FileBox
 {
     internal static class Program
     {
-        #region Methods (9)
+        #region Methods (12)
 
-        private static void Box(Func<RSACryptoServiceProvider, int, int?, IEnumerable<FileItem>> func,
-                                ExecutionContext ctx)
+        private static void Help(ExecutionContext ctx)
+        {
+            Action<ExecutionContext> actionToInvoke = null;
+
+            if (ctx.Arguments.Count > 0)
+            {
+                var command = ctx.Arguments[0].ToLower().Trim();
+
+                switch (command)
+                {
+                    case "list":
+                        actionToInvoke = Help_List;
+                        break;
+
+                    case "send":
+                        actionToInvoke = Help_Send;
+                        break;
+                }
+            }
+
+            if (actionToInvoke != null)
+            {
+                actionToInvoke(ctx);
+            }
+            else
+            {
+                ShowShortHelp();
+            }
+        }
+
+        private static void Help_List(ExecutionContext ctx)
+        {
+            Console.WriteLine("Lists the files of a folder.");
+            Console.WriteLine();
+            Console.WriteLine("Usage:  filebox list [FOLDER]");
+            Console.WriteLine();
+
+            Console.WriteLine("The following values are available for [FOLDER]:");
+            Console.WriteLine();
+            Console.WriteLine("  inbox         List RECEIVED files.");
+            Console.WriteLine("  outbox        List SEND files.");
+            Console.WriteLine();
+            Console.WriteLine(@"Example:  filebox inbox --host=""fb.kremlin.ru"" --user=""ejsnowden""");
+        }
+
+        private static void Help_Send(ExecutionContext ctx)
+        {
+            Console.WriteLine("Sends one or more files to one or more recipients.");
+            Console.WriteLine();
+            Console.WriteLine("Usage:  filebox send --to=[RECIPIENTS] [FILE]*");
+            Console.WriteLine();
+            Console.WriteLine("  [FILE]        Paths to one or more files to send.");
+            Console.WriteLine();
+            Console.WriteLine("The following options are available:");
+            Console.WriteLine();
+            Console.WriteLine("  --to=[RECIPIENTS]        A ';' separated list of recipients.");
+            Console.WriteLine();
+            Console.WriteLine(@"Example:  filebox send --to=""ejsnowden@kremlin.ru;wwputin@kremlin.ru""");
+            Console.WriteLine(@"          ""C:\file1.pdf"" ""C:\file2.pdf""");
+            Console.WriteLine(@"          --host=""fb.kremlin.ru"" --user=""tm""");
+        }
+
+        private static void Invoke(Action action,
+                                   ConsoleColor? foreColor = null, ConsoleColor? bgColor = null)
+        {
+            Invoke<Action>(action: (a) => a(),
+                           actionState: action,
+                           foreColor: foreColor, bgColor: bgColor);
+        }
+
+        private static void Invoke<S>(Action<S> action, S actionState,
+                                      ConsoleColor? foreColor = null, ConsoleColor? bgColor = null)
+        {
+            var oldForeColor = Console.ForegroundColor;
+            var oldBgColor = Console.BackgroundColor;
+
+            try
+            {
+                if (foreColor.HasValue)
+                {
+                    Console.ForegroundColor = foreColor.Value;
+                }
+
+                if (bgColor.HasValue)
+                {
+                    Console.BackgroundColor = bgColor.Value;
+                }
+
+                action(actionState);
+            }
+            finally
+            {
+                Console.BackgroundColor = oldBgColor;
+                Console.ForegroundColor = oldForeColor;
+            }
+        }
+
+        private static void List(ExecutionContext ctx)
+        {
+            Action<ExecutionContext> actionToInvoke = Help_List;
+
+            if (ctx.Arguments.Count > 0)
+            {
+                switch (ctx.Arguments[0].ToLower())
+                {
+                    case "inbox":
+                        actionToInvoke = List_Inbox;
+                        break;
+
+                    case "outbox":
+                        actionToInvoke = List_Outbox;
+                        break;
+                }
+            }
+
+            actionToInvoke(ctx);
+        }
+
+        private static void List_Box(Func<RSACryptoServiceProvider, int, int?, IEnumerable<FileItem>> func,
+                                     ExecutionContext ctx)
         {
             var allFiles = func(ctx.RSA, 0, null);
 
@@ -59,92 +177,18 @@ namespace MarcelJoachimKloubert.FileBox
             }
         }
 
-        private static void Help(ExecutionContext ctx)
-        {
-            Action<ExecutionContext> actionToInvoke = null;
-
-            if (ctx.Arguments.Count > 0)
-            {
-                var command = ctx.Arguments[0].ToLower().Trim();
-
-                switch (command)
-                {
-                    case "inbox":
-                        actionToInvoke = Help_Inbox;
-                        break;
-
-                    case "outbox":
-                        actionToInvoke = Help_Outbox;
-                        break;
-
-                    case "send":
-                        actionToInvoke = Help_Send;
-                        break;
-                }
-            }
-
-            if (actionToInvoke != null)
-            {
-                actionToInvoke(ctx);
-            }
-            else
-            {
-                ShowShortHelp();
-            }
-        }
-
-        private static void Help_Inbox(ExecutionContext ctx)
-        {
-        }
-
-        private static void Help_Outbox(ExecutionContext ctx)
-        {
-        }
-
-        private static void Help_Send(ExecutionContext ctx)
-        {
-        }
-
-        private static void Inbox(ExecutionContext ctx)
+        private static void List_Inbox(ExecutionContext ctx)
         {
             var conn = ctx.CreateConnection();
 
-            Box(conn.GetInbox, ctx);
+            List_Box(conn.GetInbox, ctx);
         }
 
-        private static void Invoke(Action action,
-                                   ConsoleColor? foreColor = null, ConsoleColor? bgColor = null)
+        private static void List_Outbox(ExecutionContext ctx)
         {
-            Invoke<Action>(action: (a) => a(),
-                           actionState: action,
-                           foreColor: foreColor, bgColor: bgColor);
-        }
+            var conn = ctx.CreateConnection();
 
-        private static void Invoke<S>(Action<S> action, S actionState,
-                                      ConsoleColor? foreColor = null, ConsoleColor? bgColor = null)
-        {
-            var oldForeColor = Console.ForegroundColor;
-            var oldBgColor = Console.BackgroundColor;
-
-            try
-            {
-                if (foreColor.HasValue)
-                {
-                    Console.ForegroundColor = foreColor.Value;
-                }
-
-                if (bgColor.HasValue)
-                {
-                    Console.BackgroundColor = bgColor.Value;
-                }
-
-                action(actionState);
-            }
-            finally
-            {
-                Console.BackgroundColor = oldBgColor;
-                Console.ForegroundColor = oldForeColor;
-            }
+            List_Box(conn.GetOutbox, ctx);
         }
 
         private static int Main(string[] args)
@@ -170,14 +214,9 @@ namespace MarcelJoachimKloubert.FileBox
                             actionToInvoke = Help;
                             break;
 
-                        case "inbox":
+                        case "list":
                             actionArgs = actionArgs.Skip(1);
-                            actionToInvoke = Inbox;
-                            break;
-
-                        case "outbox":
-                            actionArgs = actionArgs.Skip(1);
-                            actionToInvoke = Outbox;
+                            actionToInvoke = List;
                             break;
 
                         case "send":
@@ -225,11 +264,6 @@ namespace MarcelJoachimKloubert.FileBox
                         else if (a.StartsWith("--port="))
                         {
                             ctx.Port = int.Parse(a.Substring(7).Trim());
-                        }
-                        else if ((a.ToLower().Trim() == "--help") ||
-                                 (a.ToLower().Trim() == "/?"))
-                        {
-                            actionToInvoke = ShowLongHelp;
                         }
                         else if (a.ToLower().Trim() == "--http")
                         {
@@ -280,20 +314,13 @@ namespace MarcelJoachimKloubert.FileBox
             return result;
         }
 
-        private static void Outbox(ExecutionContext ctx)
-        {
-            var conn = ctx.CreateConnection();
-
-            Box(conn.GetOutbox, ctx);
-        }
-
         private static void PrintHeader()
         {
             var asm = Assembly.GetExecutingAssembly();
             var asmName = asm.GetName();
 
             Console.WriteLine("FileBox  {0}, for .NET 4 and Mono", asmName.Version);
-            Console.WriteLine("Created by Marcel Joachim Kloubert");
+            Console.WriteLine("Created by Marcel Joachim Kloubert <marcel.kloubert@gmx.net>");
             Console.WriteLine();
         }
 
@@ -368,22 +395,36 @@ namespace MarcelJoachimKloubert.FileBox
             }
         }
 
-        private static void ShowLongHelp(ExecutionContext ctx)
-        {
-            ShowShortHelp();
-        }
-
         private static void ShowShortHelp()
         {
+            Console.WriteLine("Usage:  filebox [COMMAND] [OPTIONS]*");
             Console.WriteLine();
-            Console.WriteLine("Usage: filebox [COMMAND] [OPTIONS*]");
+
+            Console.WriteLine("The following commands are available:");
             Console.WriteLine();
-            Console.WriteLine("  help [COMMAND]        Shows details of a command.");
-            Console.WriteLine("  inbox [OPTIONS+]      Shows the box with the RECEIVED files.");
-            Console.WriteLine("  outbox [OPTIONS+]     Shows the box with the SEND files.");
-            Console.WriteLine("  send [OPTIONS+]       Sends one or more files.");
+            Console.WriteLine("  help [COMMAND]        Shows details of a command");
+            Console.WriteLine("  list");
+            Console.WriteLine("  send");
+
+            Console.WriteLine();
+
+            Console.WriteLine("These options can be used to define the connection parameters:");
+            Console.WriteLine();
+            Console.WriteLine("  --host=[HOST]                 The IP or host address of the server.");
+            Console.WriteLine("                                Default: 'localhost'");
+            Console.WriteLine();
+            Console.WriteLine("  --http                        Use UNSECURE http connection.");
+            Console.WriteLine("                                Default: NOT set");
+            Console.WriteLine();
+            Console.WriteLine("  --https                       Use SECURE https connection.");
+            Console.WriteLine("                                Default: set");
+            Console.WriteLine();
+            Console.WriteLine("  --password=[PASSWORD]         The password for the connection.");
+            Console.WriteLine();
+            Console.WriteLine("  --port=[PORT]                 The TCP port where the server listens on.");
+            Console.WriteLine("                                Default: 5979");
         }
 
-        #endregion Methods (9)
+        #endregion Methods (12)
     }
 }

@@ -77,12 +77,17 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
 
         #endregion INTERFACE: IHttpServer
 
-        #region Delegates and Events (7)
-        
+        #region Delegates and Events (9)
+
         /// <summary>
         /// Is invoked for handling a bad request.
         /// </summary>
         event EventHandler<HttpRequestEventArgs> HandleBadRequest;
+
+        /// <summary>
+        /// Is invoked when a status code is between 400 and 499.
+        /// </summary>
+        event EventHandler<HttpRequestEventArgs> HandleClientError;
 
         /// <summary>
         /// Is invoked when a document / resource was not found.
@@ -98,7 +103,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
         /// Is invoked when a HTTP is forbidden.
         /// </summary>
         event EventHandler<HttpRequestEventArgs> HandleForbidden;
-        
+
         /// <summary>
         /// Is invoked if a resource is not implemented.
         /// </summary>
@@ -108,7 +113,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
         /// Is invoked when a HTTP has been arrived that should be handled.
         /// </summary>
         event EventHandler<HttpRequestEventArgs> HandleRequest;
-        
+
+        /// <summary>
+        /// Is invoked when a status code is between 500 and 599.
+        /// </summary>
+        event EventHandler<HttpRequestEventArgs> HandleServerError;
+
         /// <summary>
         /// Is invoked when authorization failed.
         /// </summary>
