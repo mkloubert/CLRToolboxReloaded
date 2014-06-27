@@ -14,17 +14,24 @@ using System.Xml.Linq;
 
 namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
 {
-    internal sealed class SendJob : SendJobBase
+    internal sealed class SendRemoteJob : SendJobBase
     {
+        #region Field (1)
+
+        private string _remoteHost;
+
+        #endregion Field (1)
+
         #region Constructors (1)
 
-        internal SendJob(FileBoxHost host,
-                         object sync,
-                         string tempFile,
-                         byte[] pwd, byte[] salt,
-                         IServerPrincipal sender, string recipient,
-                         XElement meta)
-            : base(id: new Guid("{11AC2E44-0122-4BBB-A883-CF6BD8678C7D}"),
+        internal SendRemoteJob(FileBoxHost host,
+                               object sync,
+                               string tempFile,
+                               byte[] pwd, byte[] salt,
+                               IServerPrincipal sender,
+                               string recipient, string remoteHost,
+                               XElement meta)
+            : base(id: new Guid("{F2A107F8-EB63-4649-B18F-A95270849E49}"),
                    host: host,
                    sync: sync,
                    tempFile: tempFile,
@@ -32,6 +39,12 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
                    sender: sender, recipient: recipient,
                    meta: meta)
         {
+            this._remoteHost = remoteHost;
+        }
+
+        ~SendRemoteJob()
+        {
+            this._remoteHost = null;
         }
 
         #endregion Constructors (1)
@@ -161,13 +174,15 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
                         }
 
                         // write to outbox of sender
-                        this._host
-                            .EnqueueJob(new CopyToOutboxJob(sync: this._SYNC,
-                                                            host: this._host,
-                                                            tempFile: this._tempFile.FullName,
-                                                            pwd: this._pwd, salt: this._salt,
-                                                            sender: this._sender, recipient: this._recipient,
-                                                            meta: new XElement(this._meta)));
+                        {
+                            this._host
+                                .EnqueueJob(new CopyToOutboxJob(sync: this._SYNC,
+                                                                host: this._host,
+                                                                tempFile: this._tempFile.FullName,
+                                                                pwd: this._pwd, salt: this._salt,
+                                                                sender: this._sender, recipient: this._recipient,
+                                                                meta: new XElement(this._meta)));
+                        }
                     }
                     catch
                     {

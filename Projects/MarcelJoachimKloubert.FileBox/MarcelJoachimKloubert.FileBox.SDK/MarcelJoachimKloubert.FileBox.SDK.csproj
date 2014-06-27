@@ -50,10 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExecutionContext.cs" />
     <Compile Include="FileBoxConnection.cs" />
     <Compile Include="FileBoxException.cs" />
     <Compile Include="FileBoxObjectBase.cs" />
     <Compile Include="FileItem.cs" />
+    <Compile Include="IExecutionContext.cs" />
     <Compile Include="JSON.NET\Bson\BsonBinaryType.cs" />
     <Compile Include="JSON.NET\Bson\BsonBinaryWriter.cs" />
     <Compile Include="JSON.NET\Bson\BsonObjectId.cs" />

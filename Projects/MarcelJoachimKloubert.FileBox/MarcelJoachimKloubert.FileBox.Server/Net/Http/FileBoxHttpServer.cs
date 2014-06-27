@@ -3,7 +3,6 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener;
-using MarcelJoachimKloubert.FileBox.Server.Execution.Jobs;
 using MarcelJoachimKloubert.FileBox.Server.Helpers;
 using System.IO;
 using System.Net;
@@ -124,13 +123,8 @@ namespace MarcelJoachimKloubert.FileBox.Server.Net.Http
 
         private void TryDeleteFile(FileInfo file)
         {
-            if (file == null)
-            {
-                return;
-            }
-
             this._HOST
-                .EnqueueJob(new DeleteFileJob(filePath: file.FullName));
+                .TryDeleteFile(file: file);
         }
 
         #endregion Methods (6)

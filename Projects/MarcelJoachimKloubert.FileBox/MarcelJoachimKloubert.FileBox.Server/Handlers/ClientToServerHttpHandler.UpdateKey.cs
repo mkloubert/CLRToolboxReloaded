@@ -11,9 +11,9 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace MarcelJoachimKloubert.FileBox.Server
+namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 {
-    partial class FileBoxHost
+    partial class ClientToServerHttpHandler
     {
         #region Methods (1)
 
@@ -22,6 +22,7 @@ namespace MarcelJoachimKloubert.FileBox.Server
             if (e.Request.TryGetKnownMethod() != HttpMethod.PUT)
             {
                 e.Response.StatusCode = HttpStatusCode.MethodNotAllowed;
+
                 return;
             }
 

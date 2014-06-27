@@ -20,8 +20,14 @@ namespace MarcelJoachimKloubert.FileBox.Server
 
             using (var host = new FileBoxHost(config: conf))
             {
-                host.Port = 23979;
-                host.UseSecureConnections = false;
+                // client to server
+                host.ClientToServer.Port = 23979;
+                host.ClientToServer.IsSecure = false;
+                
+                // server to server
+                host.ServerToServer.Port = 23980;
+                host.ServerToServer.IsSecure = false;
+                host.ServerToServer.IsActive = true;
 
                 if (host.IsInitialized == false)
                 {

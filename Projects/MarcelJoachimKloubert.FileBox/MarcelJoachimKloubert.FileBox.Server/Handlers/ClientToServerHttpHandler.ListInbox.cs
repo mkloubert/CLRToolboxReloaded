@@ -5,18 +5,18 @@
 using MarcelJoachimKloubert.CLRToolbox.Net.Http;
 using MarcelJoachimKloubert.FileBox.Server.Security;
 
-namespace MarcelJoachimKloubert.FileBox.Server
+namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 {
-    partial class FileBoxHost
+    partial class ClientToServerHttpHandler
     {
         #region Methods (1)
 
-        private void ListOutbox(HttpRequestEventArgs e)
+        private void ListInbox(HttpRequestEventArgs e)
         {
             var sender = (IServerPrincipal)e.Request.User;
 
             this.ListBox(e,
-                         boxPath: sender.Outbox);
+                         boxPath: sender.Inbox);
         }
 
         #endregion Methods (1)

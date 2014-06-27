@@ -11,11 +11,12 @@ namespace MarcelJoachimKloubert.CLRToolbox
     /// </summary>
     public abstract partial class DisposableObjectBase : ObjectBase, IDisposableObject
     {
-        #region Fields (1)
+        #region Fields (2)
 
         private bool _isDisposed;
+        private readonly Action<DisposeContext> _DISPOSE_ACTION;
 
-        #endregion Fields (1)
+        #endregion Fields (2)
 
         #region Constrcutors (5)
 
@@ -24,31 +25,40 @@ namespace MarcelJoachimKloubert.CLRToolbox
             : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
+            if (this._IS_SYNCHRONIZED)
+            {
+                this._DISPOSE_ACTION = this.Dispose_ThreadSafe;
+            }
+            else
+            {
+                this._DISPOSE_ACTION = this.Dispose_NonThreadSafe;
+            }
         }
 
         /// <inheriteddoc />
         protected DisposableObjectBase(bool isSynchronized)
-            : base(isSynchronized: isSynchronized)
+            : this(isSynchronized: isSynchronized,
+                   sync: new object())
         {
         }
 
         /// <inheriteddoc />
         protected DisposableObjectBase(object sync)
-            : base(isSynchronized: true,
+            : this(isSynchronized: true,
                    sync: sync)
         {
         }
 
         /// <inheriteddoc />
         protected DisposableObjectBase()
-            : base(isSynchronized: true)
+            : this(isSynchronized: true)
         {
         }
 
         /// <inheriteddoc />
         ~DisposableObjectBase()
         {
-            this.Dispose(DisposeContext.Finalizer);
+            this._DISPOSE_ACTION(DisposeContext.Finalizer);
         }
 
         #endregion Constrcutors (5)
@@ -73,28 +83,13 @@ namespace MarcelJoachimKloubert.CLRToolbox
 
         #endregion Properties (2)
 
-        #region Methods (6)
+        #region Methods (5)
 
         /// <inheriteddoc />
         public void Dispose()
         {
-            this.Dispose(DisposeContext.DisposeMethod);
+            this._DISPOSE_ACTION(DisposeContext.DisposeMethod);
             GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(DisposeContext ctx)
-        {
-            Action<DisposeContext> disposeAction;
-            if (this._IS_SYNCHRONIZED == false)
-            {
-                disposeAction = this.Dispose_NonThreadSafe;
-            }
-            else
-            {
-                disposeAction = this.Dispose_ThreadSafe;
-            }
-
-            disposeAction(ctx);
         }
 
         private void Dispose_NonThreadSafe(DisposeContext ctx)
@@ -150,6 +145,6 @@ namespace MarcelJoachimKloubert.CLRToolbox
             }
         }
 
-        #endregion Methods (6)
+        #endregion Methods (5)
     }
 }

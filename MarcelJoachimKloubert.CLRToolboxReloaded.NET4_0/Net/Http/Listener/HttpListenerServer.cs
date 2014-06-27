@@ -411,12 +411,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
         private void HttpListener_BeginGetContext(IAsyncResult ar)
         {
             HttpListener listener = null;
+            var tryStartListening = true;
 
             try
             {
                 listener = (HttpListener)ar.AsyncState;
 
-                HandleContext(ctx: listener.EndGetContext(ar));
+                var ctx = listener.EndGetContext(ar);
+                tryStartListening = false;
+
+                // listen for next request
+                // before handle current context
+                this.StartListening(listener: listener,
+                                    throwException: false);
+
+                HandleContext(ctx: ctx);
             }
             catch (Exception ex)
             {
@@ -424,16 +433,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
             }
             finally
             {
-                if (listener != null)
+                if (tryStartListening)
                 {
-                    lock (this._SYNC)
-                    {
-                        if (this.IsRunning)
-                        {
-                            this.StartListening(listener: listener,
-                                                throwException: false);
-                        }
-                    }
+                    this.StartListening(listener: listener,
+                                        throwException: false);
                 }
             }
         }
@@ -532,7 +535,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 
 #if (KNOWS_ASYNC_PATTERN)
 
-            while (this.IsRunning)
+            while (true)
             {
                 try
                 {
@@ -542,12 +545,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 
                         HandleContext(ctx: ctx);
                     }
+                    else
+                    {
+                        break;
+                    }
                 }
-                catch (global::System.Exception ex)
+                catch (Exception ex)
                 {
                     this.OnErrorsReceived(ex);
-
-                    DisposeListener(listener: listener);
                 }
             }
 
@@ -555,10 +560,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 
             try
             {
-                listener.BeginGetContext(callback: this.HttpListener_BeginGetContext,
-                                         state: listener);
+                if (listener.IsListening)
+                {
+                    listener.BeginGetContext(callback: this.HttpListener_BeginGetContext,
+                                             state: listener);
+                }
             }
-            catch (global::System.Exception ex)
+            catch (Exception ex)
             {
                 if (throwException)
                 {

@@ -8,13 +8,14 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Text;
 using System.Xml.Linq;
 
 namespace MarcelJoachimKloubert.FileBox
 {
-    internal static class Program
+    internal static partial class Program
     {
-        #region Methods (12)
+        #region Methods (5)
 
         private static void Help(ExecutionContext ctx)
         {
@@ -44,38 +45,6 @@ namespace MarcelJoachimKloubert.FileBox
             {
                 ShowShortHelp();
             }
-        }
-
-        private static void Help_List(ExecutionContext ctx)
-        {
-            Console.WriteLine("Lists the files of a folder.");
-            Console.WriteLine();
-            Console.WriteLine("Usage:  filebox list [FOLDER]");
-            Console.WriteLine();
-
-            Console.WriteLine("The following values are available for [FOLDER]:");
-            Console.WriteLine();
-            Console.WriteLine("  inbox         List RECEIVED files.");
-            Console.WriteLine("  outbox        List SEND files.");
-            Console.WriteLine();
-            Console.WriteLine(@"Example:  filebox inbox --host=""fb.kremlin.ru"" --user=""ejsnowden""");
-        }
-
-        private static void Help_Send(ExecutionContext ctx)
-        {
-            Console.WriteLine("Sends one or more files to one or more recipients.");
-            Console.WriteLine();
-            Console.WriteLine("Usage:  filebox send --to=[RECIPIENTS] [FILE]*");
-            Console.WriteLine();
-            Console.WriteLine("  [FILE]        Paths to one or more files to send.");
-            Console.WriteLine();
-            Console.WriteLine("The following options are available:");
-            Console.WriteLine();
-            Console.WriteLine("  --to=[RECIPIENTS]        A ';' separated list of recipients.");
-            Console.WriteLine();
-            Console.WriteLine(@"Example:  filebox send --to=""ejsnowden@kremlin.ru;wwputin@kremlin.ru""");
-            Console.WriteLine(@"          ""C:\file1.pdf"" ""C:\file2.pdf""");
-            Console.WriteLine(@"          --host=""fb.kremlin.ru"" --user=""tm""");
         }
 
         private static void Invoke(Action action,
@@ -113,84 +82,6 @@ namespace MarcelJoachimKloubert.FileBox
             }
         }
 
-        private static void List(ExecutionContext ctx)
-        {
-            Action<ExecutionContext> actionToInvoke = Help_List;
-
-            if (ctx.Arguments.Count > 0)
-            {
-                switch (ctx.Arguments[0].ToLower())
-                {
-                    case "inbox":
-                        actionToInvoke = List_Inbox;
-                        break;
-
-                    case "outbox":
-                        actionToInvoke = List_Outbox;
-                        break;
-                }
-            }
-
-            actionToInvoke(ctx);
-        }
-
-        private static void List_Box(Func<RSACryptoServiceProvider, int, int?, IEnumerable<FileItem>> func,
-                                     ExecutionContext ctx)
-        {
-            var allFiles = func(ctx.RSA, 0, null);
-
-            int? maxLength = allFiles.Select(f => f.RealName != null ? f.RealName.Length : 0)
-                                     .Cast<int?>()
-                                     .Max();
-
-            foreach (var file in func(ctx.RSA, 0, null).OrderBy(f => f.Name))
-            {
-                var prefix = string.Format("[{0}] ",
-                                           (file.RealName ?? string.Empty).PadLeft(maxLength.Value, ' '));
-                var prefix2 = "".PadLeft(prefix.Length, ' ');
-
-                // file name and
-                // prefix if file item is marked as "corrupted"
-                Invoke(() => Console.Write(prefix));
-                if (file.IsCorrupted)
-                {
-                    Invoke(() => Console.Write("[CORRUPT] "),
-                           foreColor: ConsoleColor.Yellow);
-                }
-                Invoke(() => Console.Write(file.IsCorrupted ? "???" : file.Name),
-                       foreColor: ConsoleColor.White);
-                Invoke(() => Console.WriteLine());
-
-                // send date
-                Invoke(() => Console.Write(prefix2));
-                Invoke(() => Console.Write("Date: {0}",
-                                           file.IsCorrupted ? "???" : file.SendTime.ToString("yyyy'-'MM'-'dd HH':'mm':'ss")));
-                Invoke(() => Console.WriteLine());
-
-                // size
-                Invoke(() => Console.Write(prefix2));
-                Invoke(() => Console.Write("Size: {0}",
-                                           file.IsCorrupted ? "???" : file.Size.ToString()));
-                Invoke(() => Console.WriteLine());
-
-                Invoke(() => Console.WriteLine());
-            }
-        }
-
-        private static void List_Inbox(ExecutionContext ctx)
-        {
-            var conn = ctx.CreateConnection();
-
-            List_Box(conn.GetInbox, ctx);
-        }
-
-        private static void List_Outbox(ExecutionContext ctx)
-        {
-            var conn = ctx.CreateConnection();
-
-            List_Box(conn.GetOutbox, ctx);
-        }
-
         private static int Main(string[] args)
         {
             PrintHeader();
@@ -199,6 +90,8 @@ namespace MarcelJoachimKloubert.FileBox
 
             try
             {
+                result = 0;
+
                 IEnumerable<string> normalizedArgs = args.Where(a => string.IsNullOrWhiteSpace(a) == false)
                                                          .Select(a => a.TrimStart());
 
@@ -223,6 +116,11 @@ namespace MarcelJoachimKloubert.FileBox
                             actionArgs = actionArgs.Skip(1);
                             actionToInvoke = Send;
                             break;
+
+                        case "test":
+                            actionArgs = actionArgs.Skip(1);
+                            actionToInvoke = Test;
+                            break;
                     }
                 }
 
@@ -246,6 +144,8 @@ namespace MarcelJoachimKloubert.FileBox
 
                         ctx.RSA = rsa;
                     }
+
+                    var inputPassword = false;
 
                     foreach (var a in normalizedArgs.Skip(1))
                     {
@@ -273,19 +173,36 @@ namespace MarcelJoachimKloubert.FileBox
                         {
                             ctx.IsSecure = true;
                         }
+                        else if (a == "--password")
+                        {
+                            inputPassword = true;
+                        }
                     }
 
-                    ctx.Arguments = normalizedArgs.Skip(1)
+                    var cancelled = false;
+                    if (inputPassword)
+                    {
+                        Console.Write("Password: ");
+                        ctx.Password = ReadPassword();
+
+                        if (ctx.Password == string.Empty)
+                        {
+                            cancelled = true;
+                        }
+                    }
+
+                    if (cancelled == false)
+                    {
+                        ctx.Arguments = normalizedArgs.Skip(1)
                                                   .ToList();
 
-                    actionToInvoke(ctx);
+                        actionToInvoke(ctx);
+                    }
                 }
                 else
                 {
                     ShowShortHelp();
                 }
-
-                result = 0;
             }
             catch (Exception ex)
             {
@@ -322,77 +239,42 @@ namespace MarcelJoachimKloubert.FileBox
             Console.WriteLine("FileBox  {0}, for .NET 4 and Mono", asmName.Version);
             Console.WriteLine("Created by Marcel Joachim Kloubert <marcel.kloubert@gmx.net>");
             Console.WriteLine();
+            Console.WriteLine();
         }
 
-        private static void Send(ExecutionContext ctx)
+        private static string ReadPassword()
         {
-            var files = new HashSet<string>();
-            var recipients = new HashSet<string>();
+            var result = new StringBuilder();
 
-            foreach (var a in ctx.Arguments)
+            while (true)
             {
-                if (a.StartsWith("--to="))
+                var keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter)
                 {
-                    foreach (var r in a.Substring(5)
-                                       .Split(';')
-                                       .Select(s => s.ToLower().Trim())
-                                       .Where(s => s != string.Empty))
-                    {
-                        recipients.Add(r);
-                    }
+                    Console.WriteLine();
+                    break;
                 }
-                else if (a.StartsWith("--") == false)
+
+                if (keyInfo.Key != ConsoleKey.Backspace)
                 {
-                    var file = a.Trim();
+                    // append char
 
-                    if (file != string.Empty)
+                    result.Append(keyInfo.KeyChar);
+                    // Console.Write("*");
+                }
+                else
+                {
+                    // remove last char
+
+                    if (result.Length > 0)
                     {
-                        if (Path.IsPathRooted(file) == false)
-                        {
-                            file = Path.GetFullPath(file);
-                        }
-
-                        file = Path.GetFullPath(file);
-                        files.Add(file);
+                        result.Remove(result.Length - 1, 1);
+                        // Console.Write("\b \b");
                     }
                 }
             }
 
-            var conn = ctx.CreateConnection();
-
-            foreach (var f in files)
-            {
-                Invoke(() => Console.Write("Sending file '"),
-                       foreColor: ConsoleColor.Gray);
-                Invoke((p) => Console.Write(Path.GetFileName(p)), f,
-                       foreColor: ConsoleColor.White);
-                Invoke(() => Console.Write("'... "),
-                       foreColor: ConsoleColor.Gray);
-                try
-                {
-                    var fi = new FileInfo(f);
-                    if (fi.Exists)
-                    {
-                        conn.Send(fi.FullName, recipients);
-
-                        Invoke(() => Console.WriteLine("[OK]"),
-                               foreColor: ConsoleColor.Green);
-                    }
-                    else
-                    {
-                        Invoke(() => Console.WriteLine("[NOT FOUND!]"),
-                               foreColor: ConsoleColor.Yellow);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    var innerEx = ex.GetBaseException() ?? ex;
-
-                    Invoke((e) => Console.WriteLine("[ERROR: {0}]",
-                                                    e.Message), innerEx,
-                           foreColor: ConsoleColor.Red);
-                }
-            }
+            return result.ToString();
         }
 
         private static void ShowShortHelp()
@@ -414,17 +296,25 @@ namespace MarcelJoachimKloubert.FileBox
             Console.WriteLine("                                Default: 'localhost'");
             Console.WriteLine();
             Console.WriteLine("  --http                        Use UNSECURE http connection.");
-            Console.WriteLine("                                Default: NOT set");
+            Console.WriteLine("                                Default: not set");
             Console.WriteLine();
             Console.WriteLine("  --https                       Use SECURE https connection.");
             Console.WriteLine("                                Default: set");
             Console.WriteLine();
+            Console.WriteLine("  --password                    The user has to enter the password");
+            Console.WriteLine("                                for the connection.");
+            Console.WriteLine();
             Console.WriteLine("  --password=[PASSWORD]         The password for the connection.");
+            Console.WriteLine("                                Default: none");
             Console.WriteLine();
             Console.WriteLine("  --port=[PORT]                 The TCP port where the server listens on.");
             Console.WriteLine("                                Default: 5979");
+
+            Console.WriteLine();
+
+            Console.WriteLine(@"Example:  filebox list inbox --host=""fb.doe.com"" --password --user=""john""");
         }
 
-        #endregion Methods (12)
+        #endregion Methods (5)
     }
 }

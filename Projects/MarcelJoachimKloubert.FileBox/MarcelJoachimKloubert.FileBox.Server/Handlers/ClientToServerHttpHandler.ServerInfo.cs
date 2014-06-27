@@ -8,9 +8,9 @@ using MarcelJoachimKloubert.FileBox.Server.Security;
 using System;
 using System.Net;
 
-namespace MarcelJoachimKloubert.FileBox.Server
+namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 {
-    partial class FileBoxHost
+    partial class ClientToServerHttpHandler
     {
         #region Methods (1)
 

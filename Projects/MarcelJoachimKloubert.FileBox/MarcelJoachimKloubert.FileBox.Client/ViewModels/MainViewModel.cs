@@ -224,7 +224,7 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
                         conn.User = vm.Login.Username.Trim();
 
                         // test connection by loading server information
-                        var info = conn.GetServerInfo();
+                        var info = conn.GetServerInfo().Result;
 
                         // check if a new key file has been created
                         bool isKeyFileNew;

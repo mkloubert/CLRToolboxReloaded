@@ -26,7 +26,7 @@ namespace MarcelJoachimKloubert.FileBox
             }
 
             this.Code = result.code;
-            this.Data = result.msg;
+            this.ErrorData = result.msg;
         }
 
         /// <summary>
@@ -44,12 +44,12 @@ namespace MarcelJoachimKloubert.FileBox
         /// </summary>
         /// <param name="code">The value for the <see cref="FileBoxException.Code" /> property.</param>
         /// <param name="message">The (optional) exception message.</param>
-        /// <param name="innerException">The (optional) inner exception.</param>
-        public FileBoxException(int? code, string message, object data)
+        /// <param name="errorData">The value for the <see cref="FileBoxException.ErrorData" /> property.</param>
+        public FileBoxException(int? code, string message, object errorData)
             : base(message: message)
         {
             this.Code = code;
-            this.Data = data;
+            this.ErrorData = errorData;
         }
 
         /// <inheriteddoc />
@@ -74,7 +74,7 @@ namespace MarcelJoachimKloubert.FileBox
         /// <summary>
         /// Gets the underlying data.
         /// </summary>
-        public dynamic Data
+        public dynamic ErrorData
         {
             get;
             private set;

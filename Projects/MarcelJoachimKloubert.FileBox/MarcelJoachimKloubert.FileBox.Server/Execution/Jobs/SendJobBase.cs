@@ -63,7 +63,7 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
 
         #endregion Constructors (2)
 
-        #region Methods (4)
+        #region Methods (3)
 
         protected internal static Encoding CreateXmlEncoder()
         {
@@ -75,41 +75,12 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
             canExecuteJob = true;
         }
 
-        protected internal void FindUniqueDataAndMetaFileNames(DirectoryInfo targetDir,
-                                                               out FileInfo dataFile, out FileInfo metaFile, out FileInfo metaPwdFile)
-        {
-            dataFile = null;
-            metaFile = null;
-            metaPwdFile = null;
-
-            ulong i = 0;
-            do
-            {
-                dataFile = new FileInfo(Path.Combine(targetDir.FullName,
-                                                     i + GlobalConstants.FileExtensions.DATA_FILE));
-                metaFile = new FileInfo(Path.Combine(targetDir.FullName,
-                                                     i + GlobalConstants.FileExtensions.META_FILE));
-                metaPwdFile = new FileInfo(Path.Combine(targetDir.FullName,
-                                                        i + GlobalConstants.FileExtensions.META_PASSWORD_FILE));
-
-                if (dataFile.Exists || metaFile.Exists || metaPwdFile.Exists)
-                {
-                    ++i;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            while (true);
-        }
-
         protected internal void TryDeleteFile(FileInfo file)
         {
             this._host
                 .TryDeleteFile(file: file);
         }
 
-        #endregion Methods (4)
+        #endregion Methods (3)
     }
 }

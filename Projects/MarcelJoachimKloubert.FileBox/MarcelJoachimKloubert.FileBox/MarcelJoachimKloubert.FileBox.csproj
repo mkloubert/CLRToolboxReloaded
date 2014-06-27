@@ -44,6 +44,15 @@
   <ItemGroup>
     <Compile Include="ExecutionContext.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Program.List.cs">
+      <DependentUpon>Program.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.Send.cs">
+      <DependentUpon>Program.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.Test.cs">
+      <DependentUpon>Program.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

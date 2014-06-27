@@ -60,10 +60,10 @@ namespace MarcelJoachimKloubert.FileBox.Server.Execution.Jobs
                     FileInfo targetDataFile;
                     FileInfo targetMetaFile;
                     FileInfo targetMetaPwdFile;
-                    FindUniqueDataAndMetaFileNames(targetDir,
-                                                    dataFile: out targetDataFile,
-                                                    metaFile: out targetMetaFile,
-                                                    metaPwdFile: out targetMetaPwdFile);
+                    FileHelper.CreateUniqueFilesForCryptedData(targetDir,
+                                                               dataFile: out targetDataFile,
+                                                               metaFile: out targetMetaFile,
+                                                               metaPwdFile: out targetMetaPwdFile);
 
                     using (var tempStream = new FileStream(this._tempFile.FullName,
                                                            FileMode.Open, FileAccess.Read))

@@ -43,34 +43,42 @@
   <ItemGroup>
     <Compile Include="Execution\Jobs\CopyToOutboxJob.cs" />
     <Compile Include="Execution\Jobs\DeleteFileJob.cs" />
+    <Compile Include="Execution\Jobs\SendRemoteJob.cs" />
     <Compile Include="Execution\Jobs\SendJob.cs" />
     <Compile Include="Execution\Jobs\SendJobBase.cs" />
-    <Compile Include="FileBoxHost.ServerInfo.cs">
-      <DependentUpon>FileBoxHost.cs</DependentUpon>
+    <Compile Include="Handlers\ClientToServerHttpHandler.ListInbox.cs">
+      <DependentUpon>ClientToServerHttpHandler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\ClientToServerHttpHandler.ListOutbox.cs">
+      <DependentUpon>ClientToServerHttpHandler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\ClientToServerHttpHandler.ReceiveInboxFile.cs">
+      <DependentUpon>ClientToServerHttpHandler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\ClientToServerHttpHandler.ReceiveOutboxFile.cs">
+      <DependentUpon>ClientToServerHttpHandler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\ClientToServerHttpHandler.SendFile.cs">
+      <DependentUpon>ClientToServerHttpHandler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\ClientToServerHttpHandler.ServerInfo.cs">
+      <DependentUpon>ClientToServerHttpHandler.cs</DependentUpon>
     </Compile>
     <Compile Include="FileBoxHost.cs" />
-    <Compile Include="FileBoxHost.ListOutbox.cs">
-      <DependentUpon>FileBoxHost.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FileBoxHost.ListInbox.cs">
-      <DependentUpon>FileBoxHost.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FileBoxHost.ReceiveOutboxFile.cs">
-      <DependentUpon>FileBoxHost.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FileBoxHost.ReceiveInboxFile.cs">
-      <DependentUpon>FileBoxHost.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FileBoxHost.SendFile.cs">
-      <DependentUpon>FileBoxHost.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FileBoxHost.UpdateKey.cs">
-      <DependentUpon>FileBoxHost.cs</DependentUpon>
-    </Compile>
     <Compile Include="GlobalConstants.cs" />
+    <Compile Include="Handlers\ClientToServerHttpHandler.cs" />
+    <Compile Include="Handlers\ClientToServerHttpHandler.UpdateKey.cs">
+      <DependentUpon>ClientToServerHttpHandler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\HttpHandlerBase.cs" />
+    <Compile Include="Handlers\ServerToServerHttpHandler.cs" />
+    <Compile Include="Handlers\ServerToServerHttpHandler.SendFileRemote.cs">
+      <DependentUpon>ServerToServerHttpHandler.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\CryptoHelper.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Json\JsonResult.cs" />
+    <Compile Include="Net\TcpHostConnection.cs" />
     <Compile Include="Net\Http\FileBoxHttpServer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

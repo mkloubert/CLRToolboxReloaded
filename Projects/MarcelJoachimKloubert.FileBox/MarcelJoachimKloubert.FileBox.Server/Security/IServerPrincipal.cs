@@ -13,7 +13,12 @@ namespace MarcelJoachimKloubert.FileBox.Server.Security
     /// </summary>
     public interface IServerPrincipal : IObject, IPrincipal
     {
-        #region Properties (5)
+        #region Properties (7)
+
+        /// <summary>
+        /// Gets if that principal can write messages or not.
+        /// </summary>
+        bool CanWriteMessages { get; }
 
         /// <summary>
         /// Gets the root directory of the user's files.
@@ -29,6 +34,11 @@ namespace MarcelJoachimKloubert.FileBox.Server.Security
         string Inbox { get; }
 
         /// <summary>
+        /// Gets the root directory of the user's message files.
+        /// </summary>
+        string Messages { get; }
+
+        /// <summary>
         /// Gets the root directory of the user's outbox files.
         /// </summary>
         string Outbox { get; }
@@ -38,9 +48,9 @@ namespace MarcelJoachimKloubert.FileBox.Server.Security
         /// </summary>
         string Temp { get; }
 
-        #endregion Properties (5)
+        #endregion Properties (7)
 
-        #region Methods (1)
+        #region Methods (2)
 
         /// <summary>
         /// Tries to return the RSA crypter.
@@ -50,6 +60,15 @@ namespace MarcelJoachimKloubert.FileBox.Server.Security
         /// </returns>
         RSACryptoServiceProvider TryGetRsaCrypter();
 
-        #endregion Methods (1)
+        /// <summary>
+        /// Writes a message for the user.
+        /// </summary>
+        /// <param name="subject">The subject.</param>
+        /// <param name="msg">The message in MarkDown format.</param>
+        /// <exception cref="InvalidOperationException">Currently it is not possible to write a message.</exception>
+        void WriteMessage(string subject,
+                          string msg);
+
+        #endregion Methods (2)
     }
 }

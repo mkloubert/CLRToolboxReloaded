@@ -3,6 +3,7 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using MarcelJoachimKloubert.CLRToolbox;
+using MarcelJoachimKloubert.CLRToolbox.Execution.Jobs;
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using MarcelJoachimKloubert.CLRToolbox.IO;
 using MarcelJoachimKloubert.CLRToolbox.Net.Http;
@@ -18,9 +19,9 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Xml.Linq;
 
-namespace MarcelJoachimKloubert.FileBox.Server
+namespace MarcelJoachimKloubert.FileBox.Server.Handlers
 {
-    partial class FileBoxHost
+    partial class ClientToServerHttpHandler
     {
         #region Methods (1)
 
@@ -29,6 +30,7 @@ namespace MarcelJoachimKloubert.FileBox.Server
             if (e.Request.TryGetKnownMethod() != HttpMethod.PUT)
             {
                 e.Response.StatusCode = HttpStatusCode.MethodNotAllowed;
+
                 return;
             }
 
@@ -143,21 +145,83 @@ namespace MarcelJoachimKloubert.FileBox.Server
                             recipients.ForAll((ctx) =>
                                 {
                                     var r = ctx.Item;
+                                    string remoteHost = null;
+
+                                    var adIndex = r.IndexOf('@');
+                                    if (adIndex > -1)
+                                    {
+                                        remoteHost = r.Substring(adIndex + 1).ToLower().Trim();
+                                        r = r.Substring(0, adIndex).Trim();
+                                    }
+
+                                    if (string.IsNullOrWhiteSpace(r))
+                                    {
+                                        // no recipient defined
+                                        return;
+                                    }
+
+                                    // check if host is local
+                                    if (string.IsNullOrWhiteSpace(remoteHost) == false)
+                                    {
+                                        remoteHost = remoteHost.ToLower().Trim();
+
+                                        if ((remoteHost == "127.0.0.1") ||
+                                            (remoteHost == "localhost"))
+                                        {
+                                            // is local
+                                            remoteHost = null;
+                                        }
+                                        else if (this._HOST.GetHostNames().Contains(remoteHost))
+                                        {
+                                            // is local
+                                            remoteHost = null;
+                                        }
+                                    }
+
+                                    string recipientAddr;
+                                    if (string.IsNullOrWhiteSpace(remoteHost))
+                                    {
+                                        recipientAddr = r;
+                                    }
+                                    else
+                                    {
+                                        recipientAddr = r + "@" + remoteHost;
+                                    }
 
                                     var metaCopy = new XElement(ctx.State.Meta);
-                                    metaCopy.Add(new XElement("to", r));
+                                    metaCopy.Add(new XElement("to", recipientAddr));
+
+                                    IJob newJob;
+                                    if (string.IsNullOrWhiteSpace(remoteHost))
+                                    {
+                                        // local recipient
+
+                                        newJob = new SendJob(sync: ctx.State.Sync,
+                                                             host: ctx.State.Host,
+                                                             tempFile: tempFile.FullName,
+                                                             pwd: ctx.State.Password, salt: ctx.State.Salt,
+                                                             sender: ctx.State.Sender, recipient: r,
+                                                             meta: metaCopy);
+                                    }
+                                    else
+                                    {
+                                        // send to remote server
+
+                                        newJob = new SendRemoteJob(sync: ctx.State.Sync,
+                                                                   host: ctx.State.Host,
+                                                                   tempFile: tempFile.FullName,
+                                                                   pwd: ctx.State.Password, salt: ctx.State.Salt,
+                                                                   sender: ctx.State.Sender,
+                                                                   recipient: r, remoteHost: remoteHost,
+                                                                   meta: metaCopy);
+                                    }
 
                                     ctx.State
                                        .Host
-                                       .EnqueueJob(new SendJob(sync: ctx.State.Sync,
-                                                               host: ctx.State.Host,
-                                                               tempFile: tempFile.FullName,
-                                                               pwd: ctx.State.Password, salt: ctx.State.Salt,
-                                                               sender: ctx.State.Sender, recipient: r,
-                                                               meta: metaCopy));
+                                       .EnqueueJob(newJob);
                                 }, new
                                 {
-                                    Host = this,
+                                    Host = this._HOST,
                                     Meta = meta,
                                     Password = pwd,
                                     Salt = salt,

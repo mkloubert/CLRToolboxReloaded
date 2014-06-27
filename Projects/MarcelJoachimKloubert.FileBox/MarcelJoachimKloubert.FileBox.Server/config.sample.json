@@ -3,5 +3,9 @@
         "temp": "./temp",
         "userFiles": "./files",
         "work":  "C:\\fileBox"
+    },
+    
+    "host":  {
+        "name": "fb.myhost.com" 
     }
 }
