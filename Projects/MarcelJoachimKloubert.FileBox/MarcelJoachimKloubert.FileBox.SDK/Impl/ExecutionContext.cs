@@ -4,19 +4,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Threading.Tasks;
 
-namespace MarcelJoachimKloubert.FileBox
+namespace MarcelJoachimKloubert.FileBox.Impl
 {
     #region CLASS: ExecutionContext<TResult>
 
-    internal class ExecutionContext<TResult> : IExecutionContext<TResult>
+    internal class ExecutionContext<TResult> : NotificationObjectBase, IExecutionContext<TResult>
     {
-        #region Fields (13)
+        #region Fields (12)
 
         private double? _currentStepPercentage;
         private string _currentStepProgressStatus;
@@ -30,19 +27,34 @@ namespace MarcelJoachimKloubert.FileBox
         private int? _overallTaskId;
         private TResult _result;
         private DateTimeOffset? _startTime;
-        private readonly object _SYNC = new object();
 
-        #endregion Fields (13)
+        #endregion Fields (12)
 
-        #region Events (2)
+        #region Constructors (1)
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        internal ExecutionContext()
+        {
+            this.AllStepsProgress = new Progress();
+            this.CurrentStepProgress = new Progress();
+        }
 
-        public event PropertyChangingEventHandler PropertyChanging;
+        #endregion
 
-        #endregion Events (2)
+        #region Events (7)
 
-        #region Properties (18)
+        public event EventHandler Canceled;
+
+        public event EventHandler Completed;
+
+        public event EventHandler Failed;
+
+        public event EventHandler Succeeded;
+
+        public event EventHandler Started;
+
+        #endregion Events (7)
+
+        #region Properties (15)
 
         internal Action<ExecutionContext<TResult>> Action
         {
@@ -56,53 +68,26 @@ namespace MarcelJoachimKloubert.FileBox
             }
         }
 
-        public double? CurrentStepPercentage
+        internal Progress AllStepsProgress
         {
-            get { return this._currentStepPercentage; }
-
-            internal set
-            {
-                if (value < 0)
-                {
-                    value = 0;
-                }
-
-                if (value > 100)
-                {
-                    value = 100;
-                }
-
-                this.OnPropertyChange(() => this.CurrentStepPercentage, ref this._currentStepPercentage, value);
-            }
+            get;
+            private set;
         }
 
-        public string CurrentStepProgressStatus
+        IProgress IExecutionContext.AllStepsProgress
         {
-            get { return this._currentStepProgressStatus; }
-
-            internal set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    value = null;
-                }
-                else
-                {
-                    value = value.Trim();
-                }
-
-                this.OnPropertyChange(() => this.CurrentStepProgressStatus, ref this._currentStepProgressStatus, value);
-            }
+            get { return this.AllStepsProgress; }
         }
 
-        public int? CurrentStepTaskId
+        internal Progress CurrentStepProgress
         {
-            get { return this._currentStepTaskId; }
+            get;
+            private set;
+        }
 
-            internal set
-            {
-                this.OnPropertyChange(() => this.CurrentStepTaskId, ref this._currentStepTaskId, value);
-            }
+        IProgress IExecutionContext.CurrentStepProgress
+        {
+            get { return this.CurrentStepProgress; }
         }
 
         public TimeSpan? Duration
@@ -183,55 +168,6 @@ namespace MarcelJoachimKloubert.FileBox
             }
         }
 
-        public double? OverallPercentage
-        {
-            get { return this._overallPercentage; }
-
-            internal set
-            {
-                if (value < 0)
-                {
-                    value = 0;
-                }
-
-                if (value > 100)
-                {
-                    value = 100;
-                }
-
-                this.OnPropertyChange(() => this.OverallPercentage, ref this._overallPercentage, value);
-            }
-        }
-
-        public string OverallProgressStatus
-        {
-            get { return this._overallProgressStatus; }
-
-            internal set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    value = null;
-                }
-                else
-                {
-                    value = value.Trim();
-                }
-
-                this.OnPropertyChange(() => this.OverallProgressStatus, ref this._overallProgressStatus, value);
-            }
-        }
-
-        public int? OverallTaskId
-        {
-            get { return this._overallTaskId; }
-
-            internal set
-            {
-                this.OnPropertyChange(() => this.OverallTaskId, ref this._overallTaskId, value);
-            }
-        }
-
         public TResult Result
         {
             get { return this._result; }
@@ -252,12 +188,7 @@ namespace MarcelJoachimKloubert.FileBox
             }
         }
 
-        public object SyncRoot
-        {
-            get { return this._SYNC; }
-        }
-
-        #endregion Properties (18)
+        #endregion Properties (15)
 
         #region Methods (16)
 
@@ -454,32 +385,6 @@ namespace MarcelJoachimKloubert.FileBox
                 startTask: startTask);
         }
 
-        private bool OnPropertyChange<T>(Expression<Func<T>> expr, ref T field, T newValue)
-        {
-            var propertyName = ((expr.Body as MemberExpression).Member as PropertyInfo).Name;
-
-            if (object.Equals(field, newValue) == false)
-            {
-                var changingHandler = this.PropertyChanging;
-                if (changingHandler != null)
-                {
-                    changingHandler(this, new PropertyChangingEventArgs(propertyName: propertyName));
-                }
-
-                field = newValue;
-
-                var changedHandler = this.PropertyChanged;
-                if (changedHandler != null)
-                {
-                    changedHandler(this, new PropertyChangedEventArgs(propertyName: propertyName));
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-
         internal void SetAction<T>(Action<ExecutionContext<TResult>, T> action, T actionState)
         {
             this.Action = action == null ? null : new Action<ExecutionContext<TResult>>((ctx) =>
@@ -518,19 +423,22 @@ namespace MarcelJoachimKloubert.FileBox
                     this.StartTime = DateTimeOffset.Now;
 
                     this.IsRunning = true;
+                    this.RaiseEventHandler(this.Started);
 
                     this.Result = this.Func(this);
                 }
                 catch (Exception ex)
                 {
                     var aggEx = ex as AggregateException;
-                    if (aggEx != null)
+                    if (aggEx == null)
                     {
-                        var innerEx = aggEx.InnerExceptions;
-                        if (innerEx != null)
-                        {
-                            errors.AddRange(innerEx.OfType<Exception>());
-                        }
+                        aggEx = new AggregateException(ex);
+                    }
+
+                    var innerEx = aggEx.InnerExceptions;
+                    if (innerEx != null)
+                    {
+                        errors.AddRange(innerEx.OfType<Exception>());
                     }
                 }
                 finally
@@ -540,7 +448,30 @@ namespace MarcelJoachimKloubert.FileBox
                     this.EndTime = DateTimeOffset.Now;
                     this.IsRunning = false;
 
-                    this.IsCancelling = false;
+                    if (this.IsCancelling)
+                    {
+                        try
+                        {
+                            this.RaiseEventHandler(this.Canceled);
+                        }
+                        finally
+                        {
+                            this.IsCancelling = false;
+                        }
+                    }
+                    else
+                    {
+                        if (this.HasFailed)
+                        {
+                            this.RaiseEventHandler(this.Failed);
+                        }
+                        else
+                        {
+                            this.RaiseEventHandler(this.Succeeded);
+                        }
+                    }
+
+                    this.RaiseEventHandler(this.Completed);
                 }
             }
         }
@@ -682,6 +613,14 @@ namespace MarcelJoachimKloubert.FileBox
                         Provider = actionStateProvider,
                     },
                 startTask: startTask);
+        }
+
+        public void ThrowIfFailed()
+        {
+            if (this.HasFailed)
+            {
+                throw new AggregateException(innerExceptions: this.Errors);
+            }
         }
 
         #endregion Methods (16)

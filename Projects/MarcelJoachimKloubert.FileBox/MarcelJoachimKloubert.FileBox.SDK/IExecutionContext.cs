@@ -14,25 +14,42 @@ namespace MarcelJoachimKloubert.FileBox
     /// <summary>
     /// Describes an execution context.
     /// </summary>
-    public interface IExecutionContext : INotifyPropertyChanged, INotifyPropertyChanging
+    public interface IExecutionContext : IObject, INotifyPropertyChanged, INotifyPropertyChanging
     {
-        #region Properties (11)
+        #region Events (5)
 
         /// <summary>
-        /// Gets a value between 0 and 100 that describes the progress of the current step
-        /// inside that operation in percentage (if defined).
+        /// Is invoked after execution has been completed.
         /// </summary>
-        double? CurrentStepPercentage { get; }
+        event EventHandler Canceled;
 
         /// <summary>
-        /// Gets the status text for the progress of the current step.
+        /// Is invoked after execution has been completed.
         /// </summary>
-        string CurrentStepProgressStatus { get; }
+        event EventHandler Completed;
 
         /// <summary>
-        /// Gets a value that describes / categorizes the task inside the current step context.
+        /// Is invoked after execution has been finished with at least one error.
         /// </summary>
-        int? CurrentStepTaskId { get; }
+        event EventHandler Failed;
+
+        /// <summary>
+        /// Is invoked after execution has been finished successfully.
+        /// </summary>
+        event EventHandler Succeeded;
+
+        /// <summary>
+        /// Is invoked after execution has been started.
+        /// </summary>
+        event EventHandler Started;
+
+        #endregion Events (5)
+
+        #region Properties (10)
+
+        IProgress AllStepsProgress { get; }
+
+        IProgress CurrentStepProgress { get; }
 
         /// <summary>
         /// Gets the time the context needed to be executed.
@@ -70,34 +87,13 @@ namespace MarcelJoachimKloubert.FileBox
         bool IsSynchronized { get; }
 
         /// <summary>
-        /// Gets a value between 0 and 100 that describes the progress of the whole operation
-        /// in percentage (if defined).
-        /// </summary>
-        double? OverallPercentage { get; }
-
-        /// <summary>
-        /// Gets the status text for the progress of the whole operation.
-        /// </summary>
-        string OverallProgressStatus { get; }
-
-        /// <summary>
-        /// Gets a value that describes / categorizes the task inside the whole operation context.
-        /// </summary>
-        int? OverallTaskId { get; }
-
-        /// <summary>
         /// Gets the start time.
         /// </summary>
         DateTimeOffset? StartTime { get; }
 
-        /// <summary>
-        /// Gets the object for thread safe operations.
-        /// </summary>
-        object SyncRoot { get; }
+        #endregion Properties (10)
 
-        #endregion Properties (11)
-
-        #region Methods (8)
+        #region Methods (9)
 
         /// <summary>
         /// Cancels the operation.
@@ -229,7 +225,13 @@ namespace MarcelJoachimKloubert.FileBox
                            Func<IExecutionContext, T> actionStateProvider,
                            bool startTask = true);
 
-        #endregion Methods (8)
+        /// <summary>
+        /// Throws all exceptions of <see cref="IExecutionContext.Errors" /> as one <see cref="AggregateException" />.
+        /// </summary>
+        /// <exception cref="AggregateException">Execution failed.</exception>
+        void ThrowIfFailed();
+
+        #endregion Methods (9)
     }
 
     #endregion INTERFACE: IExecutionProgress

@@ -2,6 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.FileBox.Impl;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace MarcelJoachimKloubert.FileBox
     /// <summary>
     /// Handles a FileBox (server) connection.
     /// </summary>
-    public sealed class FileBoxConnection : FileBoxObjectBase
+    public sealed class FileBoxConnection : ObjectBase, IConnection
     {
         #region Fields (1)
 
@@ -113,13 +114,9 @@ namespace MarcelJoachimKloubert.FileBox
 
         #endregion Properties (6)
 
-        #region Methods (16)
+        #region Methods (17)
 
-        /// <summary>
-        /// Creates a basic and setupped HTTP web request client.
-        /// </summary>
-        /// <param name="relativePath">The additional path for the request URI.</param>
-        /// <returns>The created instance.</returns>
+        /// <inheriteddoc />
         public HttpWebRequest CreateWebRequest(string relativePath)
         {
             var result = (HttpWebRequest)HttpWebRequest.Create(this.GetBaseUrl() + relativePath.Trim());
@@ -163,7 +160,10 @@ namespace MarcelJoachimKloubert.FileBox
                                  this.Port);
         }
 
-        private ExecutionContext<List<FileItem>> GetBox(Location loc, RSACryptoServiceProvider rsa, int startAt, int? maxItems)
+        private ExecutionContext<List<IFile>> GetBox(Location loc,
+                                                     RSACryptoServiceProvider rsa,
+                                                     int startAt, int? maxItems,
+                                                     bool autoStart)
         {
             if (rsa == null)
             {
@@ -195,10 +195,15 @@ namespace MarcelJoachimKloubert.FileBox
                     throw new NotSupportedException(loc.ToString());
             }
 
-            var result = new ExecutionContext<List<FileItem>>();
+            var result = new ExecutionContext<List<IFile>>();
             result.SetFunc((ctx, s) =>
                 {
-                    var fileList = new List<FileItem>();
+                    var fileList = new List<IFile>();
+
+                    if (ctx.IsCancelling)
+                    {
+                        return fileList;
+                    }
 
                     s.Request.Method = "GET";
 
@@ -209,6 +214,11 @@ namespace MarcelJoachimKloubert.FileBox
                         s.Request.Headers["X-FileBox-MaxItems"] = s.MaximumItems.ToString();
                     }
 
+                    if (ctx.IsCancelling)
+                    {
+                        return fileList;
+                    }
+
                     var jsonResult = s.Connection
                                       .GetJsonObject(s.Request.GetResponse());
 
@@ -217,9 +227,13 @@ namespace MarcelJoachimKloubert.FileBox
                         case 0:
                             if (jsonResult.data != null)
                             {
-                                foreach (dynamic item in jsonResult.data.files)
+                                int itemCount = jsonResult.data.files.Length;
+
+                                for (var i = 0; i < itemCount; i++)
                                 {
-                                    var newItem = new FileItem();
+                                    var item = jsonResult.data.files[i];
+
+                                    var newItem = new FileBoxFile();
                                     newItem.IsCorrupted = true;
                                     newItem.Location = loc;
                                     newItem.Server = this;
@@ -241,8 +255,8 @@ namespace MarcelJoachimKloubert.FileBox
                                                 using (var decryptedMetaStream = new MemoryStream())
                                                 {
                                                     var cryptoMetaStream = new CryptoStream(cryptedMetaStream,
-                                                                                            CreateRijndael(pwd: metaPwdAndSalt.Skip(7).Take(48).ToArray(),
-                                                                                                           salt: metaPwdAndSalt.Skip(7 + 48).Take(16).ToArray()).CreateDecryptor(),
+                                                                                            CreateRijndael(pwd: metaPwdAndSalt.Skip(7).Take(48),
+                                                                                                           salt: metaPwdAndSalt.Skip(7 + 48).Take(16)).CreateDecryptor(),
                                                                                             CryptoStreamMode.Read);
 
                                                     cryptoMetaStream.CopyTo(decryptedMetaStream);
@@ -317,10 +331,16 @@ namespace MarcelJoachimKloubert.FileBox
                 {
                     Connection = this,
                     DataCulture = CultureInfo.InvariantCulture,
+                    Location = loc,
                     MaximumItems = maxItems,
                     Request = this.CreateWebRequest(path),
                     StartAt = startAt,
                 });
+
+            if (autoStart)
+            {
+                result.Start();
+            }
 
             return result;
         }
@@ -384,7 +404,8 @@ namespace MarcelJoachimKloubert.FileBox
         /// <exception cref="ArgumentNullException">
         /// <paramref name="response" /> is <see langword="null" />.
         /// </exception>
-        public JsonResult GetJsonObject(WebResponse response, bool closeResponse = true)
+        public JsonResult GetJsonObject(WebResponse response,
+                                        bool closeResponse = true)
         {
             if (response == null)
             {
@@ -422,52 +443,32 @@ namespace MarcelJoachimKloubert.FileBox
             return result;
         }
 
-        /// <summary>
-        /// Returns the files from the INBOX folder.
-        /// </summary>
-        /// <param name="rsa">The crypter for encrypting the meta data of the files.</param>
-        /// <param name="startAt">The zero based index of the first item.</param>
-        /// <param name="maxItems">The maximum number of items to return.</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="rsa" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="startAt" /> and/or <paramref name="maxItems" /> are invalid.
-        /// </exception>
-        public IExecutionContext<List<FileItem>> GetInbox(RSACryptoServiceProvider rsa, int startAt = 0, int? maxItems = null)
+        /// <inheriteddoc />
+        public IExecutionContext<IList<IFile>> GetInbox(RSACryptoServiceProvider rsa,
+                                                        int startAt = 0,
+                                                        int? maxItems = null,
+                                                        bool autoStart = true)
         {
             return this.GetBox(loc: Location.Inbox,
                                rsa: rsa,
-                               startAt: startAt, maxItems: maxItems);
+                               startAt: startAt, maxItems: maxItems,
+                               autoStart: autoStart);
         }
 
-        /// <summary>
-        /// Returns the files from the OUTBOX folder.
-        /// </summary>
-        /// <param name="rsa">The crypter for encrypting the meta data of the files.</param>
-        /// <param name="startAt">The zero based index of the first item.</param>
-        /// <param name="maxItems">The maximum number of items to return.</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="rsa" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="startAt" /> and/or <paramref name="maxItems" /> are invalid.
-        /// </exception>
-        public IExecutionContext<List<FileItem>> GetOutbox(RSACryptoServiceProvider rsa, int startAt = 0, int? maxItems = null)
+        /// <inheriteddoc />
+        public IExecutionContext<IList<IFile>> GetOutbox(RSACryptoServiceProvider rsa,
+                                                         int startAt = 0,
+                                                         int? maxItems = null,
+                                                         bool autoStart = true)
         {
             return this.GetBox(loc: Location.Outbox,
                                rsa: rsa,
-                               startAt: startAt, maxItems: maxItems);
+                               startAt: startAt, maxItems: maxItems,
+                               autoStart: autoStart);
         }
 
-        /// <summary>
-        /// Gets information about the server.
-        /// </summary>
-        /// <param name="autoStart">Start operation directly or not.</param>
-        /// <returns>The underlying execution result.</returns>
-        public IExecutionContext<ServerInfo> GetServerInfo(bool autoStart = true)
+        /// <inheriteddoc />
+        public IExecutionContext<IServerInfo> GetServerInfo(bool autoStart = true)
         {
             var result = new ExecutionContext<ServerInfo>();
 
@@ -522,6 +523,21 @@ namespace MarcelJoachimKloubert.FileBox
             }
         }
 
+        private static bool IsValidRecipient(string r)
+        {
+            if (string.IsNullOrWhiteSpace(r))
+            {
+                return false;
+            }
+
+            if (r.Contains(';'))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Sets the value of <see cref="FileBoxConnection.Password" /> via a string.
         /// </summary>
@@ -529,6 +545,7 @@ namespace MarcelJoachimKloubert.FileBox
         public void SetPassword(string pwd)
         {
             var newValue = new SecureString();
+
             if (pwd != null)
             {
                 foreach (var c in pwd)
@@ -541,19 +558,7 @@ namespace MarcelJoachimKloubert.FileBox
             this.Password = newValue;
         }
 
-        /// <summary>
-        /// Send a file.
-        /// </summary>
-        /// <param name="path">The path of the file to send.</param>
-        /// <param name="recipients">The list of recipients.</param>
-        /// <returns>The underlying execution context.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="recipients" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="FileNotFoundException">
-        /// File in <paramref name="path" /> does not exist.
-        /// </exception>
-        /// <remarks>The operations directly starts.</remarks>
+        /// <inheriteddoc />
         public IExecutionContext Send(string path, params string[] recipients)
         {
             return this.Send(path: path,
@@ -561,19 +566,7 @@ namespace MarcelJoachimKloubert.FileBox
                              recipients: recipients);
         }
 
-        /// <summary>
-        /// Send a file.
-        /// </summary>
-        /// <param name="path">The path of the file to send.</param>
-        /// <param name="autoStart">Directly start operation or not.</param>
-        /// <param name="recipients">The list of recipients.</param>
-        /// <returns>The underlying execution context.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="recipients" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="FileNotFoundException">
-        /// File in <paramref name="path" /> does not exist.
-        /// </exception>
+        /// <inheriteddoc />
         public IExecutionContext Send(string path, bool autoStart, params string[] recipients)
         {
             return this.Send(path: path,
@@ -581,19 +574,7 @@ namespace MarcelJoachimKloubert.FileBox
                              autoStart: autoStart);
         }
 
-        /// <summary>
-        /// Send a file.
-        /// </summary>
-        /// <param name="path">The path of the file to send.</param>
-        /// <param name="recipients">The list of recipients.</param>
-        /// <param name="autoStart">Directly start operation or not.</param>
-        /// <returns>The underlying execution context.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="recipients" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="FileNotFoundException">
-        /// File in <paramref name="path" /> does not exist.
-        /// </exception>
+        /// <inheriteddoc />
         public IExecutionContext Send(string path,
                                       IEnumerable<string> recipients,
                                       bool autoStart = true)
@@ -612,13 +593,10 @@ namespace MarcelJoachimKloubert.FileBox
             var result = new ExecutionContext();
             result.SetAction((ctx, state) =>
                 {
-                    ctx.OverallPercentage = 0;
-                    ctx.OverallProgressStatus = "Sending file operation";
-                    ctx.OverallTaskId = 1;
-
-                    ctx.CurrentStepPercentage = 0;
-                    ctx.CurrentStepProgressStatus = "Sending file...";
-                    ctx.CurrentStepTaskId = 1;
+                    if (ctx.IsCancelling)
+                    {
+                        return;
+                    }
 
                     state.Request.Method = "PUT";
                     state.Request.ContentType = "application/octet-stream";
@@ -640,9 +618,14 @@ namespace MarcelJoachimKloubert.FileBox
                                       () => state.File.LastWriteTime.ToString(LONG_TIME_FORMAT));
 
                     // recipients
-                    state.Request.Headers["X-FileBox-To"] = string.Join(";", recipients.Where(r => string.IsNullOrWhiteSpace(r) == false)
+                    state.Request.Headers["X-FileBox-To"] = string.Join(";", recipients.Where(r => IsValidRecipient(r))
                                                                                        .Select(r => r.ToLower().Trim())
                                                                                        .Distinct());
+
+                    if (ctx.IsCancelling)
+                    {
+                        return;
+                    }
 
                     // send file content
                     using (var stream = state.File.OpenRead())
@@ -658,10 +641,14 @@ namespace MarcelJoachimKloubert.FileBox
                                 long bytesWritten = 0;
                                 while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
                                 {
+                                    if (ctx.IsCancelling)
+                                    {
+                                        return;
+                                    }
+
                                     reqStream.Write(buffer, 0, bytesRead);
 
                                     bytesWritten += bytesRead;
-                                    ctx.CurrentStepPercentage = (double)bytesWritten / (double)dataSize * 100d;
                                 }
                             }
 
@@ -670,9 +657,12 @@ namespace MarcelJoachimKloubert.FileBox
                         }
                     }
 
-                    var json = this.GetJsonObject(state.Request.GetResponse());
+                    if (ctx.IsCancelling)
+                    {
+                        return;
+                    }
 
-                    ctx.OverallPercentage = 100;
+                    var json = this.GetJsonObject(state.Request.GetResponse());
 
                     switch (json.code)
                     {
@@ -697,68 +687,81 @@ namespace MarcelJoachimKloubert.FileBox
             return result;
         }
 
-        private static void TrySetHeaderValue(WebHeaderCollection coll, string name, Func<string> valueProvider)
+        private static bool TrySetHeaderValue(WebHeaderCollection coll, string name, Func<string> valueProvider)
         {
             try
             {
                 coll[name] = valueProvider();
+                return true;
             }
             catch
             {
                 // ignore
+                return false;
             }
         }
 
-        /// <summary>
-        /// Updates the public RSA key on the server.
-        /// </summary>
-        /// <param name="xml">The RSA key as XML data.</param>
-        public void UpdateKey(string xml)
+        /// <inheriteddoc />
+        public IExecutionContext UpdateKey(string xml,
+                                           bool autoStart = true)
         {
-            try
-            {
-                var enc = this.GetEncoding();
-
-                var rsa = new RSACryptoServiceProvider();
-                rsa.FromXmlString(xml);
-
-                var request = this.CreateWebRequest("update-key");
-                request.Method = "PUT";
-
-                var blob = enc.GetBytes(rsa.ToXmlString(includePrivateParameters: false));
-
-                request.ContentType = "text/xml; charset=" + enc.WebName;
-                request.ContentLength = blob.Length;
-
-                using (var stream = request.GetRequestStream())
+            var result = new ExecutionContext();
+            result.SetAction((ctx, s) =>
                 {
-                    stream.Write(blob, 0, blob.Length);
+                    if (ctx.IsCancelling)
+                    {
+                        return;
+                    }
 
-                    stream.Flush();
-                    stream.Close();
-                }
+                    var rsa = new RSACryptoServiceProvider();
+                    rsa.FromXmlString(s.Xml);
 
-                var json = this.GetJsonObject(request.GetResponse());
-                switch (json.code)
+                    var blob = s.Encoding.GetBytes(rsa.ToXmlString(includePrivateParameters: false));
+
+                    s.Request.Method = "PUT";
+                    s.Request.ContentType = "text/xml; charset=" + s.Encoding.WebName;
+                    s.Request.ContentLength = blob.Length;
+
+                    using (var stream = s.Request.GetRequestStream())
+                    {
+                        stream.Write(blob, 0, blob.Length);
+
+                        stream.Flush();
+                        stream.Close();
+                    }
+
+                    if (ctx.IsCancelling)
+                    {
+                        return;
+                    }
+
+                    var json = s.Connection.GetJsonObject(s.Request.GetResponse());
+
+                    switch (json.code)
+                    {
+                        case 0:
+                            // OK
+                            break;
+
+                        default:
+                            throw new FileBoxException(result: json);
+                    }
+                }, new
                 {
-                    case 0:
-                        // OK
-                        break;
+                    Connection = this,
+                    Encoding = this.GetEncoding(),
+                    Request = this.CreateWebRequest("update-key"),
+                    Xml = xml,
+                });
 
-                    default:
-                        throw new FileBoxException(result: json);
-                }
-            }
-            catch (FileBoxException)
+            if (autoStart)
             {
-                throw;
+                result.Start();
             }
-            catch (Exception ex)
-            {
-                throw new FileBoxException(innerException: ex);
-            }
+
+            return result;
         }
 
-        #endregion Methods (16)
+        #endregion Methods (17)
     }
 }

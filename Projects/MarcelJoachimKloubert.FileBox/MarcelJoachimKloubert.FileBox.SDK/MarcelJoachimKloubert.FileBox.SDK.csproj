@@ -50,12 +50,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExecutionContext.cs" />
+    <Compile Include="Impl\ExecutionContext.cs" />
     <Compile Include="FileBoxConnection.cs" />
     <Compile Include="FileBoxException.cs" />
-    <Compile Include="FileBoxObjectBase.cs" />
-    <Compile Include="FileItem.cs" />
+    <Compile Include="IProgress.cs" />
+    <Compile Include="NotificationObjectBase.cs" />
+    <Compile Include="ObjectBase.cs" />
+    <Compile Include="Impl\FileBoxFile.cs" />
+    <Compile Include="IConnection.cs" />
+    <Compile Include="IConnectionChild.cs" />
     <Compile Include="IExecutionContext.cs" />
+    <Compile Include="IFile.cs" />
+    <Compile Include="IObject.cs" />
+    <Compile Include="IServerInfo.cs" />
     <Compile Include="JSON.NET\Bson\BsonBinaryType.cs" />
     <Compile Include="JSON.NET\Bson\BsonBinaryWriter.cs" />
     <Compile Include="JSON.NET\Bson\BsonObjectId.cs" />
@@ -245,10 +252,11 @@
     <Compile Include="JSON.NET\Utilities\ValidationUtils.cs" />
     <Compile Include="JSON.NET\WriteState.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="Impl\Progress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JsonResult.cs" />
-    <Compile Include="ServerInfo.cs" />
-    <Compile Include="ServerObjectBase.cs" />
+    <Compile Include="Impl\ServerInfo.cs" />
+    <Compile Include="ConnectionChildBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="LICENSE" />

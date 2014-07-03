@@ -10,19 +10,16 @@ using System.Security.Cryptography;
 using System.Xml.Linq;
 using LocationEnum = MarcelJoachimKloubert.FileBox.Location;
 
-namespace MarcelJoachimKloubert.FileBox
+namespace MarcelJoachimKloubert.FileBox.Impl
 {
     /// <summary>
     /// Stores the data of a file (item).
     /// </summary>
-    public sealed class FileItem : ServerObjectBase
+    internal sealed class FileBoxFile : ConnectionChildBase, IFile
     {
         #region Constructors (1)
 
-        /// <summary>
-        ///
-        /// </summary>
-        ~FileItem()
+        ~FileBoxFile()
         {
             using (var pwd = this.CryptedMetaXml)
             {
@@ -34,99 +31,66 @@ namespace MarcelJoachimKloubert.FileBox
 
         #region Properties (11)
 
-        /// <summary>
-        /// Gets the creation date.
-        /// </summary>
         public DateTimeOffset CreationDate
         {
             get;
             internal set;
         }
 
-        /// <summary>
-        /// Gets the crypted meta data of the item.
-        /// </summary>
         public byte[] CryptedMeta
         {
             get;
             internal set;
         }
 
-        /// <summary>
-        /// Gets the crypted meta data of the item as XML string.
-        /// </summary>
         public SecureString CryptedMetaXml
         {
             get;
             internal set;
         }
 
-        /// <summary>
-        /// Gets the ID of the file.
-        /// </summary>
         public Guid Id
         {
             get;
             internal set;
         }
 
-        /// <summary>
-        /// Gets if the data of that data is corrupted or not.
-        /// </summary>
         public bool IsCorrupted
         {
             get;
             internal set;
         }
 
-        /// <summary>
-        /// Gets the last write time.
-        /// </summary>
         public DateTimeOffset LastWriteTime
         {
             get;
             internal set;
         }
 
-        /// <summary>
-        /// Gets the location of the file.
-        /// </summary>
         public LocationEnum Location
         {
             get;
             internal set;
         }
 
-        /// <summary>
-        /// Gets the (machine) name of the server.
-        /// </summary>
         public string Name
         {
             get;
             internal set;
         }
 
-        /// <summary>
-        /// Gets the (internal) name of that item on the server.
-        /// </summary>
         public string RealName
         {
             get;
             internal set;
         }
 
-        /// <summary>
-        /// Gets time the file was send.
-        /// </summary>
         public DateTimeOffset SendTime
         {
             get;
             internal set;
         }
 
-        /// <summary>
-        /// Gets the size of the file.
-        /// </summary>
         public long Size
         {
             get;
@@ -135,24 +99,11 @@ namespace MarcelJoachimKloubert.FileBox
 
         #endregion Properties (11)
 
-        #region Methods (1)
+        #region Methods (2)
 
-        /// <summary>
-        /// Opens that file for reading.
-        /// </summary>
-        /// <returns>The stream for reading the file.</returns>
-        /// <exception cref="InvalidOperationException">
-        /// File item contains corrupted data.
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// The operation is (currently) not supported.
-        /// </exception>
         public Stream Open()
         {
-            if (this.IsCorrupted)
-            {
-                throw new InvalidOperationException();
-            }
+            this.ThrowIfCorrupted();
 
             string path;
             switch (this.Location)
@@ -197,6 +148,14 @@ namespace MarcelJoachimKloubert.FileBox
             }
         }
 
-        #endregion Methods (1)
+        private void ThrowIfCorrupted()
+        {
+            if (this.IsCorrupted)
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        #endregion Methods (2)
     }
 }

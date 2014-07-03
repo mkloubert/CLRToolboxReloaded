@@ -16,7 +16,7 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
     {
         #region Constructors (1)
 
-        internal ServerViewModel(MainViewModel parent, ServerInfo info)
+        internal ServerViewModel(MainViewModel parent, IServerInfo info)
         {
             this.Initialize();
 
@@ -31,7 +31,7 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
         /// <summary>
         /// Gets the underlying connection.
         /// </summary>
-        public FileBoxConnection Connection
+        public IConnection Connection
         {
             get { return this.Info.Server; }
         }
@@ -39,7 +39,7 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
         /// <summary>
         /// Gets the list of outbox items.
         /// </summary>
-        public DispatcherObservableCollection<FileItem> Inbox
+        public DispatcherObservableCollection<IFile> Inbox
         {
             get;
             private set;
@@ -48,7 +48,7 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
         /// <summary>
         /// Gets the underlying connection.
         /// </summary>
-        public ServerInfo Info
+        public IServerInfo Info
         {
             get;
             private set;
@@ -66,7 +66,7 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
         /// <summary>
         /// Gets the list of outbox items.
         /// </summary>
-        public DispatcherObservableCollection<FileItem> Outbox
+        public DispatcherObservableCollection<IFile> Outbox
         {
             get;
             private set;
@@ -78,11 +78,11 @@ namespace MarcelJoachimKloubert.FileBox.Client.ViewModels
 
         private void Initialize()
         {
-            this.Inbox = DispatcherObservableCollection.Create<FileItem>(prio: DispatcherPriority.Background,
-                                                                         isBackground: true);
+            this.Inbox = DispatcherObservableCollection.Create<IFile>(prio: DispatcherPriority.Background,
+                                                                      isBackground: true);
 
-            this.Outbox = DispatcherObservableCollection.Create<FileItem>(prio: DispatcherPriority.Background,
-                                                                          isBackground: true);
+            this.Outbox = DispatcherObservableCollection.Create<IFile>(prio: DispatcherPriority.Background,
+                                                                       isBackground: true);
         }
 
         public void ReloadInbox()

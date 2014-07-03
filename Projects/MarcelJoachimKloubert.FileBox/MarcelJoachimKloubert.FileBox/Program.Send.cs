@@ -72,7 +72,7 @@ namespace MarcelJoachimKloubert.FileBox
                        foreColor: ConsoleColor.Gray);
                 Invoke((p) => Console.Write(Path.GetFileName(p)), f,
                        foreColor: ConsoleColor.White);
-                Invoke(() => Console.Write("'... "),
+                Invoke(() => Console.WriteLine("'..."),
                        foreColor: ConsoleColor.Gray);
 
                 try
@@ -80,10 +80,11 @@ namespace MarcelJoachimKloubert.FileBox
                     var fi = new FileInfo(f);
                     if (fi.Exists)
                     {
-                        conn.Send(fi.FullName, recipients);
+                        var execCtx = conn.Send(fi.FullName, recipients,
+                                                autoStart: false);
 
-                        Invoke(() => Console.WriteLine("[OK]"),
-                               foreColor: ConsoleColor.Green);
+                        execCtx.Start();
+                        execCtx.ThrowIfFailed();
                     }
                     else
                     {
@@ -98,6 +99,10 @@ namespace MarcelJoachimKloubert.FileBox
                     Invoke((e) => Console.WriteLine("[ERROR: {0}]",
                                                     e.Message), innerEx,
                            foreColor: ConsoleColor.Red);
+                }
+                finally
+                {
+                    Console.WriteLine();
                 }
             }
         }

@@ -5,22 +5,22 @@
 namespace MarcelJoachimKloubert.FileBox
 {
     /// <summary>
-    /// A basic server object.
+    /// A basic child of a server connection.
     /// </summary>
-    public abstract class ServerObjectBase : FileBoxObjectBase
+    public abstract class ConnectionChildBase : ObjectBase, IConnectionChild
     {
         #region Methods (1)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServerObjectBase" /> class.
+        /// Initializes a new instance of the <see cref="ConnectionChildBase" /> class.
         /// </summary>
-        protected ServerObjectBase()
+        protected ConnectionChildBase()
         {
         }
 
         #endregion Methods (1)
 
-        #region Properties (1)
+        #region Properties (2)
 
         /// <summary>
         /// Gets the underlying server.
@@ -31,6 +31,11 @@ namespace MarcelJoachimKloubert.FileBox
             internal set;
         }
 
-        #endregion Properties (1)
+        IConnection IConnectionChild.Server
+        {
+            get { return this.Server; }
+        }
+
+        #endregion Properties (2)
     }
 }

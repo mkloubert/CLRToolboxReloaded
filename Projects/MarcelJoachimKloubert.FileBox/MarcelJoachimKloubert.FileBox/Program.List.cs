@@ -49,11 +49,11 @@ namespace MarcelJoachimKloubert.FileBox
             actionToInvoke(ctx);
         }
 
-        private static void List_Box(Func<RSACryptoServiceProvider, int, int?, IExecutionContext<List<FileItem>>> func,
+        private static void List_Box(Func<RSACryptoServiceProvider, int, int?, bool, IExecutionContext<IEnumerable<IFile>>> func,
                                      ExecutionContext ctx)
         {
-            var execCtx = func(ctx.RSA, 0, null);
-            execCtx.Start();
+            var execCtx = func(ctx.RSA, 0, null, true);
+            execCtx.ThrowIfFailed();
 
             var allFiles = execCtx.Result;
 
@@ -61,37 +61,42 @@ namespace MarcelJoachimKloubert.FileBox
                                      .Cast<int?>()
                                      .Max();
 
-            foreach (var file in allFiles.OrderBy(f => f.Name))
+            using (var e = allFiles.OrderBy(f => f.Name).GetEnumerator())
             {
-                var prefix = string.Format("[{0}] ",
-                                           (file.RealName ?? string.Empty).PadLeft(maxLength.Value, ' '));
-                var prefix2 = "".PadLeft(prefix.Length, ' ');
-
-                // file name and
-                // prefix if file item is marked as "corrupted"
-                Invoke(() => Console.Write(prefix));
-                if (file.IsCorrupted)
+                while (e.MoveNext())
                 {
-                    Invoke(() => Console.Write("[CORRUPT] "),
-                           foreColor: ConsoleColor.Yellow);
+                    var file = e.Current;
+
+                    var prefix = string.Format("[{0}] ",
+                                               (file.RealName ?? string.Empty).PadLeft(maxLength.Value, ' '));
+                    var prefix2 = string.Empty.PadLeft(prefix.Length, ' ');
+
+                    // file name and
+                    // prefix if file item is marked as "corrupted"
+                    Invoke(() => Console.Write(prefix));
+                    if (file.IsCorrupted)
+                    {
+                        Invoke(() => Console.Write("[CORRUPT] "),
+                               foreColor: ConsoleColor.Yellow);
+                    }
+                    Invoke(() => Console.Write(file.IsCorrupted ? "???" : file.Name),
+                           foreColor: ConsoleColor.White);
+                    Invoke(() => Console.WriteLine());
+
+                    // send date
+                    Invoke(() => Console.Write(prefix2));
+                    Invoke(() => Console.Write("Date: {0}",
+                                               file.IsCorrupted ? "???" : file.SendTime.ToString("yyyy'-'MM'-'dd HH':'mm':'ss")));
+                    Invoke(() => Console.WriteLine());
+
+                    // size
+                    Invoke(() => Console.Write(prefix2));
+                    Invoke(() => Console.Write("Size: {0}",
+                                               file.IsCorrupted ? "???" : file.Size.ToString()));
+                    Invoke(() => Console.WriteLine());
+
+                    Invoke(() => Console.WriteLine());
                 }
-                Invoke(() => Console.Write(file.IsCorrupted ? "???" : file.Name),
-                       foreColor: ConsoleColor.White);
-                Invoke(() => Console.WriteLine());
-
-                // send date
-                Invoke(() => Console.Write(prefix2));
-                Invoke(() => Console.Write("Date: {0}",
-                                           file.IsCorrupted ? "???" : file.SendTime.ToString("yyyy'-'MM'-'dd HH':'mm':'ss")));
-                Invoke(() => Console.WriteLine());
-
-                // size
-                Invoke(() => Console.Write(prefix2));
-                Invoke(() => Console.Write("Size: {0}",
-                                           file.IsCorrupted ? "???" : file.Size.ToString()));
-                Invoke(() => Console.WriteLine());
-
-                Invoke(() => Console.WriteLine());
             }
         }
 

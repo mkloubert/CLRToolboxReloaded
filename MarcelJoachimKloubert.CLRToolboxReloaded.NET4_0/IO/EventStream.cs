@@ -18,13 +18,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
     public enum EventStreamDataTransferedContext
     {
         /// <summary>
-        /// <see cref="EventStream{TStream}.Read(byte[], int, int)" />
+        /// 
         /// </summary>
+        /// <see cref="EventStream{TStream}.Read(byte[], int, int)" />
         Read,
 
         /// <summary>
-        /// <see cref="EventStream{TStream}.Read(byte[], int, int)" />
+        /// 
         /// </summary>
+        /// <see cref="EventStream{TStream}.Write(byte[], int, int)" />
         Write,
     }
 

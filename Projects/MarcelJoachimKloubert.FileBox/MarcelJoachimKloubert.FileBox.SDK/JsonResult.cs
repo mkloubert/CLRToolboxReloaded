@@ -30,7 +30,7 @@ namespace MarcelJoachimKloubert.FileBox
         }
 
         /// <summary>
-        /// Gets or sets the optional object to serialize.
+        /// Gets or sets the optional object (data) to serialize.
         /// </summary>
         public dynamic data
         {

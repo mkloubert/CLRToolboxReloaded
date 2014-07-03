@@ -31,7 +31,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Sessions
     /// Describes a session with a parent object.
     /// </summary>
     /// <typeparam name="TParent">Type of the parent object.</typeparam>
-    public interface ISession<TParent> : ISession
+    public interface ISession<out TParent> : ISession
     {
         #region Properties (1)
 

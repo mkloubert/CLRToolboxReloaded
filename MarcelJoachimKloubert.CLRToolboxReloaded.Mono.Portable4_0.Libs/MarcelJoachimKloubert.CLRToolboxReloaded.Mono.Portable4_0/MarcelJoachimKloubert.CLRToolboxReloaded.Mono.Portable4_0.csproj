@@ -549,6 +549,21 @@
     <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\UsernamePasswordValidator.cs">
       <Link>Security\UsernamePasswordValidator.cs</Link>
     </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\Console\ConsoleBase.cs">
+      <Link>IO\Console\ConsoleBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\Console\DummyConsole.cs">
+      <Link>IO\Console\DummyConsole.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\Console\GlobalConsole.cs">
+      <Link>IO\Console\GlobalConsole.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\Console\IConsole.cs">
+      <Link>IO\Console\IConsole.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0\__Compatibility\System\ConsoleColor.cs">
+      <Link>__Compatibility\System\ConsoleColor.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -572,6 +587,7 @@
     <Folder Include="__Libs\" />
     <Folder Include="Net\" />
     <Folder Include="Security\" />
+    <Folder Include="IO\Console\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0\__Libs\Newtonsoft.Json.dll">
