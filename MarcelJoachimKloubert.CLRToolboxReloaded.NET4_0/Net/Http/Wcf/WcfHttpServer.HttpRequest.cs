@@ -22,7 +22,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
 
         internal sealed class HttpRequest : HttpRequestBase, IDisposable
         {
-            #region Fields (10)
+            #region Fields (11)
 
             private readonly Uri _ADDRESS;
             private readonly IReadOnlyDictionary<string, string> _GET;
@@ -31,22 +31,24 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
             private readonly IReadOnlyDictionary<string, string> _POST;
             private readonly ITcpAddress _REMOTE_ADDR;
             private readonly IReadOnlyDictionary<string, string> _REQUEST;
+            private readonly WcfHttpServer _SERVER;
             private readonly Stream _STREAM;
             private readonly DateTimeOffset _TIME;
             private readonly IPrincipal _USER;
 
-            #endregion Fields (10)
+            #endregion Fields (11)
 
             #region Constructors (2)
 
             internal HttpRequest(Message msg,
-                                 Stream stream,
+                                 WcfHttpServer srv,
                                  IPrincipal user)
             {
                 this._TIME = AppTime.Now;
 
                 this.Property = (HttpRequestMessageProperty)msg.Properties[HttpRequestMessageProperty.Name];
-                this._STREAM = stream;
+                this._SERVER = srv;
+                this._STREAM = this._SERVER.CreateRequestStream();
                 this._USER = user;
 
                 // remote IP
@@ -174,7 +176,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
 
             #endregion Constructors (2)
 
-            #region Properties (11)
+            #region Properties (12)
 
             public override Uri Address
             {
@@ -228,6 +230,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
                 get { return this._REQUEST; }
             }
 
+            internal Stream Stream
+            {
+                get { return this._STREAM; }
+            }
+
             public override DateTimeOffset Time
             {
                 get { return this._TIME; }
@@ -238,7 +245,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
                 get { return this._USER; }
             }
 
-            #endregion Properties (11)
+            #endregion Properties (12)
 
             #region Methods (3)
 
@@ -250,6 +257,18 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
 
             private void Dispose(bool disposing)
             {
+                try
+                {
+                    this._SERVER
+                        .CloseRequestStream(this._STREAM);
+                }
+                catch
+                {
+                    if (disposing)
+                    {
+                        throw;
+                    }
+                }
             }
 
             protected override Stream OnGetBody()

@@ -3,6 +3,7 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using System;
+using System.IO;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
@@ -79,7 +80,43 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
 
         #endregion
 
-        #region Methods (5)
+        #region Methods (15)
+
+        /// <summary>
+        /// Closes a request stream.
+        /// </summary>
+        /// <param name="stream">The stream to close.</param>
+        protected virtual void CloseRequestStream(Stream stream)
+        {
+            stream.Dispose();
+        }
+
+        /// <summary>
+        /// Closes a response stream.
+        /// </summary>
+        /// <param name="stream">The stream to close.</param>
+        protected virtual void CloseResponseStream(Stream stream)
+        {
+            stream.Dispose();
+        }
+
+        /// <summary>
+        /// Creates an stream for the body of a request context.
+        /// </summary>
+        /// <returns>The initial stream.</returns>
+        protected virtual Stream CreateRequestStream()
+        {
+            return new MemoryStream();
+        }
+
+        /// <summary>
+        /// Creates an initial stream for a response context.
+        /// </summary>
+        /// <returns>The initial stream.</returns>
+        protected virtual Stream CreateResponseStream()
+        {
+            return new MemoryStream();
+        }
 
         private void DisposeOldHost()
         {
@@ -94,6 +131,36 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
             {
                 // ignore here
             }
+        }
+        
+        internal bool OnHandleBadRequestInner(HttpRequest req, HttpResponse resp)
+        {
+            return this.OnHandleBadRequest(req, resp);
+        }
+
+        internal bool OnHandleDocumentNotFoundInner(HttpRequest req, HttpResponse resp)
+        {
+            return this.OnHandleDocumentNotFound(req, resp);
+        }
+
+        internal bool OnHandleErrorInner(HttpRequest req, HttpResponse resp, Exception ex)
+        {
+            return this.OnHandleError(req, resp, ex);
+        }
+
+        internal bool OnHandleForbiddenInner(HttpRequest req, HttpResponse resp)
+        {
+            return this.OnHandleForbidden(req, resp);
+        }
+
+        internal bool OnHandleNotImplementedInner(HttpRequest req, HttpResponse resp)
+        {
+            return this.OnHandleNotImplemented(req, resp);
+        }
+
+        internal bool OnHandleRequestInner(HttpRequest req, HttpResponse resp)
+        {
+            return this.OnHandleRequest(req, resp);
         }
 
         /// <inheriteddoc />

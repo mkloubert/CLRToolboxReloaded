@@ -5,7 +5,6 @@
 using MarcelJoachimKloubert.CLRToolbox.Collections.Generic;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.ServiceModel.Channels;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
@@ -16,19 +15,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
 
         internal sealed class HttpResponse : HttpResponseBase, IDisposable
         {
-            #region Fields (2)
+            #region Fields (3)
 
             private readonly IDictionary<string, object> _FRONTEND_VARS;
             private readonly IDictionary<string, string> _HEADERS;
+            private readonly WcfHttpServer _SERVER;
 
-            #endregion Fields (2)
+            #endregion Fields (3)
 
             #region Constructors (2)
 
             internal HttpResponse(HttpResponseMessageProperty property,
-                                  Stream outputStream)
-                : base(stream: outputStream)
+                                  WcfHttpServer srv)
+                : base(stream: srv.CreateResponseStream())
             {
+                this._SERVER = srv;
                 this.Property = property;
 
                 this._FRONTEND_VARS = new Dictionary<string, object>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
@@ -75,6 +76,18 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
 
             private void Dispose(bool disposing)
             {
+                try
+                {
+                    this._SERVER
+                        .CloseResponseStream(this.Stream);
+                }
+                catch
+                {
+                    if (disposing)
+                    {
+                        throw;
+                    }
+                }
             }
 
             #endregion Methods (2)

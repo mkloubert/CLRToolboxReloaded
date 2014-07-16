@@ -2,7 +2,9 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using System;
 using System.IO;
+using System.Net;
 using System.Security.Principal;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
@@ -46,33 +48,113 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
 
         public Message Request(Message message)
         {
-            using (var uncompressedResponse = new MemoryStream())
+            BinaryMessage result;
+
+            using (var req = new WcfHttpRequest(msg: message,
+                                                srv: this._SERVER,
+                                                user: this.TryFindUser()))
+            using (var resp = new WcfHttpResponse(property: new HttpResponseMessageProperty(),
+                                                  srv: this._SERVER))
             {
-                using (var requestStream = new MemoryStream())
+                using (var outputStream = new MemoryStream())
                 {
-                    this._WEB_ENCODER.WriteMessage(message, requestStream);
-                    requestStream.Position = 0;
-
-                    using (var request = new WcfHttpRequest(msg: message,
-                                                            stream: requestStream,
-                                                            user: this.TryFindUser()))
+                    try
                     {
-                        using (var response = new WcfHttpResponse(property: new HttpResponseMessageProperty(),
-                                                                  outputStream: uncompressedResponse))
+                        resp.StatusCode = HttpStatusCode.OK;
+                        resp.StatusDescription = null;
+                        resp.Compress = false;
+
+                        var isRequestValid = true;
+
+                        var reqValidator = this._SERVER.RequestValidator;
+                        if (reqValidator != null)
                         {
-                            using (var responseStream = new MemoryStream())
+                            isRequestValid = reqValidator(req);
+                        }
+
+                        if (isRequestValid)
+                        {
+                            this._WEB_ENCODER.WriteMessage(message, req.Stream);
+                            if (req.Stream.CanSeek)
                             {
-                                uncompressedResponse.Position = 0;
+                                req.Stream.Position = 0;
+                            }
 
-                                var responseMessage = new BinaryMessage(responseStream.ToArray());
-                                responseMessage.Properties[HttpResponseMessageProperty.Name] = response.Property;
+                            if (this._SERVER.OnHandleRequestInner(req, resp) == false)
+                            {
+                                // 501 - NotImplemented
 
-                                return responseMessage;
+                                resp.Compress = false;
+                                resp.StatusCode = HttpStatusCode.NotImplemented;
+                                resp.StatusDescription = null;
+
+                                this._SERVER.OnHandleNotImplementedInner(req, resp);
                             }
                         }
+                        else
+                        {
+                            // 400 - BadRequest
+
+                            resp.Compress = false;
+                            resp.StatusCode = HttpStatusCode.BadRequest;
+                            resp.StatusDescription = null;
+
+                            this._SERVER.OnHandleBadRequestInner(req, resp);
+                        }
+
+                        if (resp.IsForbidden == false)
+                        {
+                            if (resp.DocumentNotFound)
+                            {
+                                // 404 - NotFound
+
+                                resp.Compress = false;
+                                resp.StatusCode = HttpStatusCode.NotFound;
+                                resp.StatusDescription = null;
+
+                                this._SERVER.OnHandleDocumentNotFoundInner(req, resp);
+                            }
+                        }
+                        else
+                        {
+                            // 403 - Forbidden
+
+                            resp.Compress = false;
+                            resp.StatusCode = HttpStatusCode.Forbidden;
+                            resp.StatusDescription = null;
+
+                            this._SERVER.OnHandleForbiddenInner(req, resp);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // 500 - InternalServerError
+
+                        resp.Compress = false;
+                        resp.StatusCode = HttpStatusCode.InternalServerError;
+                        resp.StatusDescription = (ex.GetBaseException() ?? ex).Message;
+
+                        this._SERVER.OnHandleErrorInner(req, resp, ex);
+                    }
+                    finally
+                    {
+                        if (resp.Stream.CanSeek)
+                        {
+                            resp.Stream.Position = 0;
+                        }
+
+                        resp.Stream.CopyTo(outputStream);
+                        outputStream.Position = 0;
+
+                        var responseMessage = new BinaryMessage(outputStream.ToArray());
+                        responseMessage.Properties[HttpResponseMessageProperty.Name] = resp.Property;
+
+                        result = responseMessage;
                     }
                 }
             }
+
+            return result;
         }
 
         private IPrincipal TryFindUser()
