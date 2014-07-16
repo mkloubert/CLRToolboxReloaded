@@ -51,6 +51,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
             BinaryMessage result;
 
             using (var req = new WcfHttpRequest(msg: message,
+                                                enc: this._WEB_ENCODER,
                                                 srv: this._SERVER,
                                                 user: this.TryFindUser()))
             using (var resp = new WcfHttpResponse(property: new HttpResponseMessageProperty(),
