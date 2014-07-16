@@ -41,6 +41,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
             #region Constructors (2)
 
             internal HttpRequest(Message msg,
+                                 MessageEncoder enc,
                                  WcfHttpServer srv,
                                  IPrincipal user)
             {
@@ -50,6 +51,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
                 this._SERVER = srv;
                 this._STREAM = this._SERVER.CreateRequestStream();
                 this._USER = user;
+
+                // write body to stream
+                enc.WriteMessage(msg, this._STREAM);
+                if (this._STREAM.CanSeek)
+                {
+                    this._STREAM.Position = 0;
+                }
 
                 // remote IP
                 try

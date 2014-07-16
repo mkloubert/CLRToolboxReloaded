@@ -74,12 +74,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
 
                         if (isRequestValid)
                         {
-                            this._WEB_ENCODER.WriteMessage(message, req.Stream);
-                            if (req.Stream.CanSeek)
-                            {
-                                req.Stream.Position = 0;
-                            }
-
                             if (this._SERVER.OnHandleRequestInner(req, resp) == false)
                             {
                                 // 501 - NotImplemented
