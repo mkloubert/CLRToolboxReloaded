@@ -125,7 +125,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
 
         #endregion Properties
 
-        #region Methods (7)
+        #region Methods (8)
 
         /// <summary>
         /// Creates a value for the <see cref="HttpRequestBase.REQUEST" /> property.
@@ -140,14 +140,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
             if (getVars != null)
             {
                 getVars.ForAll(throwExceptions: false,
-                               action: ctx =>
-                                   {
-                                       var key = ctx.Item.Key;
-
-                                       SetVar(vars: ctx.State.Vars,
-                                              key: key,
-                                              value: ctx.Item.Value);
-                                   },
+                               action: ctx => SetVar(vars: ctx.State.Vars,
+                                                     var: ctx.Item),
                                actionState: new
                                    {
                                        Vars = result,
@@ -158,15 +152,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
             if (postVars != null)
             {
                 postVars.ForAll(throwExceptions: false,
-                                action: ctx =>
-                                    {
-                                        var key = ctx.Item.Key;
-
-                                        SetVar(vars: ctx.State.Vars,
-                                               key: key,
-                                               value: ctx.Item.Value);
-                                    },
-                               actionState: new
+                                action: ctx => SetVar(vars: ctx.State.Vars,
+                                                     var: ctx.Item),
+                                actionState: new
                                     {
                                         Vars = result,
                                     });
@@ -216,6 +204,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
             }
 
             return result;
+        }
+        
+        /// <summary>
+        /// Sets the value of a variable.
+        /// </summary>
+        /// <param name="vars">The variable container.</param>
+        /// <param name="var">The name and value of the variable.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="vars" /> is <see langword="null" />.
+        /// </exception>
+        protected static void SetVar(IDictionary<string, string> vars,
+                                     KeyValuePair<string, string> var)
+        {
+            SetVar(vars: vars,
+                   key: var.Key, value: var.Value);
         }
 
         /// <summary>
