@@ -55,7 +55,10 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -184,6 +187,10 @@
     <Compile Include="Execution\Workflows\WorkflowBase.cs" />
     <Compile Include="Execution\Workflows\WorkflowExecutionContext.cs" />
     <Compile Include="Execution\Workflows\WorkflowStartAttribute.cs" />
+    <Compile Include="Extensions\AppDomains.CreateUnwrappedInstanceOf.cs">
+      <DependentUpon>AppDomains.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\AppDomains.cs" />
     <Compile Include="Extensions\ClrToolboxDataExtensionMethods.cs" />
     <Compile Include="Extensions\ClrToolboxExtensionMethods.cs" />
     <Compile Include="Extensions\Collections.AddRange.cs">
@@ -361,6 +368,24 @@
     </Compile>
     <Compile Include="Net\Http\Listener\HttpListenerServer.HttpRequest.cs">
       <DependentUpon>HttpListenerServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Net\Http\Wcf\BinaryMessage.cs" />
+    <Compile Include="Net\Http\Wcf\IWcfHttpServerService.cs" />
+    <Compile Include="Net\Http\Wcf\RawContentTypeMapper.cs" />
+    <Compile Include="Net\Http\Wcf\UserPwdAuthorizationPolicy.cs" />
+    <Compile Include="Net\Http\Wcf\UserPwdSecurityTokenAuthenticator.cs" />
+    <Compile Include="Net\Http\Wcf\UserPwdServiceCredentials.cs" />
+    <Compile Include="Net\Http\Wcf\UserPwdServiceCredentials.UsrPwdValidator.cs">
+      <DependentUpon>UserPwdServiceCredentials.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Net\Http\Wcf\UserPwdTokenManager.cs" />
+    <Compile Include="Net\Http\Wcf\WcfHttpServer.cs" />
+    <Compile Include="Net\Http\Wcf\WcfHttpServerService.cs" />
+    <Compile Include="Net\Http\Wcf\WcfHttpServer.HttpRequest.cs">
+      <DependentUpon>WcfHttpServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Net\Http\Wcf\WcfHttpServer.HttpResponse.cs">
+      <DependentUpon>WcfHttpServer.cs</DependentUpon>
     </Compile>
     <Compile Include="Net\ITcpAddress.cs" />
     <Compile Include="Net\TcpAddress.cs" />

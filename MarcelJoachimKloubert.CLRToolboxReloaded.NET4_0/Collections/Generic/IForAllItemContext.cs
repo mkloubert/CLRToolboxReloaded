@@ -2,11 +2,6 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 {
     #region INTERFACE: IForAllItemContext<T>
@@ -15,7 +10,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
     /// Describes a context for a 'ForAll' operation.
     /// </summary>
     /// <typeparam name="T">Type of the underlying item.</typeparam>
-    public interface IForAllItemContext<T> : IObject
+    public interface IForAllItemContext<out T> : IObject
     {
         #region Data Members (2)
 
@@ -29,19 +24,19 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// </summary>
         T Item { get; }
 
-        #endregion Data Members
+        #endregion Data Members (2)
     }
 
     #endregion INTERFACE: IForAllItemContext<T>
 
     #region INTERFACE: IForAllItemContext<T, TState>
-    
+
     /// <summary>
     /// Describes a context for a 'ForAll' operation.
     /// </summary>
     /// <typeparam name="T">Type of the underlying item.</typeparam>
     /// <typeparam name="TState">Type of the state item.</typeparam>
-    public interface IForAllItemContext<T, TState> : IForAllItemContext<T>
+    public interface IForAllItemContext<out T, out TState> : IForAllItemContext<T>
     {
         #region Data Members (1)
 

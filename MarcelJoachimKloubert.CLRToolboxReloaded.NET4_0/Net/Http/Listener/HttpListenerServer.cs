@@ -44,7 +44,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 
         #endregion Constructors
 
-        #region Properties (3)
+        #region Properties (4)
 
         /// <summary>
         /// Gets the name of the realm for basic auth.
@@ -72,6 +72,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
         {
             get;
             set;
+        }
+
+        /// <inheriteddoc />
+        public override bool SupportsSecureHttp
+        {
+            get { return true; }
         }
 
         /// <summary>

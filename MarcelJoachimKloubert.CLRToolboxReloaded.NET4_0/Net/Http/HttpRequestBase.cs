@@ -2,6 +2,8 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.CLRToolbox.Collections.Generic;
+using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -123,7 +125,55 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
 
         #endregion Properties
 
-        #region Methods (5)
+        #region Methods (7)
+
+        /// <summary>
+        /// Creates a value for the <see cref="HttpRequestBase.REQUEST" /> property.
+        /// </summary>
+        /// <returns>The value for the <see cref="HttpRequestBase.REQUEST" /> property.</returns>
+        protected virtual IReadOnlyDictionary<string, string> CreateRequestVarsDictionary()
+        {
+            var result = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
+                                                                                                                              emptyIsNull: true));
+
+            var getVars = this.GET;
+            if (getVars != null)
+            {
+                getVars.ForAll(throwExceptions: false,
+                               action: ctx =>
+                                   {
+                                       var key = ctx.Item.Key;
+
+                                       SetVar(vars: ctx.State.Vars,
+                                              key: key,
+                                              value: ctx.Item.Value);
+                                   },
+                               actionState: new
+                                   {
+                                       Vars = result,
+                                   });
+            }
+
+            var postVars = this.POST;
+            if (postVars != null)
+            {
+                postVars.ForAll(throwExceptions: false,
+                                action: ctx =>
+                                    {
+                                        var key = ctx.Item.Key;
+
+                                        SetVar(vars: ctx.State.Vars,
+                                               key: key,
+                                               value: ctx.Item.Value);
+                                    },
+                               actionState: new
+                                    {
+                                        Vars = result,
+                                    });
+            }
+
+            return new ReadOnlyDictionaryWrapper<string, string>(dict: result);
+        }
 
         /// <inheriteddoc />
         public Stream GetBody()
@@ -166,6 +216,31 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Sets the value of a variable.
+        /// </summary>
+        /// <param name="vars">The variable container.</param>
+        /// <param name="key">The name of the variable.</param>
+        /// <param name="value">The value of the variable.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="vars" /> is <see langword="null" />.
+        /// </exception>
+        protected static void SetVar(IDictionary<string, string> vars,
+                                     string key, string value)
+        {
+            if (vars == null)
+            {
+                throw new ArgumentNullException("vars");
+            }
+
+            if (string.IsNullOrEmpty(value))
+            {
+                value = null;
+            }
+
+            vars[key ?? string.Empty] = value;
         }
 
         /// <inheriteddoc />

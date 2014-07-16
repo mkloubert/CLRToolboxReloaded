@@ -110,7 +110,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                             {
                                 var extractedVars = HttpUtility.ParseQueryString(reader.ReadToEnd());
 
-                                extractedVars.AllKeys.Cast<string>().ForAll(
+                                extractedVars.AllKeys.ForAll(
                                     throwExceptions: false,
                                     action: faCtx =>
                                         {
@@ -131,50 +131,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 }
                 finally
                 {
-                    this._POST_VARS = new ReadOnlyDictionaryWrapper<string, string>(dict: getVars);
+                    this._POST_VARS = new ReadOnlyDictionaryWrapper<string, string>(dict: postVars);
                 }
 
-                // REQUEST
-                var requestVars = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
-                                                                                                                                       emptyIsNull: true));
-                try
-                {
-                    // then GET
-                    getVars.ForAll(
-                        throwExceptions: false,
-                        action: faCtx =>
-                            {
-                                var key = faCtx.Item.Key;
-
-                                SetVar(vars: faCtx.State.Vars,
-                                       key: key,
-                                       value: faCtx.Item.Value);
-                            },
-                        actionState: new
-                            {
-                                Vars = requestVars,
-                            });
-
-                    // then POST
-                    postVars.ForAll(
-                        throwExceptions: false,
-                        action: faCtx =>
-                            {
-                                var key = faCtx.Item.Key;
-
-                                SetVar(vars: faCtx.State.Vars,
-                                       key: key,
-                                       value: faCtx.Item.Value);
-                            },
-                        actionState: new
-                            {
-                                Vars = requestVars,
-                            });
-                }
-                finally
-                {
-                    this._REQUEST_VARS = new ReadOnlyDictionaryWrapper<string, string>(dict: getVars);
-                }
+                this._REQUEST_VARS = this.CreateRequestVarsDictionary();
 
                 // headers
                 var headers = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
@@ -273,7 +233,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 
             #endregion Properties (10)
 
-            #region Methods (3)
+            #region Methods (2)
 
             public void Dispose()
             {
@@ -302,16 +262,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
             {
                 return new NonDisposableStream(baseStream: this._STREAM,
                                                callBehaviour: NonDisposableStream.CallBehaviour.Nothing);
-            }
-
-            private static void SetVar(IDictionary<string, string> vars, string key, string value)
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    value = null;
-                }
-
-                vars[key ?? string.Empty] = value;
             }
 
             #endregion Methods (3)

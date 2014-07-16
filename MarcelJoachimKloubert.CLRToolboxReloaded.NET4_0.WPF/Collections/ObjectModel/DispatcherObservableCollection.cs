@@ -159,11 +159,17 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel
         }
 
         /// <inheriteddoc />
-        protected override void InvokeForCollection<S>(Action<SynchronizedObservableCollection<T>, S> action, S actionState)
+        protected override void InvokeForCollection<TState>(Action<SynchronizedObservableCollection<T>, TState> action,
+                                                            Func<SynchronizedObservableCollection<T>, TState> actionStateProvider)
         {
             if (action == null)
             {
                 throw new ArgumentNullException("action");
+            }
+
+            if (actionStateProvider == null)
+            {
+                throw new ArgumentNullException("actionStateProvider");
             }
 
             var disp = this._PROVIDER(this);
@@ -179,7 +185,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel
             }
 
             dispAction(this._PRIO,
-                       this.CreateSyncAction<S>(action, actionState));
+                       this.CreateSyncAction<TState>(action: action,
+                                                     actionStateProvider: actionStateProvider));
         }
 
         #endregion Methods
@@ -195,7 +202,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel
     public static class DispatcherObservableCollection
     {
         #region Methods (6)
-        
+
         /// <summary>
         /// Creates new and empty instance of the <see cref="DispatcherObservableCollection{T}" /> class
         /// for a specific <see cref="Dispatcher" />.
@@ -220,7 +227,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Collections.ObjectModel
         /// <exception cref="ArgumentNullException">
         /// <paramref name="syncRoot" /> is <see langword="null" />.
         /// </exception>
-        public static DispatcherObservableCollection<T> Create<T>(object syncRoot, 
+        public static DispatcherObservableCollection<T> Create<T>(object syncRoot,
                                                                   DispatcherPriority prio = DispatcherPriority.Normal,
                                                                   bool isBackground = false)
         {
