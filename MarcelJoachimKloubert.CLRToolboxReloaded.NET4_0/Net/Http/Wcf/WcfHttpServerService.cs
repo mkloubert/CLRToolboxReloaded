@@ -141,6 +141,27 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
                         resp.Stream.CopyTo(outputStream);
                         outputStream.Position = 0;
 
+                        // content type
+                        if (string.IsNullOrWhiteSpace(resp.ContentType))
+                        {
+                            resp.Property.Headers[HttpResponseHeader.ContentType] = resp.ContentType.ToLower().Trim();
+                        }
+
+                        // headers
+                        foreach (var item in resp.Headers)
+                        {
+                            resp.Property.Headers[item.Key] = item.Value;
+                        }
+
+                        // status code
+                        resp.Property.StatusCode = resp.StatusCode;
+
+                        // status description
+                        if (string.IsNullOrWhiteSpace(resp.StatusDescription) == false)
+                        {
+                            resp.Property.StatusDescription = resp.StatusDescription.Trim();
+                        }
+
                         var responseMessage = new BinaryMessage(outputStream.ToArray());
                         responseMessage.Properties[HttpResponseMessageProperty.Name] = resp.Property;
 
