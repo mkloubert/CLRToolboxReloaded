@@ -249,7 +249,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http
         /// <inheriteddoc />
         public HttpMethod? TryGetKnownMethod()
         {
-            string method = this.Method;
+            var method = this.Method;
             if (string.IsNullOrWhiteSpace(method))
             {
                 return HttpMethod.GET;
