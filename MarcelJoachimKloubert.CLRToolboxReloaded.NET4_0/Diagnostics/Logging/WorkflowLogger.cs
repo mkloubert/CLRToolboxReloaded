@@ -259,18 +259,19 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
             }
 
             this._WORKFLOW
-                .ForEach(ctx =>
-                {
-                    var res = ctx.Item(ctx.State.Arguments);
+                .ForEach(action: ctx =>
+                             {
+                                 var res = ctx.Item(ctx.State.Arguments);
 
-                    if (res.HasBeenCanceled)
-                    {
-                        ctx.Cancel = true;
-                    }
-                }, actionState: new
-                {
-                    Arguments = allArgs.ToArray(),
-                });
+                                 if (res.HasBeenCanceled)
+                                 {
+                                     ctx.Cancel = true;
+                                 }
+                             },
+                         actionState: new
+                             {
+                                 Arguments = allArgs.AsArray(),
+                             });
         }
 
         // Private Methods (1)
