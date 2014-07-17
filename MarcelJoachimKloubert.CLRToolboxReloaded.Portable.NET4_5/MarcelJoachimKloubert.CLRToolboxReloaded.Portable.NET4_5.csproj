@@ -350,6 +350,10 @@
       <Link>Extensions\Collections.PeekOrDefault.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.PopOrDefault.cs">
+      <Link>Extensions\Collections.PopOrDefault.cs</Link>
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.PushRange.cs">
       <Link>Extensions\Collections.PushRange.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
