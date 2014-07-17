@@ -150,6 +150,12 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ComponentModel\ReceiveValueFromOptions.cs">
       <Link>ComponentModel\ReceiveValueFromOptions.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Composition\MultiInstanceComposer.cs">
+      <Link>Composition\MultiInstanceComposer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Composition\SingleInstanceComposer.cs">
+      <Link>Composition\SingleInstanceComposer.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Configuration\ConfigRepositoryBase.cs">
       <Link>Configuration\ConfigRepositoryBase.cs</Link>
     </Compile>
