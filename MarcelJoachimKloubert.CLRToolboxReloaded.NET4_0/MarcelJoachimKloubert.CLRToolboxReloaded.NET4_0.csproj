@@ -275,6 +275,12 @@
     <Compile Include="Extensions\Data.InvokeForTransaction.cs">
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Data.ToDictionary.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Data.ToDictionaryEnumerable.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Data.ToEnumerable.cs">
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>

@@ -513,6 +513,14 @@
       <Link>Extensions\Data.ToDbValue.cs</Link>
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.ToDictionary.cs">
+      <Link>Extensions\Data.ToDictionary.cs</Link>
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.ToDictionaryEnumerable.cs">
+      <Link>Extensions\Data.ToDictionaryEnumerable.cs</Link>
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.ToEnumerable.cs">
       <Link>Extensions\Data.ToEnumerable.cs</Link>
       <DependentUpon>Data.cs</DependentUpon>
