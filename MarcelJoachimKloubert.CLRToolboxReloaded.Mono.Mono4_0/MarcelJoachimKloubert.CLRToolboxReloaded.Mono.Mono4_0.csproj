@@ -48,6 +48,10 @@
       <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="FreeImageNET">
+      <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\FreeImageNET.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -738,6 +742,21 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\AppDomains.cs">
       <Link>Extensions\AppDomains.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Drawing.cs">
+      <Link>Extensions\Drawing.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Drawing.LoadBitmap.cs">
+      <Link>Extensions\Drawing.LoadBitmap.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.InvokeForTransaction.cs">
+      <Link>Extensions\Data.InvokeForTransaction.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\DbTransactionContext.cs">
+      <Link>Data\DbTransactionContext.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Data\IDbTransactionContext.cs">
+      <Link>Data\IDbTransactionContext.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -784,6 +803,12 @@
     </None>
     <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\nunit.framework.xml">
       <Link>__Libs\nunit.framework.xml</Link>
+    </None>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\FreeImageNET.dll">
+      <Link>__Libs\FreeImageNET.dll</Link>
+    </None>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\FreeImageNET.XML">
+      <Link>__Libs\FreeImageNET.XML</Link>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -44,6 +44,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>__Libs\AppLimit.CloudComputing.SharpBox.dll</HintPath>
     </Reference>
+    <Reference Include="FreeImageNET, Version=3.15.1.0, Culture=neutral, PublicKeyToken=986636ec28bb8c01, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>__Libs\FreeImageNET.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>__Libs\Newtonsoft.Json.dll</HintPath>
@@ -55,6 +59,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -127,7 +132,9 @@
     <Compile Include="Data\Database\IAdoDataConnection.cs" />
     <Compile Include="Data\Database\IDatabase.cs" />
     <Compile Include="Data\DataConnectionBase.cs" />
+    <Compile Include="Data\DbTransactionContext.cs" />
     <Compile Include="Data\IDataConnection.cs" />
+    <Compile Include="Data\IDbTransactionContext.cs" />
     <Compile Include="Diagnostics\Logging\AggregateLogger.cs" />
     <Compile Include="Diagnostics\Logging\AsyncLogger.cs" />
     <Compile Include="Diagnostics\Logging\DelegateLogger.cs" />
@@ -265,6 +272,9 @@
     <Compile Include="Extensions\Data.ExecuteEnumerableReader.cs">
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Data.InvokeForTransaction.cs">
+      <DependentUpon>Data.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Data.ToEnumerable.cs">
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>
@@ -277,6 +287,10 @@
     <Compile Include="Extensions\Data.ToEnumerable.SqlClient.cs">
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Drawing.LoadBitmap.cs">
+      <DependentUpon>Drawing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Drawing.cs" />
     <Compile Include="Extensions\Reflection.cs" />
     <Compile Include="Extensions\Reflection.TryGetDelegateTypeFromMethod.cs">
       <DependentUpon>Reflection.cs</DependentUpon>
@@ -464,6 +478,10 @@
   <ItemGroup>
     <None Include="__Libs\nunit.framework.dll" />
     <None Include="__Libs\nunit.framework.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="__Libs\FreeImageNET.dll" />
+    <None Include="__Libs\FreeImageNET.XML" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
