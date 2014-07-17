@@ -14,10 +14,17 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data
     /// </summary>
     public class DbTransactionContext : ObjectBase, IDbTransactionContext
     {
-        #region Properties (1)
+        #region Properties (4)
         
         /// <inheriteddoc />
-        public bool CommitOnSuccess
+        public bool Commit
+        {
+            get;
+            set;
+        }
+
+        /// <inheriteddoc />
+        public bool Rollback
         {
             get;
             set;

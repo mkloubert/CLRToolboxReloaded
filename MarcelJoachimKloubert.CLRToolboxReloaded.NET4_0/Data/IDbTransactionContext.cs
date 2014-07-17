@@ -13,16 +13,30 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data
     /// </summary>
     public interface IDbTransactionContext : IObject
     {
-        #region Properties (3)
+        #region Properties (4)
 
         /// <summary>
         /// Gets or sets if transaction should be commited if execution was successful.
         /// </summary>
-        bool CommitOnSuccess { get; set; }
+        /// <remarks>
+        /// This should be <see langword="true" /> by default.
+        /// </remarks>
+        bool Commit { get; set; }
+        
+        /// <summary>
+        /// Gets or sets if transaction should be rollbacked or not.
+        /// </summary>
+        /// <remarks>
+        /// This should be <see langword="false" /> by default.
+        /// </remarks>
+        bool Rollback { get; set; }
 
         /// <summary>
         /// Gets or sets if transaction should be rollbacked if execution has been failed.
         /// </summary>
+        /// <remarks>
+        /// This should be <see langword="true" /> by default.
+        /// </remarks>
         bool RollbackOnFailure { get; set; }
 
         /// <summary>
