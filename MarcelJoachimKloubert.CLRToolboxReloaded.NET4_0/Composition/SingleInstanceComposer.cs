@@ -21,7 +21,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Composition
         /// </summary>
         /// <param name="container">The value for the <see cref="SingleInstanceComposer{T}.Container" /> property.</param>
         /// <param name="doRefresh">
-        /// Do an initial call of <see cref="SingleInstanceComposer{T}.Refresh()" /> method.
+        /// Do an initial call of <see cref="SingleInstanceComposer{T}.Refresh()" /> method or not.
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="container" /> is <see langword="null" />.

@@ -22,7 +22,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Composition
         /// </summary>
         /// <param name="container">The value for the <see cref="MultiInstanceComposer{T}.Container" /> property.</param>
         /// <param name="doRefresh">
-        /// Do an initial call of <see cref="MultiInstanceComposer{T}.Refresh()" /> method.
+        /// Do an initial call of <see cref="MultiInstanceComposer{T}.Refresh()" /> method or not.
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="container" /> is <see langword="null" />.
