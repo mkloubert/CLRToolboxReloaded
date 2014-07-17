@@ -160,7 +160,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
             var ctx = new DbTransactionContext<TState>();
             ctx.Commit = true;
-            ctx.Rollback = false;
             ctx.RollbackOnFailure = true;
             ctx.Transaction = trans;
 
