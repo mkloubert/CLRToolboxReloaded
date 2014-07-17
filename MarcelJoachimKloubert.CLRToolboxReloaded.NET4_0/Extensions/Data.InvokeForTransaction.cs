@@ -6,7 +6,7 @@ using MarcelJoachimKloubert.CLRToolbox.Data;
 using System;
 using System.Data;
 
-namespace MarcelJoachimKloubert.CLRToolbox.Extensions
+namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Data
 {
     static partial class ClrToolboxDataExtensionMethods
     {

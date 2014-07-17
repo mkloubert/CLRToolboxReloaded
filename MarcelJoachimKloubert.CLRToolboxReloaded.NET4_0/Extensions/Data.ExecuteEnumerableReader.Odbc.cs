@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Odbc;
 
-namespace MarcelJoachimKloubert.CLRToolbox.Extensions
+namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Data
 {
     static partial class ClrToolboxDataExtensionMethods
     {

@@ -2,7 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-namespace MarcelJoachimKloubert.CLRToolbox.Extensions
+namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Data
 {
     static partial class ClrToolboxDataExtensionMethods
     {
