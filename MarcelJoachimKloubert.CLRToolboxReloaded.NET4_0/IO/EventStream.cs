@@ -18,13 +18,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
     public enum EventStreamDataTransferedContext
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <see cref="EventStream{TStream}.Read(byte[], int, int)" />
         Read,
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <see cref="EventStream{TStream}.Write(byte[], int, int)" />
         Write,
@@ -113,7 +113,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
 
         #endregion Events (1)
 
-        #region Methods (4)
+        #region Methods (5)
 
         /// <summary>
         /// Raises the <see cref="EventStream{TStream}.DataTransfered" /> event.
@@ -144,6 +144,16 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
         }
 
         /// <inheriteddoc />
+        public override int ReadByte()
+        {
+            var result = base.ReadByte();
+            this.OnDataTransfered(EventStreamDataTransferedContext.Read,
+                                  result >= 0 ? new byte[] { (byte)result } : Enumerable.Empty<byte>());
+
+            return result;
+        }
+
+        /// <inheriteddoc />
         public override void Write(byte[] buffer, int offset, int count)
         {
             base.Write(buffer, offset, count);
@@ -156,9 +166,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
         public override void WriteByte(byte value)
         {
             base.WriteByte(value);
+
+            this.OnDataTransfered(EventStreamDataTransferedContext.Write,
+                                  new byte[] { value });
         }
 
-        #endregion Methods (4)
+        #endregion Methods (5)
     }
 
     #endregion CLASS: EventStream<TStream>
@@ -167,7 +180,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
 
     /// <summary>
     /// Simple implementation of <see cref="EventStream{TStream}" />.
-    /// </summary> 
+    /// </summary>
     public class EventStream : EventStream<Stream>
     {
         #region Constructors (2)
