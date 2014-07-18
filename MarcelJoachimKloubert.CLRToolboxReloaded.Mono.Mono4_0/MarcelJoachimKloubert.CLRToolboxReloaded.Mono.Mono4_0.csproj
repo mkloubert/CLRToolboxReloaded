@@ -772,6 +772,21 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Reflection.GetManifestResourceString.cs">
       <Link>Extensions\Reflection.GetManifestResourceString.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Reflection.GetManifestResourceImage.cs">
+      <Link>Extensions\Reflection.GetManifestResourceImage.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Reflection.GetManifestResourceBlob.cs">
+      <Link>Extensions\Reflection.GetManifestResourceBlob.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.TryPeek.cs">
+      <Link>Extensions\Collections.TryPeek.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.TryPop.cs">
+      <Link>Extensions\Collections.TryPop.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.PopOrDefault.cs">
+      <Link>Extensions\Collections.PopOrDefault.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

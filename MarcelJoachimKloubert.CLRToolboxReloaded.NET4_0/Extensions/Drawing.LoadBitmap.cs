@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 
-namespace MarcelJoachimKloubert.CLRToolbox.Extensions
+namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Drawing
 {
     static partial class ClrToolboxDataExtensionMethods
     {

@@ -14,7 +14,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         #region Methods (6)
 
         /// <summary>
-        /// Returns a embedded resource inside an <see cref="Assembly" /> as an UTF-8 string.
+        /// Returns an embedded resource inside an <see cref="Assembly" /> as an UTF-8 string.
         /// </summary>
         /// <typeparam name="T">The type that is used for the namespace of the resource.</typeparam>
         /// <param name="asm">The assembly where the resource is stored.</param>
@@ -31,7 +31,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         }
 
         /// <summary>
-        /// Returns a embedded resource inside an <see cref="Assembly" /> as a string.
+        /// Returns an embedded resource inside an <see cref="Assembly" /> as a string.
         /// </summary>
         /// <typeparam name="T">The type that is used for the namespace of the resource.</typeparam>
         /// <param name="asm">The assembly where the resource is stored.</param>
@@ -50,7 +50,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         }
 
         /// <summary>
-        /// Returns a embedded resource inside an <see cref="Assembly" /> as an UTF-8 string.
+        /// Returns an embedded resource inside an <see cref="Assembly" /> as an UTF-8 string.
         /// </summary>
         /// <param name="asm">The assembly where the resource is stored.</param>
         /// <param name="name">The name / relative path of the resource.</param>
@@ -66,7 +66,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         }
 
         /// <summary>
-        /// Returns a embedded resource inside an <see cref="Assembly" /> as a string.
+        /// Returns an embedded resource inside an <see cref="Assembly" /> as a string.
         /// </summary>
         /// <param name="asm">The assembly where the resource is stored.</param>
         /// <param name="name">The name / relative path of the resource.</param>
@@ -105,7 +105,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         }
 
         /// <summary>
-        /// Returns a embedded resource inside an <see cref="Assembly" /> as an UTF-8 string.
+        /// Returns an embedded resource inside an <see cref="Assembly" /> as an UTF-8 string.
         /// </summary>
         /// <param name="asm">The assembly where the resource is stored.</param>
         /// <param name="type">The type that is used for the namespace of the resource.</param>
@@ -123,7 +123,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         }
 
         /// <summary>
-        /// Returns a embedded resource inside an <see cref="Assembly" /> as a string.
+        /// Returns an embedded resource inside an <see cref="Assembly" /> as a string.
         /// </summary>
         /// <param name="asm">The assembly where the resource is stored.</param>
         /// <param name="type">The type that is used for the namespace of the resource.</param>
@@ -140,18 +140,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                 throw new ArgumentNullException("type");
             }
 
-            var ns = type.Namespace;
-            if (string.IsNullOrEmpty(ns) == false)
-            {
-                return GetManifestResourceString(asm: asm,
-                                                 name: string.Format("{0}.{1}",
-                                                                     ns,
-                                                                     name),
-                                                 enc: enc);
-            }
-
             return GetManifestResourceString(asm: asm,
-                                             name: name,
+                                             name: GetFullResourceName(type, name),
                                              enc: enc);
         }
 

@@ -233,7 +233,9 @@
     <Compile Include="Extensions\Collections.PeekOrDefault.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\Collections.PopOrDefault.cs" />
+    <Compile Include="Extensions\Collections.PopOrDefault.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Collections.PushRange.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
@@ -244,6 +246,12 @@
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Collections.Transform.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Collections.TryPop.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Collections.TryPeek.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Compression.GUnzip.cs">
@@ -301,6 +309,12 @@
     </Compile>
     <Compile Include="Extensions\Drawing.cs" />
     <Compile Include="Extensions\Reflection.cs" />
+    <Compile Include="Extensions\Reflection.GetManifestResourceBlob.cs">
+      <DependentUpon>Reflection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Reflection.GetManifestResourceImage.cs">
+      <DependentUpon>Reflection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Reflection.GetManifestResourceString.cs">
       <DependentUpon>Reflection.cs</DependentUpon>
     </Compile>
