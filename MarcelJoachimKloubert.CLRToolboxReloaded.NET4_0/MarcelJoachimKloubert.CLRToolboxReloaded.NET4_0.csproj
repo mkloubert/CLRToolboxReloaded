@@ -301,6 +301,9 @@
     </Compile>
     <Compile Include="Extensions\Drawing.cs" />
     <Compile Include="Extensions\Reflection.cs" />
+    <Compile Include="Extensions\Reflection.GetManifestResourceString.cs">
+      <DependentUpon>Reflection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Reflection.TryGetDelegateTypeFromMethod.cs">
       <DependentUpon>Reflection.cs</DependentUpon>
     </Compile>
