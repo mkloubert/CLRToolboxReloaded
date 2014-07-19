@@ -54,6 +54,17 @@
     <Compile Include="Execution\Jobs\AsyncWinFormsJobScheduler.cs" />
     <Compile Include="Execution\Jobs\WinFormsJobScheduler.cs" />
     <Compile Include="Execution\WinFormsMediator.cs" />
+    <Compile Include="Extensions\ClrToolboxWinFormsExtensionMethods.cs" />
+    <Compile Include="Extensions\Controls.EnumerateControls.cs">
+      <DependentUpon>Controls.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Controls.InvokeSafe.cs">
+      <DependentUpon>Controls.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Controls.cs" />
+    <Compile Include="Extensions\Controls.SendMessage.cs">
+      <DependentUpon>Controls.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
