@@ -13,8 +13,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
     {
         #region Methods (5)
 
-        // Public Methods (4) 
-
         /// <summary>
         /// Creates a case insensitive <see cref="IEqualityComparer{T}" /> for <see cref="string" />.
         /// </summary>
@@ -52,7 +50,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                                                                   ParseString(y, trim, emptyIsNull),
                                                         (obj) =>
                                                         {
-                                                            string str = ParseString(obj, trim, emptyIsNull);
+                                                            var str = ParseString(obj, trim, emptyIsNull);
+
                                                             return str != null ? str.GetHashCode() : 0;
                                                         });
         }
@@ -66,11 +65,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
             return CreateCaseInsensitiveStringComparer(true, true);
         }
 
-        // Private Methods (1) 
-
         private static string ParseString(string str, bool trim, bool emptyIsNull)
         {
-            string result = str;
+            var result = str;
 
             if (result != null)
             {

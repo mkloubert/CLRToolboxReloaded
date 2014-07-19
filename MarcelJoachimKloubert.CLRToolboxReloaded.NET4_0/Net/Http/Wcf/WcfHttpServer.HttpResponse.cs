@@ -5,6 +5,7 @@
 using MarcelJoachimKloubert.CLRToolbox.Collections.Generic;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.ServiceModel.Channels;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
@@ -15,13 +16,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
 
         internal sealed class HttpResponse : HttpResponseBase, IDisposable
         {
-            #region Fields (3)
+            #region Fields (4)
 
             private readonly IDictionary<string, object> _FRONTEND_VARS;
             private readonly IDictionary<string, string> _HEADERS;
+            private readonly Stream _INITIAL_STREAM;
             private readonly WcfHttpServer _SERVER;
 
-            #endregion Fields (3)
+            #endregion Fields (4)
 
             #region Constructors (2)
 
@@ -35,8 +37,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
                 this._FRONTEND_VARS = new Dictionary<string, object>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
                                                                                                                                            emptyIsNull: true));
 
-                this._HEADERS = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
-                                                                                                                                     emptyIsNull: true));
+                this._HEADERS = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateHttpKeyComparer());
+
+                this._INITIAL_STREAM = this.Stream;
             }
 
             ~HttpResponse()
@@ -79,7 +82,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
                 try
                 {
                     this._SERVER
-                        .CloseResponseStream(this.Stream);
+                        .CloseResponseStream(this._INITIAL_STREAM);
                 }
                 catch
                 {

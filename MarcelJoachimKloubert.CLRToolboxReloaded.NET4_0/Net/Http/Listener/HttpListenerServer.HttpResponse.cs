@@ -24,9 +24,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
             private readonly Stream _INITIAL_STREAM;
             private readonly HttpListenerServer _SERVER;
 
-            #endregion Fields (4)
+            #endregion Fields (5)
 
-            #region Constrcutors (1)
+            #region Constrcutors (2)
 
             internal HttpResponse(HttpListenerServer server,
                                   HttpListenerContext ctx)
@@ -39,8 +39,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 this._FRONTEND_VARS = new Dictionary<string, object>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
                                                                                                                                            emptyIsNull: true));
 
-                this._HEADERS = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
-                                                                                                                                     emptyIsNull: true));
+                this._HEADERS = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateHttpKeyComparer());
             }
 
             ~HttpResponse()
@@ -48,7 +47,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 this.Dispose(false);
             }
 
-            #endregion Constrcutors (1)
+            #endregion Constrcutors (2)
 
             #region Properties (2)
 

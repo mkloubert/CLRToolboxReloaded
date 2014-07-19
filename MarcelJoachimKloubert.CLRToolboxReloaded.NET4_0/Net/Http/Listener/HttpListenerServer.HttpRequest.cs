@@ -69,8 +69,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 }
 
                 // GET
-                var getVars = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
-                                                                                                                                   emptyIsNull: true));
+                var getVars = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateHttpKeyComparer());
                 try
                 {
                     ctx.Request.QueryString.Keys.Cast<string>().ForAll(
@@ -95,8 +94,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 }
 
                 // POST
-                var postVars = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
-                                                                                                                                    emptyIsNull: true));
+                var postVars = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateHttpKeyComparer());
                 try
                 {
                     if (this._METHOD == "POST")
@@ -137,8 +135,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 this._REQUEST_VARS = this.CreateRequestVarsDictionary();
 
                 // headers
-                var headers = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
-                                                                                                                                   emptyIsNull: true));
+                var headers = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateHttpKeyComparer());
                 try
                 {
                     ctx.Request.Headers.AllKeys.ForAll(

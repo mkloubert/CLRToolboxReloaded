@@ -4,7 +4,7 @@
 
 namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 {
-    #region INTERFACE: ForAllItemContext<T>
+    #region CLASS: ForAllItemContext<T>
 
     /// <summary>
     /// Simple implementation of the <see cref="IForEachItemContext{T}" /> interface.
@@ -53,9 +53,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         #endregion Properties (1)
     }
 
-    #endregion INTERFACE: ForEachItemContext<T>
+    #endregion CLASS: ForEachItemContext<T>
 
-    #region INTERFACE: ForEachItemContext<T, TState>
+    #region CLASS: ForEachItemContext<T, TState>
 
     /// <summary>
     /// Simple implementation of the <see cref="IForEachItemContext{T, TState}" /> interface.
@@ -105,5 +105,5 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         #endregion Properties (1)
     }
 
-    #endregion INTERFACE: IForAllItemContext<T, TState>
+    #endregion CLASS: ForAllItemContext<T, TState>
 }

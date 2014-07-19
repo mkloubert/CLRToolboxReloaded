@@ -86,8 +86,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
 
                 // headers
                 {
-                    var headers = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
-                                                                                                                                       emptyIsNull: true));
+                    var headers = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateHttpKeyComparer());
 
                     this.Property.Headers.AllKeys.ForAll(
                         action: (ctx) =>
@@ -108,8 +107,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
 
                 // GET
                 {
-                    var getVars = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
-                                                                                                                                       emptyIsNull: true));
+                    var getVars = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateHttpKeyComparer());
 
                     var queryStr = this.Property.QueryString;
                     if (string.IsNullOrWhiteSpace(queryStr) == false)
@@ -134,8 +132,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
                 }
 
                 // POST
-                var postVars = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
-                                                                                                                                    emptyIsNull: true));
+                var postVars = new Dictionary<string, string>(comparer: EqualityComparerFactory.CreateHttpKeyComparer());
                 try
                 {
                     if (this._METHOD == "POST")
