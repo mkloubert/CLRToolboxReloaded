@@ -20,7 +20,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// <param name="seq">The sequence.</param>
         /// <param name="action">The action to invoke.</param>
         /// <returns>
-        /// Operation was canceled (<see langword="true" />) or completely done (<see langword="true" />).
+        /// Operation was canceled (<see langword="false" />) or completely done (<see langword="true" />).
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="seq" /> and/or <paramref name="action" /> are <see langword="null" />.
@@ -52,7 +52,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// The state object for for <paramref name="action" />.
         /// </param>
         /// <returns>
-        /// Operation was canceled (<see langword="true" />) or completely done (<see langword="true" />).
+        /// Operation was canceled (<see langword="false" />) or completely done (<see langword="true" />).
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="seq" /> and/or <paramref name="action" /> are <see langword="null" />.
@@ -80,7 +80,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// The provider that creates / returns the state object for for <paramref name="action" />.
         /// </param>
         /// <returns>
-        /// Operation was canceled (<see langword="true" />) or completely done (<see langword="true" />).
+        /// Operation was canceled (<see langword="false" />) or completely done (<see langword="true" />).
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="seq" />, <paramref name="action" /> and/or <paramref name="actionStateProvider" /> are <see langword="null" />.
@@ -104,7 +104,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                 throw new ArgumentNullException("actionStateProvider");
             }
 
-            var result = false;
+            var result = true;
 
             using (var e = seq.GetEnumerator())
             {
@@ -124,7 +124,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
                     if (ctx.Cancel)
                     {
-                        result = true;
+                        result = false;
                         break;
                     }
                 }

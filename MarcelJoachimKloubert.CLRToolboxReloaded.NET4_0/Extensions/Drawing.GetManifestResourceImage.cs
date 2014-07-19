@@ -2,14 +2,13 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-using MarcelJoachimKloubert.CLRToolbox.Extensions.Drawing;
 using System;
 using System.Drawing;
 using System.Reflection;
 
-namespace MarcelJoachimKloubert.CLRToolbox.Extensions
+namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Drawing
 {
-    static partial class ClrToolboxExtensionMethods
+    static partial class ClrToolboxDrawExtensionMethods
     {
         #region Methods (3)
 

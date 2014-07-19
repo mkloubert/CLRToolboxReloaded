@@ -44,10 +44,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Composition
 
         #endregion Constructors (1)
 
-        #region Properties (1)
+        #region Properties (2)
 
         /// <summary>
-        /// Gets the underlying <see cref="CompositionContainer" /> instance..
+        /// Gets the underlying <see cref="CompositionContainer" /> instance.
         /// </summary>
         public CompositionContainer Container
         {
@@ -65,7 +65,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Composition
             private set;
         }
 
-        #endregion Properties (1)
+        #endregion Properties (2)
 
         #region Methods (1)
 

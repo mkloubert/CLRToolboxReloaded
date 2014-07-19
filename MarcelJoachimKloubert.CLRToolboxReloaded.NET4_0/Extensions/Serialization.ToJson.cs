@@ -28,7 +28,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// <returns>The object as JSON string.</returns>
         public static string ToJson<T>(this T obj, bool handleDbNullAsNull = true)
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             ToJson<T>(obj: obj,
                       builder: builder,
                       handleDbNullAsNull: handleDbNullAsNull);
@@ -59,7 +59,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
             using (var writer = new StringWriter(builder))
             {
-                ToJson<T>(obj, writer, handleDbNullAsNull);
+                ToJson<T>(obj,
+                          writer: writer,
+                          handleDbNullAsNull: handleDbNullAsNull);
             }
         }
 

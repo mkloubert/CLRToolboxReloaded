@@ -306,15 +306,15 @@
     <Compile Include="Extensions\Data.ToEnumerable.SqlClient.cs">
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Drawing.GetManifestResourceImage.cs">
+      <DependentUpon>Drawing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Drawing.LoadBitmap.cs">
       <DependentUpon>Drawing.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Drawing.cs" />
     <Compile Include="Extensions\Reflection.cs" />
     <Compile Include="Extensions\Reflection.GetManifestResourceBlob.cs">
-      <DependentUpon>Reflection.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\Reflection.GetManifestResourceImage.cs">
       <DependentUpon>Reflection.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Reflection.GetManifestResourceString.cs">

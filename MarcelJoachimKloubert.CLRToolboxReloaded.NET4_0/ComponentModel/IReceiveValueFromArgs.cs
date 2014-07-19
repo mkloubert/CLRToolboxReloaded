@@ -6,8 +6,6 @@ using System;
 
 namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 {
-    #region INTERFACE: IReceiveValueFromArgs
-
     /// <summary>
     /// Arguments for a method that receives values via <see cref="ReceiveValueFromAttribute" />.
     /// </summary>
@@ -61,7 +59,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
         /// <typeparam name="T">The target type.</typeparam>
         /// <returns>The casted value of <see cref="IReceiveValueFromArgs.NewValue" /> property.</returns>
         T GetNewValue<T>();
-        
+
         /// <summary>
         /// Gets the value of <see cref="IReceiveValueFromArgs.OldValue" /> property strong typed.
         /// </summary>
@@ -76,8 +74,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
         /// <returns>The casted value of <see cref="IReceiveValueFromArgs.Sender" /> property.</returns>
         T GetSender<T>();
 
-        #endregion
+        #endregion Methods (3)
     }
-
-    #endregion INTERFACE: IReceiveValueFromArgs
 }

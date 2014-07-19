@@ -84,6 +84,18 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 
         #endregion Delegates and Events (2)
 
+        #region Properties (1)
+
+        /// <inheriteddoc />
+        public override object Tag
+        {
+            get { return this.Get(() => this.Tag); }
+
+            set { this.Set(value, () => this.Tag); }
+        }
+
+        #endregion Properties (1)
+
         #region Methods (10)
 
         /// <summary>
@@ -123,7 +135,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
                            [global::System.Runtime.CompilerServices.CallerMemberName]
                            string propertyName = null
 #else
-                           string propertyName
+string propertyName
 #endif
 )
         {
@@ -441,7 +453,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
                               [global::System.Runtime.CompilerServices.CallerMemberName]
                               string propertyName = null
 #else
-                              string propertyName
+ string propertyName
 #endif
 )
         {
