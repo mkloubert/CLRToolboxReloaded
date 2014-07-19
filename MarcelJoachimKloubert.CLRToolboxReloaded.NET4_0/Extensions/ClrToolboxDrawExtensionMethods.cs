@@ -4,8 +4,10 @@
 
 namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Drawing
 {
-    static partial class ClrToolboxDrawExtensionMethods
+    /// <summary>
+    /// Drawing and image extension methods.
+    /// </summary>
+    public static partial class ClrToolboxDrawExtensionMethods
     {
-        // Drawing
     }
 }

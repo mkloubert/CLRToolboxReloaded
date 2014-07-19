@@ -10,7 +10,7 @@ using System.IO;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Drawing
 {
-    static partial class ClrToolboxDataExtensionMethods
+    static partial class ClrToolboxDrawExtensionMethods
     {
         #region Methods (2)
 

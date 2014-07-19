@@ -201,6 +201,7 @@
     </Compile>
     <Compile Include="Extensions\AppDomains.cs" />
     <Compile Include="Extensions\ClrToolboxDataExtensionMethods.cs" />
+    <Compile Include="Extensions\ClrToolboxDrawExtensionMethods.cs" />
     <Compile Include="Extensions\ClrToolboxExtensionMethods.cs" />
     <Compile Include="Extensions\Collections.AddRange.cs">
       <DependentUpon>Collections.cs</DependentUpon>

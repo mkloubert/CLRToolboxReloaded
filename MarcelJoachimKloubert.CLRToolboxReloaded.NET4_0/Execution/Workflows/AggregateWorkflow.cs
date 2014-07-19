@@ -234,15 +234,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
             return Create(workflows: (IEnumerable<IWorkflow>)workflows);
         }
 
-        /// <summary>
-        /// Returns a normalized list of workflows that are provides by <see cref="AggregateWorkflow.Provider" /> property.
-        /// </summary>
-        /// <returns>The list of workflows.</returns>
-        public IEnumerable<IWorkflow> GetWorkflows()
-        {
-            return (this._PROVIDER(this) ?? Enumerable.Empty<IWorkflow>()).Where(wf => wf != null);
-        }
-
         /// <inheriteddoc />
         protected override IEnumerable<WorkflowFunc> GetFunctionIterator()
         {
@@ -265,6 +256,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns a normalized list of workflows that are provides by <see cref="AggregateWorkflow.Provider" /> property.
+        /// </summary>
+        /// <returns>The list of workflows.</returns>
+        public IEnumerable<IWorkflow> GetWorkflows()
+        {
+            return (this._PROVIDER(this) ?? Enumerable.Empty<IWorkflow>()).Where(wf => wf != null);
         }
 
         #endregion Methods
