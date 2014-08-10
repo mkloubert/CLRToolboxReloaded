@@ -1083,105 +1083,6 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\MarkdownSharp\Markdown.cs">
       <Link>MarkdownSharp\Markdown.cs</Link>
     </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\ArchiveEmulationStreamProxy.cs">
-      <Link>SevenZipSharp\ArchiveEmulationStreamProxy.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\ArchiveExtractCallback.cs">
-      <Link>SevenZipSharp\ArchiveExtractCallback.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\ArchiveOpenCallback.cs">
-      <Link>SevenZipSharp\ArchiveOpenCallback.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\ArchiveUpdateCallback.cs">
-      <Link>SevenZipSharp\ArchiveUpdateCallback.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\COM.cs">
-      <Link>SevenZipSharp\COM.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\EventArgs.cs">
-      <Link>SevenZipSharp\EventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\Exceptions.cs">
-      <Link>SevenZipSharp\Exceptions.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\FileSignatureChecker.cs">
-      <Link>SevenZipSharp\FileSignatureChecker.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\Formats.cs">
-      <Link>SevenZipSharp\Formats.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\LibraryFeature.cs">
-      <Link>SevenZipSharp\LibraryFeature.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\LibraryManager.cs">
-      <Link>SevenZipSharp\LibraryManager.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\LzmaDecodeStream.cs">
-      <Link>SevenZipSharp\LzmaDecodeStream.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\LzmaEncodeStream.cs">
-      <Link>SevenZipSharp\LzmaEncodeStream.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\LzmaProgressCallback.cs">
-      <Link>SevenZipSharp\LzmaProgressCallback.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\NativeMethods.cs">
-      <Link>SevenZipSharp\NativeMethods.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\sdk\Common\CRC.cs">
-      <Link>SevenZipSharp\sdk\Common\CRC.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\sdk\Common\InBuffer.cs">
-      <Link>SevenZipSharp\sdk\Common\InBuffer.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\sdk\Common\OutBuffer.cs">
-      <Link>SevenZipSharp\sdk\Common\OutBuffer.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\sdk\Compress\LZMA\LzmaBase.cs">
-      <Link>SevenZipSharp\sdk\Compress\LZMA\LzmaBase.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\sdk\Compress\LZMA\LzmaDecoder.cs">
-      <Link>SevenZipSharp\sdk\Compress\LZMA\LzmaDecoder.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\sdk\Compress\LZMA\LzmaEncoder.cs">
-      <Link>SevenZipSharp\sdk\Compress\LZMA\LzmaEncoder.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\sdk\Compress\LZ\IMatchFinder.cs">
-      <Link>SevenZipSharp\sdk\Compress\LZ\IMatchFinder.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\sdk\Compress\LZ\LzBinTree.cs">
-      <Link>SevenZipSharp\sdk\Compress\LZ\LzBinTree.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\sdk\Compress\LZ\LzInWindow.cs">
-      <Link>SevenZipSharp\sdk\Compress\LZ\LzInWindow.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\sdk\Compress\LZ\LzOutWindow.cs">
-      <Link>SevenZipSharp\sdk\Compress\LZ\LzOutWindow.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\sdk\Compress\RangeCoder\RangeCoder.cs">
-      <Link>SevenZipSharp\sdk\Compress\RangeCoder\RangeCoder.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\sdk\Compress\RangeCoder\RangeCoderBit.cs">
-      <Link>SevenZipSharp\sdk\Compress\RangeCoder\RangeCoderBit.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\sdk\Compress\RangeCoder\RangeCoderBitTree.cs">
-      <Link>SevenZipSharp\sdk\Compress\RangeCoder\RangeCoderBitTree.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\sdk\ICoder.cs">
-      <Link>SevenZipSharp\sdk\ICoder.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\SevenZipCompressor.cs">
-      <Link>SevenZipSharp\SevenZipCompressor.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\SevenZipExtractor.cs">
-      <Link>SevenZipSharp\SevenZipExtractor.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\SevenZipSfx.cs">
-      <Link>SevenZipSharp\SevenZipSfx.cs</Link>
-    </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\StreamWrappers.cs">
-      <Link>SevenZipSharp\StreamWrappers.cs</Link>
-    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\WikiPlex\Common\Dimensions.cs">
       <Link>WikiPlex\Common\Dimensions.cs</Link>
     </Compile>
@@ -1487,18 +1388,6 @@
     <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\Compiler\Emit\Optimizations.txt">
       <Link>Jurassic\Compiler\Emit\Optimizations.txt</Link>
     </Content>
-    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\7z.dll">
-      <Link>SevenZipSharp\7z.dll</Link>
-    </None>
-    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\7z64.dll">
-      <Link>SevenZipSharp\7z64.dll</Link>
-    </None>
-    <EmbeddedResource Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\gpl.txt">
-      <Link>SevenZipSharp\gpl.txt</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\SevenZipSharp\lgpl.txt">
-      <Link>SevenZipSharp\lgpl.txt</Link>
-    </EmbeddedResource>
     <EmbeddedResource Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0.Libs\Jurassic\License.txt">
       <Link>Jurassic\License.txt</Link>
     </EmbeddedResource>

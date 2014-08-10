@@ -64,6 +64,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\RestSharp.dll</HintPath>
     </Reference>
+    <Reference Include="SevenZipSharp, Version=0.64.3890.29348, Culture=neutral, PublicKeyToken=20de82c62b055c88, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\SevenZipSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -945,6 +949,9 @@
     <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\ICSharpCode.SharpZipLib.dll">
       <Link>__Libs\ICSharpCode.SharpZipLib.dll</Link>
     </Content>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\SevenZipSharp.dll">
+      <Link>__Libs\SevenZipSharp.dll</Link>
+    </None>
     <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\RestSharp.dll">
       <Link>__Libs\RestSharp.dll</Link>
     </None>
