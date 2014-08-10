@@ -617,11 +617,17 @@
     <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0\__Libs\Newtonsoft.Json.xml">
       <Link>__Libs\Newtonsoft.Json.xml</Link>
     </Content>
+    <None Include="__Libs\RestSharp.WindowsPhone.dll" />
+    <None Include="__Libs\RestSharp.WindowsPhone.xml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.Portable.NET4_0\__Libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp.WindowsPhone, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>__Libs\RestSharp.WindowsPhone.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

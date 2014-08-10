@@ -672,6 +672,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>__Libs\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp.Silverlight, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>__Libs\RestSharp.Silverlight.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="__Libs\RestSharp.Silverlight.dll" />
+    <None Include="__Libs\RestSharp.Silverlight.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

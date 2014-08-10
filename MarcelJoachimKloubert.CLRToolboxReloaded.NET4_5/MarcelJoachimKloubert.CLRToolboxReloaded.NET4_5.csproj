@@ -60,6 +60,10 @@
     <Reference Include="nunit.framework">
       <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -941,6 +945,12 @@
     <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\ICSharpCode.SharpZipLib.dll">
       <Link>__Libs\ICSharpCode.SharpZipLib.dll</Link>
     </Content>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\RestSharp.dll">
+      <Link>__Libs\RestSharp.dll</Link>
+    </None>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\RestSharp.xml">
+      <Link>__Libs\RestSharp.xml</Link>
+    </None>
     <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\FreeImageNET.dll">
       <Link>__Libs\FreeImageNET.dll</Link>
     </None>

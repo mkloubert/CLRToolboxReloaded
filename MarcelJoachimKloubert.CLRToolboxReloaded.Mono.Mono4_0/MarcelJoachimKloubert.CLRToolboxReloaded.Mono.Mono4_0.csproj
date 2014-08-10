@@ -55,6 +55,9 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\RestSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -846,6 +849,12 @@
     </None>
     <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\ICSharpCode.SharpZipLib.dll">
       <Link>__Libs\ICSharpCode.SharpZipLib.dll</Link>
+    </None>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\RestSharp.dll">
+      <Link>__Libs\RestSharp.dll</Link>
+    </None>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\RestSharp.xml">
+      <Link>__Libs\RestSharp.xml</Link>
     </None>
   </ItemGroup>
   <ItemGroup>
