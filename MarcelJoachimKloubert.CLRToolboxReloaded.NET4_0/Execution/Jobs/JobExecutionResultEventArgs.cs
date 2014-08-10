@@ -11,13 +11,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
     /// </summary>
     public class JobExecutionResultEventArgs : EventArgs
     {
-        #region Fields (1)
-
-        private readonly IJobExecutionResult _RESULT;
-
-        #endregion Fields
-
-        #region Constructors (2)
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JobExecutionResultEventArgs" /> class.
@@ -33,7 +27,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
                 throw new ArgumentNullException("result");
             }
 
-            this._RESULT = result;
+            this.Result = result;
         }
 
         #endregion Constructors

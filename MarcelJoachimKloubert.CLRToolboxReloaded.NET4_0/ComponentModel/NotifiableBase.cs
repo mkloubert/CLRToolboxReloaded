@@ -277,7 +277,7 @@ string propertyName
             var receiveFromMembers = members.Where(m =>
                 {
                     var attribs = m.GetCustomAttributes(typeof(global::MarcelJoachimKloubert.CLRToolbox.ComponentModel.ReceiveValueFromAttribute),
-                                                               true)
+                                                        true)
                                    .Cast<ReceiveValueFromAttribute>();
 
                     return attribs.Where(a =>
@@ -327,7 +327,7 @@ string propertyName
                         var field = (FieldInfo)m;
 
                         field.SetValue(getMemberObj(field.IsStatic),
-                                       newValue);
+                                       ctx.State.NewValue);
                     }
                     else if (m is PropertyInfo)
                     {
@@ -340,7 +340,9 @@ string propertyName
                         setter = property.GetSetMethod(nonPublic: false) ?? property.GetSetMethod(nonPublic: true);
 #endif
 
-                        property.SetValue(getMemberObj(setter.IsStatic), newValue, null);
+                        property.SetValue(getMemberObj(setter.IsStatic),
+                                          ctx.State.NewValue,
+                                          null);
                     }
                     else if (m is MethodBase)
                     {

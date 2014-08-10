@@ -49,6 +49,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>__Libs\FreeImageNET.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>__Libs\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>__Libs\Newtonsoft.Json.dll</HintPath>
@@ -510,6 +514,9 @@
   <ItemGroup>
     <None Include="__Libs\FreeImageNET.dll" />
     <None Include="__Libs\FreeImageNET.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="__Libs\ICSharpCode.SharpZipLib.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

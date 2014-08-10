@@ -24,7 +24,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
         
         /// <summary>
         /// Is executed if an execution completed.
-        /// This is ALWAYS executed after <see cref="IJob.Error(IJobExecutionContext, Exception)" />.
+        /// This is ALWAYS executed after <see cref="IJob.Execute(IJobExecutionContext)" />
+        /// and <see cref="IJob.Error(IJobExecutionContext, Exception)" />.
         /// </summary>
         /// <param name="ctx">The underlying context.</param>
         /// <exception cref="ArgumentNullException">

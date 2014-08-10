@@ -548,7 +548,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
         {
             get
             {
-                ISession<IJobScheduler> session = this.Session;
+                var session = this.Session;
 
                 return session == null ? (DateTimeOffset?)null : session.Time;
             }

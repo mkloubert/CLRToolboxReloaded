@@ -49,6 +49,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\FreeImageNET.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>__Libs\Newtonsoft.Json.dll</HintPath>
@@ -933,6 +937,9 @@
   <ItemGroup>
     <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\AppLimit.CloudComputing.SharpBox.dll">
       <Link>__Libs\AppLimit.CloudComputing.SharpBox.dll</Link>
+    </Content>
+    <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\ICSharpCode.SharpZipLib.dll">
+      <Link>__Libs\ICSharpCode.SharpZipLib.dll</Link>
     </Content>
     <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\FreeImageNET.dll">
       <Link>__Libs\FreeImageNET.dll</Link>

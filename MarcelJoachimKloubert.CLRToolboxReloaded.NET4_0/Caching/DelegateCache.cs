@@ -165,7 +165,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Caching
                 throw new ArgumentNullException("delegate");
             }
 
-            bool result;
+            var result = false;
 
             lock (this._SYNC)
             {
@@ -174,10 +174,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Caching
                 if (item != null)
                 {
                     result = this._ITEMS.Remove(item);
-                }
-                else
-                {
-                    result = false;
                 }
             }
 
