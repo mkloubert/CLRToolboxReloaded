@@ -796,6 +796,18 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Drawing.GetManifestResourceImage.cs">
       <Link>Extensions\Drawing.GetManifestResourceImage.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Monitoring\DelegateMonitor.cs">
+      <Link>Diagnostics\Monitoring\DelegateMonitor.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Monitoring\IMonitor.cs">
+      <Link>Diagnostics\Monitoring\IMonitor.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Monitoring\IMonitorItem.cs">
+      <Link>Diagnostics\Monitoring\IMonitorItem.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Monitoring\MonitorItemState.cs">
+      <Link>Diagnostics\Monitoring\MonitorItemState.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -827,6 +839,7 @@
     <Folder Include="Net\Http\Listener\" />
     <Folder Include="IO\Console\" />
     <Folder Include="Composition\" />
+    <Folder Include="Diagnostics\Monitoring\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\AppLimit.CloudComputing.SharpBox.dll">

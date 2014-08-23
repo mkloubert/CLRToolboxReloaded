@@ -169,6 +169,10 @@
     <Compile Include="Diagnostics\Logging\LogMessage.cs" />
     <Compile Include="Diagnostics\Logging\LogMessageEventArgs.cs" />
     <Compile Include="Diagnostics\Logging\WorkflowLogger.cs" />
+    <Compile Include="Diagnostics\Monitoring\IMonitor.cs" />
+    <Compile Include="Diagnostics\Monitoring\IMonitorItem.cs" />
+    <Compile Include="Diagnostics\Monitoring\DelegateMonitor.cs" />
+    <Compile Include="Diagnostics\Monitoring\MonitorItemState.cs" />
     <Compile Include="DisposableObjectBase.cs" />
     <Compile Include="DisposableObjectBase.DisposeContext.cs">
       <DependentUpon>DisposableObjectBase.cs</DependentUpon>

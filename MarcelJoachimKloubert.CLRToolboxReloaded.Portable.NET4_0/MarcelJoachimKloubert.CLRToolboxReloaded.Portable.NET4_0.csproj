@@ -238,6 +238,18 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\WorkflowLogger.cs">
       <Link>Diagnostics\Logging\WorkflowLogger.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Monitoring\DelegateMonitor.cs">
+      <Link>Diagnostics\Monitoring\DelegateMonitor.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\diagnostics\monitoring\IMonitor.cs">
+      <Link>Diagnostics\Monitoring\IMonitor.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\diagnostics\monitoring\IMonitorItem.cs">
+      <Link>Diagnostics\Monitoring\IMonitorItem.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\diagnostics\monitoring\MonitorItemState.cs">
+      <Link>Diagnostics\Monitoring\MonitorItemState.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\DisposableObjectBase.cs">
       <Link>DisposableObjectBase.cs</Link>
     </Compile>
