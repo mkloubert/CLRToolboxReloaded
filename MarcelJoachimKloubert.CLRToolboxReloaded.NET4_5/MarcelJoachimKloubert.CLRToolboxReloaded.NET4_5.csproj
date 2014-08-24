@@ -45,6 +45,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\AppLimit.CloudComputing.SharpBox.dll</HintPath>
     </Reference>
+    <Reference Include="ColorCode, Version=1.0.1.62759, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\ColorCode.dll</HintPath>
+    </Reference>
+    <Reference Include="DotLiquid, Version=1.7.0.0, Culture=neutral, PublicKeyToken=82e46016ecf9f07c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\DotLiquid.dll</HintPath>
+    </Reference>
     <Reference Include="FreeImageNET, Version=3.15.1.0, Culture=neutral, PublicKeyToken=986636ec28bb8c01, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\FreeImageNET.dll</HintPath>
@@ -82,6 +90,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WikiPlex, Version=2.0.0.259, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\WikiPlex.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\AppTime.cs">
@@ -958,8 +970,17 @@
     <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\AppLimit.CloudComputing.SharpBox.dll">
       <Link>__Libs\AppLimit.CloudComputing.SharpBox.dll</Link>
     </Content>
+    <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\ColorCode.dll">
+      <Link>__Libs\ColorCode.dll</Link>
+    </Content>
+    <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\DotLiquid.dll">
+      <Link>__Libs\DotLiquid.dll</Link>
+    </Content>
     <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\ICSharpCode.SharpZipLib.dll">
       <Link>__Libs\ICSharpCode.SharpZipLib.dll</Link>
+    </Content>
+    <Content Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\WikiPlex.dll">
+      <Link>__Libs\WikiPlex.dll</Link>
     </Content>
     <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\SevenZipSharp.dll">
       <Link>__Libs\SevenZipSharp.dll</Link>

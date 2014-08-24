@@ -45,6 +45,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>__Libs\AppLimit.CloudComputing.SharpBox.dll</HintPath>
     </Reference>
+    <Reference Include="ColorCode, Version=1.0.1.62759, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>__Libs\ColorCode.dll</HintPath>
+    </Reference>
+    <Reference Include="DotLiquid, Version=1.7.0.0, Culture=neutral, PublicKeyToken=82e46016ecf9f07c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>__Libs\DotLiquid.dll</HintPath>
+    </Reference>
     <Reference Include="FreeImageNET, Version=3.15.1.0, Culture=neutral, PublicKeyToken=986636ec28bb8c01, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>__Libs\FreeImageNET.dll</HintPath>
@@ -83,6 +91,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WikiPlex, Version=2.0.0.259, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>__Libs\WikiPlex.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppTime.cs" />
@@ -536,6 +548,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="__Libs\SevenZipSharp.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="__Libs\DotLiquid.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="__Libs\ColorCode.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="__Libs\WikiPlex.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
