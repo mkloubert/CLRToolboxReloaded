@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GZip", "GZip", "{BCC1515C-DB30-4B3D-BB4B-9845EAE1958E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.ClrToolboxReloaded.Examples.GZip", "MarcelJoachimKloubert.ClrToolboxReloaded.Examples.GZip\MarcelJoachimKloubert.ClrToolboxReloaded.Examples.GZip.csproj", "{A84A1D02-1C83-4B2B-A8FC-BAA48E2D4007}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{46BD339A-297C-4C72-ADDA-AD9A4A7ACBA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5", "..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.csproj", "{D15249C7-977D-4A74-B596-BE0E08DC9E7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs", "..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs.csproj", "{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A84A1D02-1C83-4B2B-A8FC-BAA48E2D4007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A84A1D02-1C83-4B2B-A8FC-BAA48E2D4007}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A84A1D02-1C83-4B2B-A8FC-BAA48E2D4007}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A84A1D02-1C83-4B2B-A8FC-BAA48E2D4007}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A84A1D02-1C83-4B2B-A8FC-BAA48E2D4007} = {BCC1515C-DB30-4B3D-BB4B-9845EAE1958E}
+		{D15249C7-977D-4A74-B596-BE0E08DC9E7B} = {46BD339A-297C-4C72-ADDA-AD9A4A7ACBA8}
+		{D73E50C8-359A-4680-9FA5-8C200DE0DBC3} = {46BD339A-297C-4C72-ADDA-AD9A4A7ACBA8}
+	EndGlobalSection
+EndGlobal
