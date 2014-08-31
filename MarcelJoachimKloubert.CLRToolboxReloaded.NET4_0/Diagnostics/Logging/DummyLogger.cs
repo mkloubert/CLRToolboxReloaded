@@ -60,8 +60,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
         #region Methods (1)
 
-        // Protected Methods (1) 
-
         /// <inheriteddoc />
         protected override void OnLog(ILogMessage msg, ref bool succeeded)
         {

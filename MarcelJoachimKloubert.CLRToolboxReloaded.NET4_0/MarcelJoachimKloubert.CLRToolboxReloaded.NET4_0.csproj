@@ -184,6 +184,7 @@
     <Compile Include="Diagnostics\Monitoring\IMonitor.cs" />
     <Compile Include="Diagnostics\Monitoring\IMonitorItem.cs" />
     <Compile Include="Diagnostics\Monitoring\DelegateMonitor.cs" />
+    <Compile Include="Diagnostics\Monitoring\MonitorItem.cs" />
     <Compile Include="Diagnostics\Monitoring\MonitorItemState.cs" />
     <Compile Include="DisposableObjectBase.cs" />
     <Compile Include="DisposableObjectBase.DisposeContext.cs">
@@ -341,6 +342,10 @@
       <DependentUpon>Drawing.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Drawing.cs" />
+    <Compile Include="Extensions\IO.Shredder.cs">
+      <DependentUpon>IO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\IO.cs" />
     <Compile Include="Extensions\Reflection.cs" />
     <Compile Include="Extensions\Reflection.GetManifestResourceBlob.cs">
       <DependentUpon>Reflection.cs</DependentUpon>
@@ -370,6 +375,10 @@
     <Compile Include="Extensions\Strings.cs" />
     <Compile Include="Extensions\Strings.ToUnsecureString.cs">
       <DependentUpon>Strings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Tasks.cs" />
+    <Compile Include="Extensions\Tasks.StartNewTask.cs">
+      <DependentUpon>Tasks.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ValuesAndObjects.cs" />
     <Compile Include="Extensions\ValuesAndObjects.DisposeEx.cs">
@@ -507,6 +516,8 @@
     <Compile Include="Text\ITemplate.cs" />
     <Compile Include="Text\StringTemplateBase.cs" />
     <Compile Include="Text\TemplateBase.cs" />
+    <Compile Include="Threading\Tasks\ITaskExecutionContext.cs" />
+    <Compile Include="Threading\Tasks\TaskExecutionContext.cs" />
     <Compile Include="Threading\ThreadOption.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyDictionary.cs" />
