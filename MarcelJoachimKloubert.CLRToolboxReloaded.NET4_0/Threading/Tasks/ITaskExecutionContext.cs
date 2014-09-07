@@ -69,9 +69,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Threading.Tasks
         /// Gets or sets the handler that is invoked when an error is thrown.
         /// </summary>
         TaskExecutionErrorHandler OnError { get; set; }
-        
+
         /// <summary>
         /// Gets or sets if errors should be rethrown or not.
+        /// <see langword="null" /> indicates to use the default behavior.
         /// </summary>
         bool? RethrowErrors { get; set; }
 
@@ -84,7 +85,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Threading.Tasks
 
 #endif
 
-        #endregion Properties (4)
+        #endregion Properties (7)
     }
 
     #endregion INTERFACE: ITaskExecutionContext
@@ -100,13 +101,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Threading.Tasks
         #region Properties (3)
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <see cref="ITaskExecutionContext.OnCompleted" />
         new Action<ITaskExecutionContext<TState>> OnCompleted { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <see cref="ITaskExecutionContext.OnError" />
         new TaskExecutionErrorHandler<TState> OnError { get; set; }
@@ -116,7 +117,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Threading.Tasks
         /// </summary>
         TState State { get; }
 
-        #endregion Properties (1)
+        #endregion Properties (3)
     }
 
     #endregion INTERFACE: ITaskExecutionContext<TState>

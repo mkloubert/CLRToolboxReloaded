@@ -346,6 +346,10 @@
       <DependentUpon>IO.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\IO.cs" />
+    <Compile Include="Extensions\Net.cs" />
+    <Compile Include="Extensions\Net.SetBasicAuth.cs">
+      <DependentUpon>Net.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Reflection.cs" />
     <Compile Include="Extensions\Reflection.GetManifestResourceBlob.cs">
       <DependentUpon>Reflection.cs</DependentUpon>
@@ -425,6 +429,9 @@
     <Compile Include="IO\NonDisposableStream.cs" />
     <Compile Include="IO\StreamWrapperBase.cs" />
     <Compile Include="IRunnable.cs" />
+    <Compile Include="Models\Business\IClient.cs" />
+    <Compile Include="Models\Business\ICustomer.cs" />
+    <Compile Include="Models\Business\IPerson.cs" />
     <Compile Include="Net\Http\HttpMethod.cs" />
     <Compile Include="Net\Http\HttpRequestBase.cs" />
     <Compile Include="Net\Http\HttpRequestContext.cs" />
