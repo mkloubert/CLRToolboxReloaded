@@ -49,9 +49,12 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Execution
 
             mediator.Subscribe(action1)
                     .Subscribe(action2)
-                    .Subscribe(action3, ThreadOption.Background)
-                    .Subscribe(action4, ThreadOption.Background)
-                    .Subscribe(action4, ThreadOption.Background);
+                    .Subscribe(action3,
+                               option: ThreadOption.Background)
+                    .Subscribe(action4,
+                               option: ThreadOption.Background)
+                    .Subscribe(action4,
+                               option: ThreadOption.Background);
 
             mediator.Publish(1);
 

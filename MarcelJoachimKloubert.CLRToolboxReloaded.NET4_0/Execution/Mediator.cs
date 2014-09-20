@@ -21,7 +21,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
         private readonly IList<IMediatorActionItem> _ITEMS = new List<IMediatorActionItem>();
         private readonly MediatorUIAction _UI_ACTION;
 
-        #endregion Fields
+        #endregion Fields (2)
 
         #region Constructors (4)
 
@@ -79,9 +79,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
             this._UI_ACTION = uiAction;
         }
 
-        #endregion Constructors
+        #endregion Constructors (4)
 
-        #region Methods (18)
+        #region Methods (17)
 
         private static void AppendExceptionsIfPossible(AggregateException ex,
                                                        ICollection<Exception> exceptions, object syncExceptions)
@@ -399,7 +399,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
         /// <paramref name="action" /> is <see langword="null" />.
         /// </exception>
         public Mediator Subscribe<TPayload>(MediatorAction<TPayload> action,
-                                            Func<TPayload, bool> filter,
+                                            Func<TPayload, bool> filter = null,
                                             ThreadOption option = ThreadOption.Current,
                                             bool keepReferenceAlive = true)
         {
@@ -434,32 +434,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
                 });
 
             return this;
-        }
-
-        /// <summary>
-        /// Subscribes an action for a specific payload.
-        /// </summary>
-        /// <typeparam name="TPayload">Type of the payload object.</typeparam>
-        /// <param name="action">The action to subscribe.</param>
-        /// <param name="option">The thread handling.</param>
-        /// <param name="keepReferenceAlive">
-        /// Keep reference of <paramref name="action" /> alive or handle as weak reference.
-        /// </param>
-        /// <returns>That instance.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="action" /> is <see langword="null" />.
-        /// </exception>
-        /// <remarks>
-        /// A payload filter that ignores all payloads that are <see langword="null" />.
-        /// </remarks>
-        public Mediator Subscribe<TPayload>(MediatorAction<TPayload> action,
-                                            ThreadOption option = ThreadOption.Current,
-                                            bool keepReferenceAlive = true)
-        {
-            return this.Subscribe<TPayload>(action: action,
-                                            option: option,
-                                            keepReferenceAlive: keepReferenceAlive,
-                                            filter: NonNullFilter);
         }
 
         /// <summary>
@@ -530,6 +504,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
             return this;
         }
 
-        #endregion Methods
+        #endregion Methods (17)
     }
 }

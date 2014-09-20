@@ -346,6 +346,12 @@
       <DependentUpon>IO.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\IO.cs" />
+    <Compile Include="Extensions\IO.Read.cs">
+      <DependentUpon>IO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\IO.Write.cs">
+      <DependentUpon>IO.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Net.cs" />
     <Compile Include="Extensions\Net.SetBasicAuth.cs">
       <DependentUpon>Net.cs</DependentUpon>
