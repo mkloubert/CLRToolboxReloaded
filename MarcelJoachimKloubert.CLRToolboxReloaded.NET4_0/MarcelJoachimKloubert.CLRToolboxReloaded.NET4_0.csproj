@@ -61,6 +61,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>__Libs\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="Jurassic, Version=2.1.0.0, Culture=neutral, PublicKeyToken=9b6ab23c2b933a45, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>__Libs\Jurassic.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>__Libs\Newtonsoft.Json.dll</HintPath>
@@ -581,6 +585,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="__Libs\WikiPlex.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="__Libs\Jurassic.dll" />
+    <None Include="__Libs\Jurassic.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

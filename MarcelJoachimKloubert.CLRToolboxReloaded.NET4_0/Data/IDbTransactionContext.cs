@@ -22,7 +22,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data
         /// This should be <see langword="true" /> by default.
         /// </remarks>
         bool Commit { get; set; }
-        
+
         /// <summary>
         /// Gets or sets if transaction should be rollbacked or not.
         /// </summary>
@@ -46,7 +46,22 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data
 
         #endregion Properties (3)
 
-        #region Methods (1)
+        #region Methods (3)
+
+        /// <summary>
+        /// Creates a new command with a predefined value for <see cref="IDbCommand.Transaction" />
+        /// property from <see cref="IDbTransactionContext.Transaction" /> property.
+        /// </summary>
+        /// <returns>The created command.</returns>
+        IDbCommand CreateCommand();
+        
+        /// <summary>
+        /// Creates a new command with a predefined value for <see cref="IDbCommand.Transaction" />
+        /// property from <see cref="IDbTransactionContext.Transaction" /> property.
+        /// </summary>
+        /// <typeparam name="TCmd">Target type.</typeparam>
+        /// <returns>The created command.</returns>
+        TCmd CreateCommand<TCmd>() where TCmd : global::System.Data.IDbCommand;
 
         /// <summary>
         /// Returns the value of <see cref="IDbTransactionContext.Transaction" /> property strong typed.

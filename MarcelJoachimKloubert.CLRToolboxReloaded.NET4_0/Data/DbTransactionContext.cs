@@ -15,7 +15,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data
     public class DbTransactionContext : ObjectBase, IDbTransactionContext
     {
         #region Properties (4)
-        
+
         /// <inheriteddoc />
         public bool Commit
         {
@@ -44,9 +44,25 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data
             set;
         }
 
-        #endregion Properties (1)
+        #endregion Properties (4)
 
-        #region Methods (1)
+        #region Methods (3)
+
+        /// <inheriteddoc />
+        public IDbCommand CreateCommand()
+        {
+            var cmd = this.Transaction.Connection.CreateCommand();
+            cmd.Transaction = this.Transaction;
+
+            return cmd;
+        }
+
+        /// <inheriteddoc />
+        public TCmd CreateCommand<TCmd>() where TCmd : IDbCommand
+        {
+            return GlobalConverter.Current
+                                  .ChangeType<TCmd>(value: this.CreateCommand());
+        }
 
         /// <inheriteddoc />
         public TTrans GetTransaction<TTrans>()
@@ -55,7 +71,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data
                                   .ChangeType<TTrans>(value: this.Transaction);
         }
 
-        #endregion Methods (1)
+        #endregion Methods (3)
     }
 
     #endregion CLASS: DbTransactionContext

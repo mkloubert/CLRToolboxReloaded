@@ -70,6 +70,9 @@
     <Reference Include="WikiPlex">
       <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\WikiPlex.dll</HintPath>
     </Reference>
+    <Reference Include="Jurassic">
+      <HintPath>..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\Jurassic.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -936,6 +939,12 @@
     </None>
     <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\WikiPlex.dll">
       <Link>__Libs\WikiPlex.dll</Link>
+    </None>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\Jurassic.dll">
+      <Link>__Libs\Jurassic.dll</Link>
+    </None>
+    <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\Jurassic.xml">
+      <Link>__Libs\Jurassic.xml</Link>
     </None>
   </ItemGroup>
   <ItemGroup>
