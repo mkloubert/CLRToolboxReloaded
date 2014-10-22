@@ -13,14 +13,14 @@ namespace MarcelJoachimKloubert.CLRToolbox
     /// </summary>
     public interface IInitializable : IObject
     {
-        #region Data Members (2)
+        #region Data Members (1)
 
         /// <summary>
         /// Gets if the object has been initialized or not.
         /// </summary>
         bool IsInitialized { get; }
 
-        #endregion Data Members (2)
+        #endregion Data Members (1)
 
         #region Delegates and events (1)
 
@@ -29,7 +29,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// </summary>
         event EventHandler Initialized;
 
-        #endregion Delegates and events
+        #endregion Delegates and events (1)
 
         #region Operations (1)
 
@@ -41,7 +41,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// </exception>
         void Initialize();
 
-        #endregion Operations
+        #endregion Operations (1)
     }
 
     #endregion

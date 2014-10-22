@@ -609,6 +609,10 @@
       <Link>Extensions\Drawing.GetManifestResourceImage.cs</Link>
       <DependentUpon>Drawing.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Drawing.Grayscale.cs">
+      <Link>Extensions\Drawing.Grayscale.cs</Link>
+      <DependentUpon>Drawing.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Drawing.LoadBitmap.cs">
       <Link>Extensions\Drawing.LoadBitmap.cs</Link>
       <DependentUpon>Drawing.cs</DependentUpon>

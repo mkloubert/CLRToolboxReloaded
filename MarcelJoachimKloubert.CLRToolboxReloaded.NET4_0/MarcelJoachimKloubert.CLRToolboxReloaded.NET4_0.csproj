@@ -342,6 +342,9 @@
     <Compile Include="Extensions\Drawing.GetManifestResourceImage.cs">
       <DependentUpon>Drawing.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Drawing.Grayscale.cs">
+      <DependentUpon>Drawing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Drawing.LoadBitmap.cs">
       <DependentUpon>Drawing.cs</DependentUpon>
     </Compile>
