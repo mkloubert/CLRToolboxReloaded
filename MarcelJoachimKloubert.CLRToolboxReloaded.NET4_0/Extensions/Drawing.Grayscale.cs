@@ -46,7 +46,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Drawing
                     for (var x = 0; x < bmpData1.Width; x++)
                     {
                         var a = (imgPointer1[0] + imgPointer1[1] +
-                                imgPointer1[2]) / 3;
+                                 imgPointer1[2]) / 3;
 
                         imgPointer2[0] = (byte)a;
                         imgPointer2[1] = (byte)a;
