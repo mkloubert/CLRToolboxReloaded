@@ -349,6 +349,9 @@
       <DependentUpon>Drawing.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Drawing.cs" />
+    <Compile Include="Extensions\IO.ReadBlockwise.cs">
+      <DependentUpon>IO.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\IO.Shredder.cs">
       <DependentUpon>IO.cs</DependentUpon>
     </Compile>

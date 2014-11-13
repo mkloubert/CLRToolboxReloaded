@@ -23,50 +23,36 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Drawing
                 return null;
             }
 
-            var result = new Bitmap(input.Width, input.Height,
-                                    PixelFormat.Format32bppArgb);
+            var result = new Bitmap(input.Width, input.Height);
 
-            var bmpData1 = input.LockBits(new Rectangle(0, 0,
-                                                        input.Width, input.Height),
-                                          ImageLockMode.ReadOnly,
-                                          PixelFormat.Format32bppArgb);
-
-            var bmpData2 = result.LockBits(new Rectangle(0, 0,
-                                                         result.Width, result.Height),
-                                           ImageLockMode.ReadOnly,
-                                           PixelFormat.Format32bppArgb);
-
-            unsafe
+            try
             {
-                var imgPointer1 = (byte*)bmpData1.Scan0;
-                var imgPointer2 = (byte*)bmpData2.Scan0;
-
-                for (var y = 0; y < bmpData1.Height; y++)
+                using (var g = Graphics.FromImage(result))
                 {
-                    for (var x = 0; x < bmpData1.Width; x++)
+                    var colorMatrix = new ColorMatrix(new float[][]
                     {
-                        var a = (imgPointer1[0] + imgPointer1[1] +
-                                 imgPointer1[2]) / 3;
+                       new float[] {.3f, .3f, .3f, 0, 0},
+                       new float[] {.59f, .59f, .59f, 0, 0},
+                       new float[] {.11f, .11f, .11f, 0, 0},
+                       new float[] {0, 0, 0, 1, 0},
+                       new float[] {0, 0, 0, 0, 1}
+                    });
 
-                        imgPointer2[0] = (byte)a;
-                        imgPointer2[1] = (byte)a;
-                        imgPointer2[2] = (byte)a;
-                        imgPointer2[3] = imgPointer1[3];
+                    using (var attributes = new ImageAttributes())
+                    {
+                        attributes.SetColorMatrix(colorMatrix);
 
-                        imgPointer1 += 4;
-                        imgPointer2 += 4;
+                        g.DrawImage(input, new Rectangle(0, 0, input.Width, input.Height),
+                                    0, 0, input.Width, input.Height, GraphicsUnit.Pixel, attributes);
                     }
-
-                    imgPointer1 += bmpData1.Stride -
-                                   (bmpData1.Width * 4);
-
-                    imgPointer2 += bmpData1.Stride -
-                                   (bmpData1.Width * 4);
                 }
             }
+            catch
+            {
+                result.Dispose();
 
-            result.UnlockBits(bmpData2);
-            input.UnlockBits(bmpData1);
+                throw;
+            }
 
             return result;
         }

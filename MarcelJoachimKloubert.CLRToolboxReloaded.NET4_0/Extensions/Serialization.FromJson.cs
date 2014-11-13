@@ -11,18 +11,30 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 {
     static partial class ClrToolboxExtensionMethods
     {
-        #region Methods (3)
+        #region Methods (4)
 
         /// <summary>
-        /// Deserializes a JSON string to a dictionary.
+        /// Deserializes a JSON string to a dynamic object.
         /// </summary>
         /// <param name="json">The JSON string.</param>
         /// <returns>
-        /// The deserialized data as dictionary or <see langword="null" />.
+        /// The deserialized data as dynamic object or <see langword="null" />.
         /// </returns>
         public static dynamic FromJson(this IEnumerable<char> json)
         {
-            return FromJson<ExpandoObject>(jsonStr: AsString(json));
+            return FromJson(json: AsString(json));
+        }
+
+        /// <summary>
+        /// Deserializes a JSON string to a dynamic object.
+        /// </summary>
+        /// <param name="json">The JSON string.</param>
+        /// <returns>
+        /// The deserialized data as dynamic object or <see langword="null" />.
+        /// </returns>
+        public static dynamic FromJson(this string json)
+        {
+            return FromJson<ExpandoObject>(jsonStr: json);
         }
 
         /// <summary>
@@ -66,6 +78,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
             }
         }
 
-        #endregion Methods (3)
+        #endregion Methods (4)
     }
 }

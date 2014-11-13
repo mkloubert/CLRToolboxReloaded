@@ -3,9 +3,12 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 #if !(PORTABLE || PORTABLE40)
-#define CAN_GET_MEMBERS_FROM_TYPE
 #define CAN_GET_PROPERTIES_FROM_TYPE
 #define KNOWS_PROPERTY_CHANGING
+#endif
+
+#if !(PORTABLE45)
+#define CAN_GET_MEMBERS_FROM_TYPE
 #endif
 
 #if (WINRT)
@@ -14,6 +17,10 @@
 
 #if !(NET40 || MONO40 || PORTABLE || PORTABLE40)
 #define KNOWS_CALLER_MEMBER_NAME
+#endif
+
+#if (PORTABLE45)
+#define KNOWS_RUNTIME_REFLECTION_EXTENSIONS
 #endif
 
 using MarcelJoachimKloubert.CLRToolbox.Data.Conversion;
@@ -272,6 +279,10 @@ string propertyName
             members = members.Concat(this.GetType().GetFields(memberBindFlags))
                              .Concat(this.GetType().GetMethods(memberBindFlags))
                              .Concat(this.GetType().GetProperties(memberBindFlags));
+#elif KNOWS_RUNTIME_REFLECTION_EXTENSIONS
+            members = members.Concat(this.GetType().GetRuntimeFields())
+                             .Concat(this.GetType().GetRuntimeMethods())
+                             .Concat(this.GetType().GetRuntimeProperties());
 #endif
 
             var receiveFromMembers = members.Where(m =>
@@ -360,11 +371,7 @@ string propertyName
                                     OldValue = ctx.State.OldValue,
                                     Sender = ctx.State.Sender,
                                     SenderName = ctx.State.SenderName,
-#if CAN_GET_MEMBERS_FROM_TYPE
-                                    SenderType = (int)global::System.Reflection.MemberTypes.Property,
-#else
                                     SenderType = 16,    // s. MemberTypes.Property
-#endif
                                     TargetType = ctx.State.ValueType,
                                 },
                             };
@@ -463,11 +470,10 @@ string propertyName
             var result = this.InvokeThreadSafe((obj, state) =>
                 {
                     var no = (NotifiableBase)obj;
-                    var propertyValues = no._PROPERTIES;
 
                     var areDifferent = true;
 
-                    if (propertyValues.TryGetValue(state.PropertyName, out oldValue))
+                    if (no._PROPERTIES.TryGetValue(state.PropertyName, out oldValue))
                     {
                         if (object.Equals(value, oldValue))
                         {
@@ -478,9 +484,9 @@ string propertyName
                     if (areDifferent)
                     {
 #if KNOWS_PROPERTY_CHANGING
-                        this.OnPropertyChanging(state.PropertyName);
+                        no.OnPropertyChanging(state.PropertyName);
 #endif
-                        propertyValues[state.PropertyName] = value;
+                        no._PROPERTIES[state.PropertyName] = value;
                         no.OnPropertyChanged(state.PropertyName);
                     }
 
@@ -490,8 +496,14 @@ string propertyName
                     PropertyName = propertyName,
                 });
 
-            this.Handle_ReceiveValueFrom<T>(propertyName, result, value, oldValue);
-            this.Handle_ReceiveNotificationFrom(propertyName, result);
+            try
+            {
+                this.Handle_ReceiveValueFrom<T>(propertyName, result, value, oldValue);
+            }
+            finally
+            {
+                this.Handle_ReceiveNotificationFrom(propertyName, result);
+            }
 
             return result;
         }

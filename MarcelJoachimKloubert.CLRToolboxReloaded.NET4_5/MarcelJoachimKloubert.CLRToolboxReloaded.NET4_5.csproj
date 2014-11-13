@@ -624,6 +624,10 @@
       <Link>Extensions\IO.Read.cs</Link>
       <DependentUpon>IO.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\IO.ReadBlockwise.cs">
+      <Link>Extensions\IO.ReadBlockwise.cs</Link>
+      <DependentUpon>IO.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\IO.Shredder.cs">
       <Link>Extensions\IO.Shredder.cs</Link>
       <DependentUpon>IO.cs</DependentUpon>
@@ -682,6 +686,7 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Strings.ToUnsecureString.cs">
       <Link>Extensions\Strings.ToUnsecureString.cs</Link>
+      <DependentUpon>Strings.cs</DependentUpon>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Tasks.cs">
       <Link>Extensions\Tasks.cs</Link>

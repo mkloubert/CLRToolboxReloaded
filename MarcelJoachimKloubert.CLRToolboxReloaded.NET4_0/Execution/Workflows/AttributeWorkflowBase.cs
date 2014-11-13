@@ -144,7 +144,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
                         // first try to find method for next step
                         MethodInfo nextMethod = null;
                         {
-                            // search for 'WorkflowStartAttribute'
+                            // search for 'NextWorkflowStepAttribute'
                             var attribs = currentMethod.GetCustomAttributes(typeof(global::MarcelJoachimKloubert.CLRToolbox.Execution.Workflows.NextWorkflowStepAttribute),
                                                                             true)
                                                        .OfType<NextWorkflowStepAttribute>();

@@ -195,11 +195,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
                     tuple.Invoke();
                 }, state: new ForAllAsyncTuple<T, TState>(action: action,
-                                                             actionStateProvider: actionStateProvider,
-                                                             index: ++index,
-                                                             item: i,
-                                                             errors: errors,
-                                                             sync: sync)));
+                                                          actionStateProvider: actionStateProvider,
+                                                          index: ++index,
+                                                          item: i,
+                                                          errors: errors,
+                                                          sync: sync)));
 
             try
             {

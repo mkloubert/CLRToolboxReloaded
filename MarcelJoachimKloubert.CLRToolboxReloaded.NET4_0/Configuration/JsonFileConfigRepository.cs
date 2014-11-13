@@ -141,7 +141,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
                                         var jObj = GlobalConverter.Current
                                                                   .ChangeType<JObject>(ctx.Item.Value);
 
-                                        repo._VALUES[category ?? string.Empty] = ToDictionary(jObj);
+                                        repo._VALUES[category ?? string.Empty] = this.ToDictionary(jObj);
                                     }, actionState: new
                                     {
                                         Repo = this,

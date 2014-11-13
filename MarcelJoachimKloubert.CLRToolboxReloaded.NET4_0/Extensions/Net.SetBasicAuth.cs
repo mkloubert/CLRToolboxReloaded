@@ -39,9 +39,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                 throw new FormatException();
             }
 
-            string authInfo = string.Format("{0}:{1}",
-                                            userName,
-                                            pwd);
+            var authInfo = string.Format("{0}:{1}",
+                                         userName, pwd);
 
             request.Headers["Authorization"] = string.Format("Basic {0}",
                                                              Convert.ToBase64String(Encoding.GetEncoding("ASCII")
