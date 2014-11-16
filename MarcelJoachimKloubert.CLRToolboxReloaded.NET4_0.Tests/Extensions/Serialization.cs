@@ -34,7 +34,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
             // make JSON
             var json = result.ToJson();
             // restore from JSON as dictionary
-            var resultBack1 = json.FromJson();
+            IDictionary<string, object> resultBack1 = json.FromJson();
 
             // check properties and their values
             foreach (var property in result.GetType()
@@ -50,7 +50,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
                                 resultBack1[pn]);
             }
 
-            var resultBack1Tag = resultBack1["tag"] as IDictionary<string, JToken>;
+            var resultBack1Tag = resultBack1["tag"] as IDictionary<string, object>;
 
             Assert.IsNotNull(resultBack1Tag);
             foreach (var item in result.tag)

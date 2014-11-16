@@ -20,7 +20,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html
 
         #endregion Fields (1)
 
-        #region Constrcutors (4)
+        #region Constrcutors (1)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DotLiquidHtmlTemplate" /> class.
@@ -40,7 +40,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html
             this._PROVIDER = provider;
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constrcutors (1)
 
         #region Delegates and events (1)
 

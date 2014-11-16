@@ -261,10 +261,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         {
             IWorkflowExecutionContext result = null;
             this.ForEach(ctx => result = ctx.Item(ctx.State.Arguments),
-                actionState: new
-                {
-                    Arguments = args,
-                });
+                         actionState: new
+                         {
+                             Arguments = args,
+                         });
 
             return result != null ? result.Result : null;
         }

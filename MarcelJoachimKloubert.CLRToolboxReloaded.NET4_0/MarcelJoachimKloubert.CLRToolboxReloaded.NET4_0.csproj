@@ -174,7 +174,9 @@
     <Compile Include="Diagnostics\Logging\Execution\ILogCommand.cs" />
     <Compile Include="Diagnostics\Logging\Execution\ILogCommandExecutionContext.cs" />
     <Compile Include="Diagnostics\Logging\Execution\ILogCommandExecutionResult.cs" />
-    <Compile Include="Diagnostics\Logging\Execution\LogCommandBase.Classes.cs" />
+    <Compile Include="Diagnostics\Logging\Execution\LogCommandBase.Classes.cs">
+      <DependentUpon>LogCommandBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Diagnostics\Logging\Execution\LogCommandBase.cs" />
     <Compile Include="Diagnostics\Logging\FallbackLogger.cs" />
     <Compile Include="Diagnostics\Logging\ILogger.cs" />

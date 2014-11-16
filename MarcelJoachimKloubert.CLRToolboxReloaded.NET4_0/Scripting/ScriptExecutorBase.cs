@@ -71,7 +71,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
 
                 result = new ScriptExecutionContext();
                 result.Executor = this;
-                result.Source = src.AsString();
+                result.Source = src;
                 result.IsDebug = debug;
 
                 result.StartAction = delegate()

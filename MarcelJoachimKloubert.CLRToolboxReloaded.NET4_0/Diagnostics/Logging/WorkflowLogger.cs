@@ -184,8 +184,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
         #region Methods (5)
 
-        // Public Methods (3) 
-
         /// <summary>
         /// Creates a new instance of the <see cref="WorkflowLogger" /> class.
         /// </summary>
@@ -238,7 +236,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                                       sync: sync);
         }
 
-        // Protected Methods (1) 
+        private static object[] GetEmptyArguments(WorkflowLogger logger)
+        {
+            return new object[0];
+        }
 
         /// <inheriteddoc />
         protected override void OnLog(ILogMessage msg, ref bool succeeded)
@@ -272,13 +273,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                              {
                                  Arguments = allArgs.AsArray(),
                              });
-        }
-
-        // Private Methods (1)
-
-        private static object[] GetEmptyArguments(WorkflowLogger logger)
-        {
-            return new object[0];
         }
 
         #endregion Methods

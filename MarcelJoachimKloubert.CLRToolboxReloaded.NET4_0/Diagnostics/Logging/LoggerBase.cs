@@ -102,13 +102,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                 return null;
             }
 
-            var result = new LogMessage(id: src.Id);
-            result.Assembly = src.Assembly;
-            result.Categories = src.Categories;
-            result.LogTag = src.LogTag;
-            result.Member = src.Member;
-            result.Message = src.Message;
-            result.Time = src.Time;
+            var result = new LogMessage(id: src.Id)
+            {
+                Assembly = src.Assembly,
+                Categories = src.Categories,
+                LogTag = src.LogTag,
+                Member = src.Member,
+                Message = src.Message,
+                Time = src.Time,
+            };
 
 #if CAN_HANDLE_THREADS
 

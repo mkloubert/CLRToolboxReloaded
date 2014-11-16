@@ -79,7 +79,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.Execution
             {
                 get
                 {
-                    IList<Exception> errs = this.Errors;
+                    var errs = this.Errors;
                     return (errs != null) &&
                            errs.Any(ex => ex != null);
                 }

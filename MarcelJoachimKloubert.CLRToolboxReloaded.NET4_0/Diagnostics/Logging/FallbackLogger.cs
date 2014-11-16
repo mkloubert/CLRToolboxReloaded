@@ -278,7 +278,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         protected override void OnLog(ILogMessage msg, ref bool succeeded)
         {
             var failed = false;
-            var index = 0;
 
             using (var e = this.GetFallbacks().GetEnumerator())
             {
@@ -311,7 +310,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                         if (e.MoveNext())
                         {
                             currentLogger = e.Current;
-                            ++index;
                         }
                     }
                 }

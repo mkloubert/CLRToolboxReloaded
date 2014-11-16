@@ -10,7 +10,7 @@ using System.Reflection.Emit;
 namespace MarcelJoachimKloubert.CLRToolbox.Objects
 {
     /// <summary>
-    /// A class for building (dynamic / proxy) object.
+    /// A class for building (dynamic / proxy) objects.
     /// </summary>
     public sealed class ObjectFactory : ObjectBase
     {

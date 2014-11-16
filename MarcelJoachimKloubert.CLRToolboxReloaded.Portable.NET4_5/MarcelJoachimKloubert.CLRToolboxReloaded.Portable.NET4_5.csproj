@@ -200,6 +200,7 @@
     </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\diagnostics\logging\execution\LogCommandBase.Classes.cs">
       <Link>Diagnostics\Logging\Execution\LogCommandBase.Classes.cs</Link>
+      <DependentUpon>LogCommandBase.cs</DependentUpon>
     </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\diagnostics\logging\execution\LogCommandBase.cs">
       <Link>Diagnostics\Logging\Execution\LogCommandBase.cs</Link>

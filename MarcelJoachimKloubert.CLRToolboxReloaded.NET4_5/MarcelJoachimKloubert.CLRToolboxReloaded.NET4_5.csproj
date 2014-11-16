@@ -291,6 +291,7 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\Execution\LogCommandBase.Classes.cs">
       <Link>Diagnostics\Logging\Execution\LogCommandBase.Classes.cs</Link>
+      <DependentUpon>LogCommandBase.cs</DependentUpon>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\Execution\LogCommandBase.cs">
       <Link>Diagnostics\Logging\Execution\LogCommandBase.cs</Link>

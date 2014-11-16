@@ -2,6 +2,10 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+#if !(NET40 || PORTABLE40)
+#define CAN_INVOKE_ASYNC
+#endif
+
 using System;
 using System.IO;
 using System.Linq;
@@ -146,7 +150,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
 
         #endregion Properties (10)
 
-        #region Methods (15)
+        #region Methods (19)
 
         /// <inheriteddoc />
         public override global::System.IAsyncResult BeginRead(byte[] buffer, int offset, int count, global::System.AsyncCallback callback, object state)
@@ -159,7 +163,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
         {
             return this._BASE_STREAM.BeginWrite(buffer, offset, count, callback, state);
         }
-        
+
 #if !PORTABLE40
 
         /// <inheriteddoc />
@@ -170,6 +174,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
 
 #endif
 
+#if CAN_INVOKE_ASYNC
+
+        /// <inheriteddoc />
+        public override global::System.Threading.Tasks.Task CopyToAsync(global::System.IO.Stream destination, int bufferSize, global::System.Threading.CancellationToken cancellationToken)
+        {
+            return this._BASE_STREAM.CopyToAsync(destination, bufferSize, cancellationToken);
+        }
+
+#endif
 
         /// <inheriteddoc />
         protected override void Dispose(bool disposing)
@@ -194,6 +207,16 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
         {
             this._BASE_STREAM.Flush();
         }
+
+#if CAN_INVOKE_ASYNC
+
+        /// <inheriteddoc />
+        public override global::System.Threading.Tasks.Task FlushAsync(global::System.Threading.CancellationToken cancellationToken)
+        {
+            return this._BASE_STREAM.FlushAsync(cancellationToken);
+        }
+
+#endif
 
         /// <summary>
         /// Invokes the <see cref="Stream.Dispose(bool)" /> method of
@@ -222,7 +245,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
 
                                                // only one boolean parameter
                                                var @params = m.GetParameters();
-                                               return (@params.Length) == 1 &&
+                                               return ((@params.Length) == 1) &&
                                                       typeof(bool).Equals(@params[0].ParameterType);
                                            });
 
@@ -235,6 +258,16 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
         {
             return this._BASE_STREAM.Read(buffer, offset, count);
         }
+
+#if CAN_INVOKE_ASYNC
+
+        /// <inheriteddoc />
+        public override global::System.Threading.Tasks.Task<int> ReadAsync(byte[] buffer, int offset, int count, global::System.Threading.CancellationToken cancellationToken)
+        {
+            return this._BASE_STREAM.ReadAsync(buffer, offset, count, cancellationToken);
+        }
+
+#endif
 
         /// <inheriteddoc />
         public override int ReadByte()
@@ -266,16 +299,26 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
             this._BASE_STREAM.Write(buffer, offset, count);
         }
 
+#if CAN_INVOKE_ASYNC
+
+        /// <inheriteddoc />
+        public override global::System.Threading.Tasks.Task WriteAsync(byte[] buffer, int offset, int count, global::System.Threading.CancellationToken cancellationToken)
+        {
+            return this._BASE_STREAM.WriteAsync(buffer, offset, count, cancellationToken);
+        }
+
+#endif
+
         /// <inheriteddoc />
         public override void WriteByte(byte value)
         {
             this._BASE_STREAM.WriteByte(value);
         }
 
-        #endregion Methods (15)
+        #endregion Methods (19)
     }
 
-    #endregion CLASS: StreamWrapperBase
+    #endregion CLASS: StreamWrapperBase<TStream>
 
     #region CLASS: StreamWrapperBase
 

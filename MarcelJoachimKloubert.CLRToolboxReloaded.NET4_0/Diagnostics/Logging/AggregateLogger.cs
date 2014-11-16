@@ -265,8 +265,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                         {
                             try
                             {
-                                ctx.Item
-                                   .Log(CloneLogMessage(msg));
+                                if (ctx.Item.Log(CloneLogMessage(msg)) == false)
+                                {
+                                    throw new Exception();
+                                }
 
                                 allFailed = false;
                             }

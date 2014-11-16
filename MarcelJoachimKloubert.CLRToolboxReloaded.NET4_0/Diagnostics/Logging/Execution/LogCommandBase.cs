@@ -74,7 +74,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.Execution
 
             try
             {
-                LogCommandExecutionContext ctx = this.CreateBasicExecutionContext(orgMsg);
+                var ctx = this.CreateBasicExecutionContext(orgMsg);
 
                 this.OnExecute(ctx);
 

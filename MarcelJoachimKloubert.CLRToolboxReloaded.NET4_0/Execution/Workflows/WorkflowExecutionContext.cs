@@ -46,7 +46,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
 
         #endregion Constrcutors (4)
 
-        #region Properties (15)
+        #region Properties (17)
 
         /// <inheriteddoc />
         public bool Cancel
@@ -57,6 +57,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
 
         /// <inheriteddoc />
         public bool ContinueOnError
+        {
+            get;
+            set;
+        }
+
+        /// <inheriteddoc />
+        public IReadOnlyList<Exception> Errors
         {
             get;
             set;
@@ -100,6 +107,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         public bool IsLast
         {
             get { return this.Next == null; }
+        }
+
+        /// <inheriteddoc />
+        public Exception LastError
+        {
+            get;
+            set;
         }
 
         /// <inheriteddoc />

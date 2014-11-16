@@ -102,7 +102,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Describes a function or method that handles a log message.
         /// </summary>
         /// <param name="msg">The message to handle.</param>
-        public delegate void LogMessageHandler(ILogMessage msg);
+        /// <param name="succeeded">
+        /// Defines if handling <paramref name="msg" /> was succeeded or not.
+        /// That value is or should be <see langword="true" /> at the beginning.
+        /// </param>
+        public delegate void LogMessageHandler(ILogMessage msg, ref bool succeeded);
 
         #endregion Delegates and Events
 
@@ -271,7 +275,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                         {
                             try
                             {
-                                ctx.Item(CloneLogMessage(msg));
+                                var s = true;
+                                ctx.Item(CloneLogMessage(msg), ref s);
+
+                                if (s == false)
+                                {
+                                    throw new Exception();
+                                }
 
                                 allFailed = false;
                             }

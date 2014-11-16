@@ -4,7 +4,7 @@
 
 namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 {
-    #region CLASS: ForAllItemContext<T>
+    #region CLASS: ForEachItemContext<T>
 
     /// <summary>
     /// Simple implementation of the <see cref="IForEachItemContext{T}" /> interface.

@@ -25,8 +25,11 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
             int number = 0;
             string str = "MK+";
 
-            var childLogger2 = DelegateLogger.Create((msg) => ++number,
-                                                     (msg) =>
+            var childLogger2 = DelegateLogger.Create(delegate(ILogMessage msg, ref bool succeeded)
+                                                     {
+                                                         ++number;
+                                                     },
+                                                     delegate(ILogMessage msg, ref bool succeeded)
                                                      {
                                                          str += msg.Message;
 
@@ -38,7 +41,10 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
                                                          ++number;
                                                      });
 
-            var childLogger3 = DelegateLogger.Create((msg) => number++);
+            var childLogger3 = DelegateLogger.Create(delegate(ILogMessage msg, ref bool succeeded)
+                                                     {
+                                                         number++;
+                                                     });
 
             var logger = AggregateLogger.Create(childLogger1,
                                                 childLogger2,
@@ -64,7 +70,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
         {
             int? threadId = null;
             string str = null;
-            var childLogger = DelegateLogger.Create((msg) =>
+            var childLogger = DelegateLogger.Create(delegate(ILogMessage msg, ref bool succeeded)
                 {
                     threadId = Thread.CurrentThread.ManagedThreadId;
 
@@ -111,7 +117,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
             var logMsgs = new HashSet<ILogMessage>();
             var logMsgsRefs = new HashSet<ILogMessage>(new DelegateEqualityComparer<ILogMessage>((x, y) => object.ReferenceEquals(x, y)));
 
-            var logger1 = DelegateLogger.Create((msg) =>
+            var logger1 = DelegateLogger.Create(delegate(ILogMessage msg, ref bool succeeded)
                                                 {
                                                     ids.Add(msg.Id);
                                                     logMsgs.Add(msg);
@@ -122,7 +128,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
                                                         str += msg.GetMessage<string>();
                                                     }
                                                 },
-                                                (msg) =>
+                                                delegate(ILogMessage msg, ref bool succeeded)
                                                 {
                                                     ids.Add(msg.Id);
                                                     logMsgs.Add(msg);
@@ -136,7 +142,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
                                                     // that should not happen
                                                     str += "+YS";
                                                 },
-                                                (msg) =>
+                                                delegate(ILogMessage msg, ref bool succeeded)
                                                 {
                                                     ids.Add(msg.Id);
                                                     logMsgs.Add(msg);
@@ -152,9 +158,9 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
                                                     }
                                                 });
 
-            var logger2 = DelegateLogger.Create((msg) => { throw new Exception("1"); },
-                                                (msg) => { throw new Exception("2"); },
-                                                (msg) => { throw new Exception("3"); });
+            var logger2 = DelegateLogger.Create(delegate(ILogMessage msg, ref bool succeeded) { throw new Exception("1"); },
+                                                delegate(ILogMessage msg, ref bool succeeded) { throw new Exception("2"); },
+                                                delegate(ILogMessage msg, ref bool succeeded) { throw new Exception("3"); });
 
             var result1 = logger1.Log(msg: new char[] { 'M', 'K' });
             var result2 = logger2.Log(msg: new DateTime(1979, 9, 5, 23, 9, 19, 79));
@@ -195,7 +201,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
         public void LogCategoriesTest()
         {
             ILogMessage lastMsg = null;
-            var logger = DelegateLogger.Create((msg) => lastMsg = msg);
+            var logger = DelegateLogger.Create(delegate(ILogMessage msg, ref bool succeeded) { lastMsg = msg; });
 
             logger.Log(msg: "test",
                        categories: LogCategories.Debug | LogCategories.TODO);

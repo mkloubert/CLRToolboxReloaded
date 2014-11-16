@@ -35,7 +35,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
     /// </summary>
     public interface IWorkflowExecutionContext : IObject
     {
-        #region Data Members (15)
+        #region Data Members (17)
 
         /// <summary>
         /// Gets or sets if the whole operation should be canceled or not.
@@ -46,6 +46,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// Gets or sets if the execution should be continued if execution fails.
         /// </summary>
         bool ContinueOnError { get; set; }
+
+        /// <summary>
+        /// The list of errors that have be occured until now.
+        /// </summary>
+        IReadOnlyList<Exception> Errors { get; }
 
         /// <summary>
         /// Gets the arguments that were submitted to the underlying <see cref="WorkflowFunc" /> delegate.
@@ -80,6 +85,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// With other words: <see cref="IWorkflowExecutionContext.Next" /> is <see langword="null" />.
         /// </summary>
         bool IsLast { get; }
+
+        /// <summary>
+        /// Gets the last error or <see langword="null" /> for no error.
+        /// </summary>
+        Exception LastError { get; }
 
         /// <summary>
         /// Gets or sets the next action to invoke.

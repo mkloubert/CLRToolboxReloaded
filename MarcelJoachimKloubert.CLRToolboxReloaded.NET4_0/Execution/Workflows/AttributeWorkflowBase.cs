@@ -117,6 +117,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
             var execVars = this.CreateVarStorage();
             var hasBeenCanceled = false;
             long index = -1;
+            Exception lastError = null;
             IReadOnlyDictionary<string, object> previousVars = null;
             object result = null;
             var sync = new object();
@@ -127,19 +128,23 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
                 yield return (args) =>
                     {
                         var ctx = new WorkflowExecutionContext(isSynchronized: false,
-                                                               sync: sync);
-                        ctx.Cancel = false;
-                        ctx.ContinueOnError = false;
-                        ctx.ExecutionArguments = new ReadOnlyListWrapper<object>(args ?? new object[] { null });
-                        ctx.ExecutionVars = execVars;
-                        ctx.HasBeenCanceled = hasBeenCanceled;
-                        ctx.Index = ++index;
-                        ctx.NextVars = this.CreateVarStorage();
-                        ctx.PreviousVars = previousVars;
-                        ctx.Result = result;
-                        ctx.ThrowErrors = throwErrors;
-                        ctx.Workflow = this;
-                        ctx.WorkflowVars = this.Vars;
+                                                               sync: sync)
+                        {
+                            Cancel = false,
+                            ContinueOnError = false,
+                            Errors = new ReadOnlyListWrapper<Exception>(occuredErrors),
+                            ExecutionArguments = new ReadOnlyListWrapper<object>(args ?? new object[] { null }),
+                            ExecutionVars = execVars,
+                            HasBeenCanceled = hasBeenCanceled,
+                            Index = ++index,
+                            LastError = lastError,
+                            NextVars = this.CreateVarStorage(),
+                            PreviousVars = previousVars,
+                            Result = result,
+                            ThrowErrors = throwErrors,
+                            Workflow = this,
+                            WorkflowVars = this.Vars,
+                        };
 
                         // first try to find method for next step
                         MethodInfo nextMethod = null;
@@ -169,11 +174,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
                             }
                         }
 
-                        // execution
-                        InvokeWorkflowMethod(obj, currentMethod,
-                                             ctx,
-                                             occuredErrors);
+                        Exception le = null;
+                        try
+                        {
+                            // execution
+                            InvokeWorkflowMethod(obj, currentMethod,
+                                                 ctx,
+                                                 occuredErrors,
+                                                 out le);
+                        }
+                        finally
+                        {
+                            lastError = le;
+                        }
 
+                        // next action?
                         var nextAction = ctx.Next;
                         if (nextAction == null)
                         {
@@ -183,7 +198,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
                         {
                             obj = nextAction.Target;
                             currentMethod = nextAction.Method;
+                        }
 
+                        if (currentMethod != null)
+                        {
                             type = currentMethod.ReflectedType;
                             allMethods = GetMethodsByType(type);
                         }
@@ -202,6 +220,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
                         return ctx;
                     };
             }
+
+            if (throwErrors &&
+                (occuredErrors.Count > 0))
+            {
+                throw new AggregateException(occuredErrors);
+            }
         }
 
         private static IEnumerable<MethodInfo> GetMethodsByType(Type type)
@@ -212,8 +236,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
 
         private static void InvokeWorkflowMethod(object obj, MethodInfo method,
                                                  IWorkflowExecutionContext ctx,
-                                                 ICollection<Exception> occuredErrors)
+                                                 ICollection<Exception> occuredErrors,
+                                                 out Exception lastError)
         {
+            lastError = null;
+
             try
             {
                 object[] methodParams = null;
@@ -226,6 +253,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
             }
             catch (Exception ex)
             {
+                lastError = ex;
                 occuredErrors.Add(ex);
 
                 if (ctx.ContinueOnError == false)
