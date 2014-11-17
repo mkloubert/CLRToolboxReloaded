@@ -350,7 +350,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
                     if (ex != null)
                     {
                         ctx.State
-                           .Exceptions.AddRange(ex.InnerExceptions);
+                           .Exceptions.Add(ex);
                     }
                 }, actionState: new
                 {

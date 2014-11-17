@@ -290,7 +290,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                             }
                         }
 
-                        // maybe 'messageToLog' can be a log command again
+                        // maybe 'messageToLog.Message' can also be a log command
                         checkAgain = true;
                     }
                     else if (orgMsgObj.Message is ICommand<ILogMessage>)
@@ -300,7 +300,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                         messageToLog = null;
                         if (cmd.CanExecute(orgMsgObj))
                         {
-                            cmd.Execute(orgMsgObj);
+                            if (cmd.Execute(orgMsgObj).IsFalse())
+                            {
+                                return false;
+                            }
                         }
                     }
                 }

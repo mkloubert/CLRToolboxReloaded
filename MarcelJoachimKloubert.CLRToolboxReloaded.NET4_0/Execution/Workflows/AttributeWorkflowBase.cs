@@ -174,19 +174,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
                             }
                         }
 
-                        Exception le = null;
-                        try
-                        {
-                            // execution
-                            InvokeWorkflowMethod(obj, currentMethod,
-                                                 ctx,
-                                                 occuredErrors,
-                                                 out le);
-                        }
-                        finally
-                        {
-                            lastError = le;
-                        }
+                        // execution
+                        InvokeWorkflowMethod(obj, currentMethod,
+                                             ctx,
+                                             occuredErrors,
+                                             out lastError);
 
                         // next action?
                         var nextAction = ctx.Next;

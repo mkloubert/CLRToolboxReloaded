@@ -87,7 +87,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         bool IsLast { get; }
 
         /// <summary>
-        /// Gets the last error or <see langword="null" /> for no error.
+        /// Gets the error of the last execution or <see langword="null" /> for no error.
         /// </summary>
         Exception LastError { get; }
 
@@ -126,7 +126,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         object Result { get; set; }
 
         /// <summary>
-        /// Throw occured exceptions at the end if at least one execution failed.
+        /// Throw all occured exceptions at the end if at least one execution failed.
         /// </summary>
         bool ThrowErrors { get; set; }
 

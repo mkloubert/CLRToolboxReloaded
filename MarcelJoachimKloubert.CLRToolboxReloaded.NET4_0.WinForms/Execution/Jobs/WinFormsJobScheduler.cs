@@ -189,8 +189,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Forms.Execution.Jobs
                 {
                     this.StopTimer();
 
-                    var now = AppTime.Now;
-                    this.HandleJobs(now);
+                    this.HandleJobs(AppTime.Now);
                 }
                 catch
                 {

@@ -14,7 +14,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Execution
     /// </summary>
     public sealed class DispatcherMediator : Mediator
     {
-        #region Constructors (2)
+        #region Constructors (4)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DispatcherMediator" /> class.
@@ -55,7 +55,40 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Execution
         {
         }
 
-        #endregion Constructors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DispatcherMediator" /> class.
+        /// </summary>
+        /// <param name="sync">The unique object for thread safe operations.</param>
+        /// <param name="prio">The dispatcher priority to use.</param>
+        /// <param name="runInBackground">Run in background or not.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="sync" /> is <see langword="null" />.
+        /// </exception>
+        public DispatcherMediator(object sync,
+                                  DispatcherPriority prio = DispatcherPriority.Normal,
+                                  bool runInBackground = false)
+            : this(provider: GetAppDispatcher,
+                   sync: sync,
+                   prio: prio,
+                   runInBackground: runInBackground)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DispatcherMediator" /> class.
+        /// </summary>
+        /// <param name="prio">The dispatcher priority to use.</param>
+        /// <param name="runInBackground">Run in background or not.</param>
+        /// <returns>The new instance.</returns>
+        public DispatcherMediator(DispatcherPriority prio = DispatcherPriority.Normal, bool runInBackground = false)
+            : this(provider: GetAppDispatcher,
+                   prio: prio,
+                   runInBackground: runInBackground)
+        {
+        }
+
+        #endregion Constructors (4)
 
         #region Events and delegates (1)
 
@@ -66,7 +99,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Execution
         /// <returns>The control for the thread safe UI operations.</returns>
         public delegate Dispatcher DispatcherProvider(DispatcherMediator mediator);
 
-        #endregion Events and delegates
+        #endregion Events and delegates (1)
 
         #region Methods (6)
 
@@ -182,20 +215,27 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Execution
                 {
                     var disp = provider(ctx.GetMediator<DispatcherMediator>());
 
-                    Func<DispatcherPriority, Delegate, object> actionToInvoke;
-                    if (runInBackground)
+                    if (disp != null)
                     {
-                        actionToInvoke = disp.BeginInvoke;
+                        Func<DispatcherPriority, Delegate, object> funcToInvoke;
+                        if (runInBackground)
+                        {
+                            funcToInvoke = disp.BeginInvoke;
+                        }
+                        else
+                        {
+                            funcToInvoke = disp.Invoke;
+                        }
+
+                        funcToInvoke(prio, new Action(ctx.Invoke));
                     }
                     else
                     {
-                        actionToInvoke = disp.Invoke;
+                        ctx.Invoke();
                     }
-
-                    actionToInvoke(prio, new Action(ctx.Invoke));
                 };
         }
 
-        #endregion Methods (3)
+        #endregion Methods (6)
     }
 }

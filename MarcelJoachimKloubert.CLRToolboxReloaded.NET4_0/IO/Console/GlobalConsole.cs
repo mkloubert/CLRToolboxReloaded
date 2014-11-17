@@ -45,8 +45,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Console
 
         #region Delegates and Events (1)
 
-        // Delegates (1) 
-
         /// <summary>
         /// Describes the logic that returns the global console.
         /// </summary>

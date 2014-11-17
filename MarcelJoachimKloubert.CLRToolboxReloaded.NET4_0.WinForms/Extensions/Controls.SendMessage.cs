@@ -31,10 +31,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows.Forms
                                        .GetMethods(BindingFlags.Instance | BindingFlags.NonPublic)
                                        .First(m =>
                                            {
-                                               var p = m.GetParameters();
+                                               if (m.Name != "DefWndProc")
+                                               {
+                                                   return false;
+                                               }
 
-                                               return (m.Name == "DefWndProc") &&
-                                                      (p.Length == 1) &&
+                                               var p = m.GetParameters();
+                                               return (p.Length == 1) &&
                                                       msgTypeRef.Equals(p[0].ParameterType);
                                            });
 

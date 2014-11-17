@@ -47,12 +47,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.Execution
 
         private LogCommandExecutionContext CreateBasicExecutionContext(ILogMessage msg)
         {
-            var result = new LogCommandExecutionContext();
-            result.Arguments = (this.GetExecutionArguments(msg) ?? new object[0]).AsArray();
-            result.DoLogMessage = false;
-            result.Command = this;
-            result.Message = msg;
-            result.MessageValueToLog = null;
+            var result = new LogCommandExecutionContext()
+            {
+                Arguments = (this.GetExecutionArguments(msg) ?? new object[0]).AsArray(),
+                Command = this,
+                DoLogMessage = false,
+                Message = msg,
+                MessageValueToLog = null,
+            };
 
             return result;
         }

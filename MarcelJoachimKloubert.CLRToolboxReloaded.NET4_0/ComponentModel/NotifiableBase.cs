@@ -103,7 +103,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 
         #endregion Properties (1)
 
-        #region Methods (10)
+        #region Methods (12)
 
         /// <summary>
         /// Creates the dictionary that stores all properties and their values.
@@ -142,7 +142,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
                            [global::System.Runtime.CompilerServices.CallerMemberName]
                            string propertyName = null
 #else
-string propertyName
+                           string propertyName
 #endif
 )
         {
@@ -163,6 +163,49 @@ string propertyName
                 {
                     PropertyName = propertyName,
                 });
+        }
+
+        /// <summary>
+        /// Returns all possible members of that object for notification.
+        /// </summary>
+        /// <returns>The list of notifiable members of that object.</returns>
+        protected virtual IEnumerable<MemberInfo> GetPossibleNotificationMembers()
+        {
+            var result = Enumerable.Empty<MemberInfo>();
+#if CAN_GET_MEMBERS_FROM_TYPE
+            var memberBindFlags = global::System.Reflection.BindingFlags.Public |
+                                  global::System.Reflection.BindingFlags.NonPublic |
+                                  global::System.Reflection.BindingFlags.Instance |
+                                  global::System.Reflection.BindingFlags.Static;
+
+            result = result.Concat(this.GetType().GetFields(memberBindFlags))
+                           .Concat(this.GetType().GetMethods(memberBindFlags))
+                           .Concat(this.GetType().GetProperties(memberBindFlags));
+#elif KNOWS_RUNTIME_REFLECTION_EXTENSIONS
+            result = result.Concat(this.GetType().GetRuntimeFields())
+                           .Concat(this.GetType().GetRuntimeMethods())
+                           .Concat(this.GetType().GetRuntimeProperties());
+#endif
+
+            return result;
+        }
+
+        /// <summary>
+        /// Returns all possible properties of that object for notification.
+        /// </summary>
+        /// <returns>The list of notifiable properties of that object.</returns>
+        protected virtual IEnumerable<PropertyInfo> GetPossibleNotificationProperties()
+        {
+#if CAN_GET_PROPERTIES_FROM_TYPE
+            return this.GetType()
+                       .GetProperties(global::System.Reflection.BindingFlags.Public |
+                                      global::System.Reflection.BindingFlags.NonPublic |
+                                      global::System.Reflection.BindingFlags.Instance);
+#elif KNOWS_RUNTIME_REFLECTION_EXTENSIONS
+            return this.GetType().GetRuntimeProperties();
+#else
+            return global::System.Linq.Enumerable.Empty<PropertyInfo>();
+#endif
         }
 
         /// <summary>
@@ -200,22 +243,14 @@ string propertyName
 
         private void Handle_ReceiveNotificationFrom(string nameOfSender, bool hasBeenNotified)
         {
-            IEnumerable<PropertyInfo> properties;
-#if CAN_GET_PROPERTIES_FROM_TYPE
-            properties = this.GetType()
-                             .GetProperties(global::System.Reflection.BindingFlags.Public |
-                                            global::System.Reflection.BindingFlags.NonPublic |
-                                            global::System.Reflection.BindingFlags.Instance);
-#else
-            properties = global::System.Linq.Enumerable.Empty<PropertyInfo>();
-#endif
+            var properties = this.GetPossibleNotificationProperties();
 
             var receiveFromProperties =
                 properties.Where(p =>
                                  {
                                      var attribs = p.GetCustomAttributes(typeof(global::MarcelJoachimKloubert.CLRToolbox.ComponentModel.ReceiveNotificationFromAttribute),
                                                                          true)
-                                                     .Cast<ReceiveNotificationFromAttribute>();
+                                                    .Cast<ReceiveNotificationFromAttribute>();
 
                                      return attribs.Where(a =>
                                          {
@@ -255,10 +290,6 @@ string propertyName
 
             receiveFromProperties.ForAll((ctx) =>
                 {
-#if KNOWS_PROPERTY_CHANGING
-                    ctx.State.Object
-                             .OnPropertyChanging(ctx.Item.Name);
-#endif
                     ctx.State.Object
                              .OnPropertyChanged(ctx.Item.Name);
                 }, actionState: new
@@ -269,21 +300,7 @@ string propertyName
 
         private void Handle_ReceiveValueFrom<T>(string nameOfSender, bool hasBeenNotified, T newValue, object oldValue)
         {
-            var members = Enumerable.Empty<MemberInfo>();
-#if CAN_GET_MEMBERS_FROM_TYPE
-            var memberBindFlags = global::System.Reflection.BindingFlags.Public |
-                                  global::System.Reflection.BindingFlags.NonPublic |
-                                  global::System.Reflection.BindingFlags.Instance |
-                                  global::System.Reflection.BindingFlags.Static;
-
-            members = members.Concat(this.GetType().GetFields(memberBindFlags))
-                             .Concat(this.GetType().GetMethods(memberBindFlags))
-                             .Concat(this.GetType().GetProperties(memberBindFlags));
-#elif KNOWS_RUNTIME_REFLECTION_EXTENSIONS
-            members = members.Concat(this.GetType().GetRuntimeFields())
-                             .Concat(this.GetType().GetRuntimeMethods())
-                             .Concat(this.GetType().GetRuntimeProperties());
-#endif
+            var members = this.GetPossibleNotificationMembers();
 
             var receiveFromMembers = members.Where(m =>
                 {
@@ -462,7 +479,7 @@ string propertyName
                               [global::System.Runtime.CompilerServices.CallerMemberName]
                               string propertyName = null
 #else
- string propertyName
+                              string propertyName
 #endif
 )
         {
@@ -508,6 +525,6 @@ string propertyName
             return result;
         }
 
-        #endregion Methods (10)
+        #endregion Methods (12)
     }
 }
