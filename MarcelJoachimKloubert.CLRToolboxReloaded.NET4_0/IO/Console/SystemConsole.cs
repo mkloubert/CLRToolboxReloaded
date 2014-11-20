@@ -11,6 +11,35 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Console
     /// </summary>
     public class SystemConsole : ConsoleBase
     {
+        #region Constrcutors (4)
+
+        /// <inheriteddoc />
+        public SystemConsole(bool isSynchronized, object sync)
+            : base(isSynchronized: isSynchronized,
+                   sync: sync)
+        {
+        }
+
+        /// <inheriteddoc />
+        public SystemConsole(bool isSynchronized)
+            : base(isSynchronized: isSynchronized)
+        {
+        }
+
+        /// <inheriteddoc />
+        public SystemConsole(object sync)
+            : base(sync: sync)
+        {
+        }
+
+        /// <inheriteddoc />
+        public SystemConsole()
+            : base()
+        {
+        }
+
+        #endregion Constrcutors (4)
+
         #region Properties (2)
 
         /// <inheriteddoc />

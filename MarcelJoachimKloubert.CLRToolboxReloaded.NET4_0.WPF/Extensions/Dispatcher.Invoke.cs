@@ -186,11 +186,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Windows
                 throw new ArgumentNullException("funcStateFactory");
             }
 
-            return GlobalConverter.Current
-                                  .ChangeType<TResult>(obj.Dispatcher
-                                                          .Invoke(func,
-                                                                  prio,
-                                                                  obj, funcStateFactory(obj)));
+            return (TResult)obj.Dispatcher
+                               .Invoke(func,
+                                       prio,
+                                       obj, funcStateFactory(obj));
         }
 
         #endregion Methods

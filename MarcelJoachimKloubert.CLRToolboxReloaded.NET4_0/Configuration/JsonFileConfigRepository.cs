@@ -2,13 +2,13 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-using MarcelJoachimKloubert.CLRToolbox.Data.Conversion;
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Configuration
@@ -86,7 +86,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
 
         #endregion Properties
 
-        #region Methods (6)
+        #region Methods (8)
 
         /// <summary>
         /// Creates a new <see cref="JsonSerializer" /> instance.
@@ -138,9 +138,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
                                     {
                                         var repo = ctx.State.Repo;
                                         var category = ctx.Item.Key;
-                                        var jObj = GlobalConverter.Current
-                                                                  .ChangeType<JObject>(ctx.Item.Value);
 
+                                        var jObj = (JObject)ctx.Item.Value;
                                         repo._VALUES[category ?? string.Empty] = this.ToDictionary(jObj);
                                     }, actionState: new
                                     {
@@ -191,6 +190,68 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
             }
         }
 
+        private object[] ToArray(JArray arr,
+                                 int level = 0,
+                                 int maxLevel = 64)
+        {
+            if (arr == null)
+            {
+                return null;
+            }
+
+            if (level > maxLevel)
+            {
+                // maximum reached
+
+                return arr.Cast<object>()
+                          .ToArray();
+            }
+
+            var result = new object[arr.Count];
+            for (var i = 0; i < result.Length; i++)
+            {
+                result[i] = this.ToClrObject(arr[i]);
+            }
+
+            return result;
+        }
+
+        private object ToClrObject(object obj,
+                                   int level = 0,
+                                   int maxLevel = 64)
+        {
+            if (obj.IsNull())
+            {
+                return null;
+            }
+
+            if (level > maxLevel)
+            {
+                // maximum reached
+                return obj;
+            }
+
+            if (obj is JArray)
+            {
+                return this.ToArray((JArray)obj);
+            }
+
+            if (obj is JObject)
+            {
+                return this.ToDictionary((JObject)obj);
+            }
+
+            // this check MUST BE AT THE END of that method!
+            if (obj is JToken)
+            {
+                return this.ToClrObject(((JToken)obj).ToObject<object>(),
+                                        level: level + 1,
+                                        maxLevel: maxLevel);
+            }
+
+            return obj;
+        }
+
         private IDictionary<string, object> ToDictionary(JObject obj,
                                                          int level = 0,
                                                          int maxLevel = 64)
@@ -201,35 +262,26 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
             }
 
             var result = new Dictionary<string, object>();
-            
+
             if (level <= maxLevel)
             {
-                foreach (var property in obj.Properties())
-                {
-                    string cat;
-                    string name;
-                    this.PrepareCategoryAndName(null, property.Name,
-                                                out cat, out name);
-
-                    object valueToSet = null;
-
-                    var token = property.Value;
-                    if (token != null)
+                obj.Properties().ForEach((ctx) =>
                     {
-                        valueToSet = token.ToObject<object>();
-                    }
+                        var property = ctx.Item;
+                        var provider = ctx.State.Provider;
 
-                    var jObj = token as JObject;
-                    if (jObj != null)
+                        string cat;
+                        string name;
+                        provider.PrepareCategoryAndName(null, property.Name,
+                                                        out cat, out name);
+
+                        ctx.State.Result.Add(name ?? string.Empty,
+                                             provider.ToClrObject(property.Value));
+                    }, actionState: new
                     {
-                        valueToSet = this.ToDictionary(obj: jObj,
-                                                       level: level + 1,
-                                                       maxLevel: maxLevel);
-                    }
-
-                    result.Add(name ?? string.Empty,
-                               valueToSet);
-                }
+                        Provider = this,
+                        Result = result,
+                    });
             }
             else
             {

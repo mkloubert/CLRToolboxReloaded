@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4708054D-5C0C-46CA-AA83-6B57C03DB0A5}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MarcelJoachimKloubert.ApplicationServer.TestHost</RootNamespace>
+    <AssemblyName>MarcelJoachimKloubert.ApplicationServer.TestHost</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EmbeddedResource Include="LICENSE" />
+    <None Include="config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs.csproj">
+      <Project>{d73e50c8-359a-4680-9fa5-8c200de0dbc3}</Project>
+      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.csproj">
+      <Project>{d15249c7-977d-4a74-b596-be0e08dc9e7b}</Project>
+      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarcelJoachimKloubert.ApplicationServer.Modules.Api\MarcelJoachimKloubert.ApplicationServer.Modules.Api.csproj">
+      <Project>{8718723b-8548-4b68-8577-fc4ef97c7a4e}</Project>
+      <Name>MarcelJoachimKloubert.ApplicationServer.Modules.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarcelJoachimKloubert.ApplicationServer.SDK\MarcelJoachimKloubert.ApplicationServer.SDK.csproj">
+      <Project>{3fecd3cc-8ac9-4865-a7db-ed2a5c080ad4}</Project>
+      <Name>MarcelJoachimKloubert.ApplicationServer.SDK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarcelJoachimKloubert.ApplicationServer\MarcelJoachimKloubert.ApplicationServer.csproj">
+      <Project>{1ee34af0-8aee-4fa6-8910-4ba21215758e}</Project>
+      <Name>MarcelJoachimKloubert.ApplicationServer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="services\dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>COPY /Y "$(ProjectDir)$(OutDir)MarcelJoachimKloubert.ApplicationServer.Modules.*" "$(TargetDir)services"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

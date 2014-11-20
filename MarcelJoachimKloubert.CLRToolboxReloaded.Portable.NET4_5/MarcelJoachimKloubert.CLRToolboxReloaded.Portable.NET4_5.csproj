@@ -180,6 +180,9 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\AsyncLogger.cs">
       <Link>Diagnostics\Logging\AsyncLogger.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\ConsoleLogger.cs">
+      <Link>Diagnostics\Logging\ConsoleLogger.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Diagnostics\Logging\DelegateLogger.cs">
       <Link>Diagnostics\Logging\DelegateLogger.cs</Link>
     </Compile>

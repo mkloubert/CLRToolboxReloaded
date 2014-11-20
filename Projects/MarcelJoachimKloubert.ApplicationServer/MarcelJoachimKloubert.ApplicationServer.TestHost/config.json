@@ -1,0 +1,13 @@
+﻿{
+    "services": {
+        "modules": [
+            { 
+                "id":  "{F75BF7E0-1886-4528-83DD-4D6141D5CC4E}"
+            }
+        ]
+    },
+
+    "webInterface": {
+        "port": 5979
+    }
+}

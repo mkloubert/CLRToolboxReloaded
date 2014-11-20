@@ -2,7 +2,6 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-using MarcelJoachimKloubert.CLRToolbox.Data.Conversion;
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections.Generic;
@@ -80,11 +79,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.ServiceLocation
                 @params = new object[] { key };
             }
 
-            return GlobalConverter.Current
-                                  .ChangeType<R>(method.GetGenericMethodDefinition()
-                                                       .MakeGenericMethod(serviceType)
-                                                       .Invoke(obj: container,
-                                                               parameters: @params));
+            return (R)method.GetGenericMethodDefinition()
+                            .MakeGenericMethod(serviceType)
+                            .Invoke(obj: container,
+                                    parameters: @params);
         }
 
         /// <inheriteddoc />

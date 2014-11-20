@@ -322,7 +322,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Execution.Jobs
             lock (this._SYNC)
             {
                 var now = AppTime.Now;
-                var t = (DispatcherTimer)sender;
 
                 try
                 {

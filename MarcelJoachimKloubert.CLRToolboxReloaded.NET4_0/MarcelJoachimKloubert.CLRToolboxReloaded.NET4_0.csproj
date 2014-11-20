@@ -168,6 +168,7 @@
     <Compile Include="Data\IDbTransactionContext.cs" />
     <Compile Include="Diagnostics\Logging\AggregateLogger.cs" />
     <Compile Include="Diagnostics\Logging\AsyncLogger.cs" />
+    <Compile Include="Diagnostics\Logging\ConsoleLogger.cs" />
     <Compile Include="Diagnostics\Logging\DelegateLogger.cs" />
     <Compile Include="Diagnostics\Logging\DummyLogger.cs" />
     <Compile Include="Diagnostics\Logging\EventLogger.cs" />

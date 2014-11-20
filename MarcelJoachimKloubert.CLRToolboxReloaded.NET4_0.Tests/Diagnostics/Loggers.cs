@@ -79,7 +79,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
                           "tm";
                 });
 
-            var logger = new AsyncLogger(childLogger);
+            var logger = AsyncLogger.Create(childLogger);
             logger.Log("mk+",
                        "l://");
 

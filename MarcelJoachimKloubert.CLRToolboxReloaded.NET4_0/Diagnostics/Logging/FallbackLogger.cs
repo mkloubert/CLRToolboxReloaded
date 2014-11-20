@@ -16,7 +16,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
     {
         #region Fields (1)
 
-        private readonly LoggerProvider _PROVIDER;
+        private readonly FallbackProvider _FALLBACK_PROVIDER;
 
         #endregion Fields (1)
 
@@ -25,38 +25,38 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
         /// </summary>
-        /// <param name="mainLogger">The main logger.</param>
-        /// <param name="provider">The value for the <see cref="AggregateLogger.Provider" /> property.</param>
+        /// <param name="provider">The value for the <see cref="LoggerWrapperBase.Provider" /> property.</param>
+        /// <param name="fbProvider">The value for the <see cref="FallbackLogger.ProviderForFallbacks" /> property.</param>
         /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="provider" /> and/or <paramref name="sync" /> is <see langword="null" />.
+        /// <paramref name="provider" />, <paramref name="fbProvider" /> and/or <paramref name="sync" /> are <see langword="null" />.
         /// </exception>
-        public FallbackLogger(ILogger mainLogger, LoggerProvider provider, bool isSynchronized, object sync)
-            : base(innerLogger: mainLogger,
+        public FallbackLogger(LoggerProvider provider, FallbackProvider fbProvider, bool isSynchronized, object sync)
+            : base(provider: provider,
                    isSynchronized: isSynchronized,
                    sync: sync)
         {
-            if (provider == null)
+            if (fbProvider == null)
             {
-                throw new ArgumentNullException("provider");
+                throw new ArgumentNullException("fbProvider");
             }
 
-            this._PROVIDER = provider;
+            this._FALLBACK_PROVIDER = fbProvider;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
         /// </summary>
-        /// <param name="mainLogger">The main logger.</param>
-        /// <param name="provider">The value for the <see cref="AggregateLogger.Provider" /> property.</param>
+        /// <param name="provider">The value for the <see cref="LoggerWrapperBase.Provider" /> property.</param>
+        /// <param name="fbProvider">The value for the <see cref="FallbackLogger.ProviderForFallbacks" /> property.</param>
         /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="provider" /> is <see langword="null" />.
+        /// <paramref name="provider" /> and/or <paramref name="fbProvider" /> are <see langword="null" />.
         /// </exception>
-        public FallbackLogger(ILogger mainLogger, LoggerProvider provider, bool isSynchronized)
-            : this(mainLogger: mainLogger,
-                   provider: provider,
+        public FallbackLogger(LoggerProvider provider, FallbackProvider fbProvider, bool isSynchronized)
+            : this(provider: provider,
+                   fbProvider: fbProvider,
                    isSynchronized: isSynchronized,
                    sync: new object())
         {
@@ -65,15 +65,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
         /// </summary>
-        /// <param name="mainLogger">The main logger.</param>
-        /// <param name="provider">The value for the <see cref="AggregateLogger.Provider" /> property.</param>
+        /// <param name="provider">The value for the <see cref="LoggerWrapperBase.Provider" /> property.</param>
+        /// <param name="fbProvider">The value for the <see cref="FallbackLogger.ProviderForFallbacks" /> property.</param>
         /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="provider" /> and/or <paramref name="sync" /> is <see langword="null" />.
+        /// <paramref name="provider" />, <paramref name="fbProvider" /> and/or <paramref name="sync" /> are <see langword="null" />.
         /// </exception>
-        public FallbackLogger(ILogger mainLogger, LoggerProvider provider, object sync)
-            : this(mainLogger: mainLogger,
-                   provider: provider,
+        public FallbackLogger(LoggerProvider provider, FallbackProvider fbProvider, object sync)
+            : this(provider: provider,
+                   fbProvider: fbProvider,
                    sync: sync,
                    isSynchronized: false)
         {
@@ -82,14 +82,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
         /// </summary>
-        /// <param name="mainLogger">The main logger.</param>
-        /// <param name="provider">The value for the <see cref="FallbackLogger.Provider" /> property.</param>
+        /// <param name="provider">The value for the <see cref="LoggerWrapperBase.Provider" /> property.</param>
+        /// <param name="fbProvider">The value for the <see cref="FallbackLogger.ProviderForFallbacks" /> property.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="provider" /> is <see langword="null" />.
+        /// <paramref name="provider" /> and/or <paramref name="fbProvider" /> are <see langword="null" />.
         /// </exception>
-        public FallbackLogger(ILogger mainLogger, LoggerProvider provider)
-            : this(mainLogger: mainLogger,
-                   provider: provider,
+        public FallbackLogger(LoggerProvider provider, FallbackProvider fbProvider)
+            : this(provider: provider,
+                   fbProvider: fbProvider,
                    sync: new object())
         {
         }
@@ -99,35 +99,27 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         #region Events and delegates (1)
 
         /// <summary>
-        /// Describes a function / methods that provides the fallback loggers for an instance that class.
+        /// Describes a function / methods that provides the fallback loggers for an instance of that class.
         /// </summary>
         /// <param name="logger">The underlying instance.</param>
         /// <returns>The fallback for that class.</returns>
-        public delegate IEnumerable<ILogger> LoggerProvider(FallbackLogger logger);
+        public delegate IEnumerable<ILogger> FallbackProvider(FallbackLogger logger);
 
         #endregion Events and delegates (1)
 
-        #region Properties (2)
+        #region Properties (1)
 
         /// <summary>
-        /// Gets the main logger.
+        /// Gets the underlying provider for the fallback loggers.
         /// </summary>
-        public ILogger MainLogger
+        public FallbackProvider ProviderForFallbacks
         {
-            get { return this._INNER_LOGGER; }
-        }
-
-        /// <summary>
-        /// Gets the underlying provider.
-        /// </summary>
-        public LoggerProvider Provider
-        {
-            get { return this._PROVIDER; }
+            get { return this._FALLBACK_PROVIDER; }
         }
 
         #endregion Properties (2)
 
-        #region Methods (8)
+        #region Methods (10)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
@@ -141,13 +133,18 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </exception>
         public static FallbackLogger Create(ILogger mainLogger, IEnumerable<ILogger> loggers, bool isSynchronized, object sync)
         {
+            if (mainLogger == null)
+            {
+                throw new ArgumentNullException("mainLogger");
+            }
+
             if (loggers == null)
             {
                 throw new ArgumentNullException("loggers");
             }
 
-            return new FallbackLogger(mainLogger: mainLogger,
-                                      provider: (l) => loggers,
+            return new FallbackLogger(provider: (l) => mainLogger,
+                                      fbProvider: (l) => loggers,
                                       isSynchronized: isSynchronized,
                                       sync: sync);
         }
@@ -266,12 +263,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         }
 
         /// <summary>
-        /// Returns a normalized list of fallback loggers that are provides by <see cref="FallbackLogger.Provider" /> property.
+        /// Returns a normalized list of fallback loggers that are provides by <see cref="FallbackLogger.ProviderForFallbacks" /> property.
         /// </summary>
         /// <returns>The list of fallback loggers.</returns>
         public IEnumerable<ILogger> GetFallbacks()
         {
-            return (this._PROVIDER(this) ?? Enumerable.Empty<ILogger>()).Where(l => l != null);
+            return (this._FALLBACK_PROVIDER(this) ?? Enumerable.Empty<ILogger>()).Where(l => l != null);
         }
 
         /// <inheriteddoc />
@@ -281,7 +278,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
             using (var e = this.GetFallbacks().GetEnumerator())
             {
-                var currentLogger = this._INNER_LOGGER;
+                var currentLogger = this._PROVIDER(this);
                 while (currentLogger != null)
                 {
                     var searchForNextFallback = false;
