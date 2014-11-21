@@ -71,7 +71,7 @@ namespace MarcelJoachimKloubert.ApplicationServer
             var modules = new SynchronizedCollection<IServiceModule>();
 
             var ex = dir.GetFiles("*.dll")
-                        .ForAllAsync(action: (ctx) =>
+                        .ForAll(action: (ctx) =>
                         {
                             var f = ctx.Item;
                             var asmBlob = File.ReadAllBytes(f.FullName);
@@ -91,6 +91,9 @@ namespace MarcelJoachimKloubert.ApplicationServer
 
                                 var container = new CompositionContainer(catalog: catalog,
                                                                          isThreadSafe: true);
+
+                                ctx.State.Server
+                                         .FillCompositionContainerWithCommonExportValues(container);
 
                                 var mefServiceLocator = new ExportProviderServiceLocator(provider: container);
 

@@ -366,6 +366,9 @@
       <DependentUpon>IO.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Net.cs" />
+    <Compile Include="Extensions\Net.ForceAdd.cs">
+      <DependentUpon>Net.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Net.SetBasicAuth.cs">
       <DependentUpon>Net.cs</DependentUpon>
     </Compile>
@@ -465,9 +468,6 @@
     <Compile Include="Net\Http\IHttpResponse.cs" />
     <Compile Include="Net\Http\IHttpServer.cs" />
     <Compile Include="Net\Http\Listener\HttpListenerServer.cs" />
-    <Compile Include="Net\Http\Listener\HttpListenerServer.DummyIdentity.cs">
-      <DependentUpon>HttpListenerServer.cs</DependentUpon>
-    </Compile>
     <Compile Include="Net\Http\Listener\HttpListenerServer.HttpResponse.cs">
       <DependentUpon>HttpListenerServer.cs</DependentUpon>
     </Compile>

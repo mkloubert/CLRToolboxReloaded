@@ -18,8 +18,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
     {
         #region Fields (2)
 
+        private readonly WorkflowProvider _PROVIDER;
         private readonly ArgumentProvider _PROVIDER_OF_ARGUMENTS;
-        private readonly IWorkflow _WORKFLOW;
 
         #endregion Fields
 
@@ -28,20 +28,20 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkflowLogger" /> class.
         /// </summary>
-        /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
+        /// <param name="provider">The value for the <see cref="WorkflowLogger.Provider" /> property.</param>
         /// <param name="argProvider">The value for the <see cref="WorkflowLogger.ProviderOfArguments" /> property.</param>
         /// <param name="isSynchronized">Object is thread safe or not.</param>
         /// <param name="sync">The unique object for sync operations.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="workflow" />, <paramref name="argProvider" /> and/or <paramref name="sync" /> are <see langword="null" />.
+        /// <paramref name="provider" />, <paramref name="argProvider" /> and/or <paramref name="sync" /> are <see langword="null" />.
         /// </exception>
-        public WorkflowLogger(IWorkflow workflow, ArgumentProvider argProvider, bool isSynchronized, object sync)
+        public WorkflowLogger(WorkflowProvider provider, ArgumentProvider argProvider, bool isSynchronized, object sync)
             : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
-            if (workflow == null)
+            if (provider == null)
             {
-                throw new ArgumentNullException("workflow");
+                throw new ArgumentNullException("provider");
             }
 
             if (argProvider == null)
@@ -49,21 +49,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                 throw new ArgumentNullException("argProvider");
             }
 
-            this._WORKFLOW = workflow;
+            this._PROVIDER = provider;
             this._PROVIDER_OF_ARGUMENTS = argProvider;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkflowLogger" /> class.
         /// </summary>
-        /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
+        /// <param name="provider">The value for the <see cref="WorkflowLogger.Provider" /> property.</param>
         /// <param name="isSynchronized">Object is thread safe or not.</param>
         /// <param name="sync">The unique object for sync operations.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="workflow" /> and/or <paramref name="sync" /> are <see langword="null" />.
+        /// <paramref name="provider" /> and/or <paramref name="sync" /> are <see langword="null" />.
         /// </exception>
-        public WorkflowLogger(IWorkflow workflow, bool isSynchronized, object sync)
-            : this(workflow: workflow,
+        public WorkflowLogger(WorkflowProvider provider, bool isSynchronized, object sync)
+            : this(provider: provider,
                    argProvider: GetEmptyArguments,
                    isSynchronized: isSynchronized,
                    sync: sync)
@@ -73,14 +73,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkflowLogger" /> class.
         /// </summary>
-        /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
+        /// <param name="provider">The value for the <see cref="WorkflowLogger.Provider" /> property.</param>
         /// <param name="argProvider">The value for the <see cref="WorkflowLogger.ProviderOfArguments" /> property.</param>
         /// <param name="sync">The unique object for sync operations.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="workflow" />, <paramref name="argProvider" /> and/or <paramref name="sync" /> are <see langword="null" />.
+        /// <paramref name="provider" />, <paramref name="argProvider" /> and/or <paramref name="sync" /> are <see langword="null" />.
         /// </exception>
-        public WorkflowLogger(IWorkflow workflow, ArgumentProvider argProvider, object sync)
-            : this(workflow: workflow,
+        public WorkflowLogger(WorkflowProvider provider, ArgumentProvider argProvider, object sync)
+            : this(provider: provider,
                    argProvider: argProvider,
                    isSynchronized: false,
                    sync: sync)
@@ -90,14 +90,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkflowLogger" /> class.
         /// </summary>
-        /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
+        /// <param name="provider">The value for the <see cref="WorkflowLogger.Provider" /> property.</param>
         /// <param name="argProvider">The value for the <see cref="WorkflowLogger.ProviderOfArguments" /> property.</param>
         /// <param name="isSynchronized">Object is thread safe or not.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="workflow" /> and/or <paramref name="argProvider" /> are <see langword="null" />.
+        /// <paramref name="provider" /> and/or <paramref name="argProvider" /> are <see langword="null" />.
         /// </exception>
-        public WorkflowLogger(IWorkflow workflow, ArgumentProvider argProvider, bool isSynchronized)
-            : this(workflow: workflow,
+        public WorkflowLogger(WorkflowProvider provider, ArgumentProvider argProvider, bool isSynchronized)
+            : this(provider: provider,
                    argProvider: argProvider,
                    isSynchronized: isSynchronized,
                    sync: new object())
@@ -107,13 +107,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkflowLogger" /> class.
         /// </summary>
-        /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
+        /// <param name="provider">The value for the <see cref="WorkflowLogger.Provider" /> property.</param>
         /// <param name="sync">The unique object for sync operations.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="workflow" /> and/or <paramref name="sync" /> are <see langword="null" />.
+        /// <paramref name="provider" /> and/or <paramref name="sync" /> are <see langword="null" />.
         /// </exception>
-        public WorkflowLogger(IWorkflow workflow, object sync)
-            : this(workflow: workflow,
+        public WorkflowLogger(WorkflowProvider provider, object sync)
+            : this(provider: provider,
                    isSynchronized: false,
                    sync: sync)
         {
@@ -122,13 +122,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkflowLogger" /> class.
         /// </summary>
-        /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
+        /// <param name="provider">The value for the <see cref="WorkflowLogger.Provider" /> property.</param>
         /// <param name="isSynchronized">Object is thread safe or not.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="workflow" /> is <see langword="null" />.
+        /// <paramref name="provider" /> is <see langword="null" />.
         /// </exception>
-        public WorkflowLogger(IWorkflow workflow, bool isSynchronized)
-            : this(workflow: workflow,
+        public WorkflowLogger(WorkflowProvider provider, bool isSynchronized)
+            : this(provider: provider,
                    isSynchronized: isSynchronized,
                    sync: new object())
         {
@@ -137,12 +137,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkflowLogger" /> class.
         /// </summary>
-        /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
+        /// <param name="provider">The value for the <see cref="WorkflowLogger.Provider" /> property.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="workflow" /> is <see langword="null" />.
+        /// <paramref name="provider" /> is <see langword="null" />.
         /// </exception>
-        public WorkflowLogger(IWorkflow workflow)
-            : this(workflow: workflow,
+        public WorkflowLogger(WorkflowProvider provider)
+            : this(provider: provider,
                    isSynchronized: false)
         {
         }
@@ -152,42 +152,108 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         #region Properties (2)
 
         /// <summary>
-        /// Gets function that provides the the arguments for each function of <see cref="WorkflowLogger.Workflow" />.
+        /// Gets the underlying workflow provider.
+        /// </summary>
+        public WorkflowProvider Provider
+        {
+            get { return this._PROVIDER; }
+        }
+
+        /// <summary>
+        /// Gets function that provides the the arguments for each function of <see cref="WorkflowLogger.Provider" />.
         /// </summary>
         public ArgumentProvider ProviderOfArguments
         {
             get { return this._PROVIDER_OF_ARGUMENTS; }
         }
 
-        /// <summary>
-        /// Gets the underlying workflow.
-        /// </summary>
-        public IWorkflow Workflow
-        {
-            get { return this._WORKFLOW; }
-        }
-
         #endregion Properties
 
-        #region Delegates and Events (1)
-
-        // Delegates (1) 
+        #region Delegates and Events (2)
 
         /// <summary>
-        /// Describes a function or method that provides the instance of <see cref="WorkflowLogger.Workflow" />.
+        /// Describes a function or method that provides the instance of <see cref="WorkflowLogger.ProviderOfArguments" />.
         /// </summary>
         /// <param name="logger">The underlying logger instance.</param>
         /// <returns>The argument to use.</returns>
         public delegate IEnumerable ArgumentProvider(WorkflowLogger logger);
 
+        /// <summary>
+        /// Provides the <see cref="IWorkflow" /> for an instance of that class.
+        /// </summary>
+        /// <param name="logger">The underlying logger.</param>
+        /// <returns>The provided workflow.</returns>
+        public delegate IWorkflow WorkflowProvider(WorkflowLogger logger);
+
         #endregion Delegates and Events
 
-        #region Methods (5)
+        #region Methods (9)
 
         /// <summary>
         /// Creates a new instance of the <see cref="WorkflowLogger" /> class.
         /// </summary>
-        /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
+        /// <param name="workflow">The workflow to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="workflow" /> is <see langword="null" />.
+        /// </exception>
+        public static WorkflowLogger Create(IWorkflow workflow)
+        {
+            return Create(workflow: workflow,
+                          isSynchronized: false);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="WorkflowLogger" /> class.
+        /// </summary>
+        /// <param name="workflow">The workflow to use.</param>
+        /// <param name="isSynchronized">Object is thread safe or not.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="workflow" /> is <see langword="null" />.
+        /// </exception>
+        public static WorkflowLogger Create(IWorkflow workflow, bool isSynchronized)
+        {
+            return Create(workflow: workflow,
+                          isSynchronized: isSynchronized,
+                          sync: new object());
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="WorkflowLogger" /> class.
+        /// </summary>
+        /// <param name="workflow">The workflow to use.</param>
+        /// <param name="isSynchronized">Object is thread safe or not.</param>
+        /// <param name="sync">The unique object for sync operations.</param>
+        /// <param name="args">The arguments to use for each invokation.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="workflow" /> and/or <paramref name="sync" /> are <see langword="null" />.
+        /// </exception>
+        public static WorkflowLogger Create(IWorkflow workflow, bool isSynchronized, object sync, params object[] args)
+        {
+            return Create(workflow: workflow,
+                          args: (IEnumerable)args,
+                          isSynchronized: isSynchronized,
+                          sync: sync);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="WorkflowLogger" /> class.
+        /// </summary>
+        /// <param name="workflow">The workflow to use.</param>
+        /// <param name="args">The arguments to use for each invokation.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="workflow" /> is <see langword="null" />.
+        /// </exception>
+        public static WorkflowLogger Create(IWorkflow workflow, IEnumerable args)
+        {
+            return Create(workflow: workflow,
+                          args: args,
+                          isSynchronized: false);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="WorkflowLogger" /> class.
+        /// </summary>
+        /// <param name="workflow">The workflow to use.</param>
         /// <param name="args">The arguments to use for each invokation.</param>
         /// <param name="sync">The unique object for sync operations.</param>
         /// <exception cref="ArgumentNullException">
@@ -204,7 +270,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Creates a new instance of the <see cref="WorkflowLogger" /> class.
         /// </summary>
-        /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
+        /// <param name="workflow">The workflow to use.</param>
         /// <param name="args">The arguments to use for each invokation.</param>
         /// <param name="isSynchronized">Object is thread safe or not.</param>
         /// <exception cref="ArgumentNullException">
@@ -221,7 +287,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <summary>
         /// Creates a new instance of the <see cref="WorkflowLogger" /> class.
         /// </summary>
-        /// <param name="workflow">The value for the <see cref="WorkflowLogger.Workflow" /> property.</param>
+        /// <param name="workflow">The workflow to use.</param>
         /// <param name="args">The arguments to use for each invokation.</param>
         /// <param name="isSynchronized">Object is thread safe or not.</param>
         /// <param name="sync">The unique object for sync operations.</param>
@@ -230,7 +296,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// </exception>
         public static WorkflowLogger Create(IWorkflow workflow, IEnumerable args, bool isSynchronized, object sync)
         {
-            return new WorkflowLogger(workflow: workflow,
+            if (workflow == null)
+            {
+                throw new ArgumentNullException("workflow");
+            }
+
+            return new WorkflowLogger(provider: (l) => workflow,
                                       argProvider: (l) => args,
                                       isSynchronized: isSynchronized,
                                       sync: sync);
@@ -244,6 +315,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <inheriteddoc />
         protected override void OnLog(ILogMessage msg, ref bool succeeded)
         {
+            var workflow = this._PROVIDER(this);
+            if (workflow == null)
+            {
+                return;
+            }
+
             // use instance of 'msg'
             // as first argument for the workflow
             var basicArgs = new object[] { msg };
@@ -259,20 +336,20 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                 allArgs = allArgs.Concat(additionalArgs);
             }
 
-            this._WORKFLOW
-                .ForEach(action: ctx =>
-                             {
-                                 var res = ctx.Item(ctx.State.Arguments);
+            workflow.ForEach(
+                action: ctx =>
+                    {
+                        var res = ctx.Item(ctx.State.Arguments);
 
-                                 if (res.HasBeenCanceled)
-                                 {
-                                     ctx.Cancel = true;
-                                 }
-                             },
-                         actionState: new
-                             {
-                                 Arguments = allArgs.AsArray(),
-                             });
+                        if (res.HasBeenCanceled)
+                        {
+                            ctx.Cancel = true;
+                        }
+                    },
+                actionState: new
+                    {
+                        Arguments = allArgs.AsArray(),
+                    });
         }
 
         #endregion Methods

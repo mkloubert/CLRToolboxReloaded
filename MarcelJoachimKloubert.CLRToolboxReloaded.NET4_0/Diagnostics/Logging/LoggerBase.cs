@@ -6,7 +6,6 @@
 #define CAN_DO_REMOTING
 #define CAN_GET_ASSEMBLY_BY_METHOD
 #define CAN_HANDLE_THREADS
-#define CAN_SERIALIZE
 #define KNOWS_DBNULL
 #endif
 
@@ -175,7 +174,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                         LogCategories categories = LogCategories.None)
         {
             var msgObj = new LogMessage();
-            msgObj.Time = DateTimeOffset.Now;
+            msgObj.Time = AppTime.Now;
 #if CAN_GET_ASSEMBLY_BY_METHOD
             msgObj.Assembly = global::System.Reflection.Assembly.GetCallingAssembly();
 #endif

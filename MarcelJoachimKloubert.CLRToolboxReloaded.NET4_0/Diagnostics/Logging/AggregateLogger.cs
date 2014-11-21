@@ -112,7 +112,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
         #endregion Properties (1)
 
-        #region Methods (10)
+        #region Methods (11)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
@@ -163,20 +163,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         {
             return Create(loggers,
                           isSynchronized: false,
-                          sync: sync);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AggregateLogger" /> class.
-        /// </summary>
-        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
-        /// <param name="loggers">The loggers to use.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="loggers" /> and/or <paramref name="sync" /> is <see langword="null" />.
-        /// </exception>
-        public static AggregateLogger Create(object sync, params ILogger[] loggers)
-        {
-            return Create(loggers: (IEnumerable<ILogger>)loggers,
                           sync: sync);
         }
 

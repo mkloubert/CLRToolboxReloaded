@@ -16,12 +16,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 
         private sealed class HttpResponse : HttpResponseBase, IDisposable
         {
-            #region Fields (5)
+            #region Fields (4)
 
             private readonly HttpListenerContext _CONTEXT;
             private readonly IDictionary<string, object> _FRONTEND_VARS;
             private readonly IDictionary<string, string> _HEADERS;
-            private readonly Stream _INITIAL_STREAM;
             private readonly HttpListenerServer _SERVER;
 
             #endregion Fields (5)
@@ -33,7 +32,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 : base(stream: server.CreateResponseStream(ctx))
             {
                 this._CONTEXT = ctx;
-                this._INITIAL_STREAM = this.Stream;
                 this._SERVER = server;
 
                 this._FRONTEND_VARS = new Dictionary<string, object>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
@@ -77,7 +75,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 {
                     this._SERVER
                         .CloseResponseStream(this._CONTEXT,
-                                             this._INITIAL_STREAM);
+                                             this.Stream);
                 }
                 catch
                 {

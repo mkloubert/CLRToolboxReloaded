@@ -119,7 +119,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
         #endregion Properties (2)
 
-        #region Methods (10)
+        #region Methods (9)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
@@ -188,22 +188,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
         /// </summary>
         /// <param name="mainLogger">The main logger.</param>
-        /// <param name="sync">The reference for the <see cref="ObjectBase.SyncRoot" /> property.</param>
-        /// <param name="loggers">The loggers to use.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="mainLogger" />, <paramref name="sync" /> and/or <paramref name="loggers" /> are <see langword="null" />.
-        /// </exception>
-        public static FallbackLogger Create(ILogger mainLogger, object sync, params ILogger[] loggers)
-        {
-            return Create(mainLogger: mainLogger,
-                          loggers: (IEnumerable<ILogger>)loggers,
-                          sync: sync);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FallbackLogger" /> class.
-        /// </summary>
-        /// <param name="mainLogger">The main logger.</param>
         /// <param name="loggers">The loggers to use.</param>
         /// <param name="isSynchronized">The value for the <see cref="ObjectBase.IsSynchronized" /> property.</param>
         /// <exception cref="ArgumentNullException">
@@ -213,7 +197,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         {
             return Create(mainLogger: mainLogger,
                           loggers: loggers,
-                          isSynchronized: false,
                           sync: new object());
         }
 

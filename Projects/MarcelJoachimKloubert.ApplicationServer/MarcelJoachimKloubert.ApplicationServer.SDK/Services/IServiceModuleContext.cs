@@ -37,7 +37,19 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
 
         #endregion Properties (4)
 
-        #region Methods (1)
+        #region Methods (3)
+
+        /// <summary>
+        /// Returns the unique hash of that context.
+        /// </summary>
+        /// <returns>The hash of that context.</returns>
+        byte[] GetHash();
+
+        /// <summary>
+        /// Retruns the result of <see cref="IServiceModuleContext.GetHash()" /> as lower case hex string.
+        /// </summary>
+        /// <returns>The hash of that context as hex string.</returns>
+        string GetHashAsString();
 
         /// <summary>
         /// Returns all other modules that are also part of <see cref="IServiceModuleContext.Assembly" />.
@@ -45,6 +57,6 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
         /// <returns>The other modules.</returns>
         IEnumerable<IServiceModule> GetOtherModules();
 
-        #endregion Methods (1)
+        #endregion Methods (3)
     }
 }

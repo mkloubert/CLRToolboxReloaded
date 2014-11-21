@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiServiceModule.cs" />
+    <Compile Include="Net\Web\Modules\ApiWebModuleBase.cs" />
+    <Compile Include="Net\Web\Modules\index.cs" />
+    <Compile Include="Net\Web\Modules\test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

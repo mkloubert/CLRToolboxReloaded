@@ -54,6 +54,22 @@
     <Compile Include="ApplicationServer.Logging.cs">
       <DependentUpon>ApplicationServer.cs</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationServer.Temp.cs">
+      <DependentUpon>ApplicationServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationServer.WebInterface.cs">
+      <DependentUpon>ApplicationServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Net\Http\HttpServer.cs" />
+    <Compile Include="Net\Web\Modules\ApplicationServerWebModuleBase.cs" />
+    <Compile Include="Net\Web\Modules\index.cs" />
+    <Compile Include="Net\Web\Modules\test.cs" />
+    <Compile Include="Net\Web\WebExecutionContext.cs" />
+    <Compile Include="Net\Web\WebUrlHandler.cs" />
+    <Compile Include="Net\Web\WebUrlHandler.HandlerItem.cs">
+      <DependentUpon>WebUrlHandler.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ServiceModuleContext.cs" />
   </ItemGroup>

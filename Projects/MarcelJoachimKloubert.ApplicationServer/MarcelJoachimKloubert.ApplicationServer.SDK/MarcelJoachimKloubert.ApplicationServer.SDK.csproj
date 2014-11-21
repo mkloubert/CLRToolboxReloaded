@@ -50,6 +50,10 @@
     <Compile Include="ApplicationServerContext.cs" />
     <Compile Include="IApplicationServer.cs" />
     <Compile Include="IApplicationServerContext.cs" />
+    <Compile Include="Net\Web\DefaultWebInterfaceModuleAttribute.cs" />
+    <Compile Include="Net\Web\IWebExecutionContext.cs" />
+    <Compile Include="Net\Web\IWebInterfaceModule.cs" />
+    <Compile Include="Net\Web\WebInterfaceModuleBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IServiceModule.cs" />
     <Compile Include="Services\IServiceModuleContext.cs" />

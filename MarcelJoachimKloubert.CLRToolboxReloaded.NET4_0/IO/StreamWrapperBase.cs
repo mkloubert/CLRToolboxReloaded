@@ -2,7 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-#if !(NET40 || PORTABLE40 || MONO40)
+#if !(MONO40 || NET40 || PORTABLE40)
 #define CAN_INVOKE_ASYNC
 #endif
 

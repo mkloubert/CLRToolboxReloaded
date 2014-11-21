@@ -38,10 +38,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         /// <inheriteddoc />
         protected override void OnLog(ILogMessage msg, ref bool succeeded)
         {
-            if (this.RaiseEventHandler(this.MessageReceived, new LogMessageEventArgs(msg)) == false)
-            {
-                succeeded = false;
-            }
+            this.RaiseEventHandler(this.MessageReceived,
+                                   new LogMessageEventArgs(msg));
         }
 
         #endregion Methods

@@ -2,6 +2,9 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using System.Collections;
+using System.Collections.Generic;
+
 namespace MarcelJoachimKloubert.CLRToolbox.Text
 {
     /// <summary>
@@ -9,6 +12,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text
     /// </summary>
     public abstract class TemplateBase : ObjectBase, ITemplate
     {
+        #region Fields (1)
+
+        /// <summary>
+        /// Stores the variables of that template.
+        /// </summary>
+        protected readonly IDictionary<string, object> _VARS;
+
+        #endregion Fields (1)
+
         #region Constrcutors (4)
 
         /// <inheriteddoc />
@@ -16,29 +28,65 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text
             : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
+            this._VARS = this.CreateVarStorage() ?? new Dictionary<string, object>();
         }
 
         /// <inheriteddoc />
         protected TemplateBase(bool isSynchronized)
-            : base(isSynchronized: isSynchronized)
+            : this(isSynchronized: isSynchronized,
+                   sync: new object())
         {
         }
 
         /// <inheriteddoc />
         protected TemplateBase(object sync)
-            : base(sync: sync)
+            : this(isSynchronized: false,
+                   sync: sync)
         {
         }
 
         /// <inheriteddoc />
         protected TemplateBase()
-            : base()
+            : this(isSynchronized: false)
         {
         }
 
         #endregion Constrcutors (4)
 
-        #region Methods (2)
+        #region Properties (1)
+
+        /// <inheriteddoc />
+        public object this[string varName]
+        {
+            get { return this._VARS[varName]; }
+
+            set { this._VARS[varName] = value; }
+        }
+
+        #endregion Properties (1)
+
+        #region Methods (5)
+
+        /// <summary>
+        /// Creates the instance for <see cref="TemplateBase._VARS" />.
+        /// </summary>
+        /// <returns>The created instance.</returns>
+        protected virtual IDictionary<string, object> CreateVarStorage()
+        {
+            return null;
+        }
+
+        /// <inheriteddoc />
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        {
+            return this._VARS
+                       .GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
 
         /// <summary>
         /// The logic that renders the output.
@@ -58,6 +106,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text
             return result;
         }
 
-        #endregion Methods (2)
+        #endregion Methods (5)
     }
 }

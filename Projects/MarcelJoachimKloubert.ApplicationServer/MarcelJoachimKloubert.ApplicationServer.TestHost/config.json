@@ -8,6 +8,7 @@
     },
 
     "webInterface": {
-        "port": 5979
+        "port": 23979,
+        "useSecureHttp": false
     }
 }

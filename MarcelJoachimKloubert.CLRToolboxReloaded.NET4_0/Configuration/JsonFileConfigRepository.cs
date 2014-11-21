@@ -139,8 +139,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
                                         var repo = ctx.State.Repo;
                                         var category = ctx.Item.Key;
 
+                                        string cat;
+                                        string name;
+                                        this.PrepareCategoryAndName(category, null,
+                                                                    out cat, out name);
+
                                         var jObj = (JObject)ctx.Item.Value;
-                                        repo._VALUES[category ?? string.Empty] = this.ToDictionary(jObj);
+                                        repo._VALUES[cat] = this.ToDictionary(jObj);
                                     }, actionState: new
                                     {
                                         Repo = this,

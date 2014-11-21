@@ -3,6 +3,7 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using DotLiquid;
+using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.IO;
 using System.Text;
@@ -54,7 +55,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html
 
         #endregion Delegates and events (1)
 
-        #region Methods (2)
+        #region Methods (5)
 
         /// <summary>
         /// Creates a new instance based on a template source string.
@@ -66,6 +67,63 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html
             return new DotLiquidHtmlTemplate((tpl, sb) => sb.Append(src));
         }
 
+        /// <summary>
+        /// Reads the data of a template from a UTF-8 stream.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <returns>The created template.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="stream" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="IOException">
+        /// <paramref name="stream" /> cannot be read.
+        /// </exception>
+        public static DotLiquidHtmlTemplate Create(Stream stream)
+        {
+            return Create(stream,
+                          Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// Reads the data of a template from a stream.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <param name="enc">The string encoding.</param>
+        /// <returns>The created template.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="stream" /> and/or <paramref name="enc" /> are <see langword="null" />.
+        /// </exception>
+        /// <exception cref="IOException">
+        /// <paramref name="stream" /> cannot be read.
+        /// </exception>
+        public static DotLiquidHtmlTemplate Create(Stream stream, Encoding enc)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
+
+            if (enc == null)
+            {
+                throw new ArgumentNullException("enc");
+            }
+
+            if (stream.CanRead == false)
+            {
+                throw new IOException();
+            }
+
+            return new DotLiquidHtmlTemplate((tpl, sb) =>
+                {
+                    using (var temp = new MemoryStream())
+                    {
+                        stream.CopyTo(temp);
+
+                        sb.Append(enc.GetString(temp.ToArray()));
+                    }
+                });
+        }
+
         /// <inheriteddoc />
         protected override void OnRender(TextWriter writer)
         {
@@ -73,11 +131,35 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html
             var src = new StringBuilder();
             this._PROVIDER(this, src);
 
-            // render
+            // create template and assign variables
             var tpl = Template.Parse(src.ToString());
+            foreach (var item in this)
+            {
+                tpl.Assigns
+                   .Add(item.Key,
+                        ToLiquidObject(item.Value));
+            }
+
+            // render
             writer.Write(tpl.Render());
         }
 
-        #endregion Methods (2)
+        private static object ToLiquidObject(object input)
+        {
+            var result = input;
+
+            if (DBNull.Value.Equals(result))
+            {
+                result = null;
+            }
+            else
+            {
+                result = result.AsString();
+            }
+
+            return result;
+        }
+
+        #endregion Methods (5)
     }
 }

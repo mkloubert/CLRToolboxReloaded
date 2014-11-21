@@ -2,15 +2,20 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.ApplicationServer.Net.Web;
 using MarcelJoachimKloubert.ApplicationServer.Services;
 using MarcelJoachimKloubert.CLRToolbox;
 using MarcelJoachimKloubert.CLRToolbox.ComponentModel;
 using MarcelJoachimKloubert.CLRToolbox.Configuration;
 using MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging;
+using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MarcelJoachimKloubert.ApplicationServer
 {
@@ -44,7 +49,7 @@ namespace MarcelJoachimKloubert.ApplicationServer
 
         #endregion Events and delegates (3)
 
-        #region Properties (9)
+        #region Properties (8)
 
         /// <inheriteddoc />
         public bool CanRestart
@@ -103,9 +108,57 @@ namespace MarcelJoachimKloubert.ApplicationServer
             private set { this.Set(value); }
         }
 
-        #endregion Properties (9)
+        #endregion Properties (8)
 
-        #region Methods (15)
+        #region Methods (19)
+
+        private static void CleanupDirectory(DirectoryInfo dir,
+                                             bool deleteDirectory = false)
+        {
+            if (dir.Exists == false)
+            {
+                return;
+            }
+
+            try
+            {
+                // sub directories
+                dir.EnumerateDirectories()
+                   .ForAllAsync(action: ctx => CleanupDirectory(ctx.Item,
+                                                                deleteDirectory: true),
+                                throwExceptions: false);
+
+                // files
+                {
+                    var tasks = dir.EnumerateFiles()
+                               .Select(f => CreateShredderFileTask(f))
+                               .ToArray();
+
+                    tasks.ForAll(action: ctx => ctx.Item.Start(),
+                                 throwExceptions: false);
+
+                    Task.WaitAll(tasks);
+                }
+
+                if (deleteDirectory)
+                {
+                    dir.Refresh();
+                    if (dir.Exists)
+                    {
+                        dir.Delete();
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        private static Task CreateShredderFileTask(FileInfo file)
+        {
+            return new Task(action: ShredderAndDeleteFile,
+                            state: file);
+        }
 
         /// <inheriteddoc />
         public void Dispose()
@@ -136,6 +189,26 @@ namespace MarcelJoachimKloubert.ApplicationServer
                     this.RaiseEventHandler(this.Disposed);
                 }
             }
+        }
+
+        /// <summary>
+        /// Fills a <see cref="CompositionContainer" /> instance with common export values.
+        /// </summary>
+        /// <param name="container">The instance to fill.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="container" /> is <see langword="null" />.
+        /// </exception>
+        public void FillCompositionContainerWithCommonExportValues(CompositionContainer container)
+        {
+            if (container == null)
+            {
+                throw new ArgumentNullException("container");
+            }
+
+            container.ComposeExportedValue<global::MarcelJoachimKloubert.ApplicationServer.ApplicationServer>(this);
+            container.ComposeExportedValue<global::MarcelJoachimKloubert.ApplicationServer.IApplicationServer>(this);
+
+            container.ComposeExportedValue<global::MarcelJoachimKloubert.ApplicationServer.IApplicationServerContext>(this.Context);
         }
 
         /// <inheriteddoc />
@@ -194,6 +267,8 @@ namespace MarcelJoachimKloubert.ApplicationServer
 
         private void OnInitialize(IApplicationServerContext context)
         {
+            this._web_url_handler = new WebUrlHandler(this);
+
             this.AllLoggers = new ILogger[0];
             this.ServiceModules = new IServiceModule[0];
         }
@@ -208,13 +283,17 @@ namespace MarcelJoachimKloubert.ApplicationServer
             this.ReloadConfig();
             this.ReloadLoggers();
 
+            this.CleanupTempDirectory();
+
             this.LoadAndInitializeServices();
+
+            this.StartWebInterface();
+
+            this.IsRunning = true;
 
             this.Logger.Log(categories: LogCategories.Information,
                             tag: "START_SERVER",
                             msg: "Server is running now.");
-
-            this.IsRunning = true;
         }
 
         private void OnStop(bool restarting)
@@ -224,13 +303,15 @@ namespace MarcelJoachimKloubert.ApplicationServer
                 return;
             }
 
+            this.StopWebInterface();
+
             this.UnloadAndDisposeServices();
+
+            this.IsRunning = false;
 
             this.Logger.Log(categories: LogCategories.Information,
                             tag: "STOP_SERVER",
                             msg: "Server has been stopped.");
-
-            this.IsRunning = false;
         }
 
         private void ReloadConfig()
@@ -261,6 +342,36 @@ namespace MarcelJoachimKloubert.ApplicationServer
 
                 this.OnStop(true);
                 this.OnStart(true);
+            }
+        }
+
+        private static void ShredderAndDeleteFile(object state)
+        {
+            var file = (FileInfo)state;
+
+            try
+            {
+                using (var fs = file.Open(FileMode.Open, FileAccess.ReadWrite))
+                {
+                    fs.Shredder();
+                }
+            }
+            catch
+            {
+            }
+            finally
+            {
+                try
+                {
+                    file.Refresh();
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+                }
+                catch
+                {
+                }
             }
         }
 
@@ -308,6 +419,6 @@ namespace MarcelJoachimKloubert.ApplicationServer
             }
         }
 
-        #endregion Methods (15)
+        #endregion Methods (19)
     }
 }

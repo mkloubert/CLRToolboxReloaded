@@ -4,6 +4,8 @@
 
 using MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging;
 using MarcelJoachimKloubert.CLRToolbox.ServiceLocation;
+using System;
+using System.IO;
 
 namespace MarcelJoachimKloubert.ApplicationServer
 {
@@ -12,12 +14,17 @@ namespace MarcelJoachimKloubert.ApplicationServer
     /// </summary>
     public interface IApplicationServerContext : IServiceLocator
     {
-        #region Properties (3)
+        #region Properties (6)
 
         /// <summary>
         /// Gets the underlying logger.
         /// </summary>
         ILogger Logger { get; }
+
+        /// <summary>
+        /// Gets the current server time.
+        /// </summary>
+        DateTimeOffset Now { get; }
 
         /// <summary>
         /// Gets the full path of the root directory.
@@ -29,6 +36,38 @@ namespace MarcelJoachimKloubert.ApplicationServer
         /// </summary>
         IApplicationServer Server { get; }
 
-        #endregion Properties (3)
+        /// <summary>
+        /// Gets the root directory for temp files.
+        /// </summary>
+        string TempDirectory { get; }
+
+        /// <summary>
+        /// Gets the root directory for web files.
+        /// </summary>
+        string WebDirectory { get; }
+
+        #endregion Properties (6)
+
+        #region Methods (2)
+
+        /// <summary>
+        /// Creates an unique temp directory.
+        /// </summary>
+        /// <returns>The full path of the created directory.</returns>
+        string CreateTempDirectory();
+
+        /// <summary>
+        /// Creates and opens an empty and unique temp file for read/write operations.
+        /// </summary>
+        /// <param name="tempDir">
+        /// The custom directory where the file should be created.
+        /// If that value is <see langword="null" /> or empty, the value from <see cref="IApplicationServerContext.TempDirectory" /> is used.
+        /// </param>
+        /// <param name="extension">The extension for the file.</param>
+        /// <returns>The created and opened file.</returns>
+        FileStream CreateAndOpenTempFile(string tempDir = null,
+                                         string extension = "tmp");
+
+        #endregion Methods (2)
     }
 }

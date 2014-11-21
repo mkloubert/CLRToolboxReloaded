@@ -3,10 +3,15 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using MarcelJoachimKloubert.CLRToolbox;
+using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using MarcelJoachimKloubert.CLRToolbox.ServiceLocation;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace MarcelJoachimKloubert.ApplicationServer.Services
 {
@@ -44,9 +49,6 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
             internal set;
         }
 
-        /// <summary>
-        /// Gets or sets the inner service locator.
-        /// </summary>
         internal IServiceLocator ServiceLocator
         {
             get;
@@ -55,7 +57,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
 
         #endregion Properties (6)
 
-        #region Methods (10)
+        #region Methods (12)
 
         public IEnumerable<S> GetAllInstances<S>()
         {
@@ -75,6 +77,47 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
         public IEnumerable<object> GetAllInstances(Type serviceType, object key)
         {
             return this.ServiceLocator.GetAllInstances(serviceType, key);
+        }
+
+        public byte[] GetHash()
+        {
+            using (var temp = new MemoryStream())
+            {
+                // assembly name
+                temp.Write(Encoding.UTF8
+                                   .GetBytes(this.Assembly.FullName));
+
+                // assembly public key
+                var asmPubKey = this.Assembly.GetName().GetPublicKey();
+                if (asmPubKey != null)
+                {
+                    temp.Write(asmPubKey);
+                }
+
+                // assembly hash
+                temp.Write(this.AssemblyHash);
+
+                // assembly location
+                temp.Write(Encoding.UTF8
+                                   .GetBytes(this.AssemblyLocation));
+
+                // full name of service module
+                temp.Write(Encoding.UTF8
+                                   .GetBytes(this.Module.GetType().FullName));
+
+                // calculate hash and return...
+                using (var md5 = new MD5CryptoServiceProvider())
+                {
+                    temp.Position = 0;
+                    return md5.ComputeHash(temp);
+                }
+            }
+        }
+
+        public string GetHashAsString()
+        {
+            return string.Concat(this.GetHash()
+                                     .Select(b => b.ToString("x2")));
         }
 
         public S GetInstance<S>()
@@ -107,6 +150,6 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
             return this.ServiceLocator.GetService(serviceType);
         }
 
-        #endregion Methods (10)
+        #endregion Methods (12)
     }
 }

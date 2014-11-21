@@ -9,11 +9,10 @@
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 {
@@ -113,38 +112,20 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
         private void CreateRequestAndResponse(HttpListenerContext ctx, out HttpRequest req, out HttpResponse resp)
         {
             // find user
-            IPrincipal user = null;
+            var user = ctx.User;
+            if (user != null)
             {
                 var finder = this.PrincipalFinder;
                 if (finder != null)
                 {
-                    string username = null;
-                    string password = null;
-                    try
-                    {
-                        ExtractUsernameAndPassword(req: ctx.Request,
-                                                   username: out username, password: out password);
-
-                        var id = new DummyIdentity()
-                            {
-                                AuthenticationType = "HttpBasicAuth",
-                                IsAuthenticated = false,
-                                Name = username,
-                            };
-
-                        user = finder(id);
-                    }
-                    finally
-                    {
-                        username = null;
-                        password = null;
-                    }
+                    user = finder(user.Identity);
                 }
             }
 
             req = new HttpRequest(server: this,
                                   ctx: ctx,
                                   user: user);
+
             resp = new HttpResponse(server: this,
                                     ctx: ctx);
         }
@@ -169,6 +150,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
             stream.Dispose();
         }
 
+        private Task CreateHandleContextTask(HttpListenerContext ctx)
+        {
+            return new Task(action: this.HandleContext,
+                            state: ctx);
+        }
+
         /// <summary>
         /// Creates an stream for the body of a request context.
         /// </summary>
@@ -189,7 +176,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
             return new MemoryStream();
         }
 
-        private static void DisposeListener(HttpListener listener)
+        private static void DisposeListener(ref HttpListener listener)
         {
             try
             {
@@ -206,64 +193,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 
         private void DisposeOldListener()
         {
-            DisposeListener(this._listener);
+            DisposeListener(ref this._listener);
         }
 
-        private static void ExtractUsernameAndPassword(HttpListenerRequest req,
-                                                       out string username, out string password)
+        private void HandleContext(object state)
         {
-            username = null;
-            password = null;
+            var ctx = (HttpListenerContext)state;
 
-            try
-            {
-                var data = (req.Headers["Authorization"] ?? string.Empty).Trim();
-                if (data != string.Empty)
-                {
-                    if (data.ToLower().StartsWith("basic "))
-                    {
-                        var base64EncodedData = data.Substring(data.IndexOf(' ')).Trim();
-                        var blobData = Convert.FromBase64String(base64EncodedData);
-
-                        var strData = new UTF8Encoding().GetString(blobData);
-
-                        var semicolon = strData.IndexOf(':');
-                        if (semicolon > -1)
-                        {
-                            username = strData.Substring(0, semicolon).ToLower().Trim();
-                            if (username == string.Empty)
-                            {
-                                username = null;
-                            }
-
-                            password = strData.Substring(semicolon + 1);
-                        }
-                        else
-                        {
-                            username = strData.Trim();
-                        }
-
-                        if (string.IsNullOrWhiteSpace(username))
-                        {
-                            username = null;
-                        }
-
-                        if (string.IsNullOrEmpty(password))
-                        {
-                            password = null;
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                username = null;
-                password = null;
-            }
-        }
-
-        private void HandleContext(HttpListenerContext ctx)
-        {
             HttpRequest req;
             HttpResponse resp;
             this.CreateRequestAndResponse(ctx: ctx,
@@ -293,20 +229,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                         var credValidator = this.CredentialValidator;
                         if (credValidator != null)
                         {
-                            string username = null;
-                            string password = null;
-                            try
-                            {
-                                ExtractUsernameAndPassword(req: ctx.Request,
-                                                           username: out username, password: out password);
+                            var id = (HttpListenerBasicIdentity)ctx.User.Identity;
 
-                                isAuthorized = credValidator(username, password);
-                            }
-                            finally
-                            {
-                                username = null;
-                                password = null;
-                            }
+                            isAuthorized = credValidator(id.Name,
+                                                         id.Password);
                         }
 
                         if (isAuthorized)
@@ -329,14 +255,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                             resp.Compress = false;
                             resp.StatusCode = HttpStatusCode.Unauthorized;
                             resp.StatusDescription = null;
-
-                            if (credValidator != null)
-                            {
-                                /* TODO
-                                ctx.Response.Headers[HttpResponseHeader.WwwAuthenticate] =
-                                    string.Format("Basic realm=\"{0}\"",
-                                                    this.RealmName);*/
-                            }
 
                             this.OnHandleUnauthorized(req, resp);
                         }
@@ -431,7 +349,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 this.StartListening(listener: listener,
                                     throwException: false);
 
-                HandleContext(ctx: ctx);
+                this.CreateHandleContextTask(ctx: ctx)
+                    .Start();
             }
             catch (Exception ex)
             {
@@ -467,45 +386,18 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
             HttpListener newListener = null;
             try
             {
+                var useHttps = this.UseSecureHttp;
+
                 newListener = new HttpListener();
 
-                var useHttps = this.UseSecureHttp;
-                var storeLoc = this.SslStoreLocation ?? StoreLocation.CurrentUser;
-                var storeName = this.SslStoreName ?? StoreName.My;
-                var thumb = this.Thumbprint;
+                if (this.CredentialValidator != null)
+                {
+                    newListener.AuthenticationSchemes = AuthenticationSchemes.Basic;
+                    newListener.Realm = this.RealmName;
+                }
 
                 this.AddPrefixes(listener: newListener,
                                  useHttps: useHttps);
-
-                if (useHttps)
-                {
-                    X509Certificate2 cert = null;
-
-                    if (string.IsNullOrWhiteSpace(thumb) == false)
-                    {
-                        var store = new X509Store(storeName, storeLoc);
-                        try
-                        {
-                            store.Open(OpenFlags.ReadOnly);
-
-                            var foundCerts = store.Certificates.Find(findType: X509FindType.FindByThumbprint,
-                                                                     findValue: thumb,
-                                                                     validOnly: false);
-
-                            cert = foundCerts.Cast<X509Certificate2>()
-                                             .SingleOrDefault();
-                        }
-                        finally
-                        {
-                            store.Close();
-                        }
-                    }
-
-                    if (cert != null)
-                    {
-                        //TODO
-                    }
-                }
 
                 newListener.Start();
                 this.StartListening(newListener, true);
@@ -528,6 +420,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
         }
 
 #if (KNOWS_ASYNC_PATTERN)
+
         private async void StartListening(HttpListener listener, bool throwException)
 #else
 
@@ -549,7 +442,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                     {
                         var ctx = await listener.GetContextAsync();
 
-                        HandleContext(ctx: ctx);
+                        this.CreateHandleContextTask(ctx: ctx)
+                            .Start();
                     }
                     else
                     {
@@ -601,6 +495,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                     {
                         Response = resp,
                     });
+
+                if (string.IsNullOrWhiteSpace(resp.ContentType) == false)
+                {
+                    ctx.Response.ContentType = resp.ContentType;
+                }
 
                 var outputStream = resp.Stream;
                 if (outputStream != null)

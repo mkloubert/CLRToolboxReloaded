@@ -450,6 +450,10 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Net.cs">
       <Link>Extensions\Net.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Net.ForceAdd.cs">
+      <Link>Extensions\Net.ForceAdd.cs</Link>
+      <DependentUpon>Net.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Net.SetBasicAuth.cs">
       <Link>Extensions\Net.SetBasicAuth.cs</Link>
       <DependentUpon>Net.cs</DependentUpon>

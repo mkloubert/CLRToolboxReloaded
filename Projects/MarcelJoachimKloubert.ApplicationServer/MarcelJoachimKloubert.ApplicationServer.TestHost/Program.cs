@@ -37,7 +37,6 @@ namespace MarcelJoachimKloubert.ApplicationServer.TestHost
                     serviceLocator = new DelegateServiceLocator(baseLocator: mefServiceLocator);
 
                     container.ComposeExportedValue<global::MarcelJoachimKloubert.CLRToolbox.ServiceLocation.IServiceLocator>(serviceLocator);
-                    container.ComposeExportedValue<global::MarcelJoachimKloubert.ApplicationServer.IApplicationServer>(server);
 
                     ServiceLocator.SetLocator(serviceLocator);
                 }
@@ -52,9 +51,9 @@ namespace MarcelJoachimKloubert.ApplicationServer.TestHost
                     ServiceLocator = serviceLocator,
                 };
 
-                container.ComposeExportedValue<global::MarcelJoachimKloubert.ApplicationServer.IApplicationServerContext>(ctx);
-
                 server.Initialize(ctx);
+                server.FillCompositionContainerWithCommonExportValues(container);
+
                 server.Start();
 
                 Console.WriteLine();
