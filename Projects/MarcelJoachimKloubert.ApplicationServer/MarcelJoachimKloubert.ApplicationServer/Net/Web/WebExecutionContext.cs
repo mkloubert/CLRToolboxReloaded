@@ -4,12 +4,15 @@
 
 using MarcelJoachimKloubert.CLRToolbox;
 using MarcelJoachimKloubert.CLRToolbox.Net.Http;
+using MarcelJoachimKloubert.CLRToolbox.Text.Html;
+using System;
+using System.IO;
 
 namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
 {
-    internal class WebExecutionContext : ObjectBase, IWebExecutionContext
+    internal sealed class WebExecutionContext : ObjectBase, IWebExecutionContext
     {
-        #region Properties (2)
+        #region Properties (4)
 
         public IHttpRequest Request
         {
@@ -23,6 +26,39 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
             internal set;
         }
 
-        #endregion Properties (2)
+        internal IApplicationServerContext ServerContext
+        {
+            get;
+            set;
+        }
+
+        internal Func<FileInfo, IHtmlTemplate> TryGetHtmlTemplateFunc
+        {
+            get;
+            set;
+        }
+
+        #endregion Properties (4)
+
+        #region Methods (1)
+
+        /// <inheriteddoc />
+        public IHtmlTemplate TryGetHtmlTemplate(string name)
+        {
+            IHtmlTemplate result = null;
+
+            var dir = new DirectoryInfo(Path.Combine(this.ServerContext.WebDirectory, "tpl"));
+            if (dir.Exists)
+            {
+                var file = new FileInfo(Path.Combine(dir.FullName,
+                                                     name.Trim() + ".html"));
+
+                result = this.TryGetHtmlTemplateFunc(file);
+            }
+
+            return result;
+        }
+
+        #endregion Methods (1)
     }
 }

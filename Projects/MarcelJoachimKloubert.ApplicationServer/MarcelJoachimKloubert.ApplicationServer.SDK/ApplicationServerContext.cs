@@ -83,7 +83,7 @@ namespace MarcelJoachimKloubert.ApplicationServer
             }
         }
 
-        #endregion Properties (6)
+        #endregion Properties (7)
 
         #region Methods (11)
 

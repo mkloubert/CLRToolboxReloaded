@@ -285,7 +285,7 @@ namespace MarcelJoachimKloubert.ApplicationServer
 
             this.CleanupTempDirectory();
 
-            this.LoadAndInitializeServices();
+            this.LoadAndInitializeServiceModules();
 
             this.StartWebInterface();
 
@@ -305,7 +305,7 @@ namespace MarcelJoachimKloubert.ApplicationServer
 
             this.StopWebInterface();
 
-            this.UnloadAndDisposeServices();
+            this.UnloadAndDisposeServiceModules();
 
             this.IsRunning = false;
 

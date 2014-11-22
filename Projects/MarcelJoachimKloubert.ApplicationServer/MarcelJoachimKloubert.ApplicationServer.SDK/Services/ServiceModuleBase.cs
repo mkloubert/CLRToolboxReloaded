@@ -11,7 +11,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
     /// <summary>
     /// A basic service module.
     /// </summary>
-    public abstract class ServiceModuleBase : NotifiableBase, IServiceModule
+    public abstract partial class ServiceModuleBase : NotifiableBase, IServiceModule
     {
         #region Constructors (2)
 
@@ -122,7 +122,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
         {
             if (this.CanStop)
             {
-                this.OnStop(false);
+                this.OnStop(disposing ? StartStopContext.Dispose : StartStopContext.Finalizer);
             }
         }
 
@@ -247,15 +247,22 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
             // dummy
         }
 
-        private void OnStart(bool restarting)
+        private void OnStart(StartStopContext context)
         {
+            if (this.CanStart == false)
+            {
+                throw new InvalidOperationException(message: string.Format("Instance {0} of class '{1}' cannot be started!",
+                                                                           this.GetType().GetHashCode(),
+                                                                           this.GetType().FullName));
+            }
+
             if (this.IsRunning)
             {
                 return;
             }
 
             var isRunning = true;
-            this.OnStart(restarting, ref isRunning);
+            this.OnStart(context, ref isRunning);
 
             this.IsRunning = isRunning;
         }
@@ -272,20 +279,28 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
         /// The new value for the <see cref="ServiceModuleBase.IsRunning" /> property.
         /// That value is <see langword="true" /> by default.
         /// </param>
-        protected virtual void OnStart(bool restarting, ref bool isRunning)
+        protected virtual void OnStart(StartStopContext context,
+                                       ref bool isRunning)
         {
             // dummy
         }
 
-        private void OnStop(bool restarting)
+        private void OnStop(StartStopContext context)
         {
+            if (this.CanStop == false)
+            {
+                throw new InvalidOperationException(message: string.Format("Instance {0} of class '{1}' cannot be stopped!",
+                                                                           this.GetType().GetHashCode(),
+                                                                           this.GetType().FullName));
+            }
+
             if (this.IsRunning == false)
             {
                 return;
             }
 
             var isRunning = false;
-            this.OnStop(restarting, ref isRunning);
+            this.OnStop(context, ref isRunning);
 
             this.IsRunning = isRunning;
         }
@@ -302,7 +317,8 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
         /// The new value for the <see cref="ServiceModuleBase.IsRunning" /> property.
         /// That value is <see langword="false" /> by default.
         /// </param>
-        protected virtual void OnStop(bool restarting, ref bool isRunning)
+        protected virtual void OnStop(StartStopContext context,
+                                      ref bool isRunning)
         {
             // dummy
         }
@@ -315,8 +331,8 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
                 this.ThrowIfDisposed();
                 this.ThrowIfNotInitialized();
 
-                this.OnStop(true);
-                this.OnStart(true);
+                this.OnStop(StartStopContext.Restart);
+                this.OnStart(StartStopContext.Restart);
             }
         }
 
@@ -328,7 +344,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
                 this.ThrowIfDisposed();
                 this.ThrowIfNotInitialized();
 
-                this.OnStart(false);
+                this.OnStart(StartStopContext.Start);
             }
         }
 
@@ -340,7 +356,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
                 this.ThrowIfDisposed();
                 this.ThrowIfNotInitialized();
 
-                this.OnStop(false);
+                this.OnStop(StartStopContext.Stop);
             }
         }
 

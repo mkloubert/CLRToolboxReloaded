@@ -36,16 +36,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web.Modules
         {
             var resp = context.Response;
 
-            resp.Write("<ul>");
-
-            foreach (var m in this.Server.GetServiceModules())
-            {
-                resp.Write(string.Format(@"<li><a href=""/{0}"">{1}</a></li>",
-                                         m.Context.GetHashAsString(),
-                                         m.GetType().FullName));
-            }
-
-            resp.Write("</ul>");
+            resp.Write(context.TryGetHtmlTemplate("index"));
         }
 
         #endregion Methods (1)

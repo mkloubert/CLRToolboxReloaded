@@ -4,6 +4,7 @@
 
 using MarcelJoachimKloubert.CLRToolbox;
 using MarcelJoachimKloubert.CLRToolbox.Net.Http;
+using MarcelJoachimKloubert.CLRToolbox.Text.Html;
 
 namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
 {
@@ -25,5 +26,16 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
         IHttpResponse Response { get; }
 
         #endregion Properties (2)
+
+        #region Methods (1)
+
+        /// <summary>
+        /// Tries to return a HTML template.
+        /// </summary>
+        /// <param name="name">The name of the template.</param>
+        /// <returns>The template or <see langword="null" /> if NOT found.</returns>
+        IHtmlTemplate TryGetHtmlTemplate(string name);
+
+        #endregion Methods (1)
     }
 }

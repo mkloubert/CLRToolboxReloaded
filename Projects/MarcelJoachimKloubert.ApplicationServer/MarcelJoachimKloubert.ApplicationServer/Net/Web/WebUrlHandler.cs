@@ -20,7 +20,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
     {
         #region Fields (3)
 
-        private const string _COMMON_FILENAME = @"[A-Za-z0-9|,|\-|_|\.]+";
+        private const string _COMMON_FILENAME = @"[A-Za-z0-9|/|,|\-|_|\.]+";
         private const string _COMMON_HASH = @"[A-Za-z0-9]{32}";
         private readonly ApplicationServer _SERVER;
 
@@ -47,7 +47,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
 
         #endregion Properties (1)
 
-        #region Methods (16)
+        #region Methods (18)
 
         private static void CopyHtmlTemplateTo(IHtmlTemplate tpl, Stream target)
         {
@@ -115,26 +115,27 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
             var name = (match.Groups[2].Value ?? string.Empty).ToLower().Trim() + ".css";
 
             var dir = new DirectoryInfo(Path.Combine(this._SERVER.Context.WebDirectory, "css"));
-            if (dir.Exists)
-            {
-                var file = dir.EnumerateFiles()
-                              .SingleOrDefault(f =>
-                              {
-                                  return (f.Name ?? string.Empty).ToLower().Trim() == name;
-                              });
 
-                if (file != null)
-                {
-                    found = true;
+            HandleFile(name: name,
+                       dir: dir,
+                       contentType: "text/css; charset=utf-8",
+                       e: e,
+                       found: ref found);
+        }
 
-                    using (var fs = OpenFileForReading(file))
-                    {
-                        fs.CopyTo(e.Response.Stream);
+        private void Handle_ServerFontFile(Match match, HttpRequestEventArgs e, ref bool found)
+        {
+            var name = (match.Groups[2].Value ?? string.Empty).ToLower().Trim();
+            var ext = (match.Groups[4].Value ?? string.Empty).ToLower().Trim();
+            var fullName = name + "." + ext;
 
-                        e.Response.ContentType = "text/css; charset=utf-8";
-                    }
-                }
-            }
+            var dir = new DirectoryInfo(Path.Combine(this._SERVER.Context.WebDirectory, "fonts"));
+
+            HandleFile(name: fullName,
+                       dir: dir,
+                       contentType: WebHelper.GetContentTypeByFileExtension(ext),
+                       e: e,
+                       found: ref found);
         }
 
         private void Handle_ServerImageFile(Match match, HttpRequestEventArgs e, ref bool found)
@@ -144,56 +145,12 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
             var fullName = name + "." + ext;
 
             var dir = new DirectoryInfo(Path.Combine(this._SERVER.Context.WebDirectory, "img"));
-            if (dir.Exists)
-            {
-                var file = dir.EnumerateFiles()
-                              .SingleOrDefault(f =>
-                              {
-                                  return (f.Name ?? string.Empty).ToLower().Trim() == fullName;
-                              });
 
-                if (file != null)
-                {
-                    found = true;
-
-                    using (var fs = OpenFileForReading(file))
-                    {
-                        fs.CopyTo(e.Response.Stream);
-
-                        var contentType = "application/octet-stream";
-                        switch (ext)
-                        {
-                            case "bmp":
-                                contentType = "image/bmp";
-                                break;
-
-                            case "gif":
-                                contentType = "image/gif";
-                                break;
-
-                            case "ico":
-                            case "icon":
-                                contentType = "image/x-icon";
-                                break;
-
-                            case "jpg":
-                            case "jpeg":
-                                contentType = "image/jpeg";
-                                break;
-
-                            case "png":
-                                contentType = "image/png";
-                                break;
-
-                            case "svg":
-                                contentType = "image/svg+xml";
-                                break;
-                        }
-
-                        e.Response.ContentType = contentType;
-                    }
-                }
-            }
+            HandleFile(name: name,
+                       dir: dir,
+                       contentType: WebHelper.GetContentTypeByFileExtension(ext),
+                       e: e,
+                       found: ref found);
         }
 
         private void Handle_ServerJavascriptFile(Match match, HttpRequestEventArgs e, ref bool found)
@@ -201,26 +158,12 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
             var name = (match.Groups[2].Value ?? string.Empty).ToLower().Trim() + ".js";
 
             var dir = new DirectoryInfo(Path.Combine(this._SERVER.Context.WebDirectory, "js"));
-            if (dir.Exists)
-            {
-                var file = dir.EnumerateFiles()
-                              .SingleOrDefault(f =>
-                              {
-                                  return (f.Name ?? string.Empty).ToLower().Trim() == name;
-                              });
 
-                if (file != null)
-                {
-                    found = true;
-
-                    using (var fs = OpenFileForReading(file))
-                    {
-                        fs.CopyTo(e.Response.Stream);
-
-                        e.Response.ContentType = "text/javascript; charset=utf-8";
-                    }
-                }
-            }
+            HandleFile(name: name,
+                       dir: dir,
+                       contentType: "text/javascript; charset=utf-8",
+                       e: e,
+                       found: ref found);
         }
 
         private void Handle_ServerModule(Match match, HttpRequestEventArgs e, ref bool found)
@@ -259,13 +202,56 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
             }
         }
 
+        private static void HandleFile(string name, DirectoryInfo dir, string contentType, HttpRequestEventArgs e, ref bool found)
+        {
+            while (name.Contains("../"))
+            {
+                name = name.Replace("../", string.Empty);
+            }
+
+            while (name.Contains("..\\"))
+            {
+                name = name.Replace("..\\", string.Empty);
+            }
+
+            while (name.Contains(".."))
+            {
+                name = name.Replace("..", string.Empty);
+            }
+
+            var file = new FileInfo(Path.Combine(dir.FullName, name));
+            if (file.Exists == false)
+            {
+                return;
+            }
+
+            found = true;
+
+            using (var fs = OpenFileForReading(file))
+            {
+                fs.CopyTo(e.Response.Stream);
+
+                e.Response.ContentType = contentType;
+            }
+        }
+
         private void HandleWebInterfaceModule(IWebInterfaceModule module, HttpRequestEventArgs e)
         {
             var ctx = new WebExecutionContext()
             {
                 Request = e.Request,
                 Response = e.Response,
+                ServerContext = this._SERVER.Context,
             };
+            ctx.TryGetHtmlTemplateFunc = (file) =>
+                {
+                    if (file.Exists)
+                    {
+                        return DotLiquidHtmlTemplate.Create(file);
+                    }
+
+                    return null;
+                };
 
             module.Handle(ctx);
 
@@ -347,17 +333,17 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
                                          action: this.Handle_ServerModule));
 
             // server image file
-            handlers.Add(new HandlerItem(regex: new Regex("^(/img/)(" + _COMMON_FILENAME + @")(\.)(bmp|gif|ico|icon|jpg|jpeg|png|svg)$",
+            handlers.Add(new HandlerItem(regex: new Regex("^(/img/)(" + _COMMON_FILENAME + @")(\.)(bmp|gif|ico|icon|jpg|jpeg|png|svg)",
                                                           RegexOptions.Compiled | RegexOptions.IgnoreCase),
                                          action: this.Handle_ServerImageFile));
 
             // server javascript file
-            handlers.Add(new HandlerItem(regex: new Regex("^(/js/)(" + _COMMON_FILENAME + @")(\.js)$",
+            handlers.Add(new HandlerItem(regex: new Regex("^(/js/)(" + _COMMON_FILENAME + @")(\.js)",
                                                           RegexOptions.Compiled | RegexOptions.IgnoreCase),
                                          action: this.Handle_ServerJavascriptFile));
 
             // server css file
-            handlers.Add(new HandlerItem(regex: new Regex("^(/css/)(" + _COMMON_FILENAME + @")(\.css)$",
+            handlers.Add(new HandlerItem(regex: new Regex("^(/css/)(" + _COMMON_FILENAME + @")(\.css)",
                                                           RegexOptions.Compiled | RegexOptions.IgnoreCase),
                                          action: this.Handle_ServerCssFile));
 
@@ -370,6 +356,11 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
             handlers.Add(new HandlerItem(regex: new Regex("^(/)(" + _COMMON_HASH + @")(/)(" + _COMMON_FILENAME + @")(\.html)",
                                                           RegexOptions.Compiled | RegexOptions.IgnoreCase),
                                          action: this.Handle_ServerServiceModule));
+
+            // server font file
+            handlers.Add(new HandlerItem(regex: new Regex("^(/fonts/)(" + _COMMON_FILENAME + @")(\.)(eot|svg|ttf|woff)",
+                                                          RegexOptions.Compiled | RegexOptions.IgnoreCase),
+                                         action: this.Handle_ServerFontFile));
 
             this.Handlers = handlers.ToArray();
         }
@@ -424,13 +415,13 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
 
             for (var i = 0; i < this.Handlers.Length; i++)
             {
-                var h = this.Handlers[i];
+                var handler = this.Handlers[i];
 
-                var m = h.REG_EX.Match(path);
-                if (m.Success)
+                var match = handler.REG_EX.Match(path);
+                if (match.Success)
                 {
                     var found = false;
-                    h.ACTION(m, e, ref found);
+                    handler.ACTION(match, e, ref found);
 
                     if (found == false)
                     {
@@ -445,6 +436,6 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
             return false;
         }
 
-        #endregion Methods (16)
+        #endregion Methods (18)
     }
 }

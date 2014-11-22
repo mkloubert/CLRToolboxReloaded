@@ -43,20 +43,23 @@ namespace MarcelJoachimKloubert.ApplicationServer
                 });
         }
 
-        private DirectoryInfo GetServiceDirectory()
+        private DirectoryInfo GetServiceModuleDirectory()
         {
             return new DirectoryInfo(Path.Combine(this.Context.RootDirectory,
-                                                  "services"));
+                                                  "modules"));
         }
 
-        private void LoadAndInitializeServices()
+        private void LoadAndInitializeServiceModules()
         {
             const string LOG_CATEGORY = "LOAD_SERVICE_MODULES";
 
-            var dir = this.GetServiceDirectory();
+            var dir = this.GetServiceModuleDirectory();
             if (dir.Exists == false)
             {
-                //TODO log
+                this.Logger.Log(categories: LogCategories.Warnings,
+                                tag: LOG_CATEGORY,
+                                msg: "Module directory does NOT exist!");
+
                 return;
             }
 
@@ -68,9 +71,9 @@ namespace MarcelJoachimKloubert.ApplicationServer
                 modulesConf = modulesConf ?? new List<object>();
             }
 
-            var modules = new SynchronizedCollection<IServiceModule>();
+            var modules = new List<IServiceModule>();
 
-            var ex = dir.GetFiles("*.dll")
+            var ex = dir.EnumerateFiles("*.dll")
                         .ForAll(action: (ctx) =>
                         {
                             var f = ctx.Item;
@@ -101,35 +104,36 @@ namespace MarcelJoachimKloubert.ApplicationServer
                             }
 
                             var ex2 = serviceLocator.GetAllInstances<IServiceModule>()
-                                                    .ForAllAsync(action: ctx2 =>
+                                                    .ForAll(action: ctx2 =>
                                                     {
-                                                        var m = ctx2.Item;
-                                                        var allMods = ctx2.State.AllModules;
-
-                                                        //TODO
+                                                        var module = ctx2.Item;
 
                                                         var modCtx = new ServiceModuleContext()
                                                         {
                                                             Assembly = ctx2.State.Assembly,
                                                             AssemblyHash = ctx2.State.AssemblyHash,
                                                             AssemblyLocation = ctx2.State.AssemblyLocation,
-                                                            GetOtherModulesFunc = CreateGetOtherModulesFunc(m, allMods),
-                                                            Module = m,
+                                                            GetOtherModulesFunc = CreateGetOtherModulesFunc(module, ctx2.State.AllModules),
+                                                            Module = module,
                                                             ServiceLocator = ctx2.State.ServiceLocator,
                                                         };
 
-                                                        if (m.IsInitialized == false)
+                                                        if (module.IsInitialized == false)
                                                         {
-                                                            m.Initialize(modCtx);
+                                                            module.Initialize(modCtx);
                                                         }
 
-                                                        if (m.IsInitialized)
+                                                        if (module.IsInitialized)
                                                         {
-                                                            allMods.Add(m);
+                                                            ctx2.State.AllModules.Add(module);
                                                         }
                                                         else
                                                         {
-                                                            //TODO: log
+                                                            ctx2.State.Server.Logger.Log(categories: LogCategories.Warnings,
+                                                                                         tag: LOG_CATEGORY,
+                                                                                         msg: string.Format("Module '{0}' from '{1}' could NOT be initialized!",
+                                                                                                            module.GetType().FullName,
+                                                                                                            ctx2.State.AssemblyLocation));
                                                         }
                                                     }, actionState: new
                                                     {
@@ -138,6 +142,7 @@ namespace MarcelJoachimKloubert.ApplicationServer
                                                         AssemblyHash = asmHash,
                                                         AssemblyLocation = f.FullName,
                                                         ModuleConfig = ctx.State.ModuleConfig,
+                                                        Server = ctx.State.Server,
                                                         ServiceLocator = serviceLocator,
                                                     }, throwExceptions: false);
 
@@ -183,15 +188,17 @@ namespace MarcelJoachimKloubert.ApplicationServer
             }
         }
 
-        private void UnloadAndDisposeServices()
+        private void UnloadAndDisposeServiceModules()
         {
+            const string LOG_CATEGORY = "UNLOAD_SERVICE_MODULES";
+
             var modules = this.ServiceModules;
             if (modules == null)
             {
                 return;
             }
 
-            var ex = modules.ForAllAsync(action: (ctx) =>
+            var ex = modules.ForAll(action: (ctx) =>
                         {
                             var m = ctx.Item;
 
@@ -199,13 +206,21 @@ namespace MarcelJoachimKloubert.ApplicationServer
                             {
                                 m.Dispose();
                             }
-                        }, actionState: new
-                        {
                         }, throwExceptions: false);
 
             if (ex != null)
             {
-                // TODO log
+                this.Logger.Log(categories: LogCategories.Errors,
+                                tag: LOG_CATEGORY,
+                                msg: string.Format("Error while unloading modules: {0}",
+                                                   ex));
+            }
+            else
+            {
+                this.Logger.Log(categories: LogCategories.Information,
+                                tag: LOG_CATEGORY,
+                                msg: string.Format("{0} service modules were unloaded.",
+                                                   modules.Length));
             }
         }
 

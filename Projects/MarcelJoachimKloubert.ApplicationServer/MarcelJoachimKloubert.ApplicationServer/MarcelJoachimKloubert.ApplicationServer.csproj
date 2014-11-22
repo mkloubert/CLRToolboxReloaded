@@ -48,10 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServer.cs" />
-    <Compile Include="ApplicationServer.Services.cs">
+    <Compile Include="ApplicationServer.Logging.cs">
       <DependentUpon>ApplicationServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationServer.Logging.cs">
+    <Compile Include="ApplicationServer.Modules.cs">
       <DependentUpon>ApplicationServer.cs</DependentUpon>
     </Compile>
     <Compile Include="ApplicationServer.Temp.cs">
@@ -61,6 +61,7 @@
       <DependentUpon>ApplicationServer.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Helpers\WebHelper.cs" />
     <Compile Include="Net\Http\HttpServer.cs" />
     <Compile Include="Net\Web\Modules\ApplicationServerWebModuleBase.cs" />
     <Compile Include="Net\Web\Modules\index.cs" />
@@ -76,6 +77,7 @@
   <ItemGroup>
     <EmbeddedResource Include="LICENSE" />
     <None Include="MarcelJoachimKloubert.ApplicationServer.snk" />
+    <None Include="_Res\startbootstrap-sb-admin-2-gh-pages.zip" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs.csproj">
