@@ -146,7 +146,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
 
             var dir = new DirectoryInfo(Path.Combine(this._SERVER.Context.WebDirectory, "img"));
 
-            HandleFile(name: name,
+            HandleFile(name: fullName,
                        dir: dir,
                        contentType: WebHelper.GetContentTypeByFileExtension(ext),
                        e: e,

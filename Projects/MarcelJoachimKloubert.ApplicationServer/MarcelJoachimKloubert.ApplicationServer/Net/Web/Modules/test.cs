@@ -33,7 +33,22 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web.Modules
         /// <inheriteddoc />
         protected override void OnHandle(IWebExecutionContext context, ref bool invokeAfterHandle)
         {
-            context.Response.Write("Test page");
+            string page;
+            context.Request.REQUEST.TryGetValue("p", out page);
+
+            if (string.IsNullOrWhiteSpace(page))
+            {
+                page = "index";
+            }
+
+            var tpl = context.TryGetHtmlTemplate(page);
+            if (tpl == null)
+            {
+                tpl = context.TryGetHtmlTemplate("index");
+            }
+
+            context.Response
+                   .Write(tpl);
         }
 
         #endregion Methods (1)
