@@ -201,6 +201,8 @@
     <Compile Include="Execution\Commands\DelegateCommand.cs" />
     <Compile Include="Execution\Commands\ICommand.cs" />
     <Compile Include="Execution\ExecutionErrorEventArgs.cs" />
+    <Compile Include="Execution\Functions\FunctionBase.cs" />
+    <Compile Include="Execution\Functions\IFunction.cs" />
     <Compile Include="Execution\IMediator.cs" />
     <Compile Include="Execution\Jobs\AsyncJobScheduler.cs" />
     <Compile Include="Execution\Jobs\DelegateJob.cs" />
@@ -498,6 +500,8 @@
     <Compile Include="Objects\ObjectFactory.cs" />
     <Compile Include="Objects\ProxyBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\IResourceLocator.cs" />
+    <Compile Include="Resources\ResourceRootNamespaceAttribute.cs" />
     <Compile Include="Scripting\ExportScriptFuncAttribute.cs" />
     <Compile Include="Scripting\ExportScriptTypeAttribute.cs" />
     <Compile Include="Scripting\IScriptExecutionContext.cs" />
@@ -536,6 +540,9 @@
     <Compile Include="Text\Html\Builders\HtmlBuilderBase.cs" />
     <Compile Include="Text\Html\Builders\IHtmlBuilder.cs" />
     <Compile Include="Text\Html\DotLiquidHtmlTemplate.cs" />
+    <Compile Include="Text\Html\DotLiquidHtmlTemplate.HtmlFilters.cs">
+      <DependentUpon>DotLiquidHtmlTemplate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Text\Html\HtmlTemplateBase.cs" />
     <Compile Include="Text\Html\IHtmlTemplate.cs" />
     <Compile Include="Text\IStringTemplate.cs" />

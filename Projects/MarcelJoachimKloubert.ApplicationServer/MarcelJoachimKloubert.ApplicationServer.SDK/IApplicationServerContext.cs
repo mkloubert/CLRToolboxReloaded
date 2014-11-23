@@ -3,6 +3,7 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging;
+using MarcelJoachimKloubert.CLRToolbox.Resources;
 using MarcelJoachimKloubert.CLRToolbox.ServiceLocation;
 using System;
 using System.IO;
@@ -12,7 +13,7 @@ namespace MarcelJoachimKloubert.ApplicationServer
     /// <summary>
     /// The context of an <see cref="IApplicationServer" />.
     /// </summary>
-    public interface IApplicationServerContext : IServiceLocator
+    public interface IApplicationServerContext : IServiceLocator, IResourceLocator
     {
         #region Properties (6)
 

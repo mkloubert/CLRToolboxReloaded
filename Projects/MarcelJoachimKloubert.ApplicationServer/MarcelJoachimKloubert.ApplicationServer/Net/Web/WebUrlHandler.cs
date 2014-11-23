@@ -120,7 +120,8 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
                        dir: dir,
                        contentType: "text/css; charset=utf-8",
                        e: e,
-                       found: ref found);
+                       found: ref found,
+                       compress: true);
         }
 
         private void Handle_ServerFontFile(Match match, HttpRequestEventArgs e, ref bool found)
@@ -163,7 +164,8 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
                        dir: dir,
                        contentType: "text/javascript; charset=utf-8",
                        e: e,
-                       found: ref found);
+                       found: ref found,
+                       compress: true);
         }
 
         private void Handle_ServerModule(Match match, HttpRequestEventArgs e, ref bool found)
@@ -202,7 +204,8 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
             }
         }
 
-        private static void HandleFile(string name, DirectoryInfo dir, string contentType, HttpRequestEventArgs e, ref bool found)
+        private static void HandleFile(string name, DirectoryInfo dir, string contentType, HttpRequestEventArgs e, ref bool found,
+                                       bool compress = false)
         {
             while (name.Contains("../"))
             {
@@ -232,6 +235,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
                 fs.CopyTo(e.Response.Stream);
 
                 e.Response.ContentType = contentType;
+                e.Response.Compress = compress;
             }
         }
 
@@ -243,11 +247,37 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
                 Response = e.Response,
                 ServerContext = this._SERVER.Context,
             };
+
+            // load HTML template
             ctx.TryGetHtmlTemplateFunc = (file) =>
                 {
                     if (file.Exists)
                     {
                         return DotLiquidHtmlTemplate.Create(file);
+                    }
+
+                    return null;
+                };
+
+            // load javascript
+            ctx.TryLoadJavascriptFunc = (file) =>
+                {
+                    if (file.Exists)
+                    {
+                        return File.ReadAllText(file.FullName,
+                                                Encoding.UTF8);
+                    }
+
+                    return null;
+                };
+
+            // load CSS styles
+            ctx.TryLoadStylesheetsFunc = (file) =>
+                {
+                    if (file.Exists)
+                    {
+                        return File.ReadAllText(file.FullName,
+                                                Encoding.UTF8);
                     }
 
                     return null;

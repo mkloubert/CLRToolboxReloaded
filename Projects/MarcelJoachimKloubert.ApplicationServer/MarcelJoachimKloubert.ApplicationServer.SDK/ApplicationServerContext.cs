@@ -2,6 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.ApplicationServer.Helpers;
 using MarcelJoachimKloubert.CLRToolbox;
 using MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging;
 using MarcelJoachimKloubert.CLRToolbox.ServiceLocation;
@@ -85,7 +86,7 @@ namespace MarcelJoachimKloubert.ApplicationServer
 
         #endregion Properties (7)
 
-        #region Methods (11)
+        #region Methods (12)
 
         /// <inheriteddoc />
         public virtual FileStream CreateAndOpenTempFile(string tempDir = null,
@@ -200,6 +201,16 @@ namespace MarcelJoachimKloubert.ApplicationServer
             return this.ServiceLocator.GetService(serviceType);
         }
 
-        #endregion Methods (11)
+        /// <inheriteddoc />
+        public virtual Stream TryGetResourceStream(string resourceName)
+        {
+            var type = this.Server.GetType();
+
+            return ResourceHelper.GetManifestResourceStream(type.Assembly,
+                                                            type,
+                                                            resourceName);
+        }
+
+        #endregion Methods (12)
     }
 }

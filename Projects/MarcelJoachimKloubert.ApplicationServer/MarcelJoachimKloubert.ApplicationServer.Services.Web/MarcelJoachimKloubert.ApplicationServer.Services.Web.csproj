@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,10 +46,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\ApplicationServerWebModuleBase.cs" />
+    <Compile Include="Modules\index.cs" />
+    <Compile Include="Modules\test.cs" />
+    <Compile Include="Net\Http\HttpServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="LICENSE" />
     <None Include="MarcelJoachimKloubert.ApplicationServer.Services.Web.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs.csproj">
+      <Project>{d73e50c8-359a-4680-9fa5-8c200de0dbc3}</Project>
+      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.Libs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5.csproj">
+      <Project>{d15249c7-977d-4a74-b596-be0e08dc9e7b}</Project>
+      <Name>MarcelJoachimKloubert.CLRToolboxReloaded.NET4_5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarcelJoachimKloubert.ApplicationServer.SDK\MarcelJoachimKloubert.ApplicationServer.SDK.csproj">
+      <Project>{3fecd3cc-8ac9-4865-a7db-ed2a5c080ad4}</Project>
+      <Name>MarcelJoachimKloubert.ApplicationServer.SDK</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

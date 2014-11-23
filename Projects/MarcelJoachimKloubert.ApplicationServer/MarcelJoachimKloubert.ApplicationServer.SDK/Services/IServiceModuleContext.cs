@@ -2,6 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.CLRToolbox.Resources;
 using MarcelJoachimKloubert.CLRToolbox.ServiceLocation;
 using System.Collections.Generic;
 using System.Reflection;
@@ -11,7 +12,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
     /// <summary>
     /// The context of an <see cref="IServiceModule" />.
     /// </summary>
-    public interface IServiceModuleContext : IServiceLocator
+    public interface IServiceModuleContext : IServiceLocator, IResourceLocator
     {
         #region Properties (4)
 

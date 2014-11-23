@@ -1,4 +1,4 @@
-﻿// LICENSE: GPL 3 - https://www.gnu.org/licenses/gpl-3.0.txt
+﻿// LICENSE: LGPL 3 - https://www.gnu.org/licenses/lgpl-3.0.txt
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
@@ -8,19 +8,29 @@ using System.Threading.Tasks;
 
 namespace MarcelJoachimKloubert.ApplicationServer.Helpers
 {
-    internal static class FileHelper
+    /// <summary>
+    /// Helper class for file operations.
+    /// </summary>
+    public static class FileHelper
     {
         #region Methods (2)
 
-        internal static void ShredderAndDeleteFile(FileStream fs)
+        /// <summary>
+        /// Shredders and deletes a file in background.
+        /// </summary>
+        /// <param name="fs">The stream of the underlying file.</param>
+        /// <returns>
+        /// The underlying task or <see langword="null" /> if no task is running.
+        /// </returns>
+        public static Task ShredderAndDeleteFile(FileStream fs)
         {
             if (fs == null)
             {
-                return;
+                return null;
             }
 
-            Task.Factory.StartNew(action: ShredderFileStreamTaskAction,
-                                  state: fs);
+            return Task.Factory.StartNew(action: ShredderFileStreamTaskAction,
+                                         state: fs);
         }
 
         private static void ShredderFileStreamTaskAction(object state)
@@ -34,6 +44,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Helpers
             }
             catch
             {
+                // ignore errors here
             }
             finally
             {
@@ -44,6 +55,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Helpers
                 }
                 catch
                 {
+                    // ignore errors here
                 }
             }
         }

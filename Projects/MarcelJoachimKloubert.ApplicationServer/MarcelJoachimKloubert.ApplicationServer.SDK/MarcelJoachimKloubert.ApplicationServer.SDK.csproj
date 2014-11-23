@@ -48,6 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServerContext.cs" />
+    <Compile Include="Execution\Functions\IServerFunction.cs" />
+    <Compile Include="Execution\Functions\IServerFunctionLocator.cs" />
+    <Compile Include="Execution\Functions\ServerFunctionBase.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Helpers\ResourceHelper.cs" />
     <Compile Include="IApplicationServer.cs" />
     <Compile Include="IApplicationServerContext.cs" />
     <Compile Include="Net\Web\DefaultWebInterfaceModuleAttribute.cs" />

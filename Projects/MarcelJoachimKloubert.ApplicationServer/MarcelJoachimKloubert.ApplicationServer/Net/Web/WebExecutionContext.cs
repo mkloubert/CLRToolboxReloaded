@@ -12,7 +12,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
 {
     internal sealed class WebExecutionContext : ObjectBase, IWebExecutionContext
     {
-        #region Properties (4)
+        #region Properties (6)
 
         public IHttpRequest Request
         {
@@ -38,11 +38,22 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
             set;
         }
 
-        #endregion Properties (4)
+        internal Func<FileInfo, string> TryLoadJavascriptFunc
+        {
+            get;
+            set;
+        }
 
-        #region Methods (1)
+        internal Func<FileInfo, string> TryLoadStylesheetsFunc
+        {
+            get;
+            set;
+        }
 
-        /// <inheriteddoc />
+        #endregion Properties (6)
+
+        #region Methods (3)
+
         public IHtmlTemplate TryGetHtmlTemplate(string name)
         {
             IHtmlTemplate result = null;
@@ -59,6 +70,38 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
             return result;
         }
 
-        #endregion Methods (1)
+        public string TryLoadJavascript(string name)
+        {
+            string result = null;
+
+            var dir = new DirectoryInfo(Path.Combine(this.ServerContext.WebDirectory, "js"));
+            if (dir.Exists)
+            {
+                var file = new FileInfo(Path.Combine(dir.FullName,
+                                                     name.Trim() + ".js"));
+
+                result = this.TryLoadJavascriptFunc(file);
+            }
+
+            return result;
+        }
+
+        public string TryLoadStylesheets(string name)
+        {
+            string result = null;
+
+            var dir = new DirectoryInfo(Path.Combine(this.ServerContext.WebDirectory, "css"));
+            if (dir.Exists)
+            {
+                var file = new FileInfo(Path.Combine(dir.FullName,
+                                                     name.Trim() + ".css"));
+
+                result = this.TryLoadStylesheetsFunc(file);
+            }
+
+            return result;
+        }
+
+        #endregion Methods (3)
     }
 }

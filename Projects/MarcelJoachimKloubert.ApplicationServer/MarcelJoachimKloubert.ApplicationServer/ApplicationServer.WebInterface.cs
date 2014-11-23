@@ -2,7 +2,6 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-using MarcelJoachimKloubert.ApplicationServer.Net.Http;
 using MarcelJoachimKloubert.ApplicationServer.Net.Web;
 using MarcelJoachimKloubert.CLRToolbox.Net.Http;
 
@@ -88,7 +87,7 @@ namespace MarcelJoachimKloubert.ApplicationServer
             bool useSecureHttp;
             this.Config.TryGetValue("useSecureHttp", out useSecureHttp, "webInterface", defaultVal: true);
 
-            IHttpServer newServer = new HttpServer(this);
+            var newServer = this.Context.GetInstance<IHttpServer>();
             try
             {
                 newServer.CredentialValidator = this.CheckWebInterfaceUser;
@@ -123,6 +122,6 @@ namespace MarcelJoachimKloubert.ApplicationServer
             server.HandleRequest -= this.HttpServer_HandleRequest;
         }
 
-        #endregion Methods (4)
+        #endregion Methods (6)
     }
 }

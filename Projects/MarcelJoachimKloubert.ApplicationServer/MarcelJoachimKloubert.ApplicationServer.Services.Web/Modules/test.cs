@@ -2,10 +2,11 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.ApplicationServer.Net.Web;
 using System;
 using System.ComponentModel.Composition;
 
-namespace MarcelJoachimKloubert.ApplicationServer.Net.Web.Modules
+namespace MarcelJoachimKloubert.ApplicationServer.Services.Web
 {
     /// <summary>
     /// The test module.
@@ -33,6 +34,8 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web.Modules
         /// <inheriteddoc />
         protected override void OnHandle(IWebExecutionContext context, ref bool invokeAfterHandle)
         {
+            var resp = context.Response;
+
             string page;
             context.Request.REQUEST.TryGetValue("p", out page);
 
@@ -47,8 +50,10 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web.Modules
                 tpl = context.TryGetHtmlTemplate("index");
             }
 
-            context.Response
-                   .Write(tpl);
+            resp.FrontendVars["javascript_code"] = context.TryLoadJavascript("custom");
+            resp.FrontendVars["css_stylesheets"] = context.TryLoadStylesheets("custom");
+
+            resp.Write(tpl);
         }
 
         #endregion Methods (1)

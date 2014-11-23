@@ -2,6 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.ApplicationServer.Helpers;
 using MarcelJoachimKloubert.CLRToolbox;
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using MarcelJoachimKloubert.CLRToolbox.ServiceLocation;
@@ -57,7 +58,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
 
         #endregion Properties (6)
 
-        #region Methods (12)
+        #region Methods (13)
 
         public IEnumerable<S> GetAllInstances<S>()
         {
@@ -105,6 +106,9 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
                 temp.Write(Encoding.UTF8
                                    .GetBytes(this.Module.GetType().FullName));
 
+                // ID of the module
+                temp.Write(this.Module.Id.ToByteArray());
+
                 // calculate hash and return...
                 using (var md5 = new MD5CryptoServiceProvider())
                 {
@@ -150,6 +154,13 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services
             return this.ServiceLocator.GetService(serviceType);
         }
 
-        #endregion Methods (12)
+        public Stream TryGetResourceStream(string resourceName)
+        {
+            return ResourceHelper.GetManifestResourceStream(this.Assembly,
+                                                            this.Module.GetType(),
+                                                            resourceName);
+        }
+
+        #endregion Methods (13)
     }
 }

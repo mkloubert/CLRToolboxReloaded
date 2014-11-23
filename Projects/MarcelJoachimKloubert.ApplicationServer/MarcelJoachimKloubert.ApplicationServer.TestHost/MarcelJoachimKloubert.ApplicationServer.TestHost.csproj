@@ -69,6 +69,14 @@
       <Project>{3fecd3cc-8ac9-4865-a7db-ed2a5c080ad4}</Project>
       <Name>MarcelJoachimKloubert.ApplicationServer.SDK</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MarcelJoachimKloubert.ApplicationServer.Services.Functions\MarcelJoachimKloubert.ApplicationServer.Services.Functions.csproj">
+      <Project>{10a9d042-eb23-417f-9777-b966afd323bc}</Project>
+      <Name>MarcelJoachimKloubert.ApplicationServer.Services.Functions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarcelJoachimKloubert.ApplicationServer.Services.Loggers\MarcelJoachimKloubert.ApplicationServer.Services.Loggers.csproj">
+      <Project>{4ee3391f-e376-4440-b69b-da6693913182}</Project>
+      <Name>MarcelJoachimKloubert.ApplicationServer.Services.Loggers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MarcelJoachimKloubert.ApplicationServer.Services.Web\MarcelJoachimKloubert.ApplicationServer.Services.Web.csproj">
       <Project>{ea4b8f54-dbed-47f4-b193-9bf60082bbea}</Project>
       <Name>MarcelJoachimKloubert.ApplicationServer.Services.Web</Name>
@@ -653,6 +661,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="web\tpl\calendar.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="web\css\custom.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

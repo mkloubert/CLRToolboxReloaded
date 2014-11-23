@@ -4,6 +4,7 @@
 
 using MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MarcelJoachimKloubert.ApplicationServer
 {
@@ -40,7 +41,9 @@ namespace MarcelJoachimKloubert.ApplicationServer
         /// <returns>The loggers to use.</returns>
         public IEnumerable<ILogger> GetLoggers(AggregateLogger logger)
         {
-            return this.AllLoggers;
+            return this.AllLoggers
+                       .Concat(this.Context
+                                   .GetAllInstances<ILogger>());
         }
 
         private void ReloadLoggers()

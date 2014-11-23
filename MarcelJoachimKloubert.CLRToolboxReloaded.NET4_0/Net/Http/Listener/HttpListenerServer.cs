@@ -2,16 +2,12 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-#if !(MONO40 || NET40)
-#define KNOWS_ASYNC_PATTERN
-#endif
-
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
-using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
@@ -321,12 +317,44 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                             this.OnHandleServerError(req, resp);
                         }
 
+                        var compress = resp.Compress ?? false;
+                        if (compress)
+                        {
+                            var closeOldStream = false;
+
+                            var oldStream = resp.Stream;
+                            var newStream = this.CreateResponseStream(ctx);
+                            try
+                            {
+                                resp.SetStream(newStream);
+                                closeOldStream = true;
+                                    
+                                oldStream.Position = 0;
+                                oldStream.GZip(newStream);
+
+                                ctx.Response.Headers[HttpResponseHeader.ContentEncoding] = "gzip";
+                            }
+                            catch
+                            {
+                                this.CloseResponseStream(ctx, newStream);
+
+                                throw;
+                            }
+                            finally
+                            {
+                                if (closeOldStream)
+                                {
+                                    this.CloseResponseStream(ctx, oldStream);
+                                }
+                            }
+                        }
+
                         SendResponse(ctx: ctx,
                                      req: req, resp: resp);
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // ignore here
+                        this.OnErrorsReceived(ex);
                     }
                 }
             }
@@ -349,8 +377,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 this.StartListening(listener: listener,
                                     throwException: false);
 
-                this.CreateHandleContextTask(ctx: ctx)
-                    .Start();
+                this.HandleContext(ctx);
             }
             catch (Exception ex)
             {
@@ -419,44 +446,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
             this.DisposeOldListener();
         }
 
-#if (KNOWS_ASYNC_PATTERN)
-
-        private async void StartListening(HttpListener listener, bool throwException)
-#else
-
         private void StartListening(HttpListener listener, bool throwException)
-#endif
         {
             if (listener == null)
             {
                 return;
             }
-
-#if (KNOWS_ASYNC_PATTERN)
-
-            while (true)
-            {
-                try
-                {
-                    if (listener.IsListening)
-                    {
-                        var ctx = await listener.GetContextAsync();
-
-                        this.CreateHandleContextTask(ctx: ctx)
-                            .Start();
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    this.OnErrorsReceived(ex);
-                }
-            }
-
-#else
 
             try
             {
@@ -477,8 +472,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                     this.OnErrorsReceived(ex);
                 }
             }
-
-#endif
         }
 
         private static void SendResponse(HttpListenerContext ctx, HttpRequest req, HttpResponse resp)

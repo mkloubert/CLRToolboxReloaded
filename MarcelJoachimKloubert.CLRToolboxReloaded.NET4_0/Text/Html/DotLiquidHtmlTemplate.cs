@@ -13,7 +13,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html
     /// <summary>
     /// A HTML template that is based on DotLiquid (<see href="http://dotliquidmarkup.org/" />).
     /// </summary>
-    public sealed class DotLiquidHtmlTemplate : HtmlTemplateBase
+    public sealed partial class DotLiquidHtmlTemplate : HtmlTemplateBase
     {
         #region Fields (1)
 
@@ -55,7 +55,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html
 
         #endregion Delegates and events (1)
 
-        #region Methods (5)
+        #region Methods (7)
 
         /// <summary>
         /// Creates a new instance based on a template source string.
@@ -65,6 +65,53 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html
         public static DotLiquidHtmlTemplate Create(string src)
         {
             return new DotLiquidHtmlTemplate((tpl, sb) => sb.Append(src));
+        }
+
+        /// <summary>
+        /// Reads the data of a template from a UTF-8 file.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns>The created template.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="file" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="IOException">
+        /// <paramref name="file" /> cannot be read.
+        /// </exception>
+        public static DotLiquidHtmlTemplate Create(FileInfo file)
+        {
+            return Create(file,
+                          Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// Reads the data of a template from a file.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="enc">The string encoding.</param>
+        /// <returns>The created template.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="file" /> and/or <paramref name="enc" /> are <see langword="null" />.
+        /// </exception>
+        /// <exception cref="IOException">
+        /// <paramref name="file" /> cannot be read.
+        /// </exception>
+        public static DotLiquidHtmlTemplate Create(FileInfo file, Encoding enc)
+        {
+            if (file == null)
+            {
+                throw new ArgumentNullException("file");
+            }
+
+            if (enc == null)
+            {
+                throw new ArgumentNullException("enc");
+            }
+
+            return new DotLiquidHtmlTemplate((tpl, sb) =>
+                {
+                    sb.Append(enc.GetString(File.ReadAllBytes(file.FullName)));
+                });
         }
 
         /// <summary>
@@ -140,8 +187,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html
                         ToLiquidObject(item.Value));
             }
 
+            var @params = new RenderParameters();
+            @params.Filters = new Type[]
+            {
+                typeof(HtmlFilters),
+            };
+
             // render
-            writer.Write(tpl.Render());
+            writer.Write(tpl.Render(@params));
         }
 
         private static object ToLiquidObject(object input)
@@ -160,6 +213,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html
             return result;
         }
 
-        #endregion Methods (5)
+        #endregion Methods (7)
     }
 }

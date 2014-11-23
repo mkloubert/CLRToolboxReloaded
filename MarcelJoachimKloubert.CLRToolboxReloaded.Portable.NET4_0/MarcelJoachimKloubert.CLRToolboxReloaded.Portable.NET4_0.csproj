@@ -276,6 +276,12 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\ExecutionErrorEventArgs.cs">
       <Link>Execution\ExecutionErrorEventArgs.cs</Link>
     </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\execution\functions\FunctionBase.cs">
+      <Link>Execution\Functions\FunctionBase.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\execution\functions\IFunction.cs">
+      <Link>Execution\Functions\IFunction.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\IMediator.cs">
       <Link>Execution\IMediator.cs</Link>
     </Compile>
@@ -632,6 +638,12 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ObjectBase.cs">
       <Link>ObjectBase.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\resources\IResourceLocator.cs">
+      <Link>Resources\IResourceLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\resources\ResourceRootNamespaceAttribute.cs">
+      <Link>Resources\ResourceRootNamespaceAttribute.cs</Link>
     </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\scripting\ExportScriptFuncAttribute.cs">
       <Link>Scripting\ExportScriptFuncAttribute.cs</Link>

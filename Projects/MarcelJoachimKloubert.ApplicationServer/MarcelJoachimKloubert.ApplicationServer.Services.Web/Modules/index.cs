@@ -2,10 +2,11 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.ApplicationServer.Net.Web;
 using System;
 using System.ComponentModel.Composition;
 
-namespace MarcelJoachimKloubert.ApplicationServer.Net.Web.Modules
+namespace MarcelJoachimKloubert.ApplicationServer.Services.Web
 {
     /// <summary>
     /// The start module.
@@ -35,6 +36,9 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web.Modules
         protected override void OnHandle(IWebExecutionContext context, ref bool invokeAfterHandle)
         {
             var resp = context.Response;
+
+            resp.FrontendVars["javascript_code"] = context.TryLoadJavascript("custom");
+            resp.FrontendVars["css_stylesheets"] = context.TryLoadStylesheets("custom");
 
             resp.Write(context.TryGetHtmlTemplate("index"));
         }

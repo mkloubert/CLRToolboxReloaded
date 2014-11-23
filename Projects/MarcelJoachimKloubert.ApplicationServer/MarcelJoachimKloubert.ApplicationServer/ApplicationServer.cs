@@ -2,6 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.ApplicationServer.Helpers;
 using MarcelJoachimKloubert.ApplicationServer.Net.Web;
 using MarcelJoachimKloubert.ApplicationServer.Services;
 using MarcelJoachimKloubert.CLRToolbox;
@@ -349,30 +350,8 @@ namespace MarcelJoachimKloubert.ApplicationServer
         {
             var file = (FileInfo)state;
 
-            try
-            {
-                using (var fs = file.Open(FileMode.Open, FileAccess.ReadWrite))
-                {
-                    fs.Shredder();
-                }
-            }
-            catch
-            {
-            }
-            finally
-            {
-                try
-                {
-                    file.Refresh();
-                    if (file.Exists)
-                    {
-                        file.Delete();
-                    }
-                }
-                catch
-                {
-                }
-            }
+            FileHelper.ShredderAndDeleteFile(file.Open(FileMode.Open,
+                                                       FileAccess.ReadWrite));
         }
 
         /// <inheriteddoc />

@@ -142,7 +142,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
                         outputStream.Position = 0;
 
                         // content type
-                        if (string.IsNullOrWhiteSpace(resp.ContentType))
+                        if (string.IsNullOrWhiteSpace(resp.ContentType) == false)
                         {
                             resp.Property.Headers[HttpResponseHeader.ContentType] = resp.ContentType.ToLower().Trim();
                         }

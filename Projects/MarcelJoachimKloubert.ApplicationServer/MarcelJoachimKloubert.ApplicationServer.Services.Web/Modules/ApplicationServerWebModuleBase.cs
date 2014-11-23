@@ -2,9 +2,10 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.ApplicationServer.Net.Web;
 using System;
 
-namespace MarcelJoachimKloubert.ApplicationServer.Net.Web.Modules
+namespace MarcelJoachimKloubert.ApplicationServer.Services.Web
 {
     /// <summary>
     /// A basic web interface module.
@@ -48,5 +49,17 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web.Modules
         }
 
         #endregion Properties (2)
+
+        #region Methods (1)
+        
+        /// <inheriteddoc />
+        protected override void OnBeforeHandle(IWebExecutionContext context, ref bool invokeOnHandle)
+        {
+            base.OnBeforeHandle(context, ref invokeOnHandle);
+
+            context.Response.Compress = true;
+        }
+
+        #endregion
     }
 }

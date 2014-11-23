@@ -60,12 +60,8 @@
     <Compile Include="ApplicationServer.WebInterface.cs">
       <DependentUpon>ApplicationServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Execution\Functions\ServerFunctionLocator.cs" />
     <Compile Include="Helpers\WebHelper.cs" />
-    <Compile Include="Net\Http\HttpServer.cs" />
-    <Compile Include="Net\Web\Modules\ApplicationServerWebModuleBase.cs" />
-    <Compile Include="Net\Web\Modules\index.cs" />
-    <Compile Include="Net\Web\Modules\test.cs" />
     <Compile Include="Net\Web\WebExecutionContext.cs" />
     <Compile Include="Net\Web\WebUrlHandler.cs" />
     <Compile Include="Net\Web\WebUrlHandler.HandlerItem.cs">
@@ -77,6 +73,7 @@
   <ItemGroup>
     <EmbeddedResource Include="LICENSE" />
     <None Include="MarcelJoachimKloubert.ApplicationServer.snk" />
+    <None Include="_Res\Bootstrap_Metro_Dashboard-master.zip" />
     <None Include="_Res\startbootstrap-sb-admin-2-gh-pages.zip" />
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +89,9 @@
       <Project>{3fecd3cc-8ac9-4865-a7db-ed2a5c080ad4}</Project>
       <Name>MarcelJoachimKloubert.ApplicationServer.SDK</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\img\Edward_Snowden.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

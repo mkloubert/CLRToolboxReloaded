@@ -360,6 +360,12 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\ExecutionErrorEventArgs.cs">
       <Link>Execution\ExecutionErrorEventArgs.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Functions\FunctionBase.cs">
+      <Link>Execution\Functions\FunctionBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Functions\IFunction.cs">
+      <Link>Execution\Functions\IFunction.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\IMediator.cs">
       <Link>Execution\IMediator.cs</Link>
     </Compile>
@@ -894,6 +900,12 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Objects\ProxyBuilder.cs">
       <Link>Objects\ProxyBuilder.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Resources\IResourceLocator.cs">
+      <Link>Resources\IResourceLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Resources\ResourceRootNamespaceAttribute.cs">
+      <Link>Resources\ResourceRootNamespaceAttribute.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Scripting\ExportScriptFuncAttribute.cs">
       <Link>Scripting\ExportScriptFuncAttribute.cs</Link>
     </Compile>
@@ -982,6 +994,10 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\Html\DotLiquidHtmlTemplate.cs">
       <Link>Text\Html\DotLiquidHtmlTemplate.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\Html\DotLiquidHtmlTemplate.HtmlFilters.cs">
+      <Link>Text\Html\DotLiquidHtmlTemplate.HtmlFilters.cs</Link>
+      <DependentUpon>DotLiquidHtmlTemplate.cs</DependentUpon>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Text\Html\HtmlTemplateBase.cs">
       <Link>Text\Html\HtmlTemplateBase.cs</Link>

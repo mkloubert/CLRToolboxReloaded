@@ -27,7 +27,7 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
 
         #endregion Properties (2)
 
-        #region Methods (1)
+        #region Methods (3)
 
         /// <summary>
         /// Tries to return a HTML template.
@@ -36,6 +36,20 @@ namespace MarcelJoachimKloubert.ApplicationServer.Net.Web
         /// <returns>The template or <see langword="null" /> if NOT found.</returns>
         IHtmlTemplate TryGetHtmlTemplate(string name);
 
-        #endregion Methods (1)
+        /// <summary>
+        /// Tries to load javascript code.
+        /// </summary>
+        /// <param name="name">The name of the script container.</param>
+        /// <returns>The code or <see langword="null" /> if NOT found.</returns>
+        string TryLoadJavascript(string name);
+
+        /// <summary>
+        /// Tries to load CSS code.
+        /// </summary>
+        /// <param name="name">The name of the CSS container.</param>
+        /// <returns>The code or <see langword="null" /> if NOT found.</returns>
+        string TryLoadStylesheets(string name);
+
+        #endregion Methods (3)
     }
 }
