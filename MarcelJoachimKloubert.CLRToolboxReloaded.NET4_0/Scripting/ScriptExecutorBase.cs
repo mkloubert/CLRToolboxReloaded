@@ -250,8 +250,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                     throw new ArgumentNullException("type");
                 }
 
-                var typeAlias = alias.AsString();
-                this._EXPOSED_TYPES[type] = string.IsNullOrWhiteSpace(typeAlias) ? null : typeAlias.Trim();
+                this._EXPOSED_TYPES[type] = string.IsNullOrWhiteSpace(alias) ? null : alias.Trim();
             }
 
             return this;
@@ -344,7 +343,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                     throw new ArgumentNullException("funcName");
                 }
 
-                var name = funcName.AsString().Trim();
+                var name = funcName.Trim();
                 if (name == string.Empty)
                 {
                     throw new ArgumentException("funcName");
@@ -373,7 +372,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                     throw new ArgumentNullException("varName");
                 }
 
-                var name = varName.AsString().Trim();
+                var name = varName.Trim();
                 if (name == string.Empty)
                 {
                     throw new ArgumentException("varName");

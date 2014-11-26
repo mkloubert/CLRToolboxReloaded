@@ -202,6 +202,9 @@
     <Compile Include="Execution\Commands\ICommand.cs" />
     <Compile Include="Execution\ExecutionErrorEventArgs.cs" />
     <Compile Include="Execution\Functions\FunctionBase.cs" />
+    <Compile Include="Execution\Functions\FunctionBase.FunctionExecutionContext.cs">
+      <DependentUpon>FunctionBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Execution\Functions\IFunction.cs" />
     <Compile Include="Execution\IMediator.cs" />
     <Compile Include="Execution\Jobs\AsyncJobScheduler.cs" />
@@ -264,6 +267,9 @@
     <Compile Include="Extensions\Collections.ForEach.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Collections.GetValue.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Collections.IsEmpty.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
@@ -286,6 +292,9 @@
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Collections.Transform.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Collections.TryGetValue.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Collections.TryPop.cs">

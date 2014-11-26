@@ -7,18 +7,19 @@ using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Execution.Functions
 {
     /// <summary>
     /// A basic dedicated function.
     /// </summary>
-    public abstract class FunctionBase : IdentifiableBase, IFunction
+    public abstract partial class FunctionBase : IdentifiableBase, IFunction
     {
         #region Fields (2)
 
         private readonly Guid _ID;
-        private readonly Action<IReadOnlyDictionary<string, object>, IDictionary<string, object>> _ON_EXECUTE_FUNC;
+        private readonly Action<FunctionExecutionContext> _ON_EXECUTE_FUNC;
 
         #endregion Fields (2)
 
@@ -39,8 +40,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Functions
         {
             this._ID = id;
 
-            this._ON_EXECUTE_FUNC = this._IS_SYNCHRONIZED ? new Action<IReadOnlyDictionary<string, object>, IDictionary<string, object>>(this.OnExecute_ThreadSafe)
-                                                          : new Action<IReadOnlyDictionary<string, object>, IDictionary<string, object>>(this.OnExecute);
+            this._ON_EXECUTE_FUNC = this._IS_SYNCHRONIZED ? new Action<FunctionExecutionContext>(this.OnExecute_ThreadSafe)
+                                                          : new Action<FunctionExecutionContext>(this.OnExecute);
         }
 
         /// <summary>
@@ -82,7 +83,23 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Functions
 
         #endregion Constrcutors (4)
 
-        #region Properties (4)
+        #region Properties (6)
+
+        /// <summary>
+        /// Gets the name of result parameter for the error message.
+        /// </summary>
+        protected virtual string ErrorParameter
+        {
+            get { return "Error"; }
+        }
+
+        /// <summary>
+        /// Gets the name of result parameter for the exit code.
+        /// </summary>
+        protected virtual string ExitCodeParameter
+        {
+            get { return "ExitCode"; }
+        }
 
         /// <inheriteddoc />
         public string Fullname
@@ -120,17 +137,28 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Functions
             get { return this.GetType().Namespace; }
         }
 
-        #endregion Properties (4)
+        #endregion Properties (6)
 
-        #region Methods (3)
+        #region Methods (14)
 
-        /// <inheriteddoc />
-        public IDictionary<string, object> Execute(IEnumerable<KeyValuePair<string, object>> @params = null)
+        /// <summary>
+        /// Creates an empty an initial function execution context instance.
+        /// </summary>
+        /// <param name="params">The input parameters.</param>
+        /// <returns>The created context.</returns>
+        protected virtual FunctionExecutionContext CreateExecutionContext(IEnumerable<KeyValuePair<string, object>> @params)
         {
-            @params = @params ?? Enumerable.Empty<KeyValuePair<string, object>>();
+            return new FunctionExecutionContext();
+        }
 
-            // input parameters
-            IReadOnlyDictionary<string, object> input;
+        /// <summary>
+        /// Creates and returns the dictionary for first parameter of <see cref="FunctionBase.OnExecute(FunctionExecutionContext)" /> method.
+        /// </summary>
+        /// <param name="params">The input parameters from <see cref="FunctionBase.Execute(IEnumerable{KeyValuePair{string, object}})" /> method.</param>
+        /// <returns>The created dictionary.</returns>
+        protected virtual IReadOnlyDictionary<string, object> CreateInputParameterStorage(IEnumerable<KeyValuePair<string, object>> @params)
+        {
+            IReadOnlyDictionary<string, object> result;
             {
                 // keep sure to have a case insensitive dictionary
                 var dict = new Dictionary<string, object>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
@@ -142,33 +170,173 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Functions
                                     Dictionary = (IDictionary<string, object>)dict,
                                 });
 
-                input = new ReadOnlyDictionaryWrapper<string, object>(dict);
+                result = new ReadOnlyDictionaryWrapper<string, object>(dict);
             }
 
-            // output parameters
-            var output = new Dictionary<string, object>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
-                                                                                                                              emptyIsNull: true));
+            return result;
+        }
 
-            this._ON_EXECUTE_FUNC(input, output);
+        /// <summary>
+        /// Creates and returns the dictionary for second parameter of <see cref="FunctionBase.OnExecute(FunctionExecutionContext)" /> method.
+        /// </summary>
+        /// <param name="input">The submitted input parameters.</param>
+        /// <returns>The created dictionary.</returns>
+        protected virtual IDictionary<string, object> CreateResultParameterStorage(IReadOnlyDictionary<string, object> input)
+        {
+            return new Dictionary<string, object>(comparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
+                                                                                                                        emptyIsNull: true));
+        }
 
-            return output;
+        /// <inheriteddoc />
+        public IDictionary<string, object> Execute(IEnumerable<KeyValuePair<string, object>> @params = null)
+        {
+            @params = @params ?? Enumerable.Empty<KeyValuePair<string, object>>();
+
+            var ctx = this.CreateExecutionContext(@params);
+            ctx.Input = this.CreateInputParameterStorage(@params);
+            ctx.Result = this.CreateResultParameterStorage(ctx.Input);
+
+            string errMsg = null;
+            try
+            {
+                ctx.ExitCode = this.GetInitialExitCode(ctx.Input);
+                this.InitializeExecutionContext(ctx);
+
+                ctx.StartTime = AppTime.Now;
+                this._ON_EXECUTE_FUNC(ctx);
+                ctx.EndTime = AppTime.Now;
+
+                ctx.HasBeenFailed = false;
+
+                this.OnExecutionSucceeded(ctx);
+            }
+            catch (Exception ex)
+            {
+                ctx.EndTime = AppTime.Now;
+                
+                ctx.HasBeenFailed = true;
+                ctx.Error = ex;
+
+                ctx.ExitCode = this.GetExitCode(ctx, ex);
+
+                // error message
+                {
+                    var msg = new StringBuilder();
+                    this.GenerateErrorMessage(ctx, ex, ref msg);
+
+                    if (msg != null)
+                    {
+                        errMsg = msg.ToString();
+                    }
+                }
+
+                this.OnExecutionError(ctx, ex);
+            }
+            finally
+            {
+                if (ctx.ExitCode.HasValue)
+                {
+                    ctx.Result[this.ExitCodeParameter] = ctx.ExitCode.Value;
+                }
+
+                if (errMsg != null)
+                {
+                    ctx.Result[this.ErrorParameter] = errMsg;
+                }
+
+                this.OnExecutionCompleted(ctx);
+            }
+
+            return ctx.Result;
+        }
+
+        /// <summary>
+        /// Generates a message for an exception.
+        /// </summary>
+        /// <param name="ctx">The underlying execution context.</param>
+        /// <param name="ex">The underlying exception.</param>
+        /// <param name="message">
+        /// The <see cref="StringBuilder" /> were to write the message to.
+        /// </param>
+        protected virtual void GenerateErrorMessage(FunctionExecutionContext ctx, Exception ex, ref StringBuilder message)
+        {
+            message.Append(ex.Message);
+        }
+
+        /// <summary>
+        /// Returns the exit code for a specific exception.
+        /// </summary>
+        /// <param name="ctx">The underlying execution context.</param>
+        /// <param name="ex">The exception.</param>
+        /// <returns>The exit code.</returns>
+        protected virtual int? GetExitCode(FunctionExecutionContext ctx, Exception ex)
+        {
+            return -1;
+        }
+
+        /// <summary>
+        /// Returns the initial exit code code based on the input parameters.
+        /// </summary>
+        /// <param name="input">The input parameters.</param>
+        /// <returns>The exit code.</returns>
+        protected virtual int? GetInitialExitCode(IReadOnlyDictionary<string, object> input)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// Initializes an execution context.
+        /// </summary>
+        /// <param name="ctx">The context to initialize.</param>
+        protected virtual void InitializeExecutionContext(FunctionExecutionContext ctx)
+        {
+            // dummy
         }
 
         /// <summary>
         /// Stores the logic for the <see cref="FunctionBase.Execute(IEnumerable{KeyValuePair{string, object}})" /> method.
         /// </summary>
-        /// <param name="input">The input parameters.</param>
-        /// <param name="result">The result parameters.</param>
-        protected abstract void OnExecute(IReadOnlyDictionary<string, object> input, IDictionary<string, object> result);
+        /// <param name="ctx">The execution context.</param>
+        protected abstract void OnExecute(FunctionExecutionContext ctx);
 
-        private void OnExecute_ThreadSafe(IReadOnlyDictionary<string, object> input, IDictionary<string, object> result)
+        private void OnExecute_ThreadSafe(FunctionExecutionContext ctx)
         {
             lock (this._SYNC)
             {
-                this.OnExecute(input, result);
+                this.OnExecute(ctx);
             }
         }
 
-        #endregion Methods (3)
+        /// <summary>
+        /// Is invoked AFTER execution was done, even if execution was successful or not.
+        /// It is executed after <see cref="FunctionBase.OnExecutionSucceeded(FunctionExecutionContext)" /> and
+        /// <see cref="FunctionBase.OnExecutionError(FunctionExecutionContext, Exception)" /> methods.
+        /// </summary>
+        /// <param name="ctx">The underlying execution context.</param>
+        protected virtual void OnExecutionCompleted(FunctionExecutionContext ctx)
+        {
+            // dummy
+        }
+
+        /// <summary>
+        /// Is invoked AFTER exception was thrown and exception exit code was set.
+        /// </summary>
+        /// <param name="ctx">The underlying execution context.</param>
+        /// <param name="ex">The thrown exception(s).</param>
+        protected virtual void OnExecutionError(FunctionExecutionContext ctx, Exception ex)
+        {
+            // dummy
+        }
+
+        /// <summary>
+        /// Is invoked AFTER execution was successful.
+        /// </summary>
+        /// <param name="ctx">The underlying execution context.</param>
+        protected virtual void OnExecutionSucceeded(FunctionExecutionContext ctx)
+        {
+            // dummy
+        }
+
+        #endregion Methods (13)
     }
 }

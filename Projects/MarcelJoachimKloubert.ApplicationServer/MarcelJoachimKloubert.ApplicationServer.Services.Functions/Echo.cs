@@ -2,10 +2,9 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-using MarcelJoachimKloubert.ApplicationServer.Execution.Functions;
+using MarcelJoachimKloubert.CLRToolbox.Execution.Functions;
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 
 namespace MarcelJoachimKloubert.ApplicationServer.Services.Functions
@@ -33,16 +32,15 @@ namespace MarcelJoachimKloubert.ApplicationServer.Services.Functions
         #region Methods (1)
 
         /// <inheriteddoc />
-        protected override void OnExecute(IReadOnlyDictionary<string, object> input, IDictionary<string, object> result)
+        protected override void OnExecute(FunctionBase.FunctionExecutionContext context)
         {
-            input.ForEach(action: ctx =>
-                {
-                    ctx.State.Result
-                             .Add(ctx.Item);
-                }, actionState: new
-                {
-                    Result = result,
-                });
+            context.Input
+                   .ForEach(action: ctx => ctx.State.Result
+                                                    .Add(ctx.Item),
+                            actionState: new
+                            {
+                                Result = context.Result,
+                            });
         }
 
         #endregion Methods (1)

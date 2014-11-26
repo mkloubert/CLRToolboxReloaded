@@ -29,27 +29,23 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
 
             // global functions
             this._FUNCS
-                .ForEach(ctx =>
-                {
-                    ctx.State
-                       .Engine.SetGlobalFunction(functionName: ctx.Item.Key,
-                                                 functionDelegate: ctx.Item.Value);
-                }, actionState: new
-                {
-                    Engine = engine,
-                });
+                .ForEach(ctx => ctx.State
+                                   .Engine.SetGlobalFunction(functionName: ctx.Item.Key,
+                                                             functionDelegate: ctx.Item.Value),
+                         actionState: new
+                         {
+                             Engine = engine,
+                         });
 
             // variables
             this._VARS
-                .ForEach(ctx =>
-                {
-                    ctx.State
-                       .Engine.SetGlobalValue(variableName: ctx.Item.Key,
-                                              value: ctx.Item.Value);
-                }, actionState: new
-                {
-                    Engine = engine,
-                });
+                .ForEach(ctx => ctx.State
+                                   .Engine.SetGlobalValue(variableName: ctx.Item.Key,
+                                                          value: ctx.Item.Value),
+                         actionState: new
+                         {
+                             Engine = engine,
+                         });
 
             engine.Execute(code: context.Source);
         }

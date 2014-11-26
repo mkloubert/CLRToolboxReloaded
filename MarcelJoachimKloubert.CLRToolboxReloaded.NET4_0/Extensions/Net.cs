@@ -2,8 +2,6 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-using System;
-
 namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 {
     static partial class ClrToolboxExtensionMethods

@@ -2,7 +2,6 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-using MarcelJoachimKloubert.CLRToolbox.Data.Conversion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,8 +94,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Caching
         /// </exception>
         public T InvokeFunc<T>(CachedFunc<T> func)
         {
-            return GlobalConverter.Current
-                                  .ChangeType<T>(this.InvokeInner(func));
+            return (T)this.InvokeInner(func);
         }
 
         private object InvokeInner(Delegate @delegate, params object[] args)

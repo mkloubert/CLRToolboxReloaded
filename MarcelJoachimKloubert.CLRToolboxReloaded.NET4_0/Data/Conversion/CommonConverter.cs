@@ -2,10 +2,21 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-#if !(PORTABLE || PORTABLE40)
+#if !(PORTABLE45)
 #define CAN_GET_MEMBERS_FROM_TYPE
+#endif
+
+#if !(PORTABLE || PORTABLE40)
 #define KNOWS_DBNULL
 #define STRING_IS_CHAR_SEQUENCE
+#endif
+
+#if (PORTABLE45)
+#define KNOWS_RUNTIME_REFLECTION_EXTENSIONS
+#endif
+
+#if (WINRT)
+#define GETTER_AND_SETTER_FROM_PROPERTY
 #endif
 
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
@@ -64,11 +75,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
 #if MONO_PORTABLE40 || !(PORTABLE || PORTABLE40 || PORTABLE45)
             return type.IsAssignableFrom(c);
 #else
-    #if PORTABLE45
+#if PORTABLE45
             return type.GetTypeInfo().IsAssignableFrom(c.GetTypeInfo());
-    #else
+#else
             return false;
-    #endif
+#endif
 #endif
         }
 
@@ -87,15 +98,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
                     return;
                 }
 
-                var handled = false;
-
                 // ConvertToAttribute
                 {
                     var obj = targetValue;
 
                     var members = Enumerable.Empty<MemberInfo>();
 #if CAN_GET_MEMBERS_FROM_TYPE
-
                     var memberBindFlags = global::System.Reflection.BindingFlags.Public |
                                           global::System.Reflection.BindingFlags.NonPublic |
                                           global::System.Reflection.BindingFlags.Instance |
@@ -104,7 +112,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
                     members = members.Concat(obj.GetType().GetFields(memberBindFlags))
                                      .Concat(obj.GetType().GetMethods(memberBindFlags))
                                      .Concat(obj.GetType().GetProperties(memberBindFlags));
-
+#elif KNOWS_RUNTIME_REFLECTION_EXTENSIONS
+                    members = members.Concat(obj.GetType().GetRuntimeFields())
+                                     .Concat(obj.GetType().GetRuntimeMethods())
+                                     .Concat(obj.GetType().GetRuntimeProperties());
+#else
+                    members = members.Concat(obj.GetType().GetFields())
+                                     .Concat(obj.GetType().GetMethods())
+                                     .Concat(obj.GetType().GetProperties());
 #endif
 
                     var convertToMembers = members.Select(m =>
@@ -137,20 +152,17 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
                     if (converter != null)
                     {
                         var member = converter.Member;
-                        handled = true;
+                        var handled = true;
+
+                        Func<bool, object> getMemberObj = (isStatic) => isStatic ? null : obj;
 
                         if (member is MethodBase)
                         {
                             var method = (MethodBase)member;
-                            object[] invokationParams;
+                            object[] invokationParams = null;
 
                             var methodParams = method.GetParameters();
-                            if (methodParams.Length < 1)
-                            {
-                                // no parameters
-                                invokationParams = new object[0];
-                            }
-                            else
+                            if (methodParams.Length > 0)
                             {
                                 invokationParams = new object[]
                                 {
@@ -163,20 +175,28 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
                                 };
                             }
 
-                            targetValue = method.Invoke(method.IsStatic == false ? obj : null,
+                            targetValue = method.Invoke(getMemberObj(method.IsStatic),
                                                         invokationParams);
                         }
                         else if (member is PropertyInfo)
                         {
                             var property = (PropertyInfo)member;
 
-                            targetValue = property.GetValue(obj, null);
+                            MethodBase getter;
+#if GETTER_AND_SETTER_FROM_PROPERTY
+                            getter = property.GetMethod;
+#else
+                            getter = property.GetGetMethod(false) ?? property.GetGetMethod(true);
+#endif
+
+                            targetValue = property.GetValue(getMemberObj(getter.IsStatic),
+                                                            null);
                         }
                         else if (member is FieldInfo)
                         {
                             var field = (FieldInfo)member;
 
-                            targetValue = field.GetValue(obj);
+                            targetValue = field.GetValue(getMemberObj(field.IsStatic));
                         }
                         else
                         {
@@ -222,7 +242,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
                 var temp = targetValue;
                 ConvertToString(ref temp, provider);
 
-                targetValue = (CharSequence)temp.AsString();
+                targetValue = (global::MarcelJoachimKloubert.CLRToolbox.CharSequence)temp.AsString();
                 return;
             }
 

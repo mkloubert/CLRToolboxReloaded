@@ -74,15 +74,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Objects
             properties.AddRange(type.GetProperties());
 
             type.GetInterfaces()
-                .ForEach(ctx =>
-                {
-                    CollectProperties(ctx.State.Properties, ctx.Item,
-                                      ctx.State.HandlesTypes);
-                }, actionState: new
-                {
-                    HandlesTypes = handledTypes,
-                    Properties = properties,
-                });
+                .ForEach(ctx => CollectProperties(ctx.State.Properties, ctx.Item,
+                                                  ctx.State.HandlesTypes),
+                         actionState: new
+                         {
+                             HandlesTypes = handledTypes,
+                             Properties = properties,
+                         });
         }
 
         /// <summary>

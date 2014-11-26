@@ -279,6 +279,10 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\execution\functions\FunctionBase.cs">
       <Link>Execution\Functions\FunctionBase.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Execution\Functions\FunctionBase.FunctionExecutionContext.cs">
+      <Link>Execution\Functions\FunctionBase.FunctionExecutionContext.cs</Link>
+      <DependentUpon>FunctionBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\execution\functions\IFunction.cs">
       <Link>Execution\Functions\IFunction.cs</Link>
     </Compile>
@@ -391,6 +395,10 @@
       <Link>Extensions\Collections.ForEach.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.GetValue.cs">
+      <Link>Extensions\Collections.GetValue.cs</Link>
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.IsEmpty.cs">
       <Link>Extensions\Collections.IsEmpty.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
@@ -421,6 +429,10 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.Transform.cs">
       <Link>Extensions\Collections.Transform.cs</Link>
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.TryGetValue.cs">
+      <Link>Extensions\Collections.TryGetValue.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.TryPeek.cs">

@@ -51,7 +51,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization.Json
     /// <summary>
     /// Describes a simple result object that can be (de)serialized via JSON.
     /// </summary>
-    public sealed partial class SimpleJsonResult : JsonResult<object>
+    public sealed partial class JsonResult : JsonResult<object>
     {
     }
 
