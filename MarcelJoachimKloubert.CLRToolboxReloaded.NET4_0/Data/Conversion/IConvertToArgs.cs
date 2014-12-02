@@ -33,7 +33,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
         #region Methods (1)
 
         /// <summary>
-        /// returns the value of <see cref="IConvertToArgs.CurrentValue" /> strong typed.
+        /// Returns the value of <see cref="IConvertToArgs.CurrentValue" /> strong typed.
         /// </summary>
         /// <typeparam name="T">The target type.</typeparam>
         /// <returns>The casted value.</returns>

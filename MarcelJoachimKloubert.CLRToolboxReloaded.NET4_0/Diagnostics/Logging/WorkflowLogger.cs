@@ -309,7 +309,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
         private static object[] GetEmptyArguments(WorkflowLogger logger)
         {
-            return new object[0];
+            return null;
         }
 
         /// <inheriteddoc />
@@ -336,20 +336,19 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                 allArgs = allArgs.Concat(additionalArgs);
             }
 
-            workflow.ForEach(
-                action: ctx =>
-                    {
-                        var res = ctx.Item(ctx.State.Arguments);
+            workflow.ForEach(action: ctx =>
+                                 {
+                                     var res = ctx.Item(ctx.State.Arguments);
 
-                        if (res.HasBeenCanceled)
-                        {
-                            ctx.Cancel = true;
-                        }
-                    },
-                actionState: new
-                    {
-                        Arguments = allArgs.AsArray(),
-                    });
+                                     if (res.HasBeenCanceled)
+                                     {
+                                         ctx.Cancel = true;
+                                     }
+                                 },
+                             actionState: new
+                                 {
+                                     Arguments = allArgs.AsArray(),
+                                 });
         }
 
         #endregion Methods

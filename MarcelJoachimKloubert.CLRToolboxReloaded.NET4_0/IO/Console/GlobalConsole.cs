@@ -56,21 +56,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Console
         #region Methods (2)
 
         /// <summary>
-        /// Sets the logic that returns the value for <see cref="GlobalConsole.Current" />.
-        /// </summary>
-        /// <param name="newProvider">The new provider delegate.</param>
-        public static void SetConsoleProvider(ConsoleProvider newProvider)
-        {
-            _provider = newProvider;
-        }
-
-        /// <summary>
         /// Sets the value for <see cref="GlobalConsole.Current" />.
         /// </summary>
         /// <param name="newConsole">The new console.</param>
         public static void SetConsole(IConsole newConsole)
         {
             SetConsoleProvider(newConsole == null ? null : new ConsoleProvider(() => newConsole));
+        }
+
+        /// <summary>
+        /// Sets the logic that returns the value for <see cref="GlobalConsole.Current" />.
+        /// </summary>
+        /// <param name="newProvider">The new provider delegate.</param>
+        public static void SetConsoleProvider(ConsoleProvider newProvider)
+        {
+            _provider = newProvider;
         }
 
         #endregion Methods

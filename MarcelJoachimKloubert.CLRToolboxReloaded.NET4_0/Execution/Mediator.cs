@@ -81,7 +81,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
 
         #endregion Constructors (4)
 
-        #region Methods (17)
+        #region Methods (16)
 
         private static void AppendExceptionsIfPossible(AggregateException ex,
                                                        ICollection<Exception> exceptions, object syncExceptions)
@@ -172,11 +172,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
             ((IMediatorUIContext)res.AsyncState).Invoke();
         }
 
-        private static bool NonNullFilter<TPayload>(TPayload payload)
-        {
-            return payload != null;
-        }
-
         /// <summary>
         /// Publishes a payload.
         /// </summary>
@@ -188,17 +183,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
             // get actions
             IMediatorActionItem<TPayload>[] actionsBg = null;
             IMediatorActionItem<TPayload>[] actionsBgNoWait = null;
-            IMediatorActionItem<TPayload>[] actionsCurrent = null;
             IMediatorActionItem<TPayload>[] actionsUI = null;
+            IMediatorActionItem<TPayload>[] actionsCurrent = null;
             this.InvokeForItemList((l, s) =>
                 {
-                    // cleasnup "dead" items
+                    // cleanup "dead" items
                     s.Mediator.CleanupList();
-
-                    actionsCurrent = l.OfType<IMediatorActionItem<TPayload>>()
-                                      .Where(i => (i.Option == ThreadOption.Current) &&
-                                                  ((i.Filter == null) || i.Filter(s.Payload)))
-                                      .ToArray();
 
                     actionsBg = l.OfType<IMediatorActionItem<TPayload>>()
                                  .Where(i => (i.Option == ThreadOption.Background) &&
@@ -214,6 +204,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
                                  .Where(i => (i.Option == ThreadOption.UserInterface) &&
                                              ((i.Filter == null) || i.Filter(s.Payload)))
                                  .ToArray();
+
+
+                    actionsCurrent = l.OfType<IMediatorActionItem<TPayload>>()
+                                      .Where(i => (i.Option == ThreadOption.Current) &&
+                                                  ((i.Filter == null) || i.Filter(s.Payload)))
+                                      .ToArray();
                 }, actionState: new
                 {
                     Mediator = this,
@@ -235,7 +231,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
 
                 // ... and start them
                 AppendExceptionsIfPossible(ex: tasksBgWait.ForAll(throwExceptions: false,
-                                                                  action: ctx => ctx.Item.Start()),
+                                                                  action: ctx => ctx.Item
+                                                                                    .Start()),
                                            exceptions: exceptions,
                                            syncExceptions: sync);
 
@@ -257,19 +254,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
                                            exceptions: exceptions,
                                            syncExceptions: sync);
 
-                // actions that are running in the same thread
-                AppendExceptionsIfPossible(ex: actionsCurrent.ForAll(throwExceptions: false,
-                                                                     action: ctx => ctx.Item.Invoke(ctx.State.Payload),
-                                                                     actionState: new
-                                                                     {
-                                                                         Exceptions = exceptions,
-                                                                         Payload = payload,
-                                                                         Sync = sync,
-                                                                     }),
-                                           exceptions: exceptions,
-                                           syncExceptions: sync);
-
-                // run an UI thread
+                // run on UI thread
                 AppendExceptionsIfPossible(ex: actionsUI.ForAll(throwExceptions: false,
                                                                 action: ctx =>
                                                                 {
@@ -295,7 +280,20 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
                                            exceptions: exceptions,
                                            syncExceptions: sync);
 
-                // wait for background threads
+                // actions that are running on the same thread
+                AppendExceptionsIfPossible(ex: actionsCurrent.ForAll(throwExceptions: false,
+                                                                     action: ctx => ctx.Item
+                                                                                       .Invoke(ctx.State.Payload),
+                                                                     actionState: new
+                                                                     {
+                                                                         Exceptions = exceptions,
+                                                                         Payload = payload,
+                                                                         Sync = sync,
+                                                                     }),
+                                           exceptions: exceptions,
+                                           syncExceptions: sync);
+
+                // wait for background tasks
                 Task.WaitAll(tasksBgWait);
             }
             catch (Exception ex)
@@ -414,14 +412,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
                     if (s.KeepReferenceAlive)
                     {
                         newItem = new HardReferenceActionItem<TPayload>(action: s.Action,
-                                                                        option: option,
-                                                                        filter: filter);
+                                                                        option: s.Options,
+                                                                        filter: s.Filter);
                     }
                     else
                     {
                         newItem = new WeakReferenceActionItem<TPayload>(action: s.Action,
-                                                                        option: option,
-                                                                        filter: filter);
+                                                                        option: s.Options,
+                                                                        filter: s.Filter);
                     }
 
                     l.Add(newItem);
@@ -504,6 +502,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
             return this;
         }
 
-        #endregion Methods (17)
+        #endregion Methods (16)
     }
 }

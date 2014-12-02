@@ -490,7 +490,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Configuration
         }
 
         /// <summary>
-        /// Converts a value
+        /// Converts an object for use as config value.
         /// </summary>
         /// <param name="category">The category where the input value should be stored in.</param>
         /// <param name="name">The name in the category where the input value should be stored in.</param>
