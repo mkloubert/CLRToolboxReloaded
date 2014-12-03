@@ -895,6 +895,9 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.TryGetValue.cs">
       <Link>Extensions\Collections.TryGetValue.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\IO.ReadSingleByte.cs">
+      <Link>Extensions\IO.ReadSingleByte.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
