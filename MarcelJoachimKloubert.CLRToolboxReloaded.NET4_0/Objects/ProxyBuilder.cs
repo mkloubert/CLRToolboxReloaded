@@ -65,8 +65,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Objects
 
         private static void CollectProperties(ICollection<PropertyInfo> properties, Type type)
         {
-            var handledTypes = new HashSet<Type>();
-            CollectProperties(properties, type, handledTypes);
+            CollectProperties(properties,
+                              type,
+                              handledTypes: new HashSet<Type>());
         }
 
         private static void CollectProperties(ICollection<PropertyInfo> properties, Type type, ICollection<Type> handledTypes)
@@ -180,29 +181,45 @@ namespace MarcelJoachimKloubert.CLRToolbox.Objects
             properties.ForEach(ctx =>
                 {
                     var p = ctx.Item;
-                    var tb = ctx.State.TypeBuilder;
 
                     var propertyName = p.Name;
                     var propertyType = p.PropertyType;
 
-                    var propertyBuilder = tb.DefineProperty(propertyName,
-                                                            PropertyAttributes.None,
-                                                            propertyType,
-                                                            Type.EmptyTypes);
+                    var propertyBuilder = ctx.State.TypeBuilder
+                                                   .DefineProperty(propertyName,
+                                                                   PropertyAttributes.None,
+                                                                   propertyType,
+                                                                   Type.EmptyTypes);
 
-                    var fieldName = char.ToLower(propertyName[0]) +
-                                    new string(propertyName.Skip(1).ToArray());
+                    var fieldBaseName = char.ToLower(propertyName[0]) +
+                                        new string(propertyName.Skip(1).ToArray());
 
-                    var field = tb.DefineField("_" + fieldName,
-                                               propertyType,
-                                               FieldAttributes.Family);
+                    // find unique field name
+                    var fieldName = fieldBaseName;
+                    {
+                        long fieldNameIndex = -1;
+                        while (ctx.State.FieldNamesInUse
+                                        .Contains(fieldName))
+                        {
+                            fieldName = fieldBaseName + (++fieldNameIndex).ToString();
+                        }
+
+                        ctx.State.FieldNamesInUse
+                                 .Add(fieldName);
+                    }
+
+                    var field = ctx.State.TypeBuilder
+                                         .DefineField("_" + fieldName,
+                                                      propertyType,
+                                                      FieldAttributes.Family);
 
                     // getter
                     {
-                        var methodBuilder = typeBuilder.DefineMethod("get_" + propertyName,
-                                                                     MethodAttributes.Public | MethodAttributes.Virtual,
-                                                                     propertyType,
-                                                                     Type.EmptyTypes);
+                        var methodBuilder = ctx.State.TypeBuilder
+                                                     .DefineMethod("get_" + propertyName,
+                                                                   MethodAttributes.Public | MethodAttributes.Virtual,
+                                                                   propertyType,
+                                                                   Type.EmptyTypes);
 
                         var ilGen = methodBuilder.GetILGenerator();
 
@@ -215,10 +232,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Objects
 
                     // setter
                     {
-                        var methodBuilder = typeBuilder.DefineMethod("set_" + propertyName,
-                                                                     MethodAttributes.Public | MethodAttributes.Virtual,
-                                                                     typeof(void),
-                                                                     new Type[] { propertyType });
+                        var methodBuilder = ctx.State.TypeBuilder
+                                                     .DefineMethod("set_" + propertyName,
+                                                                   MethodAttributes.Public | MethodAttributes.Virtual,
+                                                                   typeof(void),
+                                                                   new Type[] { propertyType });
 
                         var ilGen = methodBuilder.GetILGenerator();
 
@@ -231,6 +249,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Objects
                     }
                 }, actionState: new
                 {
+                    FieldNamesInUse = new HashSet<string>(),
                     TypeBuilder = typeBuilder,
                 });
 

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 {
     /// <summary>
-    /// An <see cref="IReadOnlyCollection{T}"/> wrapper for an <see cref="IList{T}" /> object.
+    /// An <see cref="IReadOnlyList{T}"/> wrapper for an <see cref="IList{T}" /> object.
     /// </summary>
     /// <typeparam name="T">Type of the items.</typeparam>
     public sealed class ReadOnlyListWrapper<T> : ObjectBase, IReadOnlyList<T>
