@@ -11,7 +11,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 {
     static partial class ClrToolboxExtensionMethods
     {
-        #region Methods (1)
+        #region Methods (1)
 
         /// <summary>
         /// Tries to return the delegate type for a method.
@@ -36,10 +36,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
             Type delegateReturnType = null;
 
             var returnType = method.ReturnType;
-            if ((returnType == null) ||
-                typeof(void).Equals(returnType))
+            if (typeof(void).Equals(returnType) ||
+                (returnType == null))
             {
-                // action
+                // search for action type
 
                 ForEach(_KNOWN_ACTION_TYPES,
                         (ctx) =>
@@ -49,6 +49,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                             if (GetGenericTypeArguments(type).Count() ==
                                 ctx.State.Parameters.Length)
                             {
+                                // found
+
                                 delegateType = type;
                                 ctx.Cancel = true;
                             }
@@ -59,7 +61,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
             }
             else
             {
-                // function
+                // search for func type
                 delegateReturnType = returnType;
 
                 ForEach(_KNOWN_FUNC_TYPES,
@@ -70,6 +72,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                             if (GetGenericTypeArguments(type).Count() ==
                                 (ctx.State.Parameters.Length + 1))
                             {
+                                // found
+
                                 delegateType = type;
                                 ctx.Cancel = true;
                             }
@@ -81,17 +85,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
             if (delegateType != null)
             {
-                var delegateTypesForGenericArgs = new List<Type>();
-                ForEach(@params,
-                        (ctx) =>
-                        {
-                            ctx.State
-                               .DelegateTypesForGenericArgs.Add(ctx.Item.ParameterType);
-                        }, actionState: new
-                        {
-                            DelegateTypesForGenericArgs = delegateTypesForGenericArgs,
-                        });
-
+                var delegateTypesForGenericArgs = new List<Type>(@params.Select(p => p.ParameterType));
                 if (delegateReturnType != null)
                 {
                     delegateTypesForGenericArgs.Add(delegateReturnType);
@@ -103,6 +97,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
             return result;
         }
 
-        #endregion Methods
+        #endregion Methods (1)
     }
 }
