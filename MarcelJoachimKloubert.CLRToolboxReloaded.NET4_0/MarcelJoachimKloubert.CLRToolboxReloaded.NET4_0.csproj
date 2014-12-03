@@ -366,7 +366,9 @@
     <Compile Include="Extensions\IO.ReadBlockwise.cs">
       <DependentUpon>IO.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\IO.ReadSingleByte.cs" />
+    <Compile Include="Extensions\IO.ReadSingleByte.cs">
+      <DependentUpon>IO.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\IO.Shredder.cs">
       <DependentUpon>IO.cs</DependentUpon>
     </Compile>
