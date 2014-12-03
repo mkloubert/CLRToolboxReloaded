@@ -463,6 +463,10 @@
       <Link>Extensions\Reflection.GetManifestResourceString.cs</Link>
       <DependentUpon>Reflection.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Reflection.TryGetDelegateTypeFromMethod.cs">
+      <Link>Extensions\Reflection.TryGetDelegateTypeFromMethod.cs</Link>
+      <DependentUpon>Reflection.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Serialization.cs">
       <Link>Extensions\Serialization.cs</Link>
     </Compile>

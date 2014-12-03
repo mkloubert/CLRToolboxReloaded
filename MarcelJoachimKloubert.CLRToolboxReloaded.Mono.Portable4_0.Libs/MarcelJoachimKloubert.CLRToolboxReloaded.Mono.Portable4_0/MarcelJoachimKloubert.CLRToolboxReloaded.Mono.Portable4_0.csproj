@@ -636,6 +636,9 @@
     <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\IO.ReadSingleByte.cs">
       <Link>Extensions\IO.ReadSingleByte.cs</Link>
     </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Reflection.TryGetDelegateTypeFromMethod.cs">
+      <Link>Extensions\Reflection.TryGetDelegateTypeFromMethod.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

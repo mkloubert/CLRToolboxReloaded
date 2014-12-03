@@ -51,6 +51,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
         /// <param name="funcName">The name of the function.</param>
         /// <param name="func">The (new) function.</param>
         /// <returns>That instance.</returns>
+        /// <exception cref="ObjectDisposedException">Object has already been disposed.</exception>
         IScriptExecutor SetFunction(string funcName, Delegate func);
 
         /// <summary>
@@ -59,6 +60,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
         /// <param name="varName">The name of the variable.</param>
         /// <param name="value">The (new) value for the variable.</param>
         /// <returns>That instance.</returns>
+        /// <exception cref="ObjectDisposedException">Object has already been disposed.</exception>
         IScriptExecutor SetVariable(string varName, object value);
 
         #endregion Operations

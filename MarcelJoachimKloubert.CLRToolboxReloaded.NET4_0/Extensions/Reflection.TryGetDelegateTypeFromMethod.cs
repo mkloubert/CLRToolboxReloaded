@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Extensions
@@ -45,7 +46,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                         {
                             var type = ctx.Item;
 
-                            if (type.GetGenericArguments().Length == ctx.State.Parameters.Length)
+                            if (GetGenericTypeArguments(type).Count() ==
+                                ctx.State.Parameters.Length)
                             {
                                 delegateType = type;
                                 ctx.Cancel = true;
@@ -60,12 +62,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                 // function
                 delegateReturnType = returnType;
 
-                ForEach(_KNOWN_ACTION_TYPES,
+                ForEach(_KNOWN_FUNC_TYPES,
                         (ctx) =>
                         {
                             var type = ctx.Item;
 
-                            if (type.GetGenericArguments().Length ==
+                            if (GetGenericTypeArguments(type).Count() ==
                                 (ctx.State.Parameters.Length + 1))
                             {
                                 delegateType = type;

@@ -2,13 +2,14 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-#if !(PORTABLE || PORTABLE40)
-#define CAN_REFLECTION
+#if (PORTABLE45)
+#define ACTIONS_AND_FUNCS_FROM_ONE_ASSEMBLY
 #endif
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 {
@@ -28,54 +29,27 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
         static ClrToolboxExtensionMethods()
         {
-            // known actions and functions
-            {
-                var actionTypeList = new HashSet<Type>();
-                var funcTypeList = new HashSet<Type>();
-
-#if CAN_REFLECTION
-
-                var actionType = typeof(global::System.Action);
-                var actionAsm = actionType.Assembly;
-
-                ForEach(actionAsm.GetTypes(),
-                        (ctx) =>
-                        {
-                            var type = ctx.Item;
-
-                            if (type.FullName.StartsWith("System.Action"))
-                            {
-                                ctx.State
-                                   .ActionTypes.Add(type);
-                            }
-                        }, actionState: new
-                        {
-                            ActionTypes = actionTypeList,
-                        });
-
-                var funcType = typeof(global::System.Func<>);
-                var funcAsm = funcType.Assembly;
-
-                ForEach(funcAsm.GetTypes(),
-                        (ctx) =>
-                        {
-                            var type = ctx.Item;
-
-                            if (type.FullName.StartsWith("System.Func"))
-                            {
-                                ctx.State
-                                   .FuncTypes.Add(type);
-                            }
-                        }, actionState: new
-                        {
-                            FuncTypes = funcTypeList,
-                        });
-
+            var asms = new HashSet<Assembly>();
+            asms.Add(GetAssembly(typeof(Action)));
+#if !ACTIONS_AND_FUNCS_FROM_ONE_ASSEMBLY
+            asms.Add(GetAssembly(typeof(Action<,,,,,,,,>)));
 #endif
 
-                _KNOWN_ACTION_TYPES = actionTypeList.ToArray();
-                _KNOWN_FUNC_TYPES = funcTypeList.ToArray();
-            }
+            // known actions
+            _KNOWN_ACTION_TYPES = asms.SelectMany(a => GetTypes(a))
+                                      .Where(t => t.FullName.StartsWith("System.Action"))
+                                      .Distinct()
+                                      .OrderBy(t => GetGenericTypeArguments(t).Count())
+                                      .ThenBy(t => t.FullName)
+                                      .ToArray();
+
+            // known functions
+            _KNOWN_FUNC_TYPES = asms.SelectMany(a => GetTypes(a))
+                                    .Where(t => t.FullName.StartsWith("System.Func"))
+                                    .Distinct()
+                                    .OrderBy(t => GetGenericTypeArguments(t).Count())
+                                    .ThenBy(t => t.FullName)
+                                    .ToArray();
         }
 
         #endregion
