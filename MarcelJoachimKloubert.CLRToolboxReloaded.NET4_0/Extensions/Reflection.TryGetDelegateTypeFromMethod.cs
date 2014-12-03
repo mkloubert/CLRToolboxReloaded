@@ -85,7 +85,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
             if (delegateType != null)
             {
-                if (delegateType.IsGenericTypeDefinition)
+                if (GetGenericTypeArguments(delegateType).Count() > 0)
                 {
                     var delegateTypesForGenericArgs = new List<Type>(@params.Select(p => p.ParameterType));
                     if (delegateReturnType != null)
