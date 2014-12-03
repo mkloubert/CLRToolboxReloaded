@@ -85,13 +85,20 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
             if (delegateType != null)
             {
-                var delegateTypesForGenericArgs = new List<Type>(@params.Select(p => p.ParameterType));
-                if (delegateReturnType != null)
+                if (delegateType.IsGenericTypeDefinition)
                 {
-                    delegateTypesForGenericArgs.Add(delegateReturnType);
-                }
+                    var delegateTypesForGenericArgs = new List<Type>(@params.Select(p => p.ParameterType));
+                    if (delegateReturnType != null)
+                    {
+                        delegateTypesForGenericArgs.Add(delegateReturnType);
+                    }
 
-                result = delegateType.MakeGenericType(delegateTypesForGenericArgs.ToArray());
+                    result = delegateType.MakeGenericType(delegateTypesForGenericArgs.ToArray());
+                }
+                else
+                {
+                    result = delegateType;
+                }
             }
 
             return result;

@@ -76,7 +76,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.ComponentModel
 
         private TestNotifiable _notifiable;
 
-        #endregion
+        #endregion Fields (1)
 
         #region Methods (1)
 
@@ -145,7 +145,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.ComponentModel
 
             // PropertyChanging
             Assert.IsTrue(changingProperties.Contains("Test1"));
-            Assert.IsTrue(changingProperties.Contains("Test2"));
+            Assert.IsFalse(changingProperties.Contains("Test2"));
             Assert.IsFalse(changingProperties.Contains("Test3"));
             Assert.IsTrue(changingProperties.Contains("Test4"));
 
