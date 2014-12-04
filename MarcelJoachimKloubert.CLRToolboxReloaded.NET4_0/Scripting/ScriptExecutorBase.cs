@@ -6,7 +6,7 @@
 #define KNOWS_REFLECTED_TYPE_PROPERTY
 #endif
 
-#if !(NET40 || PORTABLE40)
+#if !(NET40 || PORTABLE40 || MONO40)
 #define METHOD_BASE_HAS_CREATE_DELEGATE
 #endif
 
@@ -187,9 +187,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                                    return;
                                }
 
-                               var allExpFuncAttribs = method.GetCustomAttributes(typeof(global::MarcelJoachimKloubert.CLRToolbox.Scripting.Export.ExportScriptFuncAttribute),
-                                                                                  false)
-                                                             .ToArray();
+                               var allExpFuncAttribs = ReflectionHelper.GetCustomAttributes<global::MarcelJoachimKloubert.CLRToolbox.Scripting.Export.ExportScriptFuncAttribute>(method)
+                                                                       .ToArray();
                                if (allExpFuncAttribs.Length != 1)
                                {
                                    return;
@@ -229,7 +228,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
 #endif
                                }
 
-                               var expFuncAttrib = (ExportScriptFuncAttribute)allExpFuncAttribs[0];
+                               var expFuncAttrib = allExpFuncAttribs[0];
                                if (string.IsNullOrWhiteSpace(expFuncAttrib.Alias))
                                {
                                    ctx2.State.ExportedFuncs[method.Name] = @delegate;

@@ -8,6 +8,7 @@
 #endif
 
 #if (PORTABLE45)
+#define GET_ATTRIBUTES_OF_MEMBER_FROM_PROPERTY
 #define GET_MEMBERS_FROM_EXTENSION_METHODS
 #define GET_TYPES_OF_ASSEMBLY_FROM_PROPERTY
 #endif
@@ -46,6 +47,50 @@ namespace MarcelJoachimKloubert.CLRToolbox.Helpers
 #else
             return Assembly.Load(new AssemblyName(type.AssemblyQualifiedName));
 #endif
+        }
+
+        /// <summary>
+        /// Returns attributes of a specific member.
+        /// </summary>
+        /// <typeparam name="TAttrib">The type of the attributes.</typeparam>
+        /// <param name="member">The member from where to get the attributes from.</param>
+        /// <param name="inherit"><see langword="true" /> to search this member's inheritance chain to find the attributes; otherwise, <see langword="false" />.</param>
+        /// <returns>The found attributes.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="member" /> is <see langword="null" />.
+        /// </exception>
+        public static IEnumerable<TAttrib> GetCustomAttributes<TAttrib>(MemberInfo member, bool inherit = false)
+            where TAttrib : global::System.Attribute
+        {
+            return GetCustomAttributes(member: member,
+                                       attributeType: typeof(TAttrib),
+                                       inherit: inherit).OfType<TAttrib>();
+        }
+
+        /// <summary>
+        /// Returns attributes of a specific member.
+        /// </summary>
+        /// <param name="member">The member from where to get the attributes from.</param>
+        /// <param name="attributeType">The type of the attributes.</param>
+        /// <param name="inherit"><see langword="true" /> to search this member's inheritance chain to find the attributes; otherwise, <see langword="false" />.</param>
+        /// <returns>The found attributes.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="member" /> and/or <paramref name="attributeType" /> are <see langword="null" />.
+        /// </exception>
+        public static IEnumerable<object> GetCustomAttributes(MemberInfo member, Type attributeType, bool inherit = false)
+        {
+            if (member == null)
+            {
+                throw new ArgumentNullException("member");
+            }
+
+            if (attributeType == null)
+            {
+                throw new ArgumentNullException("attributeType");
+            }
+
+            return member.GetCustomAttributes(attributeType: attributeType,
+                                              inherit: inherit);
         }
 
         /// <summary>
