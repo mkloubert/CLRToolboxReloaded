@@ -6,6 +6,7 @@
 #define ACTIONS_AND_FUNCS_FROM_ONE_ASSEMBLY
 #endif
 
+using MarcelJoachimKloubert.CLRToolbox.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,13 +31,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         static ClrToolboxExtensionMethods()
         {
             var asms = new HashSet<Assembly>();
-            asms.Add(GetAssembly(typeof(Action)));
+            asms.Add(ReflectionHelper.GetAssembly(typeof(Action)));
 #if !ACTIONS_AND_FUNCS_FROM_ONE_ASSEMBLY
-            asms.Add(GetAssembly(typeof(Action<,,,,,,,,>)));
+            asms.Add(ReflectionHelper.GetAssembly(typeof(Action<,,,,,,,,>)));
 #endif
 
             // known actions
-            _KNOWN_ACTION_TYPES = asms.SelectMany(a => GetTypes(a))
+            _KNOWN_ACTION_TYPES = asms.SelectMany(a => ReflectionHelper.GetTypes(a))
                                       .Where(t => t.FullName.StartsWith("System.Action"))
                                       .Distinct()
                                       .OrderBy(t => GetGenericTypeArguments(t).Count())
@@ -44,7 +45,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                                       .ToArray();
 
             // known functions
-            _KNOWN_FUNC_TYPES = asms.SelectMany(a => GetTypes(a))
+            _KNOWN_FUNC_TYPES = asms.SelectMany(a => ReflectionHelper.GetTypes(a))
                                     .Where(t => t.FullName.StartsWith("System.Func"))
                                     .Distinct()
                                     .OrderBy(t => GetGenericTypeArguments(t).Count())

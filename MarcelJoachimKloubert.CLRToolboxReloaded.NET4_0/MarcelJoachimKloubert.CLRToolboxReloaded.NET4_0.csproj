@@ -448,6 +448,7 @@
     <Compile Include="Extensions\Data.ToDbValue.cs">
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="IdentifiableBase.cs" />
     <Compile Include="IDisposableObject.cs" />
     <Compile Include="IIdentifiable.cs" />

@@ -756,6 +756,9 @@
       <Link>Extensions\ValuesAndObjects.IsTrue.cs</Link>
       <DependentUpon>ValuesAndObjects.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Helpers\ReflectionHelper.cs">
+      <Link>Helpers\ReflectionHelper.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IdentifiableBase.cs">
       <Link>IdentifiableBase.cs</Link>
     </Compile>

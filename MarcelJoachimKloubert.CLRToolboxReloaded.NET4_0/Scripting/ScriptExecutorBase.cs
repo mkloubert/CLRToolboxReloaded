@@ -2,10 +2,20 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+#if !(PORTABLE45)
+#define KNOWS_REFLECTED_TYPE_PROPERTY
+#endif
+
+#if !(NET40 || PORTABLE40)
+#define METHOD_BASE_HAS_CREATE_DELEGATE
+#endif
+
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
+using MarcelJoachimKloubert.CLRToolbox.Helpers;
 using MarcelJoachimKloubert.CLRToolbox.Scripting.Export;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Scripting
@@ -136,7 +146,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                 return;
             }
 
-            asm.GetTypes()
+            ReflectionHelper.GetTypes(asm)
                .ForEach(ctx =>
                    {
                        var obj = ctx.State.Executor;
@@ -148,11 +158,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                            return;
                        }
 
-                       var allExpTypeAttribs = type.GetCustomAttributes(typeof(global::MarcelJoachimKloubert.CLRToolbox.Scripting.Export.ExportScriptTypeAttribute),
-                                                                        false);
-                       if (allExpTypeAttribs.Length > 0)
+                       var allExpTypeAttribs = ReflectionHelper.GetCustomAttributes<global::MarcelJoachimKloubert.CLRToolbox.Scripting.Export.ExportScriptTypeAttribute>(type)
+                                                               .ToArray();
+                       if (allExpTypeAttribs.Length != 1)
                        {
-                           var expTypeAttrib = (ExportScriptTypeAttribute)allExpTypeAttribs[allExpTypeAttribs.Length - 1];
+                           var expTypeAttrib = allExpTypeAttribs[0];
                            if (string.IsNullOrWhiteSpace(expTypeAttrib.Alias))
                            {
                                ctx.State.ExportedTypes[type] = null;
@@ -163,8 +173,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                            }
                        }
 
-                       var allMethods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic |
-                                                        BindingFlags.Instance | BindingFlags.Static);
+                       var allMethods = ReflectionHelper.GetMethods(type);
 
                        object instanceOfType = null;
                        allMethods.ForEach(ctx2 =>
@@ -179,8 +188,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                                }
 
                                var allExpFuncAttribs = method.GetCustomAttributes(typeof(global::MarcelJoachimKloubert.CLRToolbox.Scripting.Export.ExportScriptFuncAttribute),
-                                                                                  false);
-                               if (allExpFuncAttribs.Length < 1)
+                                                                                  false)
+                                                             .ToArray();
+                               if (allExpFuncAttribs.Length != 1)
                                {
                                    return;
                                }
@@ -200,17 +210,26 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                                Delegate @delegate;
                                if (method.IsStatic)
                                {
+#if METHOD_BASE_HAS_CREATE_DELEGATE
+                                   @delegate = method.CreateDelegate(delegateType);
+#else
                                    @delegate = Delegate.CreateDelegate(delegateType,
                                                                        method);
+#endif
                                }
                                else
                                {
+#if METHOD_BASE_HAS_CREATE_DELEGATE
+                                   @delegate = method.CreateDelegate(delegateType,
+                                                                     instanceOfType);
+#else
                                    @delegate = Delegate.CreateDelegate(delegateType,
                                                                        instanceOfType,
                                                                        method);
+#endif
                                }
 
-                               var expFuncAttrib = (ExportScriptFuncAttribute)allExpFuncAttribs[allExpFuncAttribs.Length - 1];
+                               var expFuncAttrib = (ExportScriptFuncAttribute)allExpFuncAttribs[0];
                                if (string.IsNullOrWhiteSpace(expFuncAttrib.Alias))
                                {
                                    ctx2.State.ExportedFuncs[method.Name] = @delegate;
@@ -282,24 +301,25 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
         /// <exception cref="ArgumentNullException">
         /// <paramref name="method" /> is <see langword="null" />.
         /// </exception>
-        protected virtual bool IsTrustedMethod(MethodBase method)
+        protected virtual bool IsTrustedMethod(MethodInfo method)
         {
             if (method == null)
             {
                 throw new ArgumentNullException("method");
             }
 
-            var reflType = method.ReflectedType;
-            if (this.IsTrustedType(reflType) == false)
+            Type reflType = null;
+#if KNOWS_REFLECTED_TYPE_PROPERTY
+            reflType = method.ReflectedType;
+#endif
+
+            if ((reflType != null) &&
+                this.IsTrustedType(reflType))
             {
-                var decType = method.DeclaringType;
-                if (this.IsTrustedType(decType) == false)
-                {
-                    return false;
-                }
+                return true;
             }
 
-            return true;
+            return this.IsTrustedType(method.DeclaringType);
         }
 
         /// <summary>
@@ -317,12 +337,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                 throw new ArgumentNullException("type");
             }
 
-            if (this.IsTrustedAssembly(type.Assembly) == false)
-            {
-                return false;
-            }
-
-            return true;
+            return this.IsTrustedAssembly(ReflectionHelper.GetAssembly(type));
         }
 
         /// <summary>

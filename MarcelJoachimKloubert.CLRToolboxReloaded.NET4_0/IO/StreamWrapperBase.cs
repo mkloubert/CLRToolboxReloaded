@@ -245,7 +245,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
 
                                                // only one boolean parameter
                                                var @params = m.GetParameters();
-                                               return ((@params.Length) == 1) &&
+                                               return (@params.Length == 1) &&
                                                       typeof(bool).Equals(@params[0].ParameterType);
                                            });
 
