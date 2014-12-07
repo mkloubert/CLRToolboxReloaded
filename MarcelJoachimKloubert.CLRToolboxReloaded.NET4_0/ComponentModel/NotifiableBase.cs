@@ -3,12 +3,7 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 #if !(PORTABLE || PORTABLE40)
-#define CAN_GET_PROPERTIES_FROM_TYPE
 #define KNOWS_PROPERTY_CHANGING
-#endif
-
-#if !(PORTABLE45)
-#define CAN_GET_MEMBERS_FROM_TYPE
 #endif
 
 #if (WINRT)
@@ -25,6 +20,7 @@
 
 using MarcelJoachimKloubert.CLRToolbox.Data.Conversion;
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
+using MarcelJoachimKloubert.CLRToolbox.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -172,7 +168,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
         protected virtual IEnumerable<MemberInfo> GetPossibleNotificationMembers()
         {
             var result = Enumerable.Empty<MemberInfo>();
-#if CAN_GET_MEMBERS_FROM_TYPE
+#if KNOWS_RUNTIME_REFLECTION_EXTENSIONS
+            result = result.Concat(this.GetType().GetRuntimeFields())
+                           .Concat(this.GetType().GetRuntimeMethods())
+                           .Concat(this.GetType().GetRuntimeProperties());
+#else
             var memberBindFlags = global::System.Reflection.BindingFlags.Public |
                                   global::System.Reflection.BindingFlags.NonPublic |
                                   global::System.Reflection.BindingFlags.Instance |
@@ -181,10 +181,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
             result = result.Concat(this.GetType().GetFields(memberBindFlags))
                            .Concat(this.GetType().GetMethods(memberBindFlags))
                            .Concat(this.GetType().GetProperties(memberBindFlags));
-#elif KNOWS_RUNTIME_REFLECTION_EXTENSIONS
-            result = result.Concat(this.GetType().GetRuntimeFields())
-                           .Concat(this.GetType().GetRuntimeMethods())
-                           .Concat(this.GetType().GetRuntimeProperties());
 #endif
 
             return result;
@@ -196,15 +192,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
         /// <returns>The list of notifiable properties of that object.</returns>
         protected virtual IEnumerable<PropertyInfo> GetPossibleNotificationProperties()
         {
-#if CAN_GET_PROPERTIES_FROM_TYPE
+#if KNOWS_RUNTIME_REFLECTION_EXTENSIONS
+            return this.GetType()
+                       .GetRuntimeProperties()
+                       .Where(p => ReflectionHelper.IsStatic(p) == false);
+#else
             return this.GetType()
                        .GetProperties(global::System.Reflection.BindingFlags.Public |
                                       global::System.Reflection.BindingFlags.NonPublic |
                                       global::System.Reflection.BindingFlags.Instance);
-#elif KNOWS_RUNTIME_REFLECTION_EXTENSIONS
-            return this.GetType().GetRuntimeProperties();
-#else
-            return global::System.Linq.Enumerable.Empty<PropertyInfo>();
 #endif
         }
 

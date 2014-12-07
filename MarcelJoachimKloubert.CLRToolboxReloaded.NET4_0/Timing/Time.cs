@@ -1315,7 +1315,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         }
 
         /// <summary>
-        /// Returns a sequence of time values. Each naxt item is increased by <paramref name="ticks" /> parameter.
+        /// Returns a sequence of time values. Each next item is increased by <paramref name="ticks" /> parameter.
         /// </summary>
         /// <param name="time">The start value.</param>
         /// <param name="ticks">The step in ticks.</param>
@@ -1339,7 +1339,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         }
 
         /// <summary>
-        /// Returns a sequence of time values. Each naxt item is increased by <paramref name="ticks" /> parameter.
+        /// Returns a sequence of time values. Each next item is increased by <paramref name="ticks" /> parameter.
         /// </summary>
         /// <param name="ticks">The step in ticks.</param>
         /// <param name="time">The start value.</param>
@@ -1350,7 +1350,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         }
 
         /// <summary>
-        /// Returns a sequence of time values. Each naxt item is increased by <paramref name="ts" /> parameter.
+        /// Returns a sequence of time values. Each next item is increased by <paramref name="ts" /> parameter.
         /// </summary>
         /// <param name="time">The start value.</param>
         /// <param name="ts">The step.</param>
@@ -1361,7 +1361,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         }
 
         /// <summary>
-        /// Returns a sequence of time values. Each naxt item is increased by <paramref name="ts" /> parameter.
+        /// Returns a sequence of time values. Each next item is increased by <paramref name="ts" /> parameter.
         /// </summary>
         /// <param name="ts">The step.</param>
         /// <param name="time">The start value.</param>

@@ -13,6 +13,10 @@
 #define GET_TYPES_OF_ASSEMBLY_FROM_PROPERTY
 #endif
 
+#if (WINRT)
+#define GETTER_AND_SETTER_FROM_PROPERTY
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +29,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Helpers
     /// </summary>
     public static class ReflectionHelper
     {
-        #region Methods (5)
+        #region Methods (6)
 
         /// <summary>
         /// Returns an <see cref="Assembly" /> from a <see cref="Type" />.
@@ -184,6 +188,44 @@ namespace MarcelJoachimKloubert.CLRToolbox.Helpers
 #else
             return asm.GetTypes();
 #endif
+        }
+
+        /// <summary>
+        /// Checks if a property is static or not.
+        /// </summary>
+        /// <param name="prop">The property to check.</param>
+        /// <returns>Is static or not.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="prop" /> is <see langword="null" />.
+        /// </exception>
+        public static bool IsStatic(PropertyInfo prop)
+        {
+            if (prop == null)
+            {
+                throw new ArgumentNullException("prop");
+            }
+
+            MethodInfo getter;
+#if GETTER_AND_SETTER_FROM_PROPERTY
+            getter = prop.GetMethod;
+#else
+            getter = prop.GetGetMethod(nonPublic: false) ?? prop.GetGetMethod(nonPublic: true);
+#endif
+
+            if (getter != null)
+            {
+                return getter.IsStatic;
+            }
+
+            MethodInfo setter;
+#if GETTER_AND_SETTER_FROM_PROPERTY
+            setter = prop.SetMethod;
+#else
+            setter = prop.GetSetMethod(nonPublic: false) ?? prop.GetSetMethod(nonPublic: true);
+#endif
+
+            return (setter != null) &&
+                   setter.IsStatic;
         }
 
         #endregion Methods (5)
