@@ -6,6 +6,7 @@
 #define ARGUMENT_OUT_OF_RANGE_HAS_TWO_CONSTRUCTOR_PARAMS
 #endif
 
+using MarcelJoachimKloubert.CLRToolbox.Data.Conversion;
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
     /// In other words: A limitation of a <see cref="TimeSpan" /> that only supports a tick
     /// range between 0 (00:00:00.00000) and 863999999999 (23:59:59.99999).
     /// </summary>
-    public struct Time : IEquatable<Time>, IComparable<Time>, IComparable, IFormattable
+    public struct Time : IEquatable<Time>,
+                         IComparable<Time>, IComparable, IFormattable
     {
         #region Fields (6)
 
@@ -415,7 +417,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
 
         #endregion Properties (29)
 
-        #region Methods (49)
+        #region Methods (51)
 
         private static void CheckTickValue(long ticks)
         {
@@ -593,24 +595,24 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
                 return 1;
             }
 
-            var ticks = ((Time)other)._TICKS;
-            if (this._TICKS > ticks)
-            {
-                return 1;
-            }
-            else if (this._TICKS < ticks)
-            {
-                return -1;
-            }
-
-            return 0;
+            return this.CompareTo(GlobalConverter.Current
+                                                 .ChangeType<Time>(value: other));
         }
 
         /// <inheriteddoc />
         public int CompareTo(Time other)
         {
-            return this._TICKS
-                       .CompareTo(other._TICKS);
+            if (this._TICKS > other._TICKS)
+            {
+                return 1;
+            }
+
+            if (this._TICKS < other._TICKS)
+            {
+                return -1;
+            }
+
+            return 0;
         }
 
         /// <summary>
@@ -723,6 +725,16 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         public static Time FromTicks(long ticks)
         {
             return new Time(ticks: ticks);
+        }
+
+        /// <summary>
+        /// Calculates the difference of this with another time values.
+        /// </summary>
+        /// <param name="other">The other value.</param>
+        /// <returns>The difference.</returns>
+        public TimeSpan GetDifference(Time other)
+        {
+            return TimeSpan.FromTicks(this._TICKS - other._TICKS);
         }
 
         /// <summary>
@@ -999,6 +1011,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
                 result = TimeSpan.TryParse(format, formatProvider, out ts);
             }
 
+            if (result)
+            {
+                // ticks out of range?
+                result = IsTicksValueInRange(ts.Ticks);
+            }
+
             value = result ? new Time(ts: ts) : new Time();
             return result;
         }
@@ -1011,6 +1029,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         {
             TimeSpan ts;
             var result = TimeSpan.TryParseExact(input, format, formatProvider, styles, out ts);
+
+            if (result)
+            {
+                // ticks out of range?
+                result = IsTicksValueInRange(ts.Ticks);
+            }
 
             value = result ? new Time(ts: ts) : new Time();
             return result;
@@ -1025,13 +1049,19 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
             TimeSpan ts;
             var result = TimeSpan.TryParseExact(input, formats.AsArray(), formatProvider, styles, out ts);
 
+            if (result)
+            {
+                // ticks out of range?
+                result = IsTicksValueInRange(ts.Ticks);
+            }
+
             value = result ? new Time(ts: ts) : new Time();
             return result;
         }
 
-        #endregion Methods (49)
+        #endregion Methods (51)
 
-        #region Operators (30)
+        #region Operators (31)
 
         /// <summary>
         ///
@@ -1079,6 +1109,17 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         }
 
         /// <summary>
+        /// Calculates the difference of two time values.
+        /// </summary>
+        /// <param name="left">The left value.</param>
+        /// <param name="right">The right value.</param>
+        /// <returns>The difference.</returns>
+        public static TimeSpan operator -(Time left, Time right)
+        {
+            return left.GetDifference(right);
+        }
+
+        /// <summary>
         ///
         /// </summary>
         /// <see cref="Time.Decrement()" />
@@ -1095,7 +1136,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         /// <returns>Are equal or not.</returns>
         public static bool operator ==(Time left, Time right)
         {
-            return left._TICKS == right._TICKS;
+            return left.Equals(right);
         }
 
         /// <summary>
@@ -1117,7 +1158,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         /// <returns><paramref name="left" /> is smaller than <paramref name="right" /> or not.</returns>
         public static bool operator <(Time left, Time right)
         {
-            return left._TICKS < right._TICKS;
+            return left.CompareTo(right) < 0;
         }
 
         /// <summary>
@@ -1128,7 +1169,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         /// <returns><paramref name="left" /> is smaller/equal than <paramref name="right" /> or not.</returns>
         public static bool operator <=(Time left, Time right)
         {
-            return left._TICKS <= right._TICKS;
+            return left.CompareTo(right) <= 0;
         }
 
         /// <summary>
@@ -1139,7 +1180,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         /// <returns><paramref name="left" /> is greater than <paramref name="right" /> or not.</returns>
         public static bool operator >(Time left, Time right)
         {
-            return right < left;
+            return left.CompareTo(right) > 0;
         }
 
         /// <summary>
@@ -1150,7 +1191,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         /// <returns><paramref name="left" /> is greater/equal than <paramref name="right" /> or not.</returns>
         public static bool operator >=(Time left, Time right)
         {
-            return right <= left;
+            return left.CompareTo(right) >= 0;
         }
 
         /// <summary>
@@ -1371,6 +1412,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
             return time * ts;
         }
 
-        #endregion Operators (30)
+        #endregion Operators (31)
     }
 }

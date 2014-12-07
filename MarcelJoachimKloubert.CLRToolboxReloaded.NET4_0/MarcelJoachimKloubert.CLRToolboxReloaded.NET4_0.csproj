@@ -422,6 +422,10 @@
     <Compile Include="Extensions\Tasks.StartNewTask.cs">
       <DependentUpon>Tasks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Timing.cs" />
+    <Compile Include="Extensions\Timing.Walk.cs">
+      <DependentUpon>Timing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\ValuesAndObjects.cs" />
     <Compile Include="Extensions\ValuesAndObjects.DisposeEx.cs">
       <DependentUpon>ValuesAndObjects.cs</DependentUpon>

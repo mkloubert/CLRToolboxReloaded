@@ -534,6 +534,13 @@
       <Link>Extensions\Tasks.StartNewTask.cs</Link>
       <DependentUpon>Tasks.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Timing.cs">
+      <Link>Extensions\Timing.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Timing.Walk.cs">
+      <Link>Extensions\Timing.Walk.cs</Link>
+      <DependentUpon>Timing.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\ValuesAndObjects.cs">
       <Link>Extensions\ValuesAndObjects.cs</Link>
     </Compile>
