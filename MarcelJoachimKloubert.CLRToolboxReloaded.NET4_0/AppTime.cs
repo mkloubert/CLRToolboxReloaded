@@ -6,6 +6,7 @@
 #define KNOWS_SYSTEM_DIAGNOSTICS_PROCESS
 #endif
 
+using MarcelJoachimKloubert.CLRToolbox.Timing;
 using System;
 
 namespace MarcelJoachimKloubert.CLRToolbox
@@ -47,7 +48,15 @@ namespace MarcelJoachimKloubert.CLRToolbox
 
         #endregion Constructors
 
-        #region Properties (7)
+        #region Properties (8)
+
+        /// <summary>
+        /// Gets the clock part of <see cref="AppTime.Now" />.
+        /// </summary>
+        public static Time ClockTime
+        {
+            get { return (Time)Now; }
+        }
 
         /// <summary>
         /// Gets the current time.

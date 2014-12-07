@@ -136,6 +136,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Helpers
 #if GET_TYPE_ATTRIBUTES_FROM_METHODS
             return type.GetCustomAttributes(attributeType, inherit);
 #else
+            //TODO: implement
             yield break;
 #endif
         }

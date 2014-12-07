@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="Caching\DelegateCache.cs" />
     <Compile Include="CharSequence.cs" />
+    <Compile Include="Collections\GeneralList.cs" />
     <Compile Include="Collections\Generic\DelegateEqualityComparer.cs" />
     <Compile Include="Collections\Generic\EqualityComparerFactory.cs" />
     <Compile Include="Collections\Generic\ForEachItemContext.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Collections\Generic\ReadOnlyDictionaryWrapper.cs" />
     <Compile Include="Collections\Generic\ReadOnlyListWrapper.cs" />
     <Compile Include="Collections\Generic\ForAllItemContext.cs" />
+    <Compile Include="Collections\IGeneralList.cs" />
     <Compile Include="Collections\ObjectModel\SynchronizedObservableCollection.cs" />
     <Compile Include="ComponentModel\INotifiable.cs" />
     <Compile Include="ComponentModel\IReceiveValueFromArgs.cs" />
@@ -565,6 +567,7 @@
     <Compile Include="Threading\Tasks\ITaskExecutionContext.cs" />
     <Compile Include="Threading\Tasks\TaskExecutionContext.cs" />
     <Compile Include="Threading\ThreadOption.cs" />
+    <Compile Include="Timing\Time.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyDictionary.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyList.cs" />

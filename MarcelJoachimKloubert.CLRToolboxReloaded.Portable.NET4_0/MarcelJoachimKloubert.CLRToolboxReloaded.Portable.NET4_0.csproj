@@ -65,6 +65,9 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\CharSequence.cs">
       <Link>CharSequence.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\GeneralList.cs">
+      <Link>Collections\GeneralList.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\DelegateEqualityComparer.cs">
       <Link>Collections\Generic\DelegateEqualityComparer.cs</Link>
     </Compile>
@@ -102,6 +105,9 @@
     </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\collections\generic\ReadOnlyListWrapper.cs">
       <Link>Collections\Generic\ReadOnlyListWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\IGeneralList.cs">
+      <Link>Collections\IGeneralList.cs</Link>
     </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\componentmodel\INotifiable.cs">
       <Link>ComponentModel\INotifiable.cs</Link>
@@ -775,6 +781,9 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\threading\ThreadOption.cs">
       <Link>Threading\ThreadOption.cs</Link>
     </Compile>
+    <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\timing\Time.cs">
+      <Link>Timing\Time.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs">
       <Link>__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs</Link>
     </Compile>
@@ -786,6 +795,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="__Compatibility\System\ConsoleColor.cs" />
+    <Compile Include="__Compatibility\System\ICloneable.cs" />
     <Compile Include="__Compatibility\System\IO\ErrorEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>

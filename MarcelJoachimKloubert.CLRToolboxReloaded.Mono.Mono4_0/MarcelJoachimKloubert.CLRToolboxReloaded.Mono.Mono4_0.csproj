@@ -901,6 +901,15 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Helpers\ReflectionHelper.cs">
       <Link>Helpers\ReflectionHelper.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\GeneralList.cs">
+      <Link>Collections\GeneralList.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\IGeneralList.cs">
+      <Link>Collections\IGeneralList.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Timing\Time.cs">
+      <Link>Timing\Time.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -938,6 +947,7 @@
     <Folder Include="Resources\" />
     <Folder Include="Execution\Functions\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Timing\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Libs\AppLimit.CloudComputing.SharpBox.dll">
