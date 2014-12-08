@@ -2,7 +2,6 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-using MarcelJoachimKloubert.CLRToolbox.Data.Conversion;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,8 +20,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         int IList.Add(object value)
         {
-            return this.Add(item: GlobalConverter.Current
-                                                 .ChangeType<TValue>(value));
+            return this.Add(item: this.ConvertTo<TValue>(value));
         }
 
         void IDictionary<int?, TValue>.Add(int? key, TValue value)
@@ -33,10 +31,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         void IDictionary.Add(object key, object value)
         {
-            this.Add(key: GlobalConverter.Current
-                                         .ChangeType<int?>(key),
-                     value: GlobalConverter.Current
-                                           .ChangeType<TValue>(value));
+            this.Add(key: this.ConvertTo<int?>(key),
+                     value: this.ConvertTo<TValue>(value));
         }
 
         void ICollection<KeyValuePair<int?, TValue>>.Add(KeyValuePair<int?, TValue> item)
@@ -59,14 +55,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         bool IList.Contains(object value)
         {
-            return ((ICollection<TValue>)this).Contains(item: GlobalConverter.Current
-                                                                             .ChangeType<TValue>(value));
+            return ((ICollection<TValue>)this).Contains(item: this.ConvertTo<TValue>(value));
         }
 
         bool IDictionary.Contains(object key)
         {
-            return this.ContainsKey(key: GlobalConverter.Current
-                                                        .ChangeType<int?>(key));
+            return this.ContainsKey(key: this.ConvertTo<int?>(key));
         }
 
         void ICollection<KeyValuePair<int?, TValue>>.CopyTo(KeyValuePair<int?, TValue>[] array, int arrayIndex)
@@ -102,7 +96,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         IDictionaryEnumerator IDictionary.GetEnumerator()
         {
-            return new DictionaryEnumerator(this, 1);
+            return new DictionaryEnumerator<int, TValue>(this,
+                                                         DictionaryEnumerator<int, TValue>.EnumeratorMode.IDictionary);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -112,15 +107,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         int IList.IndexOf(object value)
         {
-            return ((IList<TValue>)this).IndexOf(item: GlobalConverter.Current
-                                                                      .ChangeType<TValue>(value));
+            return ((IList<TValue>)this).IndexOf(item: this.ConvertTo<TValue>(value));
         }
 
         void IList.Insert(int index, object value)
         {
             ((IList<TValue>)this).Insert(index: index,
-                                         item: GlobalConverter.Current
-                                                              .ChangeType<TValue>(value));
+                                         item: this.ConvertTo<TValue>(value));
         }
 
         bool IDictionary<int?, TValue>.Remove(int? key)
@@ -167,14 +160,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         void IList.Remove(object value)
         {
-            ((ICollection<TValue>)this).Remove(item: GlobalConverter.Current
-                                                                    .ChangeType<TValue>(value));
+            ((ICollection<TValue>)this).Remove(item: this.ConvertTo<TValue>(value));
         }
 
         void IDictionary.Remove(object key)
         {
-            this.Remove(key: GlobalConverter.Current
-                                            .ChangeType<int?>(key));
+            this.Remove(key: this.ConvertTo<int?>(key));
         }
 
         #endregion Methods (21)
@@ -241,8 +232,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
             set
             {
-                ((IList<TValue>)this)[index] = GlobalConverter.Current
-                                                              .ChangeType<TValue>(value);
+                ((IList<TValue>)this)[index] = this.ConvertTo<TValue>(value);
             }
         }
 
@@ -250,15 +240,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         {
             get
             {
-                return this[key: GlobalConverter.Current
-                                                .ChangeType<int?>(key)];
+                return this[key: this.ConvertTo<int?>(key)];
             }
 
             set
             {
-                this[key: GlobalConverter.Current
-                                         .ChangeType<int?>(key)] = GlobalConverter.Current
-                                                                                  .ChangeType<TValue>(value);
+                this[key: this.ConvertTo<int?>(key)] = this.ConvertTo<TValue>(value);
             }
         }
 

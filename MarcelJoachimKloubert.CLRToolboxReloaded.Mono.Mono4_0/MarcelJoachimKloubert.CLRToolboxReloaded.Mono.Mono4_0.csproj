@@ -463,9 +463,6 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\AppTime.cs">
       <Link>AppTime.cs</Link>
     </Compile>
-    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\NullIndexDictionary.DictionaryEnumerator.cs">
-      <Link>Collections\Generic\NullIndexDictionary.DictionaryEnumerator.cs</Link>
-    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\NullIndexDictionary.Interface.cs">
       <Link>Collections\Generic\NullIndexDictionary.Interface.cs</Link>
     </Compile>
@@ -921,6 +918,12 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\DictionaryWrapper.cs">
       <Link>Collections\Generic\DictionaryWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\DictionaryEnumerator.cs">
+      <Link>Collections\Generic\DictionaryEnumerator.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\DictionaryEnumerator.EnumeratorMode.cs">
+      <Link>Collections\Generic\DictionaryEnumerator.EnumeratorMode.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

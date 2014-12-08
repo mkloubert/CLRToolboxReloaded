@@ -105,7 +105,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         #endregion Delegates and events (1)
 
-        #region Properties (7)
+        #region Properties (8)
 
         /// <inheriteddoc />
         public int Count
@@ -137,6 +137,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         public bool IsSynchronized
         {
             get { return this._INNER_LIST.IsSynchronized; }
+        }
+
+        /// <summary>
+        /// Gets the provider function / method that provides the converter to use.
+        /// </summary>
+        public ConverterProvider ProviderOfConverter
+        {
+            get { return this._CONVERTER_PROVIDER; }
         }
 
         /// <inheriteddoc />

@@ -2,6 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.CLRToolbox.Data.Conversion;
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections;
@@ -23,27 +24,37 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                                                        IList<TValue>, IReadOnlyList<TValue>,
                                                        IList, IDictionary
     {
-        #region Fields (2)
+        #region Fields (3)
 
-        /// <summary>
-        /// Stores the inner dictionary.
-        /// </summary>
-        protected readonly IDictionary<int, TValue> _INNER_DICT;
+        private readonly ConverterProvider _CONVERTER_PROVIDER;
+        private readonly IDictionary<int, TValue> _INNER_DICT;
+        private readonly object _SYNC = new object();
 
-        /// <summary>
-        /// An unique object for sync operations.
-        /// </summary>
-        protected readonly object _SYNC = new object();
+        #endregion Fields (3)
 
-        #endregion Fields (2)
-
-        #region Constructors (2)
+        #region Constructors (4)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NullIndexDictionary{TValue}" /> class.
         /// </summary>
+        /// <remarks>
+        /// Converter from <see cref="GlobalConverter.Current" /> is used.
+        /// </remarks>
         public NullIndexDictionary()
-            : this(innerDict: new Dictionary<int, TValue>())
+            : this(convProvider: GetGlobalConverter)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NullIndexDictionary{TValue}" /> class.
+        /// </summary>
+        /// <param name="convProvider">The function/method that provides the converter to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="convProvider" /> is <see langword="null" />.
+        /// </exception>
+        public NullIndexDictionary(ConverterProvider convProvider)
+            : this(innerDict: new Dictionary<int, TValue>(),
+                   convProvider: convProvider)
         {
         }
 
@@ -54,19 +65,53 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// <exception cref="ArgumentNullException">
         /// <paramref name="innerDict" /> is <see langword="null" />.
         /// </exception>
+        /// <remarks>
+        /// Converter from <see cref="GlobalConverter.Current" /> is used.
+        /// </remarks>
         public NullIndexDictionary(IDictionary<int, TValue> innerDict)
+            : this(innerDict: innerDict,
+                   convProvider: GetGlobalConverter)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NullIndexDictionary{TValue}" /> class.
+        /// </summary>
+        /// <param name="innerDict">The inner dictionary to use.</param>
+        /// <param name="convProvider">The function/method that provides the converter to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="innerDict" /> and/or <paramref name="convProvider" /> are <see langword="null" />.
+        /// </exception>
+        public NullIndexDictionary(IDictionary<int, TValue> innerDict, ConverterProvider convProvider)
         {
             if (innerDict == null)
             {
                 throw new ArgumentNullException("innerDict");
             }
 
+            if (convProvider == null)
+            {
+                throw new ArgumentNullException("convProvider");
+            }
+
+            this._CONVERTER_PROVIDER = convProvider;
             this._INNER_DICT = innerDict;
         }
 
-        #endregion Constructors (2)
+        #endregion Constructors (4)
 
-        #region Methods (20)
+        #region Delegates and events (1)
+
+        /// <summary>
+        /// Provider for an <see cref="IConverter" /> that should be used by an instance of that class.
+        /// </summary>
+        /// <param name="dict">The underlying dictionary instance.</param>
+        /// <returns>The converter to use.</returns>
+        public delegate IConverter ConverterProvider(NullIndexDictionary<TValue> dict);
+
+        #endregion Delegates and events (1)
+
+        #region Methods (22)
 
         /// <summary>
         /// Adds an items add the end of the list.
@@ -148,6 +193,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                    (key < this.Count);
         }
 
+        private T ConvertTo<T>(object input)
+        {
+            var converter = this._CONVERTER_PROVIDER(this);
+
+            return converter != null ? converter.ChangeType<T>(value: input)
+                                     : (T)input;
+        }
+
         /// <inheriteddoc />
         public void CopyTo(KeyValuePair<int, TValue>[] array, int arrayIndex)
         {
@@ -194,15 +247,20 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         /// <inheriteddoc />
         public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
-            return new DictionaryEnumerator(this.Keys
-                                                .Select(k =>
-                                                    {
-                                                        TValue value;
-                                                        this._INNER_DICT.TryGetValue(k, out value);
+            return new DictionaryEnumerator<int, TValue>(this.Keys
+                                                             .Select(k =>
+                                                                 {
+                                                                     TValue value;
+                                                                     this._INNER_DICT.TryGetValue(k, out value);
 
-                                                        return new KeyValuePair<int, TValue>(key: k,
-                                                                                             value: value);
-                                                    }), 2);
+                                                                     return new KeyValuePair<int, TValue>(key: k,
+                                                                                                          value: value);
+                                                                 }), DictionaryEnumerator<int, TValue>.EnumeratorMode.GenericDictionary);
+        }
+
+        private static IConverter GetGlobalConverter(NullIndexDictionary<TValue> dict)
+        {
+            return GlobalConverter.Current;
         }
 
         /// <inheriteddoc />
@@ -444,9 +502,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                                     value: out value);
         }
 
-        #endregion Methods (20)
+        #endregion Methods (22)
 
-        #region Properties (8)
+        #region Properties (9)
 
         /// <inheriteddoc />
         public int Count
@@ -495,6 +553,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
                 return Enumerable.Range(0, this._INNER_DICT.Count < 1 ? 0
                                                                       : this.Count);
             }
+        }
+
+        /// <summary>
+        /// Gets the provider function / method that provides the converter to use.
+        /// </summary>
+        public ConverterProvider ProviderOfConverter
+        {
+            get { return this._CONVERTER_PROVIDER; }
         }
 
         /// <inheriteddoc />
@@ -575,7 +641,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
             }
         }
 
-        #endregion Properties (8)
+        #endregion Properties (9)
 
         #region Operators (2)
 
@@ -619,7 +685,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
     /// </summary>
     public sealed class NullIndexDictionary : NullIndexDictionary<object>
     {
-        #region Constructors (2)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         public NullIndexDictionary()
@@ -628,12 +694,165 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         }
 
         /// <inheriteddoc />
-        public NullIndexDictionary(IDictionary<int, object> innerDict)
-            : base(innerDict: innerDict)
+        public NullIndexDictionary(ConverterProvider convProvider)
+            : base(convProvider)
         {
         }
 
-        #endregion Constructors (2)
+        /// <inheriteddoc />
+        public NullIndexDictionary(IDictionary<int, object> innerDict)
+            : base(innerDict)
+        {
+        }
+
+        /// <inheriteddoc />
+        public NullIndexDictionary(IDictionary<int, object> innerDict, ConverterProvider convProvider)
+            : base(innerDict,
+                   convProvider)
+        {
+        }
+
+        #endregion Constructors (4)
+
+        #region Methods (8)
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="NullIndexDictionary{TValue}" /> class.
+        /// </summary>
+        /// <typeparam name="TValue">Type of the values.</typeparam>
+        /// <returns>The new instance.</returns>
+        /// <remarks>
+        /// Converter from <see cref="GlobalConverter.Current" /> is used.
+        /// </remarks>
+        public static NullIndexDictionary<TValue> Create<TValue>()
+        {
+            return new NullIndexDictionary<TValue>();
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="NullIndexDictionary{TValue}" /> class.
+        /// </summary>
+        /// <typeparam name="TValue">Type of the values.</typeparam>
+        /// <param name="innerDict">The inner dictionary to use.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="innerDict" /> is <see langword="null" />.
+        /// </exception>
+        /// <remarks>
+        /// Converter from <see cref="GlobalConverter.Current" /> is used.
+        /// </remarks>
+        public static NullIndexDictionary<TValue> Create<TValue>(IDictionary<int, TValue> innerDict)
+        {
+            return new NullIndexDictionary<TValue>(innerDict);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="NullIndexDictionary{TValue}" /> class.
+        /// </summary>
+        /// <typeparam name="TValue">Type of the values.</typeparam>
+        /// <param name="converter">The converter to use.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="converter" /> is <see langword="null" />.
+        /// </exception>
+        public static NullIndexDictionary<TValue> Create<TValue>(IConverter converter)
+        {
+            if (converter == null)
+            {
+                throw new ArgumentNullException("converter");
+            }
+
+            return new NullIndexDictionary<TValue>((d) => converter);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="NullIndexDictionary{TValue}" /> class.
+        /// </summary>
+        /// <typeparam name="TValue">Type of the values.</typeparam>
+        /// <param name="innerDict">The inner dictionary to use.</param>
+        /// <param name="converter">The converter to use.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="innerDict" /> and/or <paramref name="converter" /> are <see langword="null" />.
+        /// </exception>
+        public static NullIndexDictionary<TValue> Create<TValue>(IDictionary<int, TValue> innerDict, IConverter converter)
+        {
+            if (converter == null)
+            {
+                throw new ArgumentNullException("converter");
+            }
+
+            return new NullIndexDictionary<TValue>(innerDict,
+                                                   (d) => converter);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="NullIndexDictionary" /> class.
+        /// </summary>
+        /// <returns>The new instance.</returns>
+        /// <remarks>
+        /// Converter from <see cref="GlobalConverter.Current" /> is used.
+        /// </remarks>
+        public static NullIndexDictionary Create()
+        {
+            return new NullIndexDictionary();
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="NullIndexDictionary" /> class.
+        /// </summary>
+        /// <param name="innerDict">The inner dictionary to use.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="innerDict" /> is <see langword="null" />.
+        /// </exception>
+        /// <remarks>
+        /// Converter from <see cref="GlobalConverter.Current" /> is used.
+        /// </remarks>
+        public static NullIndexDictionary Create(IDictionary<int, object> innerDict)
+        {
+            return new NullIndexDictionary(innerDict);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="NullIndexDictionary" /> class.
+        /// </summary>
+        /// <param name="converter">The converter to use.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="converter" /> is <see langword="null" />.
+        /// </exception>
+        public static NullIndexDictionary Create(IConverter converter)
+        {
+            if (converter == null)
+            {
+                throw new ArgumentNullException("converter");
+            }
+
+            return new NullIndexDictionary((d) => converter);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="NullIndexDictionary" /> class.
+        /// </summary>
+        /// <param name="innerDict">The inner dictionary to use.</param>
+        /// <param name="converter">The converter to use.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="innerDict" /> and/or <paramref name="converter" /> are <see langword="null" />.
+        /// </exception>
+        public static NullIndexDictionary Create(IDictionary<int, object> innerDict, IConverter converter)
+        {
+            if (converter == null)
+            {
+                throw new ArgumentNullException("converter");
+            }
+
+            return new NullIndexDictionary(innerDict,
+                                           (d) => converter);
+        }
+
+        #endregion Methods (8)
 
         #region Operators (2)
 
