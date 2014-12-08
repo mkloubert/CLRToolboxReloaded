@@ -2,6 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.CLRToolbox.Collections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -40,6 +41,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
             if (seq == null)
             {
                 throw new ArgumentNullException("seq");
+            }
+
+            var genList = seq as IGeneralList;
+            if (genList != null)
+            {
+                return genList.IsEmpty;
             }
 
             var coll = seq as ICollection;

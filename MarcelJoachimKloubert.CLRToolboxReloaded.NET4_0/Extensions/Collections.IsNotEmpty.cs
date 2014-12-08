@@ -2,6 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.CLRToolbox.Collections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,6 +37,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// </exception>
         public static bool IsNotEmpty(this IEnumerable seq)
         {
+            var genList = seq as IGeneralList;
+            if (genList != null)
+            {
+                return genList.IsNotEmpty;
+            }
+
             return IsEmpty(seq) == false;
         }
 

@@ -417,7 +417,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
 
         #endregion Properties (29)
 
-        #region Methods (51)
+        #region Methods (53)
 
         private static void CheckTickValue(long ticks)
         {
@@ -1059,7 +1059,40 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
             return result;
         }
 
-        #endregion Methods (51)
+        /// <summary>
+        /// Walks a specific count of ticks starting from this value.
+        /// </summary>
+        /// <param name="stepInTicks">The step in ticks.</param>
+        /// <returns>The sequence of values.</returns>
+        public IEnumerable<Time> Walk(long stepInTicks)
+        {
+            var currentValue = this;
+            while (true)
+            {
+                yield return currentValue;
+
+                if (currentValue.CanAddTicks(stepInTicks))
+                {
+                    currentValue = currentValue.AddTicks(stepInTicks);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Walks a specific timespan starting from this value.
+        /// </summary>
+        /// <param name="step">The step to walk.</param>
+        /// <returns>The sequence of values.</returns>
+        public IEnumerable<Time> Walk(TimeSpan step)
+        {
+            return this.Walk(step.Ticks);
+        }
+
+        #endregion Methods (53)
 
         #region Operators (31)
 
@@ -1363,20 +1396,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         /// <returns>The sequence of values.</returns>
         public static IEnumerable<Time> operator *(Time time, long ticks)
         {
-            var currentValue = time;
-            while (true)
-            {
-                yield return currentValue;
-
-                if (currentValue.CanAddTicks(ticks))
-                {
-                    currentValue = currentValue.AddTicks(ticks);
-                }
-                else
-                {
-                    break;
-                }
-            }
+            return time.Walk(ticks);
         }
 
         /// <summary>
@@ -1398,7 +1418,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         /// <returns>The sequence of values.</returns>
         public static IEnumerable<Time> operator *(Time time, TimeSpan ts)
         {
-            return time * ts.Ticks;
+            return time.Walk(ts);
         }
 
         /// <summary>

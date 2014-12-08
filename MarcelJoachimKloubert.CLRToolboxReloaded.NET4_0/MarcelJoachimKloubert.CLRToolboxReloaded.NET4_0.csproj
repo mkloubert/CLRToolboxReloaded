@@ -109,10 +109,12 @@
     <Compile Include="CharSequence.cs" />
     <Compile Include="Collections\GeneralList.cs" />
     <Compile Include="Collections\Generic\DelegateEqualityComparer.cs" />
+    <Compile Include="Collections\Generic\DictionaryWrapper.cs" />
     <Compile Include="Collections\Generic\EqualityComparerFactory.cs" />
     <Compile Include="Collections\Generic\ForEachItemContext.cs" />
     <Compile Include="Collections\Generic\IForAllItemContext.cs" />
     <Compile Include="Collections\Generic\IForEachItemContext.cs" />
+    <Compile Include="Collections\Generic\ListWrapper.cs" />
     <Compile Include="Collections\Generic\NullIndexDictionary.cs" />
     <Compile Include="Collections\Generic\NullIndexDictionary.DictionaryEnumerator.cs">
       <DependentUpon>NullIndexDictionary.cs</DependentUpon>
