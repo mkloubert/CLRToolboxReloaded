@@ -6,6 +6,7 @@ using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 {
@@ -78,7 +79,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 
         #endregion Properties (2)
 
-        #region Methods (12)
+        #region Methods (24)
 
         /// <inheriteddoc />
         public byte[] Decrypt(IEnumerable<byte> src)
@@ -149,6 +150,88 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         }
 
         /// <inheriteddoc />
+        public void DecryptString(Stream src, StringBuilder builder, int? bufferSize = null)
+        {
+            this.DecryptString(src, builder, Encoding.UTF8, bufferSize);
+        }
+
+        /// <inheriteddoc />
+        public void DecryptString(Stream src, StringBuilder builder, Encoding enc, int? bufferSize = null)
+        {
+            // other (null) checks are done by 'DecryptString(Stream, Encoding, int?)'
+            // method
+
+            if (builder == null)
+            {
+                throw new ArgumentNullException("builder");
+            }
+
+            builder.Append(this.DecryptString(src, enc, bufferSize));
+        }
+
+        /// <inheriteddoc />
+        public string DecryptString(Stream src, int? bufferSize = null)
+        {
+            return this.DecryptString(src, Encoding.UTF8, bufferSize);
+        }
+
+        /// <inheriteddoc />
+        public string DecryptString(Stream src, Encoding enc, int? bufferSize = null)
+        {
+            // other (null) checks are done by 'Decrypt(Stream, int?)'
+            // method
+
+            if (enc == null)
+            {
+                throw new ArgumentNullException("enc");
+            }
+
+            var decrypted = this.Decrypt(src, bufferSize);
+            return enc.GetString(decrypted, 0, decrypted.Length);
+        }
+
+        /// <inheriteddoc />
+        public void DecryptString(IEnumerable<byte> src, StringBuilder builder)
+        {
+            this.DecryptString(src, builder, Encoding.UTF8);
+        }
+
+        /// <inheriteddoc />
+        public void DecryptString(IEnumerable<byte> src, StringBuilder builder, Encoding enc)
+        {
+            // other (null) checks are done by 'DecryptString(IEnumerable<byte>, Encoding)'
+            // method
+
+            if (builder == null)
+            {
+                throw new ArgumentNullException("builder");
+            }
+
+            builder.Append(this.DecryptString(src, enc));
+        }
+
+        /// <inheriteddoc />
+        public string DecryptString(IEnumerable<byte> src)
+        {
+            return this.DecryptString(src, Encoding.UTF8);
+        }
+
+        /// <inheriteddoc />
+        public string DecryptString(IEnumerable<byte> src, Encoding enc)
+        {
+            // other (null) checks are done by 'Decrypt(IEnumerable<byte>)'
+            // method
+
+            if (enc == null)
+            {
+                throw new ArgumentNullException("enc");
+            }
+
+            var decrypted = this.Decrypt(src);
+            return enc.GetString(decrypted, 0, decrypted.Length);
+        }
+
+        /// <inheriteddoc />
         public byte[] Encrypt(IEnumerable<byte> src)
         {
             using (var dest = new MemoryStream())
@@ -216,6 +299,44 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
                                  bufferSize);
         }
 
+        /// <inheriteddoc />
+        public void EncryptString(string str, Stream dest)
+        {
+            this.EncryptString(str, dest, Encoding.UTF8);
+        }
+
+        /// <inheriteddoc />
+        public void EncryptString(string str, Stream dest, Encoding enc)
+        {
+            if (enc == null)
+            {
+                throw new ArgumentNullException("enc");
+            }
+
+            this.Encrypt(enc.GetBytes(str ?? string.Empty),
+                         dest);
+        }
+
+        /// <inheriteddoc />
+        public byte[] EncryptString(string str)
+        {
+            return this.EncryptString(str, Encoding.UTF8);
+        }
+
+        /// <inheriteddoc />
+        public byte[] EncryptString(string str, Encoding enc)
+        {
+            // (null) check is done by 'EncryptString(string, Stream, Encoding)'
+            // method
+
+            using (var dest = new MemoryStream())
+            {
+                this.EncryptString(str, dest, enc);
+
+                return dest.ToArray();
+            }
+        }
+
         /// <summary>
         /// Stores the logic for the <see cref="CrypterBase.Decrypt(Stream, Stream, int?)" /> method.
         /// </summary>
@@ -260,6 +381,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
             }
         }
 
-        #endregion Methods (12)
+        #endregion Methods (24)
     }
 }
