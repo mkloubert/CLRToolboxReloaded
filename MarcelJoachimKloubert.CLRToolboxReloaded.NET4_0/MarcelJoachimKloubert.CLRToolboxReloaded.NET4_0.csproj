@@ -542,6 +542,11 @@
     <Compile Include="Scripting\ScriptExecutorBase.ScriptExecutionContext.cs">
       <DependentUpon>ScriptExecutorBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Security\Cryptography\AesCrypter.cs" />
+    <Compile Include="Security\Cryptography\AggregateCrypter.cs" />
+    <Compile Include="Security\Cryptography\CrypterBase.cs" />
+    <Compile Include="Security\Cryptography\ICrypter.cs" />
+    <Compile Include="Security\Cryptography\XorCrypter.cs" />
     <Compile Include="Security\UsernamePasswordValidator.cs" />
     <Compile Include="Serialization\CommonSerializer.cs" />
     <Compile Include="ServiceLocation\DelegateServiceLocator.Classes.cs">

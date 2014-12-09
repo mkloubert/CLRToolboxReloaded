@@ -14,12 +14,6 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Timing
     /// </summary>
     public sealed class TimeStruct : TestFixtureBase
     {
-        #region Fields (1)
-
-        private readonly Random _RAND = new Random();
-
-        #endregion Fields (1)
-
         #region Methods (11)
 
         [Test]
@@ -89,7 +83,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Timing
 
             for (var i = 0; i < 1000000; i++)
             {
-                var secs = (double)this._RAND.Next(1, 3600);
+                var secs = (double)this._RANDOM.Next(1, 3600);
 
                 var t1 = time.AddMinutes(secs / 60.0);
                 var t2 = t1.SubtractMinutes(secs / 60.0 * 2.0);
@@ -120,11 +114,11 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Timing
 
             for (var i = 0; i < 1000000; i++)
             {
-                var t1 = new Time(hours: this._RAND.Next(0, 24),
-                                  minutes: this._RAND.Next(0, 60),
-                                  secs: this._RAND.Next(0, 60),
-                                  msecs: this._RAND.Next(0, 1000),
-                                  ticks: this._RAND.Next(0, 10000));
+                var t1 = new Time(hours: this._RANDOM.Next(0, 24),
+                                  minutes: this._RANDOM.Next(0, 60),
+                                  secs: this._RANDOM.Next(0, 60),
+                                  msecs: this._RANDOM.Next(0, 1000),
+                                  ticks: this._RANDOM.Next(0, 10000));
                 var str = (string)t1;
                 var t2 = (Time)str;
 

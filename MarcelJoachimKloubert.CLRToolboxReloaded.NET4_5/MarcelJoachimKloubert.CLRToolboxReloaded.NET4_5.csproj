@@ -981,6 +981,21 @@
       <Link>Scripting\ScriptExecutorBase.ScriptExecutionContext.cs</Link>
       <DependentUpon>ScriptExecutorBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\AesCrypter.cs">
+      <Link>Security\Cryptography\AesCrypter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\AggregateCrypter.cs">
+      <Link>Security\Cryptography\AggregateCrypter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\CrypterBase.cs">
+      <Link>Security\Cryptography\CrypterBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\ICrypter.cs">
+      <Link>Security\Cryptography\ICrypter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\XorCrypter.cs">
+      <Link>Security\Cryptography\XorCrypter.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\UsernamePasswordValidator.cs">
       <Link>Security\UsernamePasswordValidator.cs</Link>
     </Compile>

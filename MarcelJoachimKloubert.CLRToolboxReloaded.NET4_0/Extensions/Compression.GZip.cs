@@ -23,6 +23,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// </exception>
         public static byte[] GZip(this IEnumerable<byte> data)
         {
+            // (null) check is done by constructor of MemoryStream class
+
             using (var src = new MemoryStream(AsArray(data), false))
             {
                 return GZip(src);
@@ -67,6 +69,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// </exception>
         public static void GZip(this IEnumerable<byte> data, Stream dest)
         {
+            // (null) check is done by constructor of MemoryStream class
+
             using (var src = new MemoryStream(AsArray(data), false))
             {
                 GZip(src, dest);

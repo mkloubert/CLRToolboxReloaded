@@ -2,6 +2,10 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+#if !(PORTABLE || PROTABLE40)
+#define CAN_HANDLE_THREADS
+#endif
+
 using System;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
@@ -58,9 +62,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
 
         #endregion Constrcutors (4)
 
-        #region Methods (3)
-
-        // Public Methods (2) 
+        #region Methods (3)
 
         /// <inheriteddoc />
         public T ChangeType<T>(object value, IFormatProvider provider = null)
@@ -76,22 +78,20 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
                 throw new ArgumentNullException("type");
             }
 
-#if !(PORTABLE || PROTABLE40)
-
             if (provider == null)
             {
+#if CAN_HANDLE_THREADS
                 provider = global::System.Threading.Thread.CurrentThread.CurrentCulture;
+#else
+                provider = global::System.Globalization.CultureInfo.CurrentCulture;
+#endif
             }
 
-#endif
-
-            object result = value;
+            var result = value;
             this.OnChangeType(type, ref result, provider);
 
             return result;
         }
-
-        // Protected Methods (1) 
 
         /// <summary>
         /// The logic for the <see cref="ConverterBase.ChangeType(Type, object, IFormatProvider)" /> method.
@@ -101,6 +101,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
         /// <param name="provider">The optional format provider to use.</param>
         protected abstract void OnChangeType(Type targetType, ref object targetValue, IFormatProvider provider);
 
-        #endregion Methods
+        #endregion Methods (3)
     }
 }

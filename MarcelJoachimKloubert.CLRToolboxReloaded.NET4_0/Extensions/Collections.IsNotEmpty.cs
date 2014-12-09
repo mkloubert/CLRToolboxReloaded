@@ -24,6 +24,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// </exception>
         public static bool IsNotEmpty<T>(this IEnumerable<T> seq)
         {
+            // (null) check is done by
+            // IsEmpty<T>(IEnumerable<T>) call
+
+            var genList = seq as IGeneralList;
+            if (genList != null)
+            {
+                return genList.IsNotEmpty;
+            }
+
             return IsEmpty<T>(seq) == false;
         }
 
@@ -37,6 +46,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// </exception>
         public static bool IsNotEmpty(this IEnumerable seq)
         {
+            // (null) check is done by
+            // IsEmpty(IEnumerable) call
+
             var genList = seq as IGeneralList;
             if (genList != null)
             {

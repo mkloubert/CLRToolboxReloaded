@@ -23,6 +23,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// </exception>
         public static byte[] GUnzip(this IEnumerable<byte> data)
         {
+            // (null) check is done by constructor of MemoryStream class
+
             using (var src = new MemoryStream(AsArray(data), false))
             {
                 return GUnzip(src);
@@ -67,6 +69,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// </exception>
         public static void GUnzip(this IEnumerable<byte> data, Stream dest)
         {
+            // (null) check is done by constructor of MemoryStream class
+
             using (var src = new MemoryStream(AsArray(data), false))
             {
                 GUnzip(src, dest);

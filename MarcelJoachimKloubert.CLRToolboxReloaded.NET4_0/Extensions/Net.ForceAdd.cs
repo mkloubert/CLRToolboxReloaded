@@ -45,17 +45,17 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 #endif
 
             var method = methods.First(m =>
-            {
-                if (m.Name != "AddWithoutValidate")
                 {
-                    return false;
-                }
+                    if (m.Name != "AddWithoutValidate")
+                    {
+                        return false;
+                    }
 
-                var p = m.GetParameters();
-                return (p.Length == 2) &&
-                       p[0].ParameterType.Equals(typeof(string)) &&
-                       p[1].ParameterType.Equals(typeof(string));
-            });
+                    var p = m.GetParameters();
+                    return (p.Length == 2) &&
+                           p[0].ParameterType.Equals(typeof(string)) &&
+                           p[1].ParameterType.Equals(typeof(string));
+                });
 
             method.Invoke(obj: coll,
                           parameters: new object[] { name, value });

@@ -62,7 +62,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
             var result = seq as T[];
             if (result == null)
             {
-                result = seq.ToArray();
+                var genList = seq as IGeneralList;
+                if (genList != null)
+                {
+                    result = genList.ToArray<T>(ofType: false);
+                }
+                else
+                {
+                    result = seq.ToArray();
+                }
             }
 
             return result;

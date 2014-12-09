@@ -2,10 +2,6 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-#if !(PORTABLE45)
-#define CAN_GET_MEMBERS_FROM_TYPE
-#endif
-
 #if !(PORTABLE || PORTABLE40)
 #define KNOWS_DBNULL
 #define STRING_IS_CHAR_SEQUENCE
@@ -103,7 +99,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
                     var obj = targetValue;
 
                     var members = Enumerable.Empty<MemberInfo>();
-#if CAN_GET_MEMBERS_FROM_TYPE
+#if KNOWS_RUNTIME_REFLECTION_EXTENSIONS
+
+                    members = members.Concat(obj.GetType().GetRuntimeFields())
+                                     .Concat(obj.GetType().GetRuntimeMethods())
+                                     .Concat(obj.GetType().GetRuntimeProperties());
+
+#else
+
                     var memberBindFlags = global::System.Reflection.BindingFlags.Public |
                                           global::System.Reflection.BindingFlags.NonPublic |
                                           global::System.Reflection.BindingFlags.Instance |
@@ -112,14 +115,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
                     members = members.Concat(obj.GetType().GetFields(memberBindFlags))
                                      .Concat(obj.GetType().GetMethods(memberBindFlags))
                                      .Concat(obj.GetType().GetProperties(memberBindFlags));
-#elif KNOWS_RUNTIME_REFLECTION_EXTENSIONS
-                    members = members.Concat(obj.GetType().GetRuntimeFields())
-                                     .Concat(obj.GetType().GetRuntimeMethods())
-                                     .Concat(obj.GetType().GetRuntimeProperties());
-#else
-                    members = members.Concat(obj.GetType().GetFields())
-                                     .Concat(obj.GetType().GetMethods())
-                                     .Concat(obj.GetType().GetProperties());
+
 #endif
 
                     var convertToMembers = members.Select(m =>

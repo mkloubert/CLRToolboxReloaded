@@ -62,7 +62,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Threading.Tasks
 
 #endif
 
-        #endregion Properties (8)
+        #endregion Properties (7)
     }
 
     #endregion CLASS: TaskExecutionContext
@@ -79,7 +79,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Threading.Tasks
         private Action<ITaskExecutionContext<TState>> _onCompleted;
         private TaskExecutionErrorHandler<TState> _onError;
 
-        #endregion Fields (3)
+        #endregion Fields (2)
 
         #region Properties (3)
 
@@ -116,7 +116,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Threading.Tasks
         /// <inheriteddoc />
         public TState State { get; set; }
 
-        #endregion Properties (4)
+        #endregion Properties (3)
     }
 
     #endregion CLASS: TaskExecutionContext<TState>

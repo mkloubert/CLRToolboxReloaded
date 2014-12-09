@@ -25,6 +25,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// </exception>
         public static bool IsEmpty<T>(this IEnumerable<T> seq)
         {
+            // (null) check is done extension method
+            // Count<T>(IEnumerable<T>)
+
+            var genList = seq as IGeneralList;
+            if (genList != null)
+            {
+                return genList.IsEmpty;
+            }
+
             return seq.Count<T>() < 1;
         }
 
@@ -38,10 +47,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// </exception>
         public static bool IsEmpty(this IEnumerable seq)
         {
-            if (seq == null)
-            {
-                throw new ArgumentNullException("seq");
-            }
+            // (null) check is done by overwritten
+            // IsEmpty<T>(IEnumerable<T>) call
 
             var genList = seq as IGeneralList;
             if (genList != null)
