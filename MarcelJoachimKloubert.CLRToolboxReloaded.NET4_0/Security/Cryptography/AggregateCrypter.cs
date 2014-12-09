@@ -179,8 +179,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 
             if (currentDest != null)
             {
-                currentDest.Position = 0;
-                currentDest.CopyTo(dest);
+                try
+                {
+                    currentDest.Position = 0;
+                    currentDest.CopyTo(dest);
+                }
+                finally
+                {
+                    this.CloseTempStream(currentDest);
+                }
             }
         }
 
@@ -203,7 +210,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         /// </summary>
         /// <returns>The crypters to use.</returns>
         /// <remarks>
-        /// The normal order is for enrypt operation.
+        /// The normal order is for encrypt operation.
         /// The reverse order is for decrypt operation.
         /// </remarks>
         public IEnumerable<ICrypter> GetCrypters()
