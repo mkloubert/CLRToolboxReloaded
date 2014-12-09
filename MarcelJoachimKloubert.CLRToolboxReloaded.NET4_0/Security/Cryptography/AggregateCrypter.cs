@@ -43,7 +43,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 
         #endregion Constructors (1)
 
-        #region Events and delegates (2)
+        #region Events and delegates (1)
 
         /// <summary>
         /// A function or method that provides the crypters to use.
@@ -51,7 +51,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         /// <param name="crypter">The underlying crypter instance.</param>
         public delegate IEnumerable<ICrypter> CrypterProvider(AggregateCrypter crypter);
 
-        #endregion Events and delegates (2)
+        #endregion Events and delegates (1)
 
         #region Properties (2)
 
@@ -135,6 +135,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
                 while (e.MoveNext())
                 {
                     ++index;
+                    var currentCrypter = e.Current;
 
                     if (index == 0)
                     {
@@ -151,8 +152,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 
                         currentBufSize = this.GetBufferSizeForTempStream(currentSrc);
                     }
-
-                    var currentCrypter = e.Current;
 
                     currentDest = this.CreateTempStream();
                     try

@@ -43,7 +43,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 
         #endregion Constructors (1)
 
-        #region Events and delegates (2)
+        #region Events and delegates (1)
 
         /// <summary>
         /// A function or method that provides the key to use.
@@ -52,7 +52,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         /// <param name="key">The stream where to write the key to.</param>
         public delegate void KeyProvider(XorCrypter crypter, Stream key);
 
-        #endregion Events and delegates (2)
+        #endregion Events and delegates (1)
 
         #region Properties (2)
 
