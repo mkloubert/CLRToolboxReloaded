@@ -20,7 +20,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Security
 
         #endregion Fields (1)
 
-        #region Methods (7)
+        #region Methods (5)
 
         [Test]
         public void AES_Test()
@@ -63,17 +63,14 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Security
 
         private void TestCrypter(ICrypter crypter)
         {
-            for (var i = 0; i < 100; i++)
+            foreach (var enc in Encoding.GetEncodings()
+                                        .Select(ei => ei.GetEncoding()))
             {
-                var str = this.CreateRandomText();
+                var src = this.CreateRandomText();
+                var dest = crypter.EncryptString(src, enc);
+                var src2 = crypter.DecryptString(dest, enc);
 
-                var src = Encoding.UTF8.GetBytes(str);
-                var dest = crypter.Encrypt(src);
-                var src2 = crypter.Decrypt(dest);
-
-                Assert.IsTrue(src.SequenceEqual(src2));
-                Assert.IsFalse(src.SequenceEqual(dest));
-                Assert.IsFalse(dest.SequenceEqual(src2));
+                Assert.AreEqual(src, src2);
             }
         }
 
@@ -86,6 +83,6 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Security
             this.TestCrypter(crypter);
         }
 
-        #endregion Methods (7)
+        #endregion Methods (5)
     }
 }
