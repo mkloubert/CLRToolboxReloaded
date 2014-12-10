@@ -572,6 +572,13 @@
       <Link>Extensions\Compression.GZip.cs</Link>
       <DependentUpon>Compression.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Cryptography.ComputeHash.cs">
+      <Link>Extensions\Cryptography.ComputeHash.cs</Link>
+      <DependentUpon>Cryptography.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Cryptography.cs">
+      <Link>Extensions\Cryptography.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Data.Build.cs">
       <Link>Extensions\Data.Build.cs</Link>
       <DependentUpon>Data.cs</DependentUpon>
@@ -989,6 +996,16 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\CrypterBase.cs">
       <Link>Security\Cryptography\CrypterBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\DelegateCrypter.CryptMode.cs">
+      <Link>Security\Cryptography\DelegateCrypter.CryptMode.cs</Link>
+      <DependentUpon>DelegateCrypter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\DelegateCrypter.cs">
+      <Link>Security\Cryptography\DelegateCrypter.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\HashCrypter.cs">
+      <Link>Security\Cryptography\HashCrypter.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\ICrypter.cs">
       <Link>Security\Cryptography\ICrypter.cs</Link>

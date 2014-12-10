@@ -686,6 +686,13 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\security\cryptography\CrypterBase.cs">
       <Link>Security\Cryptography\CrypterBase.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\DelegateCrypter.CryptMode.cs">
+      <Link>Security\Cryptography\DelegateCrypter.CryptMode.cs</Link>
+      <DependentUpon>DelegateCrypter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\DelegateCrypter.cs">
+      <Link>Security\Cryptography\DelegateCrypter.cs</Link>
+    </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\security\cryptography\ICrypter.cs">
       <Link>Security\Cryptography\ICrypter.cs</Link>
     </Compile>

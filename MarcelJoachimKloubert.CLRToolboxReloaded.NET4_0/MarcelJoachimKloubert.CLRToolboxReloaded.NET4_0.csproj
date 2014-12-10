@@ -315,6 +315,10 @@
       <DependentUpon>Compression.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Compression.cs" />
+    <Compile Include="Extensions\Cryptography.ComputeHash.cs">
+      <DependentUpon>Cryptography.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Cryptography.cs" />
     <Compile Include="Extensions\Data.Build.cs">
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>
@@ -545,6 +549,11 @@
     <Compile Include="Security\Cryptography\AesCrypter.cs" />
     <Compile Include="Security\Cryptography\AggregateCrypter.cs" />
     <Compile Include="Security\Cryptography\CrypterBase.cs" />
+    <Compile Include="Security\Cryptography\DelegateCrypter.CryptMode.cs">
+      <DependentUpon>DelegateCrypter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Security\Cryptography\DelegateCrypter.cs" />
+    <Compile Include="Security\Cryptography\HashCrypter.cs" />
     <Compile Include="Security\Cryptography\ICrypter.cs" />
     <Compile Include="Security\Cryptography\XorCrypter.cs" />
     <Compile Include="Security\UsernamePasswordValidator.cs" />
