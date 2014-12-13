@@ -3,6 +3,7 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
     /// <summary>
     /// A crypter that uses multi <see cref="ICrypter" /> instances.
     /// </summary>
-    public class AggregateCrypter : CrypterBase
+    public class AggregateCrypter : CrypterBase, IEnumerable<ICrypter>
     {
         #region Fields (1)
 
@@ -69,7 +70,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 
         #endregion Properties (2)
 
-        #region Methods (9)
+        #region Methods (11)
 
         /// <summary>
         /// Closes an old temporary stream that was used for encrypt / decrypt operations.
@@ -128,7 +129,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 
             using (var e = crypters.GetEnumerator())
             {
-                var index = -1L;
+                long index = -1;
                 Stream currentSrc = null;
 
                 int? currentBufSize = null;
@@ -222,6 +223,18 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         }
 
         /// <inheriteddoc />
+        public IEnumerator<ICrypter> GetEnumerator()
+        {
+            return this.GetCrypters()
+                       .GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        /// <inheriteddoc />
         protected override void OnDecrypt(Stream src, Stream dest, int? bufferSize)
         {
             this.DeOrEncrypt(src, dest, bufferSize,
@@ -237,6 +250,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
                              (c, s, d, bs) => c.Encrypt(s, d, bs));
         }
 
-        #endregion Methods (9)
+        #endregion Methods (11)
     }
 }

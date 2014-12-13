@@ -127,6 +127,7 @@
     <Compile Include="Collections\Generic\ReadOnlyDictionaryWrapper.cs" />
     <Compile Include="Collections\Generic\ReadOnlyListWrapper.cs" />
     <Compile Include="Collections\Generic\ForAllItemContext.cs" />
+    <Compile Include="Collections\Generic\SynchronizedEnumerator.cs" />
     <Compile Include="Collections\IGeneralList.cs" />
     <Compile Include="Collections\ObjectModel\SynchronizedObservableCollection.cs" />
     <Compile Include="ComponentModel\INotifiable.cs" />

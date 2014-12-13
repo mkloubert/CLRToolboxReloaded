@@ -72,17 +72,33 @@ namespace MarcelJoachimKloubert.CLRToolbox.ServiceLocation
             var method = (expr.Body as MethodCallExpression).Method;
             var methodName = method.Name;
 
-            object[] @params = null;
+            var @params = new object[0];
             if (key != null)
             {
                 // with key
                 @params = new object[] { key };
             }
 
-            return (R)method.GetGenericMethodDefinition()
-                            .MakeGenericMethod(serviceType)
-                            .Invoke(obj: container,
-                                    parameters: @params);
+            return (R)container.GetType()
+                               .GetMethods()
+                               .First(m =>
+                               {
+                                   if (m.Name != methodName)
+                                   {
+                                       return false;
+                                   }
+
+                                   if (m.IsGenericMethod == false)
+                                   {
+                                       return false;
+                                   }
+
+                                   return m.GetParameters().Length ==
+                                          @params.Length;
+                               }).GetGenericMethodDefinition()
+                                 .MakeGenericMethod(serviceType)
+                                 .Invoke(obj: container,
+                                         parameters: @params);
         }
 
         /// <inheriteddoc />

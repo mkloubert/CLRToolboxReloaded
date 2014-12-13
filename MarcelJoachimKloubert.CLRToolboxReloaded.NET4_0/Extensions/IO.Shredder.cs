@@ -97,7 +97,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                                           .ToArray();
 
                     var blockCount = (long)Math.Floor((double)len / (double)block.Length);
-                    for (var ii = 0L; ii < blockCount; ii++)
+                    for (long ii = 0; ii < blockCount; ii++)
                     {
                         stream.Write(block, 0, block.Length);
 

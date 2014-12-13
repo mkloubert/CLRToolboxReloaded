@@ -108,6 +108,9 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\collections\generic\ReadOnlyListWrapper.cs">
       <Link>Collections\Generic\ReadOnlyListWrapper.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\SynchronizedEnumerator.cs">
+      <Link>Collections\Generic\SynchronizedEnumerator.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\IGeneralList.cs">
       <Link>Collections\IGeneralList.cs</Link>
     </Compile>
