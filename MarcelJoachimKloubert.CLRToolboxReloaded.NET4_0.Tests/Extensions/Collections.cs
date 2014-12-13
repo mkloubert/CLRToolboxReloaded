@@ -15,7 +15,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
     [TestFixture]
     public class Collections
     {
-        #region Methods (6)
+        #region Methods (7)
 
         [Test]
         public void AsArray()
@@ -269,6 +269,31 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
             Assert.AreEqual(executionCount3, 1);  // second execution was canceled
         }
 
-        #endregion Methods (6)
+        [Test]
+        public void TryGetValue()
+        {
+            var dict = new Dictionary<string, object>();
+            dict["a"] = 1;
+
+            long val1;
+            var res1 = dict.TryGetValue<long>("a", out val1);
+
+            long val2;
+            var res2 = dict.TryGetValue<long>("A", out val2, 2);
+
+            string val3;
+            var res3 = dict.TryGetValue<string>("b", out val3, (k, t) => k == "B" ? "3" : "4");
+
+            Assert.IsTrue(res1);
+            Assert.AreEqual(val1, 1L);
+
+            Assert.IsFalse(res2);
+            Assert.AreEqual(val2, 2L);
+
+            Assert.IsFalse(res3);
+            Assert.AreEqual(val3, "4");
+        }
+
+        #endregion Methods (7)
     }
 }

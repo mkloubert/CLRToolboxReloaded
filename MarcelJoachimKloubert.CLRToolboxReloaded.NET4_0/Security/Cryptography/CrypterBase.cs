@@ -2,6 +2,10 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+#if !(PORTABLE || PORTABLE40 || PORTABLE45)
+#define KNOWS_SECURE_STRING
+#endif
+
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections.Generic;
@@ -79,7 +83,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 
         #endregion Properties (2)
 
-        #region Methods (24)
+        #region Methods (29)
 
         /// <inheriteddoc />
         public byte[] Decrypt(IEnumerable<byte> src)
@@ -149,6 +153,42 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
                                  bufferSize);
         }
 
+#if KNOWS_SECURE_STRING
+
+        /// <inheriteddoc />
+        public global::System.Security.SecureString DecryptSecureString(global::System.IO.Stream src, int? bufferSize = null)
+        {
+            return this.DecryptSecureString(src, global::System.Text.Encoding.UTF8);
+        }
+
+        /// <inheriteddoc />
+        public global::System.Security.SecureString DecryptSecureString(global::System.IO.Stream src, global::System.Text.Encoding enc, int? bufferSize = null)
+        {
+            // other checks are done by 'Decrypt(Stream, int?)'
+            // and ToSecureString(byte[], Encoding) methods
+
+            return ToSecureString(this.Decrypt(src),
+                                  enc);
+        }
+
+        /// <inheriteddoc />
+        public global::System.Security.SecureString DecryptSecureString(global::System.Collections.Generic.IEnumerable<byte> src)
+        {
+            return this.DecryptSecureString(src, global::System.Text.Encoding.UTF8);
+        }
+
+        /// <inheriteddoc />
+        public global::System.Security.SecureString DecryptSecureString(global::System.Collections.Generic.IEnumerable<byte> src, global::System.Text.Encoding enc)
+        {
+            // other checks are done by 'Decrypt(IEnumerable<byte>)'
+            // and ToSecureString(byte[], Encoding) methods
+
+            return ToSecureString(this.Decrypt(src),
+                                  enc);
+        }
+
+#endif
+
         /// <inheriteddoc />
         public void DecryptString(Stream src, StringBuilder builder, int? bufferSize = null)
         {
@@ -158,7 +198,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         /// <inheriteddoc />
         public void DecryptString(Stream src, StringBuilder builder, Encoding enc, int? bufferSize = null)
         {
-            // other (null) checks are done by 'DecryptString(Stream, Encoding, int?)'
+            // other checks are done by 'DecryptString(Stream, Encoding, int?)'
             // method
 
             if (builder == null)
@@ -178,7 +218,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         /// <inheriteddoc />
         public string DecryptString(Stream src, Encoding enc, int? bufferSize = null)
         {
-            // other (null) checks are done by 'Decrypt(Stream, int?)'
+            // other checks are done by 'Decrypt(Stream, int?)'
             // method
 
             if (enc == null)
@@ -381,6 +421,36 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
             }
         }
 
-        #endregion Methods (24)
+#if KNOWS_SECURE_STRING
+
+        private static global::System.Security.SecureString ToSecureString(byte[] strData, global::System.Text.Encoding enc)
+        {
+            if (enc == null)
+            {
+                throw new ArgumentNullException("enc");
+            }
+
+            string str;
+            try
+            {
+                str = enc.GetString(strData, 0, strData.Length);
+
+                var result = new global::System.Security.SecureString();
+                for (var i = 0; i < str.Length; i++)
+                {
+                    result.AppendChar(str[i]);
+                }
+
+                return result;
+            }
+            finally
+            {
+                str = null;
+            }
+        }
+
+#endif
+
+        #endregion Methods (29)
     }
 }

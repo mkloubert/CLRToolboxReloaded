@@ -116,7 +116,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
             var key = this.GetKey();
 
             byte? lastByte;
-            int index = -1;
+            var index = -1;
             while ((lastByte = src.ReadSingleByte()).IsNotNull())
             {
                 var byteToWrite = lastByte.Value;

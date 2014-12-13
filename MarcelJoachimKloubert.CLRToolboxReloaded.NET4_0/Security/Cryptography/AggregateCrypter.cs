@@ -179,6 +179,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 
             if (currentDest != null)
             {
+                // last but not least:
+                // copy to real destination stream
+
                 try
                 {
                     currentDest.Position = 0;

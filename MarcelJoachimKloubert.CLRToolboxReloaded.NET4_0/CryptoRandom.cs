@@ -147,7 +147,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// <paramref name="rng" /> is <see langword="null" />.
         /// </exception>
         /// <remarks>
-        /// The method uses <see cref="Environment.TickCount" /> as seed value.
+        /// The method a random <see cref="Guid" /> as seed value.
         /// </remarks>
         public static CryptoRandom Create(RNGCryptoServiceProvider rng)
         {

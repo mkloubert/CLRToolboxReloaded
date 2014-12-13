@@ -2,6 +2,10 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+#if !(PORTABLE || PORTABLE40 || PORTABLE45)
+#define KNOWS_SECURE_STRING
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +32,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 
         #endregion Properties (1)
 
-        #region Methods (20)
+        #region Methods (24)
 
         /// <summary>
         /// Decrypts data.
@@ -104,6 +108,78 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         /// <paramref name="src" /> cannot be read and/or <paramref name="dest" /> cannot be written.
         /// </exception>
         void Decrypt(Stream src, Stream dest, int? bufferSize = null);
+
+#if KNOWS_SECURE_STRING
+
+        /// <summary>
+        /// Decrypts a UTF-8 string as secure string.
+        /// </summary>
+        /// <param name="src">The stream with the crypted data.</param>
+        /// <param name="bufferSize">
+        /// The buffer in bytes for read operation to use.
+        /// <see langword="null" /> indicates to use the default.
+        /// </param>
+        /// <returns>The decoded string.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="src" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="bufferSize" /> is invalid.
+        /// </exception>
+        /// <exception cref="IOException">
+        /// <paramref name="src" /> cannot be read.
+        /// </exception>
+        global::System.Security.SecureString DecryptSecureString(global::System.IO.Stream src, int? bufferSize = null);
+
+        /// <summary>
+        /// Decrypts a string as secure string.
+        /// </summary>
+        /// <param name="src">The stream with the crypted data.</param>
+        /// <param name="enc">The encoding to use.</param>
+        /// <param name="bufferSize">
+        /// The buffer in bytes for read operation to use.
+        /// <see langword="null" /> indicates to use the default.
+        /// </param>
+        /// <returns>The decoded string.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="src" /> and/or <paramref name="enc" /> are <see langword="null" />.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="bufferSize" /> is invalid.
+        /// </exception>
+        /// <exception cref="IOException">
+        /// <paramref name="src" /> cannot be read.
+        /// </exception>
+        global::System.Security.SecureString DecryptSecureString(global::System.IO.Stream src, global::System.Text.Encoding enc, int? bufferSize = null);
+
+        /// <summary>
+        /// Decrypts a UTF-8 string as secure string.
+        /// </summary>
+        /// <param name="src">The crypted data.</param>
+        /// <returns>The decoded string.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="src" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="IOException">
+        /// <paramref name="src" /> cannot be read.
+        /// </exception>
+        global::System.Security.SecureString DecryptSecureString(global::System.Collections.Generic.IEnumerable<byte> src);
+
+        /// <summary>
+        /// Decrypts a string as secure string.
+        /// </summary>
+        /// <param name="src">The crypted data.</param>
+        /// <param name="enc">The encoding to use.</param>
+        /// <returns>The decoded string.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="src" /> and/or <paramref name="enc" /> are <see langword="null" />.
+        /// </exception>
+        /// <exception cref="IOException">
+        /// <paramref name="src" /> cannot be read.
+        /// </exception>
+        global::System.Security.SecureString DecryptSecureString(global::System.Collections.Generic.IEnumerable<byte> src, global::System.Text.Encoding enc);
+
+#endif
 
         /// <summary>
         /// Decrypts a UTF-8 string.
@@ -371,6 +447,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         /// </remarks>
         byte[] EncryptString(string str, Encoding enc);
 
-        #endregion Methods (20)
+        #endregion Methods (24)
     }
 }
