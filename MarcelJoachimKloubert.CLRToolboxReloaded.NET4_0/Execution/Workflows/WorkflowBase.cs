@@ -16,63 +16,66 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
     /// </summary>
     public abstract class WorkflowBase : ObjectBase, IWorkflow
     {
-        #region Fields (1)
+        #region Fields (3)
 
+        private readonly Func<object[], object> _EXECUTE_FUNC;
+        private readonly Func<IEnumerator<WorkflowFunc>> _GET_ENUMERATOR_FUNC;
         private readonly IDictionary<string, object> _VARS;
 
-        #endregion Fields (1)
+        #endregion Fields (3)
 
-        #region Constructors (4)
+        #region Constructors (4)
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WorkflowBase" /> class.
-        /// </summary>
-        /// <param name="isSynchronized">Instance should work thread safe or not.</param>
-        /// <param name="sync">The value for <see cref="ObjectBase._SYNC" /> field.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="sync" /> is <see langword="null" />.
-        /// </exception>
+        /// <inheriteddoc />
         public WorkflowBase(bool isSynchronized, object sync)
             : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
+            if (this._IS_SYNCHRONIZED)
+            {
+                this._EXECUTE_FUNC = this.Execute_ThreadSafe;
+                this._GET_ENUMERATOR_FUNC = this.GetEnumerator_ThreadSafe;
+            }
+            else
+            {
+                this._EXECUTE_FUNC = this.Execute_NonThreadSafe;
+                this._GET_ENUMERATOR_FUNC = this.GetEnumerator_NonThreadSafe;
+            }
+
             this._VARS = this.CreateVarStorage() ?? new Dictionary<string, object>();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WorkflowBase" /> class.
-        /// </summary>
-        /// <param name="isSynchronized">Instance should work thread safe or not.</param>
+        /// <inheriteddoc />
         public WorkflowBase(bool isSynchronized)
-            : base(isSynchronized: isSynchronized)
+            : this(isSynchronized: isSynchronized,
+                   sync: new object())
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WorkflowBase" /> class.
-        /// </summary>
-        /// <param name="sync">The value for <see cref="ObjectBase._SYNC" /> field.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="sync" /> is <see langword="null" />.
-        /// </exception>
-        /// <remarks>Object will NOT work thread safe.</remarks>
+        /// <inheriteddoc />
         public WorkflowBase(object sync)
-            : base(sync: sync)
+            : this(isSynchronized: false,
+                   sync: sync)
         {
         }
+
+        /// <inheriteddoc />
+        public WorkflowBase()
+            : this(isSynchronized: false)
+        {
+        }
+
+        #endregion Constructors (4)
+
+        #region Properties (3)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WorkflowBase" /> class.
+        /// Gets the converter to use to cast/convert objects.
         /// </summary>
-        /// <remarks>Object will NOT work thread safe.</remarks>
-        public WorkflowBase()
-            : base()
+        public virtual IConverter Converter
         {
+            get { return GlobalConverter.Current; }
         }
-
-        #endregion Constructors
-
-        #region Properties (2)
 
         /// <summary>
         /// Gets or sets a value of the variables of that workflow.
@@ -100,48 +103,105 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
             get { return this._VARS; }
         }
 
-        #endregion Properties
+        #endregion Properties (3)
 
-        #region Methods (14)
+        #region Methods (15)
 
-        // Public Methods (7) 
+        /// <summary>
+        /// Converts / casts an object.
+        /// </summary>
+        /// <typeparam name="T">The target type.</typeparam>
+        /// <param name="input">The input value.</param>
+        /// <returns>The output value.</returns>
+        protected virtual T ChangeType<T>(object input)
+        {
+            var converter = this.Converter;
+
+            return converter != null ? converter.ChangeType<T>(value: input)
+                                     : (T)input;
+        }
+
+        /// <summary>
+        /// Creates an empty storage for variables.
+        /// </summary>
+        /// <returns>The created storage.</returns>
+        protected virtual IDictionary<string, object> CreateVarStorage()
+        {
+            return new Dictionary<string, object>(EqualityComparerFactory.CreateCaseInsensitiveStringComparer(true, true));
+        }
 
         /// <inheriteddoc />
         public object Execute(IEnumerable<object> args)
         {
-            return this.Execute(args);
+            return this.Execute(args.AsArray());
         }
 
         /// <inheriteddoc />
         public object Execute(params object[] args)
         {
-            Func<object[], object> funcToInvoke;
-            if (this._IS_SYNCHRONIZED)
+            return this._EXECUTE_FUNC(args);
+        }
+
+        private object Execute_NonThreadSafe(object[] args)
+        {
+            IWorkflowExecutionContext result = null;
+            this.ForEach(ctx => result = ctx.Item(ctx.State.Arguments),
+                         actionState: new
+                         {
+                             Arguments = args,
+                         });
+
+            return result != null ? result.Result : null;
+        }
+
+        private object Execute_ThreadSafe(object[] args)
+        {
+            object result = null;
+
+            lock (this._SYNC)
             {
-                funcToInvoke = this.Execute_ThreadSafe;
-            }
-            else
-            {
-                funcToInvoke = this.Execute_NonThreadSafe;
+                result = this.Execute_NonThreadSafe(args);
             }
 
-            return funcToInvoke(args);
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the iterator for <see cref="WorkflowBase.GetEnumerator()" />.
+        /// </summary>
+        /// <returns>The iterator.</returns>
+        protected virtual IEnumerable<WorkflowFunc> GetFunctionIterator()
+        {
+            yield break;
         }
 
         /// <inheriteddoc />
         public IEnumerator<WorkflowFunc> GetEnumerator()
         {
-            Func<IEnumerator<WorkflowFunc>> funcToInvoke;
-            if (this._IS_SYNCHRONIZED)
+            return this._GET_ENUMERATOR_FUNC();
+        }
+
+        private IEnumerator<WorkflowFunc> GetEnumerator_NonThreadSafe()
+        {
+            return this.GetFunctionIterator()
+                       .GetEnumerator();
+        }
+
+        private IEnumerator<WorkflowFunc> GetEnumerator_ThreadSafe()
+        {
+            IEnumerator<WorkflowFunc> result;
+
+            lock (this._SYNC)
             {
-                funcToInvoke = this.GetEnumerator_ThreadSafe;
-            }
-            else
-            {
-                funcToInvoke = this.GetEnumerator_NonThreadSafe;
+                result = this.GetEnumerator_NonThreadSafe();
             }
 
-            return funcToInvoke();
+            return result;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
 
         /// <summary>
@@ -188,10 +248,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         public bool TryGetVar<T>(string name, out T value, T defaultValue)
         {
             return this.TryGetVar<T>(name, out value,
-                                     delegate(string varName)
-                                     {
-                                         return defaultValue;
-                                     });
+                                     (vn, tt) => defaultValue);
         }
 
         /// <summary>
@@ -208,7 +265,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         /// <exception cref="ArgumentNullException">
         /// <paramref name="defaultValueProvider" /> is <see langword="null" />.
         /// </exception>
-        public bool TryGetVar<T>(string name, out T value, Func<string, T> defaultValueProvider)
+        public bool TryGetVar<T>(string name, out T value, Func<string, Type, object> defaultValueProvider)
         {
             if (defaultValueProvider == null)
             {
@@ -217,93 +274,23 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
 
             lock (this.SyncRoot)
             {
-                IDictionary<string, object> dict = this.Vars;
+                var dict = this.Vars;
                 if (dict != null)
                 {
                     object foundValue;
                     if (dict.TryGetValue(WorkflowExecutionContext.ParseVarName(name), out foundValue))
                     {
-                        value = GlobalConverter.Current
-                                               .ChangeType<T>(foundValue);
+                        value = this.ChangeType<T>(foundValue);
 
                         return true;
                     }
                 }
             }
 
-            value = defaultValueProvider(name.AsString());
+            value = this.ChangeType<T>(defaultValueProvider(name, typeof(T)));
             return false;
         }
 
-        // Protected Methods (2) 
-
-        /// <summary>
-        /// Creates an empty storage for variables.
-        /// </summary>
-        /// <returns>The created storage.</returns>
-        protected virtual IDictionary<string, object> CreateVarStorage()
-        {
-            return new Dictionary<string, object>(EqualityComparerFactory.CreateCaseInsensitiveStringComparer(true, true));
-        }
-
-        /// <summary>
-        /// Returns the iterator for <see cref="WorkflowBase.GetEnumerator()" />.
-        /// </summary>
-        /// <returns>The iterator.</returns>
-        protected virtual IEnumerable<WorkflowFunc> GetFunctionIterator()
-        {
-            yield break;
-        }
-
-        // Private Methods (5) 
-
-        private object Execute_NonThreadSafe(object[] args)
-        {
-            IWorkflowExecutionContext result = null;
-            this.ForEach(ctx => result = ctx.Item(ctx.State.Arguments),
-                         actionState: new
-                         {
-                             Arguments = args,
-                         });
-
-            return result != null ? result.Result : null;
-        }
-
-        private object Execute_ThreadSafe(object[] args)
-        {
-            object result = null;
-
-            lock (this._SYNC)
-            {
-                result = this.Execute_NonThreadSafe(args);
-            }
-
-            return result;
-        }
-
-        private IEnumerator<WorkflowFunc> GetEnumerator_NonThreadSafe()
-        {
-            return this.GetFunctionIterator()
-                       .GetEnumerator();
-        }
-
-        private IEnumerator<WorkflowFunc> GetEnumerator_ThreadSafe()
-        {
-            IEnumerator<WorkflowFunc> result;
-
-            lock (this._SYNC)
-            {
-                result = this.GetEnumerator_NonThreadSafe();
-            }
-
-            return result;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
-
-        #endregion Methods
+        #endregion Methods (15)
     }
 }

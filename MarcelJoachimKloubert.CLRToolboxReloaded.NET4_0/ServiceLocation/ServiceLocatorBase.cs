@@ -83,13 +83,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.ServiceLocation
                 if (result == null)
                 {
                     exceptionToThrow = new ServiceActivationException(serviceType,
-                                                                      null);
+                                                                      key);
                 }
             }
             catch (Exception ex)
             {
                 exceptionToThrow = new ServiceActivationException(serviceType,
-                                                                  null,
+                                                                  key,
                                                                   ex);
             }
 

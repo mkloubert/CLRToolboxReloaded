@@ -12,8 +12,7 @@ using System.Threading.Tasks;
 
 namespace MarcelJoachimKloubert.CLRToolbox._Tests.Extensions
 {
-    [TestFixture]
-    public class Collections
+    public class Collections : TestFixtureBase
     {
         #region Methods (7)
 

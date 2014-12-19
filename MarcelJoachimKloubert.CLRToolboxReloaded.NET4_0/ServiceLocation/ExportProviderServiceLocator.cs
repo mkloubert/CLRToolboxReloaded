@@ -95,8 +95,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ServiceLocation
 
                                    return m.GetParameters().Length ==
                                           @params.Length;
-                               }).GetGenericMethodDefinition()
-                                 .MakeGenericMethod(serviceType)
+                               }).MakeGenericMethod(serviceType)
                                  .Invoke(obj: container,
                                          parameters: @params);
         }
