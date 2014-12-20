@@ -717,6 +717,18 @@
     <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\StringSerializerBase.cs">
       <Link>Serialization\StringSerializerBase.cs</Link>
     </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\BinarySerializerBase.cs">
+      <Link>Serialization\BinarySerializerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\IBinarySerializer.cs">
+      <Link>Serialization\IBinarySerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\Json\JsonNetSerializer.cs">
+      <Link>Serialization\Json\JsonNetSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\Json\JsonNetSerializer.SerializationMode.cs">
+      <Link>Serialization\Json\JsonNetSerializer.SerializationMode.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

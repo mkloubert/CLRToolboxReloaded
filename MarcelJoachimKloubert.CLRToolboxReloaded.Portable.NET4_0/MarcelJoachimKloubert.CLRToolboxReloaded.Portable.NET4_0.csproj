@@ -746,8 +746,14 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\security\UsernamePasswordValidator.cs">
       <Link>Security\UsernamePasswordValidator.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\BinarySerializerBase.cs">
+      <Link>Serialization\BinarySerializerBase.cs</Link>
+    </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\serialization\CommonSerializer.cs">
       <Link>Serialization\CommonSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\IBinarySerializer.cs">
+      <Link>Serialization\IBinarySerializer.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\IObjectSerializer.cs">
       <Link>Serialization\IObjectSerializer.cs</Link>
@@ -757,6 +763,13 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\IStringSerializer.cs">
       <Link>Serialization\IStringSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\Json\JsonNetSerializer.cs">
+      <Link>Serialization\Json\JsonNetSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\Json\JsonNetSerializer.SerializationMode.cs">
+      <Link>Serialization\Json\JsonNetSerializer.SerializationMode.cs</Link>
+      <DependentUpon>JsonNetSerializer.cs</DependentUpon>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\Json\JsonParamResult.cs">
       <Link>Serialization\Json\JsonParamResult.cs</Link>

@@ -83,6 +83,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
         /// <typeparam name="T">The type of the object.</typeparam>
         /// <param name="obj">The object to serialize.</param>
         /// <returns>The serialized data of <paramref name="obj" />.</returns>
+        /// <exception cref="InvalidCastException">
+        /// <paramref name="obj" /> cannot be serialized.
+        /// </exception>
         object Serialize<T>(T obj);
 
         /// <summary>

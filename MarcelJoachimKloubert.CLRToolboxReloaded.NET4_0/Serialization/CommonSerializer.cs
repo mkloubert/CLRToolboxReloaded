@@ -2,9 +2,9 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
-using MarcelJoachimKloubert.CLRToolbox.Data.Conversion;
+using MarcelJoachimKloubert.CLRToolbox.Serialization.Json;
 using Newtonsoft.Json;
-using System.IO;
+using System;
 using System.Text;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Serialization
@@ -14,7 +14,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
     /// </summary>
     public class CommonSerializer : SerializerBase
     {
-        #region Constructors (1)
+        #region Fields (1)
+
+        private readonly JsonSerializerProvider _JSON_SERIALIZER_PROVIDER;
+
+        #endregion Fields (1)
+
+        #region Constructors (2)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SerializerBase" /> class.
@@ -22,11 +28,68 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
         public CommonSerializer()
             : base(isSynchronized: false)
         {
+            this._JSON_SERIALIZER_PROVIDER = this.GetJsonNetSerializer;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SerializerBase" /> class.
+        /// </summary>
+        /// <param name="jsonSerializerProvider">The function / method that provides the JSON serializer to use.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="jsonSerializerProvider" /> is <see langword="null" />.
+        /// </exception>
+        public CommonSerializer(JsonSerializerProvider jsonSerializerProvider)
+            : base(isSynchronized: false)
+        {
+            if (jsonSerializerProvider == null)
+            {
+                throw new ArgumentNullException("jsonSerializerProvider");
+            }
+
+            this._JSON_SERIALIZER_PROVIDER = jsonSerializerProvider;
         }
 
         #endregion Constructors
 
-        #region Methods (4)
+        #region Events and delegates (1)
+
+        /// <summary>
+        /// Provides the <see cref="JsonNetSerializer" /> to use.
+        /// </summary>
+        /// <param name="serializer">The underlying instance of that class.</param>
+        /// <returns>The serializer to use.</returns>
+        public delegate JsonNetSerializer JsonSerializerProvider(CommonSerializer serializer);
+
+        #endregion
+
+        #region Methods (8)
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="CommonSerializer" /> class.
+        /// </summary>
+        /// <returns>The new instance.</returns>
+        public static CommonSerializer Create()
+        {
+            return new CommonSerializer();
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="CommonSerializer" /> class.
+        /// </summary>
+        /// <param name="jsonSerializer">The json serializer to use.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="jsonSerializer" /> is <see langword="null" />.
+        /// </exception>
+        public static CommonSerializer Create(JsonNetSerializer jsonSerializer)
+        {
+            if (jsonSerializer == null)
+            {
+                throw new ArgumentNullException("jsonSerializer");
+            }
+
+            return new CommonSerializer((s) => jsonSerializer);
+        }
 
         /// <summary>
         /// Creates a new <see cref="JsonSerializer" /> instance.
@@ -36,7 +99,18 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
         {
             var settings = this.GetJsonSerializerSettings();
 
-            return settings == null ? JsonSerializer.Create() : JsonSerializer.Create(settings);
+            return settings == null ? JsonSerializer.Create()
+                                    : JsonSerializer.Create(settings);
+        }
+
+        private JsonNetSerializer GetJsonNetSerializer(CommonSerializer serializer)
+        {
+            return JsonNetSerializer.Create();
+        }
+
+        private JsonSerializer GetJsonSerializer(JsonNetSerializer serializer, JsonNetSerializer.SerializationMode mode)
+        {
+            return this.CreateJsonSerializer();
         }
 
         /// <summary>
@@ -51,44 +125,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
         /// <inheriteddoc />
         protected override void OnFromJson<T>(string json, ref T deserializedObj)
         {
-            var serializer = this.CreateJsonSerializer();
-
-            using (var strReader = new StringReader(json))
-            {
-                using (var jsonReader = new JsonTextReader(strReader))
-                {
-                    var deserializesAs = typeof(T);
-
-                    if (typeof(T).Equals(typeof(global::System.Collections.Generic.IDictionary<string, object>)))
-                    {
-                        deserializesAs = typeof(global::System.Dynamic.ExpandoObject);
-                    }
-
-                    deserializedObj = GlobalConverter.Current
-                                                     .ChangeType<T>(serializer.Deserialize(jsonReader, deserializesAs));
-                }
-            }
+            deserializedObj = this._JSON_SERIALIZER_PROVIDER(this)
+                                  .Deserialize<T>(strData: json);
         }
 
         /// <inheriteddoc />
         protected override void OnToJson<T>(T objToSerialize, ref StringBuilder jsonBuilder)
         {
-            var serializer = this.CreateJsonSerializer();
-
-            using (var strWriter = new StringWriter(jsonBuilder))
-            {
-                using (var jsonWriter = new JsonTextWriter(strWriter))
-                {
-                    var serializesAs = typeof(T);
-
-                    if (typeof(T).Equals(typeof(global::System.Dynamic.ExpandoObject)))
-                    {
-                        serializesAs = typeof(global::System.Collections.Generic.IDictionary<string, object>);
-                    }
-
-                    serializer.Serialize(jsonWriter, objToSerialize, serializesAs);
-                }
-            }
+            jsonBuilder.Append(this._JSON_SERIALIZER_PROVIDER(this)
+                                   .Serialize<T>(objToSerialize));
         }
 
         #endregion Methods

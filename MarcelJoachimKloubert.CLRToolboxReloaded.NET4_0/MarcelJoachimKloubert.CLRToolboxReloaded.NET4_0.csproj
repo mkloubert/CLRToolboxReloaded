@@ -558,9 +558,16 @@
     <Compile Include="Security\Cryptography\ICrypter.cs" />
     <Compile Include="Security\Cryptography\XorCrypter.cs" />
     <Compile Include="Security\UsernamePasswordValidator.cs" />
+    <Compile Include="Serialization\BinaryFormatterSerializer.cs" />
+    <Compile Include="Serialization\BinarySerializerBase.cs" />
     <Compile Include="Serialization\CommonSerializer.cs" />
+    <Compile Include="Serialization\IBinarySerializer.cs" />
     <Compile Include="Serialization\IObjectSerializer.cs" />
     <Compile Include="Serialization\IStringSerializer.cs" />
+    <Compile Include="Serialization\Json\JsonNetSerializer.cs" />
+    <Compile Include="Serialization\Json\JsonNetSerializer.SerializationMode.cs">
+      <DependentUpon>JsonNetSerializer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Serialization\ObjectSerializerBase.cs" />
     <Compile Include="Serialization\StringSerializerBase.cs" />
     <Compile Include="ServiceLocation\DelegateServiceLocator.Classes.cs">

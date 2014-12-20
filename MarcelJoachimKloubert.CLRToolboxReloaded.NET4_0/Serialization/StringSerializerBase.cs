@@ -24,21 +24,19 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
 
         /// <inheriteddoc />
         protected StringSerializerBase(bool isSynchronized)
-            : this(isSynchronized: isSynchronized,
-                   sync: new object())
+            : base(isSynchronized: isSynchronized)
         {
         }
 
         /// <inheriteddoc />
         protected StringSerializerBase(object sync)
-            : this(isSynchronized: false,
-                   sync: sync)
+            : base(sync: sync)
         {
         }
 
         /// <inheriteddoc />
         protected StringSerializerBase()
-            : this(isSynchronized: false)
+            : base()
         {
         }
 
@@ -123,7 +121,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
                              serializeAs: serializeAs,
                              strData: ref strData);
 
-            data = strData != null ? strData.ToString() : null;
+            data = strData != null ? strData.ToString()
+                                   : null;
         }
 
         /// <summary>

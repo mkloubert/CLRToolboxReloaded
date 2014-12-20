@@ -323,10 +323,10 @@
       <Link>Serialization\SerializerBase.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\Json\JsonParamResult.cs">
-      <Link>Serialization\Json\JsonParamResult.cs</Link>
+      <Link>Json\JsonParamResult.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\Json\JsonResult.cs">
-      <Link>Serialization\Json\JsonResult.cs</Link>
+      <Link>Json\JsonResult.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\CryptoRandom.cs">
       <Link>CryptoRandom.cs</Link>
@@ -969,6 +969,21 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\StringSerializerBase.cs">
       <Link>Serialization\StringSerializerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\BinaryFormatterSerializer.cs">
+      <Link>Serialization\BinaryFormatterSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\BinarySerializerBase.cs">
+      <Link>Serialization\BinarySerializerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\IBinarySerializer.cs">
+      <Link>Serialization\IBinarySerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\Json\JsonNetSerializer.cs">
+      <Link>Serialization\Json\JsonNetSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\Json\JsonNetSerializer.SerializationMode.cs">
+      <Link>Serialization\Json\JsonNetSerializer.SerializationMode.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

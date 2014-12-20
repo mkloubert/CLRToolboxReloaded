@@ -74,6 +74,7 @@
     <Compile Include="RandomValues.cs" />
     <Compile Include="Scripting\Jurassic.cs" />
     <Compile Include="Security\CrypterTests.cs" />
+    <Compile Include="Serialization\SerializerTests.cs" />
     <Compile Include="ServiceLocation\ServiceLocatorTests.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="TestFixtureBase.cs" />

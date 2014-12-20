@@ -2,6 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.CLRToolbox.Data.Conversion;
 using System;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Serialization
@@ -73,7 +74,19 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
 
         #endregion
 
-        #region Methods (16)
+        #region Properties (1)
+
+        /// <summary>
+        /// Gets the converter to use.
+        /// </summary>
+        protected virtual IConverter Converter
+        {
+            get { return GlobalConverter.Current; }
+        }
+
+        #endregion
+
+        #region Methods (17)
 
         /// <inheriteddoc />
         public bool CanDeserialize<T>(object data)
@@ -125,10 +138,23 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
             return result;
         }
 
+        /// <summary>
+        /// Converts an object to a specific data type.
+        /// </summary>
+        /// <typeparam name="T">The target type.</typeparam>
+        /// <param name="input">The input object.</param>
+        /// <returns>The target value.</returns>
+        protected virtual T ChangeType<T>(object input)
+        {
+            var converter = this.Converter;
+            return converter != null ? converter.ChangeType<T>(input)
+                                     : (T)input;
+        }
+
         /// <inheriteddoc />
         public T Deserialize<T>(object data)
         {
-            return (T)this.Deserialize(data, typeof(T));
+            return this.ChangeType<T>(this.Deserialize(data, typeof(T)));
         }
 
         /// <inheriteddoc />
@@ -230,7 +256,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Serialization
             }
 
             object result = null;
-            this._DESERIALIZE_ACTION(obj, serializeAs, ref result);
+            this._SERIALIZE_ACTION(obj, serializeAs, ref result);
 
             return result;
         }
