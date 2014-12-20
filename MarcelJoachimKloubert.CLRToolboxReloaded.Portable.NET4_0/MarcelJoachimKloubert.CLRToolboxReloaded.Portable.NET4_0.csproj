@@ -749,8 +749,14 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\serialization\CommonSerializer.cs">
       <Link>Serialization\CommonSerializer.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\IObjectSerializer.cs">
+      <Link>Serialization\IObjectSerializer.cs</Link>
+    </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\serialization\ISerializer.cs">
       <Link>Serialization\ISerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\IStringSerializer.cs">
+      <Link>Serialization\IStringSerializer.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\Json\JsonParamResult.cs">
       <Link>Serialization\Json\JsonParamResult.cs</Link>
@@ -758,8 +764,14 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\Json\JsonResult.cs">
       <Link>Serialization\Json\JsonResult.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\ObjectSerializerBase.cs">
+      <Link>Serialization\ObjectSerializerBase.cs</Link>
+    </Compile>
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\serialization\SerializerBase.cs">
       <Link>Serialization\SerializerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Serialization\StringSerializerBase.cs">
+      <Link>Serialization\StringSerializerBase.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\ServiceLocation\DelegateServiceLocator.Classes.cs">
       <Link>ServiceLocation\DelegateServiceLocator.Classes.cs</Link>

@@ -139,7 +139,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Functions
 
         #endregion Properties (6)
 
-        #region Methods (14)
+        #region Methods (15)
 
         /// <summary>
         /// Creates an empty an initial function execution context instance.
@@ -202,9 +202,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Functions
                 ctx.ExitCode = this.GetInitialExitCode(ctx.Input);
                 this.InitializeExecutionContext(ctx);
 
-                ctx.StartTime = AppTime.Now;
+                ctx.StartTime = this.GetNow();
                 this._ON_EXECUTE_FUNC(ctx);
-                ctx.EndTime = AppTime.Now;
+                ctx.EndTime = this.GetNow();
 
                 ctx.HasBeenFailed = false;
 
@@ -212,8 +212,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Functions
             }
             catch (Exception ex)
             {
-                ctx.EndTime = AppTime.Now;
-                
+                ctx.EndTime = this.GetNow();
+
                 ctx.HasBeenFailed = true;
                 ctx.Error = ex;
 
@@ -285,6 +285,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Functions
         }
 
         /// <summary>
+        /// Returns a value that represents the current time.
+        /// </summary>
+        /// <returns>The current time.</returns>
+        protected virtual DateTimeOffset GetNow()
+        {
+            return AppTime.Now;
+        }
+
+        /// <summary>
         /// Initializes an execution context.
         /// </summary>
         /// <param name="ctx">The context to initialize.</param>
@@ -308,7 +317,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Functions
         }
 
         /// <summary>
-        /// Is invoked AFTER execution was done, even if execution was successful or not.
+        /// Is invoked AFTER execution was done, even if execution was successfull or not.
         /// It is executed after <see cref="FunctionBase.OnExecutionSucceeded(FunctionExecutionContext)" /> and
         /// <see cref="FunctionBase.OnExecutionError(FunctionExecutionContext, Exception)" /> methods.
         /// </summary>
@@ -337,6 +346,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Functions
             // dummy
         }
 
-        #endregion Methods (13)
+        #endregion Methods (15)
     }
 }

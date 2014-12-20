@@ -559,6 +559,10 @@
     <Compile Include="Security\Cryptography\XorCrypter.cs" />
     <Compile Include="Security\UsernamePasswordValidator.cs" />
     <Compile Include="Serialization\CommonSerializer.cs" />
+    <Compile Include="Serialization\IObjectSerializer.cs" />
+    <Compile Include="Serialization\IStringSerializer.cs" />
+    <Compile Include="Serialization\ObjectSerializerBase.cs" />
+    <Compile Include="Serialization\StringSerializerBase.cs" />
     <Compile Include="ServiceLocation\DelegateServiceLocator.Classes.cs">
       <DependentUpon>DelegateServiceLocator.cs</DependentUpon>
     </Compile>

@@ -41,14 +41,14 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
             if (this._IS_SYNCHRONIZED)
             {
                 this._CAN_EXECUTE_ACTION = this.OnCanExecute_ThreadSafe;
-                this._COMPLETED_ACTION = this.OnCompleted_ThreadSafe; 
+                this._COMPLETED_ACTION = this.OnCompleted_ThreadSafe;
                 this._ERROR_ACTION = this.OnError_ThreadSafe;
                 this._EXECUTE_ACTION = this.OnExecute_ThreadSafe;
             }
             else
             {
                 this._CAN_EXECUTE_ACTION = this.OnCanExecute_NonThreadSafe;
-                this._COMPLETED_ACTION = this.OnCompleted; 
+                this._COMPLETED_ACTION = this.OnCompleted;
                 this._ERROR_ACTION = this.OnError;
                 this._EXECUTE_ACTION = this.OnExecute;
             }
@@ -158,7 +158,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
 
         private bool OnCanExecute_NonThreadSafe(DateTimeOffset time)
         {
-            bool result = false;
+            var result = false;
             this.OnCanExecute(time, ref result);
 
             return result;
@@ -175,7 +175,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
 
             return result;
         }
-        
+
         /// <summary>
         /// The logic for the <see cref="JobBase.Completed(IJobExecutionContext)" /> method.
         /// </summary>
