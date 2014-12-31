@@ -248,6 +248,15 @@
       <DependentUpon>AppDomains.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\AppDomains.cs" />
+    <Compile Include="Extensions\Collections.PopAll.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Cryptography.DecryptSecureString.cs">
+      <DependentUpon>Cryptography.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Cryptography.DecryptString.cs">
+      <DependentUpon>Cryptography.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\ClrToolboxDataExtensionMethods.cs" />
     <Compile Include="Extensions\ClrToolboxDrawExtensionMethods.cs" />
     <Compile Include="Extensions\ClrToolboxExtensionMethods.cs" />
@@ -320,6 +329,12 @@
       <DependentUpon>Cryptography.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Cryptography.cs" />
+    <Compile Include="Extensions\Cryptography.Decrypt.cs">
+      <DependentUpon>Cryptography.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Cryptography.Encrypt.cs">
+      <DependentUpon>Cryptography.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Data.Build.cs">
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>
@@ -433,6 +448,9 @@
     <Compile Include="Extensions\Timing.cs" />
     <Compile Include="Extensions\Timing.Walk.cs">
       <DependentUpon>Timing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\ValuesAndObjects.ChangeTo.cs">
+      <DependentUpon>ValuesAndObjects.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ValuesAndObjects.cs" />
     <Compile Include="Extensions\ValuesAndObjects.DisposeEx.cs">
@@ -554,6 +572,7 @@
       <DependentUpon>DelegateCrypter.cs</DependentUpon>
     </Compile>
     <Compile Include="Security\Cryptography\DelegateCrypter.cs" />
+    <Compile Include="Security\Cryptography\GlobalCrypter.cs" />
     <Compile Include="Security\Cryptography\HashCrypter.cs" />
     <Compile Include="Security\Cryptography\ICrypter.cs" />
     <Compile Include="Security\Cryptography\XorCrypter.cs" />

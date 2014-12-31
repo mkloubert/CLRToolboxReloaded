@@ -4,7 +4,6 @@
 
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
-using System.Collections.Generic;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Data
 {

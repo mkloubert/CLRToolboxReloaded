@@ -14,7 +14,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         #region Data members (1)
 
         /// <summary>
-        /// Gets if that object works thread safe or not.
+        /// Gets if that object has been disposed or not.
         /// </summary>
         bool IsDisposed { get; }
 
@@ -26,7 +26,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// Is invoked AFTER that object has been disposed.
         /// </summary>
         event EventHandler Disposed;
-        
+
         /// <summary>
         /// Is invoked BEFORE that object starts disposing.
         /// </summary>

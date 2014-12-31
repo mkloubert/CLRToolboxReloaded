@@ -9,9 +9,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 {
     static partial class ClrToolboxExtensionMethods
     {
-        #region Methods (2)
-
-        // Public Methods (2) 
+        #region Methods (2)
 
         /// <summary>
         /// Swaps the order of elements in a list.
@@ -50,9 +48,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                 throw new ArgumentNullException("rand");
             }
 
-            for (var i = 0; i < list.Count; i++)
+            var itemCount = list.Count;
+            for (var i = 0; i < itemCount; i++)
             {
-                var newIdx = rand.Next(0, list.Count);
+                var newIdx = rand.Next(0, itemCount);
                 var temp = list[i];
 
                 list[i] = list[newIdx];
@@ -60,6 +59,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
             }
         }
 
-        #endregion Methods
+        #endregion Methods (2)
     }
 }

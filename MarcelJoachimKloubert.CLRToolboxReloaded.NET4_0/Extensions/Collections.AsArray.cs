@@ -54,26 +54,42 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// </remarks>
         public static T[] AsArray<T>(this IEnumerable<T> seq)
         {
+            if (seq is T[])
+            {
+                return (T[])seq;
+            }
+
             if (seq == null)
             {
                 return null;
             }
 
-            var result = seq as T[];
-            if (result == null)
+            // list?
+            var list = seq as List<T>;
+            if (list != null)
             {
-                var genList = seq as IGeneralList;
-                if (genList != null)
-                {
-                    result = genList.ToArray<T>(ofType: false);
-                }
-                else
-                {
-                    result = seq.ToArray();
-                }
+                // YES: use build-in method
+                return list.ToArray();
             }
 
-            return result;
+            // stack?
+            var stack = seq as Stack<T>;
+            if (stack != null)
+            {
+                // YES: use build-in method
+                return stack.ToArray();
+            }
+
+            // general list?
+            var genList = seq as IGeneralList;
+            if (genList != null)
+            {
+                // YES: use build-in method
+                return genList.ToArray<T>(ofType: false);
+            }
+
+            // use LINQ
+            return seq.ToArray();
         }
 
         #endregion Methods (2)

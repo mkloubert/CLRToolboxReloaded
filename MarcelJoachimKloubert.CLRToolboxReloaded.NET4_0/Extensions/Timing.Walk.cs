@@ -54,7 +54,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// <returns>The sequence of values.</returns>
         public static IEnumerable<DateTime> Walk(this DateTime value, long stepInTicks)
         {
-            return Walk(value, TimeSpan.FromTicks(stepInTicks));
+            return Walk(value,
+                        TimeSpan.FromTicks(stepInTicks));
         }
 
         /// <summary>
@@ -89,7 +90,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
         /// <returns>The sequence of values.</returns>
         public static IEnumerable<TimeSpan> Walk(this TimeSpan value, long stepInTicks)
         {
-            return Walk(value, TimeSpan.FromTicks(stepInTicks));
+            return Walk(value,
+                        TimeSpan.FromTicks(stepInTicks));
         }
 
         /// <summary>
