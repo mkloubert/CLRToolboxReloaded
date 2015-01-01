@@ -427,7 +427,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         {
             if (enc == null)
             {
-                throw new ArgumentNullException("enc");
+                throw new global::System.ArgumentNullException("enc");
             }
 
             string str;
