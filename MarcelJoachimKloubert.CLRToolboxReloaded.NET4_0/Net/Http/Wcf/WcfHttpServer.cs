@@ -132,7 +132,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
                 // ignore here
             }
         }
-        
+
         internal bool OnHandleBadRequestInner(HttpRequest req, HttpResponse resp)
         {
             return this.OnHandleBadRequest(req, resp);
@@ -184,7 +184,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
             {
                 var useHttps = this.UseSecureHttp;
                 var credValidator = this.CredentialValidator;
-                var port = this.Port;
+                var port = this.Port ?? (useHttps ? DEFAULT_PORT_SECURE_HTTP : DEFAULT_PORT_HTTP);
 
                 var baseUrl = new Uri(string.Format("http{0}://localhost:{1}/",
                                                     useHttps ? "s" : string.Empty,

@@ -5,7 +5,6 @@
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.IO;
-using System.IO.Compression;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -96,13 +95,15 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
         /// <param name="useHttps">User secure HTTP (https) or not.</param>
         protected virtual void AddPrefixes(HttpListener listener, bool useHttps)
         {
+            var port = this.Port ?? (useHttps ? DEFAULT_PORT_SECURE_HTTP : DEFAULT_PORT_HTTP);
+
             listener.Prefixes.Add(string.Format("http{0}://+:{1}/",
                                                 useHttps ? "s" : string.Empty,
-                                                this.Port));
+                                                port));
 
             listener.Prefixes.Add(string.Format("http{0}://*:{1}/",
                                                 useHttps ? "s" : string.Empty,
-                                                this.Port));
+                                                port));
         }
 
         private void CreateRequestAndResponse(HttpListenerContext ctx, out HttpRequest req, out HttpResponse resp)
@@ -328,7 +329,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                             {
                                 resp.SetStream(newStream);
                                 closeOldStream = true;
-                                    
+
                                 oldStream.Position = 0;
                                 oldStream.GZip(newStream);
 
