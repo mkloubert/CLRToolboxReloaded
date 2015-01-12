@@ -50,7 +50,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 
         #endregion Constrcutors (4)
 
-        #region Properties (4)
+        #region Properties (6)
 
         /// <inheriteddoc />
         public abstract bool CanDecrypt
@@ -76,9 +76,25 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
             get { return this.CanEncrypt; }
         }
 
-        #endregion Properties (4)
+        /// <summary>
+        /// Gets the size for salt string prefixes.
+        /// </summary>
+        protected virtual int SaltStringPrefixSize
+        {
+            get { return 7; }
+        }
 
-        #region Methods (31)
+        /// <summary>
+        /// Gets the size for salt string suffixes.
+        /// </summary>
+        protected virtual int SaltStringSuffixSize
+        {
+            get { return 6; }
+        }
+
+        #endregion Properties (6)
+
+        #region Methods (34)
 
         /// <inheriteddoc />
         protected override void DestroyTempByteArray(byte[] array)
@@ -116,7 +132,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
             {
                 try
                 {
-                    stream.Shredder(count: 3,
+                    stream.Shredder(count: 1,
                                     restorePos: false,
                                     fromBeginning: true,
                                     flushAfterWrite: false);
@@ -131,8 +147,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 
                     // ... before make empty
                     {
-                        // ... before make empty
-
                         stream.SetLength(0);
                         finalFlush = true;
                     }
@@ -318,6 +332,17 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         }
 
         /// <summary>
+        /// Returns the chars that are allowed to salt a string by using a specific charset.
+        /// </summary>
+        /// <param name="str">The (source/unsalted) string.</param>
+        /// <param name="enc">The charset that should be used.</param>
+        /// <returns>The list of allowed chars.</returns>
+        protected virtual string GetAllowedCharsForSaltingStrings(StringBuilder str, Encoding enc)
+        {
+            return "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        }
+
+        /// <summary>
         /// Stores the logic for the <see cref="CrypterBase.Decrypt(Stream, Stream, int?)" /> method.
         /// </summary>
         /// <param name="src">The stream with the crypted data.</param>
@@ -357,6 +382,55 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
             this.OnEncrypt(src, dest, bufferSize);
         }
 
-        #endregion Methods (31)
+        /// <inheriteddoc />
+        protected override void SaltString(StringBuilder str, Encoding enc)
+        {
+            var rand = new Random();
+
+            var allowedChars = this.GetAllowedCharsForSaltingStrings(str, enc);
+            var getNextChar = new Func<char>(() =>
+                {
+                    return allowedChars[rand.Next(0, allowedChars.Length)];
+                });
+
+            int size;
+
+            // prefix
+            size = this.SaltStringPrefixSize;
+            for (var i = 0; i < size; i++)
+            {
+                str.Insert(0,
+                           getNextChar().ToString());
+            }
+
+            // suffix
+            size = this.SaltStringSuffixSize;
+            for (var i = 0; i < size; i++)
+            {
+                str.Append(getNextChar());
+            }
+        }
+
+        /// <inheriteddoc />
+        protected override void UnsaltString(StringBuilder str, Encoding enc)
+        {
+            int size;
+
+            // prefix
+            size = this.SaltStringPrefixSize;
+            if (size > 0)
+            {
+                str.Remove(0, size);
+            }
+
+            // suffix
+            size = this.SaltStringSuffixSize;
+            if (size > 0)
+            {
+                str.Remove(str.Length - size, size);
+            }
+        }
+
+        #endregion Methods (34)
     }
 }

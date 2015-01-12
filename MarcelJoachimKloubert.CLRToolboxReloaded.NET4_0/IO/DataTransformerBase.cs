@@ -369,7 +369,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
                         var builder = new StringBuilder(enc.GetString(restored, 0, restored.Length));
                         try
                         {
-                            this.UnsaltString(builder);
+                            this.UnsaltString(builder, enc);
 
                             return builder.ToString();
                         }
@@ -451,7 +451,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
         /// Salts a string to transform.
         /// </summary>
         /// <param name="str">The string to salt.</param>
-        protected virtual void SaltString(StringBuilder str)
+        /// <param name="enc">The encoding that is used.</param>
+        protected virtual void SaltString(StringBuilder str, Encoding enc)
         {
             // dummy
         }
@@ -559,7 +560,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
             var builder = new StringBuilder(str ?? string.Empty);
             try
             {
-                this.SaltString(builder);
+                this.SaltString(builder, enc);
 
                 using (var src = new MemoryStream(enc.GetBytes(builder.ToString())))
                 {
@@ -641,7 +642,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
         /// Salts a restored string.
         /// </summary>
         /// <param name="str">The string to unsalt.</param>
-        protected virtual void UnsaltString(StringBuilder str)
+        /// <param name="enc">The encoding that is used.</param>
+        protected virtual void UnsaltString(StringBuilder str, Encoding enc)
         {
             // dummy
         }

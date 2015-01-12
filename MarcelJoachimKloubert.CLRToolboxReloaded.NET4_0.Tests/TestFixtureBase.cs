@@ -4,6 +4,9 @@
 
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
 
 namespace MarcelJoachimKloubert.CLRToolbox._Tests
 {
@@ -33,7 +36,17 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests
 
         #endregion Constructors (1)
 
-        #region Methods (8)
+        #region Methods (9)
+
+        /// <summary>
+        /// Returns all (default) encodings that should be used by that test fixture.
+        /// </summary>
+        /// <returns>The list of encodings.</returns>
+        protected virtual IEnumerable<Encoding> GetEncodings()
+        {
+            return Encoding.GetEncodings()
+                           .Select(ei => ei.GetEncoding());
+        }
 
         /// <summary>
         /// The logic for the <see cref="TestFixtureBase.SetupFixture" /> method.

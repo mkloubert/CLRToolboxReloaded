@@ -4,7 +4,10 @@
 
 using MarcelJoachimKloubert.CLRToolbox.Security.Cryptography;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace MarcelJoachimKloubert.CLRToolbox._Tests.Security
@@ -20,7 +23,7 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Security
 
         #endregion Fields (1)
 
-        #region Methods (5)
+        #region Methods (6)
 
         [Test]
         public void AES_Test()
@@ -47,11 +50,11 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Security
             this.TestCrypter(crypter);
         }
 
-        private string CreateRandomText()
+        private string CreateRandomText(int maxSize = 1024 * 1024)
         {
             var result = new StringBuilder();
 
-            var textSize = this._RANDOM.Next(0, 1024 * 1024);
+            var textSize = this._RANDOM.Next(0, maxSize);
             for (var i = 0; i < textSize; i++)
             {
                 result.Append(_WORD_CHARS[this._RANDOM
@@ -61,12 +64,85 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Security
             return result.ToString();
         }
 
+        [Test]
+        public void Hasher_Test()
+        {
+            var crypterGenericType = typeof(HashCrypter<>);
+
+            // find HashCrypter.Create<TAlgo>(string, Encoding)
+            var createMethod = typeof(HashCrypter).GetMethods()
+                                                  .Single(m =>
+                                                  {
+                                                      if (m.Name != "Create")
+                                                      {
+                                                          return false;
+                                                      }
+
+                                                      var genArgs = m.GetGenericArguments();
+                                                      if (genArgs.Length != 1)
+                                                      {
+                                                          return false;
+                                                      }
+
+                                                      var @params = m.GetParameters();
+                                                      return (@params.Length == 2) &&
+                                                             (@params[0].ParameterType.Equals(typeof(string))) &&
+                                                             (@params[1].ParameterType.Equals(typeof(Encoding)));
+                                                  });
+
+            var hashAlgorithms = new HashSet<Type>
+            {
+                typeof(MD5Cng),
+                typeof(MD5CryptoServiceProvider),
+                typeof(RIPEMD160Managed),
+                typeof(SHA1Cng),
+                typeof(SHA1CryptoServiceProvider),
+                typeof(SHA1Managed),
+                typeof(SHA256Cng),
+                typeof(SHA256CryptoServiceProvider),
+                typeof(SHA256Managed),
+                typeof(SHA384Cng),
+                typeof(SHA384CryptoServiceProvider),
+                typeof(SHA384Managed),
+                typeof(SHA512Cng),
+                typeof(SHA512CryptoServiceProvider),
+                typeof(SHA512Managed),
+            };
+
+            var src = this.CreateRandomText();
+
+            var durations = new List<long>();
+
+            foreach (var enc in this.GetEncodings())
+            {
+                var salt = this.CreateRandomText(128);
+
+                foreach (var algo in hashAlgorithms)
+                {
+                    // call HashCrypter.Create<TAlgo>(string, Encoding)
+                    var crypter = (ICrypter)createMethod.MakeGenericMethod(algo)
+                                                        .Invoke(null,
+                                                                new object[] { salt, enc });
+
+                    var hashes = new List<byte[]>();
+                    for (var i = 0; i < 2; i++)
+                    {
+                        hashes.Add(crypter.EncryptString(src, enc));
+                    }
+
+                    var firstHash = hashes.First();
+                    Assert.IsTrue(hashes.Skip(1)
+                                        .All(h => h.SequenceEqual(firstHash)));
+                }
+            }
+        }
+
         private void TestCrypter(ICrypter crypter)
         {
-            foreach (var enc in Encoding.GetEncodings()
-                                        .Select(ei => ei.GetEncoding()))
+            var src = this.CreateRandomText();
+
+            foreach (var enc in this.GetEncodings())
             {
-                var src = this.CreateRandomText();
                 var dest = crypter.EncryptString(src, enc);
                 var src2 = crypter.DecryptString(dest, enc);
 
@@ -83,6 +159,6 @@ namespace MarcelJoachimKloubert.CLRToolbox._Tests.Security
             this.TestCrypter(crypter);
         }
 
-        #endregion Methods (5)
+        #endregion Methods (6)
     }
 }
