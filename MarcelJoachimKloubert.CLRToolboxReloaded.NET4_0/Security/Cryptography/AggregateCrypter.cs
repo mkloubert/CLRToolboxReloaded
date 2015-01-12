@@ -2,6 +2,7 @@
 
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
+using MarcelJoachimKloubert.CLRToolbox.IO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,11 +16,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
     /// </summary>
     public class AggregateCrypter : CrypterBase, IEnumerable<ICrypter>
     {
-        #region Fields (1)
+        #region Fields (2)
 
         private readonly CrypterProvider _CRYPTER_PROVIDER;
+        private readonly AggregateDataTransformer _TRANSFORMER;
 
-        #endregion Fields (1)
+        #endregion Fields (2)
 
         #region Constructors (1)
 
@@ -40,6 +42,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
             }
 
             this._CRYPTER_PROVIDER = provider;
+            this._TRANSFORMER = new AggregateDataTransformer(provider: this.GetTransformers);
         }
 
         #endregion Constructors (1)
@@ -71,16 +74,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 
         #endregion Properties (2)
 
-        #region Methods (11)
-
-        /// <summary>
-        /// Closes an old temporary stream that was used for encrypt / decrypt operations.
-        /// </summary>
-        /// <param name="stream">The stream to close.</param>
-        protected virtual void CloseTempStream(Stream stream)
-        {
-            stream.Dispose();
-        }
+        #region Methods (8)
 
         /// <summary>
         /// Creates a new instance of the <see cref="AggregateCrypter" /> class.
@@ -114,103 +108,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         }
 
         /// <summary>
-        /// Creates a temporary stream for encrypt / decrypt operations.
-        /// </summary>
-        /// <returns>The created stream.</returns>
-        protected virtual Stream CreateTempStream()
-        {
-            return new MemoryStream();
-        }
-
-        private void DeOrEncrypt(Stream src, Stream dest, int? bufferSize,
-                                 IEnumerable<ICrypter> crypters,
-                                 Action<ICrypter, Stream, Stream, int?> crypterAction)
-        {
-            Stream currentDest = null;
-
-            using (var e = crypters.GetEnumerator())
-            {
-                long index = -1;
-                Stream currentSrc = null;
-
-                int? currentBufSize = null;
-                while (e.MoveNext())
-                {
-                    ++index;
-                    var currentCrypter = e.Current;
-
-                    if (index == 0)
-                    {
-                        // first operation
-
-                        currentSrc = src;
-                        currentBufSize = bufferSize;
-                    }
-                    else
-                    {
-                        // last destionation is new source
-                        currentSrc = currentDest;
-                        currentSrc.Position = 0;
-
-                        currentBufSize = this.GetBufferSizeForTempStream(currentSrc);
-                    }
-
-                    currentDest = this.CreateTempStream();
-                    try
-                    {
-                        crypterAction(currentCrypter,
-                                      currentSrc, currentDest, currentBufSize);
-                    }
-                    catch
-                    {
-                        // close before rethrow exception
-                        this.CloseTempStream(currentDest);
-
-                        throw;
-                    }
-                    finally
-                    {
-                        if (index > 0)
-                        {
-                            // at that point it is a temp stream
-                            this.CloseTempStream(currentSrc);
-                        }
-                    }
-                }
-            }
-
-            if (currentDest != null)
-            {
-                // last but not least:
-                // copy to real destination stream
-
-                try
-                {
-                    currentDest.Position = 0;
-                    currentDest.CopyTo(dest);
-                }
-                finally
-                {
-                    this.CloseTempStream(currentDest);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns the buffer size in bytes that should be used to read a temp
-        /// stream that is used as source.
-        /// </summary>
-        /// <param name="stream">The temporary stream.</param>
-        /// <returns>
-        /// The buffer size.
-        /// <see langword="null" /> indicates to use the default value.
-        /// </returns>
-        protected virtual int? GetBufferSizeForTempStream(Stream stream)
-        {
-            return null;
-        }
-
-        /// <summary>
         /// Returns the crypters to use.
         /// </summary>
         /// <returns>The crypters to use.</returns>
@@ -236,22 +133,31 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
             return this.GetEnumerator();
         }
 
+        private IEnumerable<IDataTransformer> GetTransformers(AggregateDataTransformer transformer)
+        {
+            var result = this.GetCrypters();
+
+#if MONO_PORTABLE
+            return global::System.Linq.Enumerable.Cast<IDataTransformer>(result);
+#else
+            return result;
+#endif
+        }
+
         /// <inheriteddoc />
         protected override void OnDecrypt(Stream src, Stream dest, int? bufferSize)
         {
-            this.DeOrEncrypt(src, dest, bufferSize,
-                             this.GetCrypters().Reverse(),
-                             (c, s, d, bs) => c.Decrypt(s, d, bs));
+            this._TRANSFORMER
+                .RestoreData(src, dest, bufferSize);
         }
 
         /// <inheriteddoc />
         protected override void OnEncrypt(Stream src, Stream dest, int? bufferSize)
         {
-            this.DeOrEncrypt(src, dest, bufferSize,
-                             this.GetCrypters(),
-                             (c, s, d, bs) => c.Encrypt(s, d, bs));
+            this._TRANSFORMER
+                .TransformData(src, dest, bufferSize);
         }
 
-        #endregion Methods (11)
+        #endregion Methods (8)
     }
 }
