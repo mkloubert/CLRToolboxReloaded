@@ -6,6 +6,7 @@
 #define KNOWS_SECURE_STRING
 #endif
 
+using MarcelJoachimKloubert.CLRToolbox.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +17,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
     /// <summary>
     /// Describes an object that encrypts and decrypts data.
     /// </summary>
-    public interface ICrypter : IObject
+    public interface ICrypter : IDataTransformer
     {
         #region Properties (1)
 
@@ -112,7 +113,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
 #if KNOWS_SECURE_STRING
 
         /// <summary>
-        /// Decrypts a UTF-8 string as secure string.
+        /// Decrypts an UTF-8 string as secure string.
         /// </summary>
         /// <param name="src">The stream with the crypted data.</param>
         /// <param name="bufferSize">
@@ -153,7 +154,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         global::System.Security.SecureString DecryptSecureString(global::System.IO.Stream src, global::System.Text.Encoding enc, int? bufferSize = null);
 
         /// <summary>
-        /// Decrypts a UTF-8 string as secure string.
+        /// Decrypts an UTF-8 string as secure string.
         /// </summary>
         /// <param name="src">The crypted data.</param>
         /// <returns>The decoded string.</returns>

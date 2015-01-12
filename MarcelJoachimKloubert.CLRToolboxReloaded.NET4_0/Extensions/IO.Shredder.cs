@@ -73,7 +73,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
             try
             {
-                var startPos = lastKnownPos ?? stream.Position;
+                var startPos = fromBeginning ? stream.Seek(0, SeekOrigin.Begin)
+                                             : (lastKnownPos ?? stream.Position);
 
                 var len = stream.Length;
 
@@ -99,7 +100,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                     var blockCount = (long)Math.Floor((double)len / (double)block.Length);
                     for (long ii = 0; ii < blockCount; ii++)
                     {
-                        stream.Write(block, 0, block.Length);
+                        Write(stream, block);
 
                         if (flushAfterWrite)
                         {

@@ -129,6 +129,9 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\DictionaryWrapper.cs">
       <Link>Collections\Generic\DictionaryWrapper.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\EnumeratorWrapper.cs">
+      <Link>Collections\Generic\EnumeratorWrapper.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\EqualityComparerFactory.cs">
       <Link>Collections\Generic\EqualityComparerFactory.cs</Link>
     </Compile>
@@ -830,6 +833,28 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IObject.cs">
       <Link>IObject.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\AggregateDataTransformer.cs">
+      <Link>IO\AggregateDataTransformer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\Compression\CompressorBase.cs">
+      <Link>IO\Compression\CompressorBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\Compression\DelegateCompressor.CompressionMode.cs">
+      <Link>IO\Compression\DelegateCompressor.CompressionMode.cs</Link>
+      <DependentUpon>DelegateCompressor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\Compression\DelegateCompressor.cs">
+      <Link>IO\Compression\DelegateCompressor.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\Compression\DummyCompressor.cs">
+      <Link>IO\Compression\DummyCompressor.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\Compression\GZipCompressor.cs">
+      <Link>IO\Compression\GZipCompressor.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\Compression\ICompressor.cs">
+      <Link>IO\Compression\ICompressor.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\Console\ConsoleBase.cs">
       <Link>IO\Console\ConsoleBase.cs</Link>
     </Compile>
@@ -845,8 +870,27 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\Console\SystemConsole.cs">
       <Link>IO\Console\SystemConsole.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\DataCopier.cs">
+      <Link>IO\DataCopier.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\DataTransformerBase.cs">
+      <Link>IO\DataTransformerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\DelegateDataTransformer.cs">
+      <Link>IO\DelegateDataTransformer.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\DelegateDataTransformer.TransformMode.cs">
+      <Link>IO\DelegateDataTransformer.TransformMode.cs</Link>
+      <DependentUpon>DelegateDataTransformer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\DummyDataTransformer.cs">
+      <Link>IO\DummyDataTransformer.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\EventStream.cs">
       <Link>IO\EventStream.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\IDataTransformer.cs">
+      <Link>IO\IDataTransformer.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\NonDisposableStream.CallBehaviour.cs">
       <Link>IO\NonDisposableStream.CallBehaviour.cs</Link>
@@ -1014,6 +1058,30 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Scripting\ScriptExecutorBase.ScriptExecutionContext.cs">
       <Link>Scripting\ScriptExecutorBase.ScriptExecutionContext.cs</Link>
       <DependentUpon>ScriptExecutorBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Acl\AccessControlList.cs">
+      <Link>Security\Acl\AccessControlList.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Acl\AclAllowBehavior.cs">
+      <Link>Security\Acl\AclAllowBehavior.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Acl\AclResource.cs">
+      <Link>Security\Acl\AclResource.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Acl\AclRole.cs">
+      <Link>Security\Acl\AclRole.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Acl\AclRoleAllowBehavior.cs">
+      <Link>Security\Acl\AclRoleAllowBehavior.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Acl\IAccessControlList.cs">
+      <Link>Security\Acl\IAccessControlList.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Acl\IAclResource.cs">
+      <Link>Security\Acl\IAclResource.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Acl\IAclRole.cs">
+      <Link>Security\Acl\IAclRole.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\AesCrypter.cs">
       <Link>Security\Cryptography\AesCrypter.cs</Link>

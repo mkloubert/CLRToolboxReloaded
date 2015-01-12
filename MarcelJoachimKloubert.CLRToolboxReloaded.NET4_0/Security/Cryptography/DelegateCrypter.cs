@@ -78,7 +78,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         /// <param name="src">The source stream.</param>
         /// <param name="dest">The destination stream.</param>
         /// <param name="bufferSize">
-        /// The buffer in bytes for read operation to use.
+        /// The buffer size in bytes for read operation to use.
         /// <see langword="null" /> indicates to use the default.
         /// </param>
         public delegate void CrypterAction(DelegateCrypter crypter, CryptMode mode,

@@ -185,8 +185,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
                 throw new ArgumentNullException("actionStateProvider");
             }
 
-            List<Exception> errors = new List<Exception>();
-            object sync = new object();
+            var errors = new List<Exception>();
+            var sync = new object();
 
             long index = -1;
             var tasks = seq.Select(i => new Task((state) =>

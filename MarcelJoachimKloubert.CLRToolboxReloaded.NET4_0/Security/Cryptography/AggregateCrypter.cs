@@ -50,6 +50,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         /// A function or method that provides the crypters to use.
         /// </summary>
         /// <param name="crypter">The underlying crypter instance.</param>
+        /// <returns>The crypters to use.</returns>
         public delegate IEnumerable<ICrypter> CrypterProvider(AggregateCrypter crypter);
 
         #endregion Events and delegates (1)
@@ -229,6 +230,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
                        .GetEnumerator();
         }
 
+        /// <inheriteddoc />
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();

@@ -98,7 +98,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
 
         #endregion Events and delegates
 
-        #region Methods (19)
+        #region Methods (22)
 
         private static void AppendErrors(Exception ex, IList<JobException> occuredErrors, JobExceptionContext context)
         {
@@ -108,6 +108,27 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
             }
 
             occuredErrors.Add(new JobException(ex, context));
+        }
+
+        /// <summary>
+        /// Creates an inital instance of a <see cref="JobExecutionContext" /> class.
+        /// </summary>
+        /// <param name="job">The underlying job.</param>
+        /// <param name="time">The time.</param>
+        /// <returns>The new instance.</returns>
+        protected virtual JobExecutionContext CreateExecutionContext(IJob job, DateTimeOffset time)
+        {
+            return new JobExecutionContext();
+        }
+
+        /// <summary>
+        /// Creates an initial instance of a result value storage.
+        /// </summary>
+        /// <param name="ctx">The underlying execution context.</param>
+        /// <returns>The new instance.</returns>
+        protected virtual IDictionary<string, object> CreateResultVarsStorage(JobExecutionContext ctx)
+        {
+            return new Dictionary<string, object>(EqualityComparerFactory.CreateCaseInsensitiveStringComparer(true, true));
         }
 
         /// <inheriteddoc />
@@ -167,10 +188,19 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
         }
 
         /// <summary>
+        /// Returns a value that represents the current time.
+        /// </summary>
+        /// <returns>The current time.</returns>
+        protected virtual DateTimeOffset GetNow()
+        {
+            return AppTime.Now;
+        }
+
+        /// <summary>
         /// Handles a job item.
         /// </summary>
         /// <param name="ctx">The underlying item context.</param>
-        protected virtual void HandleJobItem(IForAllItemContext<IJob, DateTimeOffset> ctx)
+        protected void HandleJobItem(IForAllItemContext<IJob, DateTimeOffset> ctx)
         {
             var isCancelling = this.IsRunning == false;
 
@@ -178,15 +208,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
             var occuredErrors = new List<JobException>();
 
             DateTimeOffset completedAt;
-            var execCtx = new JobExecutionContext();
+            var execCtx = this.CreateExecutionContext(job, ctx.State);
             execCtx.State = JobExecutionState.NotRunning;
 
             try
             {
                 execCtx.Job = job;
-                execCtx.ResultVars = new Dictionary<string, object>(EqualityComparerFactory.CreateCaseInsensitiveStringComparer(true, true));
-
-                // execute
                 execCtx.Time = ctx.State;
 
                 execCtx.IsCancellingPredicate = (c) =>
@@ -211,6 +238,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
                         return c.State == JobExecutionState.Cancelling;
                     };
 
+                execCtx.ResultVars = this.CreateResultVarsStorage(execCtx);
+
+                // execute
                 if (this.IsRunning)
                 {
                     execCtx.State = JobExecutionState.Running;
@@ -226,11 +256,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
                     execCtx.State = JobExecutionState.Canceled;
                 }
 
-                completedAt = AppTime.Now;
+                completedAt = this.GetNow();
             }
             catch (Exception ex)
             {
-                completedAt = AppTime.Now;
+                completedAt = this.GetNow();
 
                 execCtx.State = JobExecutionState.Faulted;
 
@@ -262,8 +292,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
             var result = new JobExecutionResult();
             result.Context = execCtx;
             result.Errors = occuredErrors.ToArray();
-            result.Vars = new ReadOnlyDictionaryWrapper<string, object>(execCtx.ResultVars);
             result.Time = completedAt;
+            result.Vars = (execCtx.ResultVars as IReadOnlyDictionary<string, object>) ??
+                          new ReadOnlyDictionaryWrapper<string, object>(execCtx.ResultVars);
 
             this.RaiseEventHandler(this.Executed,
                                    new JobExecutionResultEventArgs(result));
@@ -391,7 +422,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
                 var newSession = new Session<IJobScheduler>();
                 newSession.SetId(Guid.NewGuid());
                 newSession.Parent = this;
-                newSession.Time = AppTime.Now;
+                newSession.Time = this.GetNow();
 
                 this.Session = newSession;
                 this.StartTimer();
@@ -469,7 +500,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
             {
                 try
                 {
-                    var now = AppTime.Now;
+                    var now = this.GetNow();
 
                     this.HandleJobs(now);
                 }
@@ -550,7 +581,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
             {
                 var session = this.Session;
 
-                return session == null ? (DateTimeOffset?)null : session.Time;
+                return session == null ? (DateTimeOffset?)null
+                                       : session.Time;
             }
         }
 

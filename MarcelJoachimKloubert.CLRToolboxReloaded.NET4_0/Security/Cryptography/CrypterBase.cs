@@ -3,10 +3,12 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 #if !(PORTABLE || PORTABLE40 || PORTABLE45)
+#define KNOWS_ARRAY_LONGLENGTH
 #define KNOWS_SECURE_STRING
 #endif
 
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
+using MarcelJoachimKloubert.CLRToolbox.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,15 +19,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
     /// <summary>
     /// A basic object that encrypts and decrypts data.
     /// </summary>
-    public abstract class CrypterBase : ObjectBase, ICrypter
+    public abstract class CrypterBase : DataTransformerBase, ICrypter
     {
-        #region Fields (2)
-
-        private readonly Action<Stream, Stream, int?> _DECRYPT_ACTION;
-        private readonly Action<Stream, Stream, int?> _ENCRYPT_ACTION;
-
-        #endregion Fields (2)
-
         #region Constrcutors (4)
 
         /// <inheriteddoc />
@@ -33,41 +28,29 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
             : base(isSynchronized: isSynchronized,
                    sync: sync)
         {
-            if (this._IS_SYNCHRONIZED)
-            {
-                this._DECRYPT_ACTION = this.OnDecrypt_ThreadSafe;
-                this._ENCRYPT_ACTION = this.OnEncrypt_ThreadSafe;
-            }
-            else
-            {
-                this._DECRYPT_ACTION = this.OnDecrypt;
-                this._ENCRYPT_ACTION = this.OnEncrypt;
-            }
         }
 
         /// <inheriteddoc />
         protected CrypterBase(bool isSynchronized)
-            : this(isSynchronized: isSynchronized,
-                   sync: new object())
+            : base(isSynchronized: isSynchronized)
         {
         }
 
         /// <inheriteddoc />
         protected CrypterBase(object sync)
-            : this(isSynchronized: false,
-                   sync: sync)
+            : base(sync: sync)
         {
         }
 
         /// <inheriteddoc />
         protected CrypterBase()
-            : this(isSynchronized: false)
+            : base()
         {
         }
 
         #endregion Constrcutors (4)
 
-        #region Properties (2)
+        #region Properties (4)
 
         /// <inheriteddoc />
         public abstract bool CanDecrypt
@@ -81,76 +64,133 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
             get;
         }
 
-        #endregion Properties (2)
+        /// <inheriteddoc />
+        public override sealed bool CanRestoreData
+        {
+            get { return this.CanDecrypt; }
+        }
 
-        #region Methods (29)
+        /// <inheriteddoc />
+        public override sealed bool CanTransformData
+        {
+            get { return this.CanEncrypt; }
+        }
+
+        #endregion Properties (4)
+
+        #region Methods (31)
+
+        /// <inheriteddoc />
+        protected override void DestroyTempByteArray(byte[] array)
+        {
+            if (array == null)
+            {
+                return;
+            }
+
+#if KNOWS_ARRAY_LONGLENGTH
+            for (long i = 0; i < array.LongLength; i++)
+#else
+            for (int i = 0; i < array.Length; i++)
+#endif
+            {
+                array[i] = 0;
+            }
+        }
+
+        /// <inheriteddoc />
+        protected override void DestroyTempStream(Stream stream)
+        {
+            if (stream == null)
+            {
+                return;
+            }
+
+            if (stream.CanWrite == false)
+            {
+                return;
+            }
+
+            var finalFlush = true;
+            try
+            {
+                try
+                {
+                    stream.Shredder(count: 3,
+                                    restorePos: false,
+                                    fromBeginning: true,
+                                    flushAfterWrite: false);
+                }
+                finally
+                {
+                    // flush stream ...
+                    {
+                        stream.Flush();
+                        finalFlush = false;
+                    }
+
+                    // ... before make empty
+                    {
+                        // ... before make empty
+
+                        stream.SetLength(0);
+                        finalFlush = true;
+                    }
+                }
+            }
+            finally
+            {
+                if (finalFlush)
+                {
+                    // now flush all data
+                    stream.Flush();
+                }
+            }
+        }
+
+        /// <inheriteddoc />
+        protected override void DestroyTempStringBuilder(StringBuilder builder)
+        {
+            if (builder == null)
+            {
+                return;
+            }
+
+            try
+            {
+                for (var i = 0; i < builder.Length; i++)
+                {
+                    builder[i] = '\0';
+                }
+            }
+            finally
+            {
+                builder.Clear();
+            }
+        }
 
         /// <inheriteddoc />
         public byte[] Decrypt(IEnumerable<byte> src)
         {
-            using (var dest = new MemoryStream())
-            {
-                this.Decrypt(src, dest);
-
-                return dest.ToArray();
-            }
+            return this.RestoreData(src);
         }
 
         /// <inheriteddoc />
         public byte[] Decrypt(Stream src, int? bufferSize = null)
         {
-            using (var dest = new MemoryStream())
-            {
-                this.Decrypt(src, dest);
-
-                return dest.ToArray();
-            }
+            return this.RestoreData(src, bufferSize);
         }
 
         /// <inheriteddoc />
         public void Decrypt(IEnumerable<byte> src, Stream dest)
         {
-            using (var srcStream = new MemoryStream(src.AsArray(), false))
-            {
-                this.Decrypt(srcStream, dest);
-            }
+            this.RestoreData(src, dest);
         }
 
         /// <inheriteddoc />
         public void Decrypt(Stream src, Stream dest, int? bufferSize = null)
         {
-            if (src == null)
-            {
-                throw new ArgumentNullException("src");
-            }
-
-            if (dest == null)
-            {
-                throw new ArgumentNullException("dest");
-            }
-
-            if (src.CanRead == false)
-            {
-                throw new IOException("src");
-            }
-
-            if (dest.CanWrite == false)
-            {
-                throw new IOException("dest");
-            }
-
-            if (this.CanDecrypt == false)
-            {
-                throw new InvalidOperationException();
-            }
-
-            if (bufferSize < 1)
-            {
-                throw new ArgumentOutOfRangeException("bufferSize");
-            }
-
-            this._DECRYPT_ACTION(src, dest,
-                                 bufferSize);
+            this.RestoreData(src, dest, bufferSize);
         }
 
 #if KNOWS_SECURE_STRING
@@ -158,33 +198,25 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         /// <inheriteddoc />
         public global::System.Security.SecureString DecryptSecureString(global::System.IO.Stream src, int? bufferSize = null)
         {
-            return this.DecryptSecureString(src, global::System.Text.Encoding.UTF8);
+            return this.RestoreSecureString(src, bufferSize);
         }
 
         /// <inheriteddoc />
         public global::System.Security.SecureString DecryptSecureString(global::System.IO.Stream src, global::System.Text.Encoding enc, int? bufferSize = null)
         {
-            // other checks are done by 'Decrypt(Stream, int?)'
-            // and ToSecureString(byte[], Encoding) methods
-
-            return ToSecureString(this.Decrypt(src),
-                                  enc);
+            return this.RestoreSecureString(src, enc, bufferSize);
         }
 
         /// <inheriteddoc />
         public global::System.Security.SecureString DecryptSecureString(global::System.Collections.Generic.IEnumerable<byte> src)
         {
-            return this.DecryptSecureString(src, global::System.Text.Encoding.UTF8);
+            return this.RestoreSecureString(src);
         }
 
         /// <inheriteddoc />
         public global::System.Security.SecureString DecryptSecureString(global::System.Collections.Generic.IEnumerable<byte> src, global::System.Text.Encoding enc)
         {
-            // other checks are done by 'Decrypt(IEnumerable<byte>)'
-            // and ToSecureString(byte[], Encoding) methods
-
-            return ToSecureString(this.Decrypt(src),
-                                  enc);
+            return this.RestoreSecureString(src, enc);
         }
 
 #endif
@@ -192,189 +224,97 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         /// <inheriteddoc />
         public void DecryptString(Stream src, StringBuilder builder, int? bufferSize = null)
         {
-            this.DecryptString(src, builder, Encoding.UTF8, bufferSize);
+            this.RestoreString(src, builder, bufferSize);
         }
 
         /// <inheriteddoc />
         public void DecryptString(Stream src, StringBuilder builder, Encoding enc, int? bufferSize = null)
         {
-            // other checks are done by 'DecryptString(Stream, Encoding, int?)'
-            // method
-
-            if (builder == null)
-            {
-                throw new ArgumentNullException("builder");
-            }
-
-            builder.Append(this.DecryptString(src, enc, bufferSize));
+            this.RestoreString(src, builder, enc, bufferSize);
         }
 
         /// <inheriteddoc />
         public string DecryptString(Stream src, int? bufferSize = null)
         {
-            return this.DecryptString(src, Encoding.UTF8, bufferSize);
+            return this.RestoreString(src, bufferSize);
         }
 
         /// <inheriteddoc />
         public string DecryptString(Stream src, Encoding enc, int? bufferSize = null)
         {
-            // other checks are done by 'Decrypt(Stream, int?)'
-            // method
-
-            if (enc == null)
-            {
-                throw new ArgumentNullException("enc");
-            }
-
-            var decrypted = this.Decrypt(src, bufferSize);
-            return enc.GetString(decrypted, 0, decrypted.Length);
+            return this.RestoreString(src, enc, bufferSize);
         }
 
         /// <inheriteddoc />
         public void DecryptString(IEnumerable<byte> src, StringBuilder builder)
         {
-            this.DecryptString(src, builder, Encoding.UTF8);
+            this.RestoreString(src, builder);
         }
 
         /// <inheriteddoc />
         public void DecryptString(IEnumerable<byte> src, StringBuilder builder, Encoding enc)
         {
-            // other (null) checks are done by 'DecryptString(IEnumerable<byte>, Encoding)'
-            // method
-
-            if (builder == null)
-            {
-                throw new ArgumentNullException("builder");
-            }
-
-            builder.Append(this.DecryptString(src, enc));
+            this.RestoreString(src, builder, enc);
         }
 
         /// <inheriteddoc />
         public string DecryptString(IEnumerable<byte> src)
         {
-            return this.DecryptString(src, Encoding.UTF8);
+            return this.RestoreString(src);
         }
 
         /// <inheriteddoc />
         public string DecryptString(IEnumerable<byte> src, Encoding enc)
         {
-            // other (null) checks are done by 'Decrypt(IEnumerable<byte>)'
-            // method
-
-            if (enc == null)
-            {
-                throw new ArgumentNullException("enc");
-            }
-
-            var decrypted = this.Decrypt(src);
-            return enc.GetString(decrypted, 0, decrypted.Length);
+            return this.RestoreString(src, enc);
         }
 
         /// <inheriteddoc />
         public byte[] Encrypt(IEnumerable<byte> src)
         {
-            using (var dest = new MemoryStream())
-            {
-                this.Encrypt(src, dest);
-
-                return dest.ToArray();
-            }
+            return this.TransformData(src);
         }
 
         /// <inheriteddoc />
         public byte[] Encrypt(Stream src, int? bufferSize = null)
         {
-            using (var dest = new MemoryStream())
-            {
-                this.Encrypt(src, dest);
-
-                return dest.ToArray();
-            }
+            return this.TransformData(src, bufferSize);
         }
 
         /// <inheriteddoc />
         public void Encrypt(IEnumerable<byte> src, Stream dest)
         {
-            using (var srcStream = new MemoryStream(src.AsArray(), false))
-            {
-                this.Encrypt(srcStream, dest);
-            }
+            this.TransformData(src, dest);
         }
 
         /// <inheriteddoc />
         public void Encrypt(Stream src, Stream dest, int? bufferSize = null)
         {
-            if (src == null)
-            {
-                throw new ArgumentNullException("src");
-            }
-
-            if (dest == null)
-            {
-                throw new ArgumentNullException("dest");
-            }
-
-            if (src.CanRead == false)
-            {
-                throw new IOException("src");
-            }
-
-            if (dest.CanWrite == false)
-            {
-                throw new IOException("dest");
-            }
-
-            if (this.CanEncrypt == false)
-            {
-                throw new InvalidOperationException();
-            }
-
-            if (bufferSize < 1)
-            {
-                throw new ArgumentOutOfRangeException("bufferSize");
-            }
-
-            this._ENCRYPT_ACTION(src, dest,
-                                 bufferSize);
+            this.TransformData(src, dest, bufferSize);
         }
 
         /// <inheriteddoc />
         public void EncryptString(string str, Stream dest)
         {
-            this.EncryptString(str, dest, Encoding.UTF8);
+            this.TransformString(str, dest);
         }
 
         /// <inheriteddoc />
         public void EncryptString(string str, Stream dest, Encoding enc)
         {
-            if (enc == null)
-            {
-                throw new ArgumentNullException("enc");
-            }
-
-            this.Encrypt(enc.GetBytes(str ?? string.Empty),
-                         dest);
+            this.TransformString(str, enc, dest);
         }
 
         /// <inheriteddoc />
         public byte[] EncryptString(string str)
         {
-            return this.EncryptString(str, Encoding.UTF8);
+            return this.TransformString(str);
         }
 
         /// <inheriteddoc />
         public byte[] EncryptString(string str, Encoding enc)
         {
-            // (null) check is done by 'EncryptString(string, Stream, Encoding)'
-            // method
-
-            using (var dest = new MemoryStream())
-            {
-                this.EncryptString(str, dest, enc);
-
-                return dest.ToArray();
-            }
+            return this.TransformString(str, enc);
         }
 
         /// <summary>
@@ -391,14 +331,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
             throw new NotImplementedException();
         }
 
-        private void OnDecrypt_ThreadSafe(Stream src, Stream dest, int? bufferSize)
-        {
-            lock (this._SYNC)
-            {
-                this.OnDecrypt(src, dest, bufferSize);
-            }
-        }
-
         /// <summary>
         /// Stores the logic for the <see cref="CrypterBase.Encrypt(Stream, Stream, int?)" /> method.
         /// </summary>
@@ -413,44 +345,18 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
             throw new NotImplementedException();
         }
 
-        private void OnEncrypt_ThreadSafe(Stream src, Stream dest, int? bufferSize)
+        /// <inheriteddoc />
+        protected override sealed void OnRestoreData(Stream src, Stream dest, int? bufferSize)
         {
-            lock (this._SYNC)
-            {
-                this.OnEncrypt(src, dest, bufferSize);
-            }
+            this.OnDecrypt(src, dest, bufferSize);
         }
 
-#if KNOWS_SECURE_STRING
-
-        private static global::System.Security.SecureString ToSecureString(byte[] strData, global::System.Text.Encoding enc)
+        /// <inheriteddoc />
+        protected override sealed void OnTransformData(Stream src, Stream dest, int? bufferSize)
         {
-            if (enc == null)
-            {
-                throw new global::System.ArgumentNullException("enc");
-            }
-
-            string str;
-            try
-            {
-                str = enc.GetString(strData, 0, strData.Length);
-
-                var result = new global::System.Security.SecureString();
-                for (var i = 0; i < str.Length; i++)
-                {
-                    result.AppendChar(str[i]);
-                }
-
-                return result;
-            }
-            finally
-            {
-                str = null;
-            }
+            this.OnEncrypt(src, dest, bufferSize);
         }
 
-#endif
-
-        #endregion Methods (29)
+        #endregion Methods (31)
     }
 }
