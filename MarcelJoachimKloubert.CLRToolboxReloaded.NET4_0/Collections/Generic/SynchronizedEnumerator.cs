@@ -8,6 +8,8 @@ using System.Collections.Generic;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 {
+    #region CLASS: SynchronizedEnumerator<T>
+
     /// <summary>
     /// A thread safe wrapper for an <see cref="IEnumerator{T}" /> instance.
     /// </summary>
@@ -171,4 +173,81 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         #endregion Properties (4)
     }
+
+    #endregion CLASS: SynchronizedEnumerator<T>
+
+    #region CLASS: SynchronizedEnumerator
+
+    /// <summary>
+    /// FActory class for <see cref="SynchronizedEnumerator{T}" />.
+    /// </summary>
+    public static class SynchronizedEnumerator
+    {
+        #region Methods (4)
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedEnumerator{T}" /> class.
+        /// </summary>
+        /// <param name="seq">The sequence from where to get the base enumerator from.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="NullReferenceException">
+        /// <paramref name="seq" /> is <see langword="null" />.
+        /// </exception>
+        public static SynchronizedEnumerator<T> Create<T>(IEnumerable<T> seq)
+        {
+            return new SynchronizedEnumerator<T>(seq: seq);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedEnumerator{T}" /> class.
+        /// </summary>
+        /// <param name="seq">The sequence from where to get the base enumerator from.</param>
+        /// <param name="sync">The object for thread safe operations.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="sync" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="NullReferenceException">
+        /// <paramref name="seq" /> is <see langword="null" />.
+        /// </exception>
+        public static SynchronizedEnumerator<T> Create<T>(IEnumerable<T> seq,
+                                                          object sync)
+        {
+            return new SynchronizedEnumerator<T>(seq: seq,
+                                                 sync: sync);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedEnumerator{T}" /> class.
+        /// </summary>
+        /// <param name="enumerator">The base enumerator.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="enumerator" /> is <see langword="null" />.
+        /// </exception>
+        public static SynchronizedEnumerator<T> Create<T>(IEnumerator<T> enumerator)
+        {
+            return new SynchronizedEnumerator<T>(enumerator: enumerator);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedEnumerator{T}" /> class.
+        /// </summary>
+        /// <param name="enumerator">The base enumerator.</param>
+        /// <param name="sync">The object for thread safe operations.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="enumerator" /> and/or <paramref name="sync" /> are <see langword="null" />.
+        /// </exception>
+        public static SynchronizedEnumerator<T> Create<T>(IEnumerator<T> enumerator,
+                                                          object sync)
+        {
+            return new SynchronizedEnumerator<T>(enumerator: enumerator,
+                                                 sync: sync);
+        }
+
+        #endregion Methods (4)
+    }
+
+    #endregion CLASS: SynchronizedEnumerator
 }

@@ -7,7 +7,7 @@ using System.IO;
 namespace MarcelJoachimKloubert.CLRToolbox.IO
 {
     /// <summary>
-    /// A data transformer that simply copies data.
+    /// A data transformer that simply copies data from source to destination.
     /// </summary>
     public sealed class DataCopier : DataTransformerBase
     {
@@ -56,24 +56,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
 
         #endregion Properties (2)
 
-        #region Methods (3)
-
-        private void CopyData(Stream src, Stream dest, int? bufferSize)
-        {
-            if (bufferSize.HasValue)
-            {
-                src.CopyTo(dest, bufferSize.Value);
-            }
-            else
-            {
-                src.CopyTo(dest);
-            }
-        }
+        #region Methods (2)
 
         /// <inheriteddoc />
         protected override void OnRestoreData(Stream src, Stream dest, int? bufferSize)
         {
-            this.CopyData(src, dest, bufferSize);
+            this.OnTransformData(src, dest, bufferSize);
         }
 
         /// <inheriteddoc />
@@ -82,6 +70,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
             this.CopyData(src, dest, bufferSize);
         }
 
-        #endregion Methods (3)
+        #endregion Methods (2)
     }
 }

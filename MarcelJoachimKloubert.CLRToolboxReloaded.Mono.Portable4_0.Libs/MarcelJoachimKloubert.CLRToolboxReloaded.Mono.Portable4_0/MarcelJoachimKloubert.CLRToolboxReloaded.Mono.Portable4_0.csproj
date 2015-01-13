@@ -816,6 +816,39 @@
     <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\EnumeratorWrapper.cs">
       <Link>Collections\Generic\EnumeratorWrapper.cs</Link>
     </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\DummyCrypter.cs">
+      <Link>Security\Cryptography\DummyCrypter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Security\Cryptography\CompressionCrypter.cs">
+      <Link>IO\Compression\CompressionCrypter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\Compression\CryptedCompressor.cs">
+      <Link>IO\Compression\CryptedCompressor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\Compression\BestCompressor.cs">
+      <Link>IO\Compression\BestCompressor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\GlobalServices.cs">
+      <Link>GlobalServices.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\ITempDataManager.cs">
+      <Link>IO\ITempDataManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\TempDataManagerBase.cs">
+      <Link>IO\TempDataManagerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\IO\MemoryTempDataManager.cs">
+      <Link>IO\MemoryTempDataManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\SynchronizedDictionary.cs">
+      <Link>Collections\Generic\SynchronizedDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\SynchronizedCollection.cs">
+      <Link>Collections\Generic\SynchronizedCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\SynchronizedList.cs">
+      <Link>Collections\Generic\SynchronizedList.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

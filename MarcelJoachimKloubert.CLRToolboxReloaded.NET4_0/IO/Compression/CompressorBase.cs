@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
 {
@@ -57,7 +58,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
 
         #endregion Properties (2)
 
-        #region Methods (10)
+        #region Methods (12)
 
         /// <inheriteddoc />
         public byte[] Compress(IEnumerable<byte> src)
@@ -110,6 +111,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
         protected abstract void OnUncompress(Stream src, Stream dest, int? bufferSize);
 
         /// <inheriteddoc />
+        protected override sealed void SaltString(StringBuilder str, Encoding enc)
+        {
+            // uncompressed data needs no salt
+        }
+
+        /// <inheriteddoc />
         public byte[] Uncompress(IEnumerable<byte> src)
         {
             return this.RestoreData(src);
@@ -127,6 +134,12 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
             this.RestoreData(src, dest, bufferSize);
         }
 
-        #endregion Methods (10)
+        /// <inheriteddoc />
+        protected override sealed void UnsaltString(StringBuilder str, Encoding enc)
+        {
+            // compressed data needs no unsalt
+        }
+
+        #endregion Methods (12)
     }
 }

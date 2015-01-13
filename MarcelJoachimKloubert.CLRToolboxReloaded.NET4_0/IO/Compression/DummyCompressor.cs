@@ -7,7 +7,7 @@ using System.IO;
 namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
 {
     /// <summary>
-    /// A compressor that does nothing.
+    /// A compressor that simply copies data from source to destionation (no compression).
     /// </summary>
     public sealed class DummyCompressor : CompressorBase
     {
@@ -45,13 +45,13 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
         /// <inheriteddoc />
         protected override void OnCompress(Stream src, Stream dest, int? bufferSize)
         {
-            // dummy
+            this.CopyData(src, dest, bufferSize);
         }
 
         /// <inheriteddoc />
         protected override void OnUncompress(Stream src, Stream dest, int? bufferSize)
         {
-            // dummy
+            this.OnCompress(src, dest, bufferSize);
         }
 
         #endregion Methods (2)

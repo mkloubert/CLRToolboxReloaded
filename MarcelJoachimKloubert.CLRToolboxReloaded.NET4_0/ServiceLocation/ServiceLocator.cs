@@ -35,8 +35,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.ServiceLocation
 
         #region Delegates and Events (1)
 
-        // Delegates (1) 
-
         /// <summary>
         /// Describes logic that returns the value for <see cref="ServiceLocator.Current" />.
         /// </summary>

@@ -83,7 +83,33 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
 
         #endregion Properties (2)
 
-        #region Methods (42)
+        #region Methods (43)
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <see cref="Stream.CopyTo(Stream, int)" />
+        protected void CopyData(Stream src, Stream dest, int? bufferSize = null)
+        {
+            if (src == null)
+            {
+                throw new ArgumentNullException("src");
+            }
+
+            if (dest == null)
+            {
+                throw new ArgumentNullException("dest");
+            }
+
+            if (bufferSize.HasValue)
+            {
+                src.CopyTo(dest, bufferSize.Value);
+            }
+            else
+            {
+                src.CopyTo(dest);
+            }
+        }
 
         /// <summary>
         /// Destorys the data of a temporary byte array.
@@ -648,6 +674,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
             // dummy
         }
 
-        #endregion Methods (42)
+        #endregion Methods (43)
     }
 }

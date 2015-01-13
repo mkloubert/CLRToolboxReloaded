@@ -128,7 +128,10 @@
     <Compile Include="Collections\Generic\ReadOnlyDictionaryWrapper.cs" />
     <Compile Include="Collections\Generic\ReadOnlyListWrapper.cs" />
     <Compile Include="Collections\Generic\ForAllItemContext.cs" />
+    <Compile Include="Collections\Generic\SynchronizedCollection.cs" />
+    <Compile Include="Collections\Generic\SynchronizedDictionary.cs" />
     <Compile Include="Collections\Generic\SynchronizedEnumerator.cs" />
+    <Compile Include="Collections\Generic\SynchronizedList.cs" />
     <Compile Include="Collections\IGeneralList.cs" />
     <Compile Include="Collections\ObjectModel\SynchronizedObservableCollection.cs" />
     <Compile Include="ComponentModel\INotifiable.cs" />
@@ -481,6 +484,7 @@
     <Compile Include="Extensions\Data.ToDbValue.cs">
       <DependentUpon>Data.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalServices.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="IdentifiableBase.cs" />
     <Compile Include="IDisposableObject.cs" />
@@ -488,7 +492,10 @@
     <Compile Include="IInitializable.cs" />
     <Compile Include="IObject.cs" />
     <Compile Include="IO\AggregateDataTransformer.cs" />
+    <Compile Include="IO\CommonTempDataManager.cs" />
+    <Compile Include="IO\Compression\BestCompressor.cs" />
     <Compile Include="IO\Compression\CompressorBase.cs" />
+    <Compile Include="IO\Compression\CryptedCompressor.cs" />
     <Compile Include="IO\Compression\DelegateCompressor.CompressionMode.cs">
       <DependentUpon>DelegateCompressor.cs</DependentUpon>
     </Compile>
@@ -510,11 +517,15 @@
     <Compile Include="IO\DummyDataTransformer.cs" />
     <Compile Include="IO\EventStream.cs" />
     <Compile Include="IO\IDataTransformer.cs" />
+    <Compile Include="IO\ITempDataManager.cs" />
+    <Compile Include="IO\MemoryTempDataManager.cs" />
     <Compile Include="IO\NonDisposableStream.CallBehaviour.cs">
       <DependentUpon>NonDisposableStream.cs</DependentUpon>
     </Compile>
     <Compile Include="IO\NonDisposableStream.cs" />
     <Compile Include="IO\StreamWrapperBase.cs" />
+    <Compile Include="IO\TempDataManagerBase.cs" />
+    <Compile Include="IO\TempFileStream.cs" />
     <Compile Include="IRunnable.cs" />
     <Compile Include="Models\Business\IClient.cs" />
     <Compile Include="Models\Business\ICustomer.cs" />
@@ -593,11 +604,13 @@
     <Compile Include="Security\Acl\IAclRole.cs" />
     <Compile Include="Security\Cryptography\AesCrypter.cs" />
     <Compile Include="Security\Cryptography\AggregateCrypter.cs" />
+    <Compile Include="Security\Cryptography\CompressionCrypter.cs" />
     <Compile Include="Security\Cryptography\CrypterBase.cs" />
     <Compile Include="Security\Cryptography\DelegateCrypter.CryptMode.cs">
       <DependentUpon>DelegateCrypter.cs</DependentUpon>
     </Compile>
     <Compile Include="Security\Cryptography\DelegateCrypter.cs" />
+    <Compile Include="Security\Cryptography\DummyCrypter.cs" />
     <Compile Include="Security\Cryptography\GlobalCrypter.cs" />
     <Compile Include="Security\Cryptography\HashCrypter.cs" />
     <Compile Include="Security\Cryptography\ICrypter.cs" />
