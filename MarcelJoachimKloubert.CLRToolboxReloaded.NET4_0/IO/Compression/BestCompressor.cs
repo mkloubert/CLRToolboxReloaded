@@ -53,7 +53,31 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
 
         #endregion Delegates and events (1)
 
-        #region Methods (9)
+        #region Methods (10)
+
+        private void DestroyAndDisposeTempStream(Stream stream)
+        {
+            if (stream == null)
+            {
+                return;
+            }
+
+            try
+            {
+                try
+                {
+                    this.DestroyTempStream(stream);
+                }
+                finally
+                {
+                    stream.Dispose();
+                }
+            }
+            catch
+            {
+                // ignore rrors here
+            }
+        }
 
         /// <summary>
         /// Creates a new instance of the <see cref="BestCompressor" /> class.
@@ -145,7 +169,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
         /// <inheriteddoc />
         protected override void OnCompress(Stream src, Stream dest, int? bufferSize)
         {
-            using (var temp = new MemoryStream())
+            using (var temp = GlobalServices.CreateTempStream())
             {
                 try
                 {
@@ -155,11 +179,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
                     var compressors = this.GetCompressorList();
                     try
                     {
-                        var compressorCount = compressors.Count;
-
                         Stream streamToUse = null;
                         try
                         {
+                            var compressorCount = compressors.Count;
+
                             ICompressor compressorToUse = null;
                             byte compressorIndex = 0;
                             for (var i = 0; i < compressorCount; i++)
@@ -169,7 +193,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
                                 // reset temp stream with uncompressed data
                                 temp.Position = 0;
 
-                                var compressorStream = new MemoryStream();
+                                var compressorStream = GlobalServices.CreateTempStream();
                                 try
                                 {
                                     Stream oldStream = null;
@@ -191,20 +215,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
                                         compressorIndex = (byte)i;
                                     }
 
-                                    if (oldStream != null)
-                                    {
-                                        using (var s = oldStream)
-                                        {
-                                            this.DestroyTempStream(s);
-                                        }
-                                    }
+                                    this.DestroyAndDisposeTempStream(oldStream);
                                 }
                                 catch
                                 {
-                                    using (var s = compressorStream)
-                                    {
-                                        this.DestroyTempStream(s);
-                                    }
+                                    this.DestroyAndDisposeTempStream(compressorStream);
 
                                     throw;
                                 }
@@ -217,13 +232,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
                         }
                         finally
                         {
-                            using (var s = streamToUse)
-                            {
-                                if (s != null)
-                                {
-                                    this.DestroyTempStream(s);
-                                }
-                            }
+                            this.DestroyAndDisposeTempStream(streamToUse);
                         }
                     }
                     finally
@@ -246,7 +255,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
             {
                 // uncompress
                 //
-                // first byte is the index of the compressor
+                // first byte of source stream
+                // is the index of the compressor
                 compressors[src.ReadByte()].Uncompress(src, dest, bufferSize);
             }
             finally
@@ -255,6 +265,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
             }
         }
 
-        #endregion Methods (9)
+        #endregion Methods (10)
     }
 }

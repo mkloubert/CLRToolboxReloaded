@@ -113,6 +113,9 @@
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\CharSequence.cs">
       <Link>CharSequence.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\CollectionBuilder.cs">
+      <Link>Collections\CollectionBuilder.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\GeneralList.cs">
       <Link>Collections\GeneralList.cs</Link>
     </Compile>
@@ -177,6 +180,9 @@
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\Generic\SynchronizedList.cs">
       <Link>Collections\Generic\SynchronizedList.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\ICollectionBuilder.cs">
+      <Link>Collections\ICollectionBuilder.cs</Link>
     </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Collections\IGeneralList.cs">
       <Link>Collections\IGeneralList.cs</Link>

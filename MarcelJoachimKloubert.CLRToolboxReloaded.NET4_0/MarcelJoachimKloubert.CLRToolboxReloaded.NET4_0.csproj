@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="Caching\DelegateCache.cs" />
     <Compile Include="CharSequence.cs" />
+    <Compile Include="Collections\CollectionBuilder.cs" />
     <Compile Include="Collections\GeneralList.cs" />
     <Compile Include="Collections\Generic\DelegateEqualityComparer.cs" />
     <Compile Include="Collections\Generic\DictionaryEnumerator.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Collections\Generic\SynchronizedDictionary.cs" />
     <Compile Include="Collections\Generic\SynchronizedEnumerator.cs" />
     <Compile Include="Collections\Generic\SynchronizedList.cs" />
+    <Compile Include="Collections\ICollectionBuilder.cs" />
     <Compile Include="Collections\IGeneralList.cs" />
     <Compile Include="Collections\ObjectModel\SynchronizedObservableCollection.cs" />
     <Compile Include="ComponentModel\INotifiable.cs" />

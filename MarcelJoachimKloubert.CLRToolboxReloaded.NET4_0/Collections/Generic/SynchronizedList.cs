@@ -9,6 +9,8 @@ using System.Collections.Generic;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 {
+    #region CLASS: SynchronizedList<T>
+
     /// <summary>
     /// A thread safe list.
     /// </summary>
@@ -374,4 +376,61 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         #endregion Methods (16)
     }
+
+    #endregion CLASS: SynchronizedList<T>
+
+    #region CLASS: SynchronizedList
+
+    /// <summary>
+    /// Factory class for <see cref="SynchronizedList{T}" />.
+    /// </summary>
+    public static class SynchronizedList
+    {
+        #region Methods (3)
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedList{T}" /> class.
+        /// </summary>
+        /// <returns>The new instance.</returns>
+        public static SynchronizedList<T> Create<T>()
+        {
+            return new SynchronizedList<T>();
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedList{T}" /> class.
+        /// </summary>
+        /// <param name="items">
+        /// The initial items / list.
+        /// </param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="items" /> is <see langword="null" />.
+        /// </exception>
+        public static SynchronizedList<T> Create<T>(IEnumerable<T> items)
+        {
+            return new SynchronizedList<T>(items: items);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedList{T}" /> class.
+        /// </summary>
+        /// <param name="items">
+        /// The initial items / list.
+        /// </param>
+        /// <param name="sync">The object for thread safe operations.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="items" /> and/or <paramref name="sync" /> are <see langword="null" />.
+        /// </exception>
+        public static SynchronizedList<T> Create<T>(IEnumerable<T> items, object sync)
+        {
+            return new SynchronizedList<T>(items: items,
+                                           sync: sync);
+        }
+
+        #endregion Methods (3)
+    }
+
+    #endregion CLASS: SynchronizedList
 }

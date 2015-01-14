@@ -3,6 +3,7 @@
 // s. https://github.com/mkloubert/CLRToolboxReloaded
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace MarcelJoachimKloubert.CLRToolbox.IO
@@ -12,13 +13,27 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
     /// </summary>
     public interface ITempDataManager : IObject
     {
-        #region Methods (2)
+        #region Methods (3)
 
         /// <summary>
         /// Creates a new stream that should contain temporary data.
         /// </summary>
         /// <returns>The new temp stream.</returns>
         Stream CreateStream();
+        
+        /// <summary>
+        /// Creates a new stream that should contain temporary data.
+        /// </summary>
+        /// <param name="initialBlob">The inital data.</param>
+        /// <param name="startFromBeginning">
+        /// Set position of new stream to beginning or not.
+        /// </param>
+        /// <returns>The new temp stream.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="initialBlob" /> is <see langword="null" />.
+        /// </exception>
+        Stream CreateStream(IEnumerable<byte> initialBlob,
+                            bool startFromBeginning = true);
 
         /// <summary>
         /// Creates a new stream that should contain temporary data.
@@ -28,7 +43,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
         /// The buffer size in bytes that should be used to read <paramref name="initialData" />.
         /// <see langword="null" /> indicates to use the default.
         /// </param>
-        /// <param name="startAtBeginning">
+        /// <param name="startFromBeginning">
         /// Set position of new stream to beginning or not.
         /// </param>
         /// <returns>The new temp stream.</returns>
@@ -42,7 +57,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
         /// <paramref name="initialData" /> cannot be read.
         /// </exception>
         Stream CreateStream(Stream initialData, int? bufferSize = null,
-                            bool startAtBeginning = true);
+                            bool startFromBeginning = true);
 
         #endregion Methods (2)
     }

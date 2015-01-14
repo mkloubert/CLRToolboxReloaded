@@ -10,6 +10,8 @@ using System.Collections.Generic;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 {
+    #region CLASS: SynchronizedCollection<T>
+
     /// <summary>
     /// A thread safe collection.
     /// </summary>
@@ -347,4 +349,61 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         #endregion Methods (18)
     }
+
+    #endregion CLASS: SynchronizedCollection<T>
+
+    #region CLASS: SynchronizedCollection
+
+    /// <summary>
+    /// Factory class for <see cref="SynchronizedCollection{T}" />.
+    /// </summary>
+    public static class SynchronizedCollection
+    {
+        #region Methods (3)
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedCollection{T}" /> class.
+        /// </summary>
+        /// <returns>The new instance.</returns>
+        public static SynchronizedCollection<T> Create<T>()
+        {
+            return new SynchronizedCollection<T>();
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedCollection{T}" /> class.
+        /// </summary>
+        /// <param name="items">
+        /// The initial items / collection.
+        /// </param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="items" /> is <see langword="null" />.
+        /// </exception>
+        public static SynchronizedCollection<T> Create<T>(IEnumerable<T> items)
+        {
+            return new SynchronizedCollection<T>(items: items);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedCollection{T}" /> class.
+        /// </summary>
+        /// <param name="items">
+        /// The initial items / collection.
+        /// </param>
+        /// <param name="sync">The object for thread safe operations.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="items" /> and/or <paramref name="sync" /> are <see langword="null" />.
+        /// </exception>
+        public static SynchronizedCollection<T> Create<T>(IEnumerable<T> items, object sync)
+        {
+            return new SynchronizedCollection<T>(items: items,
+                                                 sync: sync);
+        }
+
+        #endregion Methods (3)
+    }
+
+    #endregion CLASS: SynchronizedCollection
 }

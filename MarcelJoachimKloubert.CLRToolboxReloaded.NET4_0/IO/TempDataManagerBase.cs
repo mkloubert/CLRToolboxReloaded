@@ -4,6 +4,7 @@
 
 using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace MarcelJoachimKloubert.CLRToolbox.IO
@@ -58,19 +59,32 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
 
         #endregion Constrcutors (4)
 
-        #region Methods (6)
+        #region Methods (7)
 
         /// <inheriteddoc />
         public Stream CreateStream()
         {
             return this.CreateStreamInner(initialData: null,
                                           bufferSize: null,
-                                          startAtBeginning: true);
+                                          startFromBeginning: true);
+        }
+
+        /// <inheriteddoc />
+        public Stream CreateStream(IEnumerable<byte> initialBlob, bool startFromBeginning = true)
+        {
+            // (null) check id done by MemoryStream(byte[])
+            // constructor
+
+            using (var temp = new MemoryStream(initialBlob.AsArray()))
+            {
+                return this.CreateStream(temp,
+                                         startFromBeginning: startFromBeginning);
+            }
         }
 
         /// <inheriteddoc />
         public Stream CreateStream(Stream initialData, int? bufferSize = null,
-                                   bool startAtBeginning = true)
+                                   bool startFromBeginning = true)
         {
             if (initialData == null)
             {
@@ -79,10 +93,10 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
 
             return this.CreateStreamInner(initialData: initialData,
                                           bufferSize: bufferSize,
-                                          startAtBeginning: startAtBeginning);
+                                          startFromBeginning: startFromBeginning);
         }
 
-        private Stream CreateStreamInner(Stream initialData, int? bufferSize, bool startAtBeginning)
+        private Stream CreateStreamInner(Stream initialData, int? bufferSize, bool startFromBeginning)
         {
             if (bufferSize < 1)
             {
@@ -112,7 +126,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
                     }
                 }
 
-                if (startAtBeginning)
+                if (startFromBeginning)
                 {
                     stream.Position = 0;
                 }
@@ -157,6 +171,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
             return result;
         }
 
-        #endregion Methods (6)
+        #endregion Methods (7)
     }
 }

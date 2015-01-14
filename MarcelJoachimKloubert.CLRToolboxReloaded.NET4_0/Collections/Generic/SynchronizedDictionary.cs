@@ -9,6 +9,8 @@ using System.Collections.Generic;
 
 namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 {
+    #region CLASS: SynchronizedDictionary<TKey, TValue>
+
     /// <summary>
     /// A thread safe generic dictionary.
     /// </summary>
@@ -494,4 +496,93 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         #endregion Methods (12)
     }
+
+    #endregion CLASS: SynchronizedDictionary<TKey, TValue>
+
+    #region CLASS: SynchronizedDictionary
+
+    /// <summary>
+    /// Factory class for <see cref="SynchronizedDictionary{TKey, TValue}" />.
+    /// </summary>
+    public static class SynchronizedDictionary
+    {
+        #region Methods (5)
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedDictionary{TKey, TValue}" /> class.
+        /// </summary>
+        /// <returns>The new instance.</returns>
+        public static SynchronizedDictionary<TKey, TValue> Create<TKey, TValue>()
+        {
+            return new SynchronizedDictionary<TKey, TValue>();
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedDictionary{TKey, TValue}" /> class.
+        /// </summary>
+        /// <param name="keyComparer">
+        /// The key comparer to use.
+        /// </param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="keyComparer" /> is <see langword="null" />.
+        /// </exception>
+        public static SynchronizedDictionary<TKey, TValue> Create<TKey, TValue>(IEqualityComparer<TKey> keyComparer)
+        {
+            return new SynchronizedDictionary<TKey, TValue>(keyComparer: keyComparer);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedDictionary{TKey, TValue}" /> class.
+        /// </summary>
+        /// <param name="keyComparer">
+        /// The key comparer to use.
+        /// </param>
+        /// <param name="sync">The object for thread safe operations.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="keyComparer" /> and/or <paramref name="sync" /> are <see langword="null" />.
+        /// </exception>
+        public static SynchronizedDictionary<TKey, TValue> Create<TKey, TValue>(IEqualityComparer<TKey> keyComparer, object sync)
+        {
+            return new SynchronizedDictionary<TKey, TValue>(keyComparer: keyComparer,
+                                                            sync: sync);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedDictionary{TKey, TValue}" /> class.
+        /// </summary>
+        /// <param name="items">
+        /// The initial items / dictionary.
+        /// </param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="items" /> is <see langword="null" />.
+        /// </exception>
+        public static SynchronizedDictionary<TKey, TValue> Create<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> items)
+        {
+            return new SynchronizedDictionary<TKey, TValue>(items: items);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SynchronizedDictionary{TKey, TValue}" /> class.
+        /// </summary>
+        /// <param name="items">
+        /// The initial items / dictionary.
+        /// </param>
+        /// <param name="sync">The object for thread safe operations.</param>
+        /// <returns>The new instance.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="items" /> and/or <paramref name="sync" /> are <see langword="null" />.
+        /// </exception>
+        public static SynchronizedDictionary<TKey, TValue> Create<TKey, TValue>(IEnumerable<KeyValuePair<TKey, TValue>> items, object sync)
+        {
+            return new SynchronizedDictionary<TKey, TValue>(items: items,
+                                                            sync: sync);
+        }
+
+        #endregion Methods (5)
+    }
+
+    #endregion CLASS: SynchronizedDictionary
 }

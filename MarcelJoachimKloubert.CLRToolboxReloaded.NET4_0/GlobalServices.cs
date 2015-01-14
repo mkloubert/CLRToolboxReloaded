@@ -6,13 +6,16 @@
 #define KNOWS_FILE_STREAM
 #endif
 
+using MarcelJoachimKloubert.CLRToolbox.Collections;
 using MarcelJoachimKloubert.CLRToolbox.Collections.Generic;
 using MarcelJoachimKloubert.CLRToolbox.Configuration;
 using MarcelJoachimKloubert.CLRToolbox.Data.Conversion;
 using MarcelJoachimKloubert.CLRToolbox.IO;
 using MarcelJoachimKloubert.CLRToolbox.IO.Console;
 using MarcelJoachimKloubert.CLRToolbox.ServiceLocation;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MarcelJoachimKloubert.CLRToolbox
 {
@@ -21,13 +24,14 @@ namespace MarcelJoachimKloubert.CLRToolbox
     /// </summary>
     public static class GlobalServices
     {
-        #region Fields (3)
+        #region Fields (4)
 
+        private static CollectionBuilderProvider _collBuilderProvider;
         private static ConfigProvider _confProvider;
         private static TempProvider _tempProvider;
         private static VariableStorageProvider _varProvider;
 
-        #endregion Fields (3)
+        #endregion Fields (4)
 
         #region Constructors (1)
 
@@ -36,6 +40,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// </summary>
         static GlobalServices()
         {
+            SetCollections(new CollectionBuilder());
             SetConfig(new KeyValuePairConfigRepository());
             SetVars(new SynchronizedDictionary<string, object>(keyComparer: EqualityComparerFactory.CreateCaseInsensitiveStringComparer(trim: true,
                                                                                                                                         emptyIsNull: true)));
@@ -49,13 +54,29 @@ namespace MarcelJoachimKloubert.CLRToolbox
 
         #endregion Constructors (1)
 
-        #region Delegates and events (3)
+        #region Delegates and events (5)
+
+        /// <summary>
+        /// Describes a function / methods that provides an object that builds collections.
+        /// </summary>
+        /// <returns>The collection builder.</returns>
+        public delegate ICollectionBuilder CollectionBuilderProvider();
 
         /// <summary>
         /// Describes a method / function that provides a repository with configuration data.
         /// </summary>
         /// <returns>The configuration repository.</returns>
         public delegate IConfigRepository ConfigProvider();
+
+        /// <summary>
+        /// Describes a method / function that provides the default value for a variable storage.
+        /// </summary>
+        /// <param name="vars">The underlying storage.</param>
+        /// <param name="name">The name of the value.</param>
+        /// <param name="targetType">The target type.</param>
+        /// <returns>The default value.</returns>
+        public delegate object DefaultVariableValueProvider(IDictionary<string, object> vars,
+                                                            string name, Type targetType);
 
         /// <summary>
         /// Describes a method / function that provides a manager that handles temporary data.
@@ -69,9 +90,17 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// <returns>The variable storage.</returns>
         public delegate IDictionary<string, object> VariableStorageProvider();
 
-        #endregion Delegates and events (3)
+        #endregion Delegates and events (5)
 
-        #region Properties (6)
+        #region Properties (7)
+
+        /// <summary>
+        /// Gets the object that builds collections.
+        /// </summary>
+        public static ICollectionBuilder Collections
+        {
+            get { return _collBuilderProvider(); }
+        }
 
         /// <summary>
         /// Gets the global configuration.
@@ -121,9 +150,220 @@ namespace MarcelJoachimKloubert.CLRToolbox
             get { return _varProvider(); }
         }
 
-        #endregion Properties (5)
+        #endregion Properties (7)
 
-        #region Methods (6)
+        #region Methods (23)
+
+        /// <summary>
+        /// Calls the <see cref="IConverter.ChangeType{T}(object, IFormatProvider)" /> method of <see cref="GlobalServices.Converter" />.
+        /// </summary>
+        /// <typeparam name="TResult">Target type.</typeparam>
+        /// <param name="input">The input value.</param>
+        /// <param name="provider">The optional format provider to use.</param>
+        /// <returns>The converted value.</returns>
+        /// <exception cref="InvalidCastException">Cast operation failed.</exception>
+        public static TResult ChangeTo<TResult>(object input,
+                                                IFormatProvider provider = null)
+        {
+            return Converter.ChangeType<TResult>(input,
+                                                 provider);
+        }
+
+        /// <summary>
+        /// Calls the <see cref="IConverter.ChangeType(Type, object, IFormatProvider)" /> method of <see cref="GlobalServices.Converter" />.
+        /// </summary>
+        /// <param name="input">The input value.</param>
+        /// <param name="targetType">The target type.</param>
+        /// <param name="provider">The optional format provider to use.</param>
+        /// <returns>The converted value.</returns>
+        /// <exception cref="InvalidCastException">Cast operation failed.</exception>
+        public static object ChangeTo(Type targetType, object input,
+                                      IFormatProvider provider = null)
+        {
+            return Converter.ChangeType(targetType, input,
+                                        provider);
+        }
+
+        /// <summary>
+        /// Calls the <see cref="ITempDataManager.CreateStream()" /> method of <see cref="GlobalServices.Temp" />.
+        /// </summary>
+        /// <returns>The new temp stream.</returns>
+        public static Stream CreateTempStream()
+        {
+            return Temp.CreateStream();
+        }
+
+        /// <summary>
+        /// Calls the <see cref="ITempDataManager.CreateStream(IEnumerable{byte}, bool)" /> method of <see cref="GlobalServices.Temp" />.
+        /// </summary>
+        /// <param name="initialBlob">The inital data.</param>
+        /// <param name="startFromBeginning">
+        /// Set position of new stream to beginning or not.
+        /// </param>
+        /// <returns>The new temp stream.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="initialBlob" /> is <see langword="null" />.
+        /// </exception>
+        public static Stream CreateTempStream(IEnumerable<byte> initialBlob,
+                                              bool startFromBeginning = true)
+        {
+            return Temp.CreateStream(initialBlob,
+                                     startFromBeginning);
+        }
+
+        /// <summary>
+        /// Calls the <see cref="ITempDataManager.CreateStream(Stream, int?, bool)" /> method of <see cref="GlobalServices.Temp" />.
+        /// </summary>
+        /// <param name="initialData">The streams that contains the inital data.</param>
+        /// <param name="bufferSize">
+        /// The buffer size in bytes that should be used to read <paramref name="initialData" />.
+        /// <see langword="null" /> indicates to use the default.
+        /// </param>
+        /// <param name="startFromBeginning">
+        /// Set position of new stream to beginning or not.
+        /// </param>
+        /// <returns>The new temp stream.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="initialData" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="bufferSize" /> is invalid (smaller than 1).
+        /// </exception>
+        /// <exception cref="IOException">
+        /// <paramref name="initialData" /> cannot be read.
+        /// </exception>
+        public static Stream CreateTempStream(Stream initialData, int? bufferSize = null,
+                                              bool startFromBeginning = true)
+        {
+            return Temp.CreateStream(initialData, bufferSize,
+                                     startFromBeginning);
+        }
+
+        /// <summary>
+        /// Calls the <see cref="IServiceLocator.GetAllInstances{S}(object)" /> method of <see cref="GlobalServices.Services" />.
+        /// </summary>
+        /// <typeparam name="S">Type of the service.</typeparam>
+        /// <param name="key">
+        /// Key of the service.
+        /// <see langword="null" /> indicates to get the default service.
+        /// </param>
+        /// <returns>All instances of the service.</returns>
+        public static object GetAllInstances<S>(object key = null)
+        {
+            return Services.GetAllInstances<S>(key);
+        }
+
+        /// <summary>
+        /// Calls the <see cref="IServiceLocator.GetAllInstances(Type, object)" /> method of <see cref="GlobalServices.Services" />.
+        /// </summary>
+        /// <param name="serviceType">Typ des Dienstes.</param>
+        /// <param name="key">
+        /// Key of the service.
+        /// <see langword="null" /> indicates to get the default service.
+        /// </param>
+        /// <returns>All instances of the service.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="serviceType" /> is <see langword="null" />.
+        /// </exception>
+        public static IEnumerable<object> GetAllInstances(Type serviceType, object key = null)
+        {
+            return Services.GetAllInstances(serviceType, key);
+        }
+
+        /// <summary>
+        /// Calls the <see cref="IServiceLocator.GetInstance{S}(object)" /> method of <see cref="GlobalServices.Services" />.
+        /// </summary>
+        /// <typeparam name="S">Type of the service.</typeparam>
+        /// <param name="key">
+        /// Key of the service.
+        /// <see langword="null" /> indicates to get the default service.
+        /// </param>
+        /// <returns>The instance of the service.</returns>
+        /// <exception cref="ServiceActivationException">
+        /// Error while locating service instance, e.g. not found.
+        /// </exception>
+        public static object GetInstance<S>(object key = null)
+        {
+            return Services.GetInstance<S>(key);
+        }
+
+        /// <summary>
+        /// Calls the <see cref="IServiceLocator.GetInstance(Type, object)" /> method of <see cref="GlobalServices.Services" />.
+        /// </summary>
+        /// <param name="serviceType">Type of the service.</param>
+        /// <param name="key">
+        /// Key of the service.
+        /// <see langword="null" /> indicates to get the default service.
+        /// </param>
+        /// <returns>The instance of the service.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="serviceType" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="ServiceActivationException">
+        /// Error while locating service instance, e.g. not found.
+        /// </exception>
+        public static object GetInstance(Type serviceType, object key = null)
+        {
+            return Services.GetInstance(serviceType, key);
+        }
+
+        /// <summary>
+        /// Returns a value from <see cref="GlobalServices.Vars" />.
+        /// </summary>
+        /// <param name="name">The name of the variable.</param>
+        /// <returns>The value.</returns>
+        /// <exception cref="InvalidOperationException">
+        /// <paramref name="name" /> was not found.
+        /// </exception>
+        public static object GetVar(string name)
+        {
+            object result;
+            if (TryGetVar(name, out result) == false)
+            {
+                throw new InvalidOperationException();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Returns a value from <see cref="GlobalServices.Vars" />.
+        /// </summary>
+        /// <typeparam name="TResult">Result type.</typeparam>
+        /// <param name="name">The name of the variable.</param>
+        /// <returns>The value.</returns>
+        /// <exception cref="InvalidOperationException">
+        /// <paramref name="name" /> was not found.
+        /// </exception>
+        public static TResult GetVar<TResult>(string name)
+        {
+            TResult result;
+            if (TryGetVar<TResult>(name, out result) == false)
+            {
+                throw new InvalidOperationException();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Sets the function / method that provides the value for the <see cref="GlobalServices.Collections" /> property.
+        /// </summary>
+        /// <param name="provider">The new provider.</param>
+        public static void SetCollectionProvider(CollectionBuilderProvider provider)
+        {
+            _collBuilderProvider = provider;
+        }
+
+        /// <summary>
+        /// Sets the new value for the <see cref="GlobalServices.Collections" /> property.
+        /// </summary>
+        /// <param name="newValue">The new value</param>
+        public static void SetCollections(ICollectionBuilder newValue)
+        {
+            SetCollectionProvider(newValue != null ? new CollectionBuilderProvider(() => newValue)
+                                                   : null);
+        }
 
         /// <summary>
         /// Sets the new value for the <see cref="GlobalServices.Config" /> property.
@@ -182,6 +422,100 @@ namespace MarcelJoachimKloubert.CLRToolbox
                                             : null);
         }
 
-        #endregion Methods (6)
+        /// <summary>
+        /// Tries to get a value from <see cref="GlobalServices.Vars" />.
+        /// </summary>
+        /// <param name="name">The name of the variable.</param>
+        /// <param name="value">The variable where to write the value to.</param>
+        /// <param name="defValue">
+        /// The value for <paramref name="value" /> if value was not found.
+        /// </param>
+        /// <returns>Value was found or not.</returns>
+        public static bool TryGetVar(string name, out object value, object defValue = null)
+        {
+            return TryGetVar(name: name,
+                             value: out value,
+                             defValueProvider: (d, n, t) => defValue);
+        }
+
+        /// <summary>
+        /// Tries to get a value from <see cref="GlobalServices.Vars" />.
+        /// </summary>
+        /// <typeparam name="TResult">Result type.</typeparam>
+        /// <param name="name">The name of the variable.</param>
+        /// <param name="value">The variable where to write the value to.</param>
+        /// <param name="defValue">
+        /// The value for <paramref name="value" /> if value was not found.
+        /// </param>
+        /// <returns>Value was found or not.</returns>
+        public static bool TryGetVar<TResult>(string name, out TResult value, TResult defValue = default(TResult))
+        {
+            return TryGetVar<TResult>(name: name,
+                                      value: out value,
+                                      defValueProvider: (d, n, t) => defValue);
+        }
+
+        /// <summary>
+        /// Tries to get a value from <see cref="GlobalServices.Vars" />.
+        /// </summary>
+        /// <param name="name">The name of the variable.</param>
+        /// <param name="value">The variable where to write the value to.</param>
+        /// <param name="defValueProvider">
+        /// The function / method that provides the value for <paramref name="value" />
+        /// if value was not found.
+        /// </param>
+        /// <returns>Value was found or not.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="defValueProvider" /> is <see langword="null" />.
+        /// </exception>
+        public static bool TryGetVar(string name, out object value, DefaultVariableValueProvider defValueProvider)
+        {
+            if (defValueProvider == null)
+            {
+                throw new ArgumentNullException("defValueProvider");
+            }
+
+            var dict = Vars;
+
+            object temp;
+            var result = dict.TryGetValue(name, out temp);
+
+            value = result ? temp
+                           : defValueProvider(dict, name, typeof(object));
+            return result;
+        }
+
+        /// <summary>
+        /// Tries to get a value from <see cref="GlobalServices.Vars" />.
+        /// </summary>
+        /// <typeparam name="TResult">Result type.</typeparam>
+        /// <param name="name">The name of the variable.</param>
+        /// <param name="value">The variable where to write the value to.</param>
+        /// <param name="defValueProvider">
+        /// The function / method that provides the value for <paramref name="value" />
+        /// if value was not found.
+        /// </param>
+        /// <returns>Value was found or not.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="defValueProvider" /> is <see langword="null" />.
+        /// </exception>
+        public static bool TryGetVar<TResult>(string name, out TResult value,
+                                              DefaultVariableValueProvider defValueProvider)
+        {
+            if (defValueProvider == null)
+            {
+                throw new ArgumentNullException("defValueProvider");
+            }
+
+            object temp;
+            var result = TryGetVar(name: name,
+                                   value: out temp,
+                                   defValueProvider: defValueProvider);
+
+            value = ChangeTo<TResult>(temp);
+            return result;
+        }
+
+        #endregion Methods (23)
     }
 }
