@@ -152,7 +152,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
 
         #endregion Properties (7)
 
-        #region Methods (23)
+        #region Methods (26)
 
         /// <summary>
         /// Calls the <see cref="IConverter.ChangeType{T}(object, IFormatProvider)" /> method of <see cref="GlobalServices.Converter" />.
@@ -182,6 +182,47 @@ namespace MarcelJoachimKloubert.CLRToolbox
         {
             return Converter.ChangeType(targetType, input,
                                         provider);
+        }
+
+        /// <summary>
+        /// Calls the <see cref="ICollectionBuilder.CreateDictionary{TKey, TValue}(bool)" /> method of <see cref="GlobalServices.Collections" />
+        /// </summary>
+        /// <typeparam name="TKey">Type of the keys.</typeparam>
+        /// <typeparam name="TValue">Type of the values.</typeparam>
+        /// <param name="isSynchronized">List should be thread safe or not.</param>
+        /// <returns>The new dictionary.</returns>
+        public static IDictionary<TKey, TValue> CreateDictionary<TKey, TValue>(bool isSynchronized = false)
+        {
+            return Collections.CreateDictionary<TKey, TValue>(isSynchronized: isSynchronized);
+        }
+
+        /// <summary>
+        /// Calls the <see cref="ICollectionBuilder.CreateDictionary{TKey, TValue}(IEqualityComparer{TKey}, bool)" />
+        /// method of <see cref="GlobalServices.Collections" />
+        /// </summary>
+        /// <typeparam name="TKey">Type of the keys.</typeparam>
+        /// <typeparam name="TValue">Type of the values.</typeparam>
+        /// <param name="keyComparer">The key comparer to use.</param>
+        /// <param name="isSynchronized">List should be thread safe or not.</param>
+        /// <returns>The new dictionary.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="keyComparer" /> is <see langword="null" />.
+        /// </exception>
+        public static IDictionary<TKey, TValue> CreateDictionary<TKey, TValue>(IEqualityComparer<TKey> keyComparer, bool isSynchronized = false)
+        {
+            return Collections.CreateDictionary<TKey, TValue>(keyComparer: keyComparer,
+                                                              isSynchronized: isSynchronized);
+        }
+
+        /// <summary>
+        /// Calls the <see cref="ICollectionBuilder.CreateList{T}(bool)" /> method of <see cref="GlobalServices.Collections" />
+        /// </summary>
+        /// <typeparam name="T">Type of the items.</typeparam>
+        /// <param name="isSynchronized">List should be thread safe or not.</param>
+        /// <returns>The new list.</returns>
+        public static IList<T> CreateList<T>(bool isSynchronized = false)
+        {
+            return Collections.CreateList<T>(isSynchronized: isSynchronized);
         }
 
         /// <summary>
@@ -516,6 +557,6 @@ namespace MarcelJoachimKloubert.CLRToolbox
             return result;
         }
 
-        #endregion Methods (23)
+        #endregion Methods (26)
     }
 }
