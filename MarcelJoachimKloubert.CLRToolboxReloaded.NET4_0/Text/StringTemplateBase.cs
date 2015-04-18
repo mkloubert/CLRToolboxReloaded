@@ -13,7 +13,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text
     /// </summary>
     public abstract class StringTemplateBase : TemplateBase, IStringTemplate
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         protected StringTemplateBase(bool isSynchronized, object sync)
@@ -40,7 +40,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Methods (4)
 

@@ -23,7 +23,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         #endregion Fields (2)
 
-        #region Constrcutors (2)
+        #region Constructors (2)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DictionaryEnumerator{TKey, TValue}" /> struct.
@@ -60,7 +60,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
             this._MODE = mode;
         }
 
-        #endregion Constrcutors (2)
+        #endregion Constructors (2)
 
         #region Methods (3)
 

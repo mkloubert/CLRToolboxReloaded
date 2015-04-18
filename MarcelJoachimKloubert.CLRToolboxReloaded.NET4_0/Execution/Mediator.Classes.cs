@@ -235,7 +235,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
 
             #endregion Fields
 
-            #region Constrcutors (1)
+            #region Constructors (1)
 
             internal WeakReferenceActionItem(MediatorAction<TPayload> action,
                                              ThreadOption option,
@@ -247,7 +247,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution
                 this._WEAK_REFERENCE = new WeakReference(action.Target);
             }
 
-            #endregion Constrcutors
+            #endregion Constructors
 
             #region Properties (1)
 

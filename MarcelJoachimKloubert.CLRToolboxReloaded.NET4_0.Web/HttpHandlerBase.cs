@@ -20,7 +20,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Web
 
         #endregion Fields (1)
 
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         protected HttpHandlerBase(bool isSynchronized, object sync)
@@ -57,7 +57,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Web
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Properties (1)
 

@@ -16,7 +16,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
     /// </summary>
     public class WorkflowExecutionContext : ObjectBase, IWorkflowExecutionContext
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         public WorkflowExecutionContext(bool isSynchronized, object sync)
@@ -44,7 +44,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Properties (17)
 
@@ -449,7 +449,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
 
         #endregion Fields
 
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         public WorkflowExecutionContext(bool isSynchronized, object sync)
@@ -477,7 +477,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Workflows
         {
         }
 
-        #endregion Constrcutors (5)
+        #endregion Constructors (4)
 
         #region Properties (4)
 

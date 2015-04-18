@@ -15,7 +15,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Data
     /// </summary>
     public class DelegateToCommandValueConverter : ValueConverterBase<Delegate, ICommand, object>
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         public DelegateToCommandValueConverter(bool isSynchronized, object sync)
@@ -42,7 +42,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Data
         {
         }
 
-        #endregion Constrcutors
+        #endregion Constructors (4)
 
         #region Methods (1)
 

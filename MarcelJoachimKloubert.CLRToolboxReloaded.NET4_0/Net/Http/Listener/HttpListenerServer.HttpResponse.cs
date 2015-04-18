@@ -25,7 +25,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 
             #endregion Fields (5)
 
-            #region Constrcutors (2)
+            #region Constructors (2)
 
             internal HttpResponse(HttpListenerServer server,
                                   HttpListenerContext ctx)
@@ -45,7 +45,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 this.Dispose(false);
             }
 
-            #endregion Constrcutors (2)
+            #endregion Constructors (2)
 
             #region Properties (2)
 

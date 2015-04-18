@@ -15,7 +15,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
     /// </summary>
     public abstract class ConverterBase : ObjectBase, IConverter
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConverterBase" /> class.
@@ -60,7 +60,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Data.Conversion
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Methods (3)
 

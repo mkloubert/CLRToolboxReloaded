@@ -41,7 +41,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
 
         #endregion Fields (1)
 
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         protected NotifiableBase(bool isSynchronized, object sync)
@@ -70,8 +70,8 @@ namespace MarcelJoachimKloubert.CLRToolbox.ComponentModel
             : this(isSynchronized: false)
         {
         }
-
-        #endregion Constrcutors (4)
+        
+        #endregion Constructors (4)
 
         #region Delegates and Events (2)
 

@@ -38,7 +38,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
 
             #endregion Fields (11)
 
-            #region Constrcutors (2)
+            #region Constructors (2)
 
             internal HttpRequest(HttpListenerServer server,
                                  HttpListenerContext ctx,
@@ -174,7 +174,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                 this.Dispose(false);
             }
 
-            #endregion Constrcutors (2)
+            #endregion Constructors (2)
 
             #region Properties (10)
 

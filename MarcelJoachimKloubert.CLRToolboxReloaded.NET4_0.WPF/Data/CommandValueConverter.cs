@@ -9,7 +9,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Data
     /// </summary>
     public sealed class CommandValueConverter : CommandValueConverterBase<object>
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         public CommandValueConverter(bool isSynchronized, object sync)
@@ -36,6 +36,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Data
         {
         }
 
-        #endregion Constrcutors
+        #endregion Constructors (4)
     }
 }

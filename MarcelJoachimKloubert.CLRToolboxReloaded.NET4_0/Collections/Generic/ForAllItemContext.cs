@@ -12,7 +12,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
     /// <typeparam name="T">Type of the underlying item.</typeparam>
     public class ForAllItemContext<T> : ObjectBase, IForAllItemContext<T>
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         public ForAllItemContext(bool isSynchronized, object sync)
@@ -39,7 +39,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Properties (2)
 
@@ -71,7 +71,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
     /// <typeparam name="TState">Type of the underlying state object.</typeparam>
     public class ForAllItemContext<T, TState> : ForAllItemContext<T>, IForAllItemContext<T, TState>
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         public ForAllItemContext(bool isSynchronized, object sync)
@@ -98,7 +98,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Properties (1)
 

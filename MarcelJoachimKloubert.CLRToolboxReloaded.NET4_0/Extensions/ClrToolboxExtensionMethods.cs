@@ -26,7 +26,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions
 
         #endregion Fields (2)
 
-        #region Constrcutors (1)
+        #region Constructors (1)
 
         static ClrToolboxExtensionMethods()
         {

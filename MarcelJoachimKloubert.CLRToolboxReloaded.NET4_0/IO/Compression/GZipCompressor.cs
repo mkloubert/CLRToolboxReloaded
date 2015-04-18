@@ -12,7 +12,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
     /// </summary>
     public sealed class GZipCompressor : CompressorBase
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         public GZipCompressor(bool isSynchronized, object sync)
@@ -39,7 +39,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Methods (2)
 

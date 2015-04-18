@@ -12,7 +12,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Commands
     /// <typeparam name="TParam">Type of the parameters.</typeparam>
     public abstract class CommandBase<TParam> : ObjectBase, ICommand<TParam>
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         protected CommandBase(bool isSynchronized, object sync)
@@ -39,7 +39,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Commands
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Delegates and Events (2)
 

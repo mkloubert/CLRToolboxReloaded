@@ -32,7 +32,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
 
         #endregion Fields (1)
 
-        #region Constrcutors (2)
+        #region Constructors (2)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LogMessage" /> class.
@@ -52,7 +52,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
         {
         }
 
-        #endregion Constrcutors (2)
+        #endregion Constructors (2)
 
         #region Properties (10)
 

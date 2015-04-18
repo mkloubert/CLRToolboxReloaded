@@ -18,7 +18,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
 
         #endregion Fields (2)
 
-        #region Constrcutors (5)
+        #region Constructors (5)
 
         /// <inheriteddoc />
         protected DisposableObjectBase(bool isSynchronized, object sync)
@@ -61,7 +61,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
             this._DISPOSE_ACTION(DisposeContext.Finalizer);
         }
 
-        #endregion Constrcutors (5)
+        #endregion Constructors (5)
 
         #region Properties (1)
 

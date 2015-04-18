@@ -30,7 +30,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
 
         #endregion Fields (2)
 
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectBase" /> class.
@@ -82,7 +82,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Events (1)
 

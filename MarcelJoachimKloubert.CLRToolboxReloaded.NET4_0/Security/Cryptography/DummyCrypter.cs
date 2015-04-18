@@ -12,7 +12,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
     /// </summary>
     public sealed class DummyCrypter : CrypterBase
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         public DummyCrypter(bool isSynchronized, object sync)
@@ -39,7 +39,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Properties (2)
 

@@ -23,7 +23,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
 
         #endregion Fields (2)
 
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SynchronizedEnumerator{T}" /> class.
@@ -92,7 +92,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections.Generic
             this._SYNC = sync;
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Methods (3)
 

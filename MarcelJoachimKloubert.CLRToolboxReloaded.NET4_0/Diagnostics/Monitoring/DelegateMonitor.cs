@@ -20,7 +20,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Monitoring
 
         #endregion Fields (2)
 
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <summary>
         /// Initializes a new instance of <see cref="DelegateMonitor" /> class.
@@ -96,7 +96,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Monitoring
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Delegates (1)
 

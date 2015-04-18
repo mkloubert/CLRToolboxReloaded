@@ -11,7 +11,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Console
     /// </summary>
     public class DummyConsole : ConsoleBase
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         public DummyConsole(bool isSynchronized, object sync)
@@ -38,7 +38,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Console
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Methods (3)
 

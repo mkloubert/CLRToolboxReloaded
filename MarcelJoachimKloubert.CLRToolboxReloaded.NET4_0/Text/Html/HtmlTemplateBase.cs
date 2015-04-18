@@ -9,7 +9,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html
     /// </summary>
     public abstract class HtmlTemplateBase : StringTemplateBase, IHtmlTemplate
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         protected HtmlTemplateBase(bool isSynchronized, object sync)
@@ -36,6 +36,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
     }
 }

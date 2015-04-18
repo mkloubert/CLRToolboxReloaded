@@ -18,7 +18,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Data
     /// <typeparam name="TOutput">The output value.</typeparam>
     public abstract class MultiParamValueConverterBase<TInput, TOutput> : ValueConverterBase<TInput, TOutput>
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         protected MultiParamValueConverterBase(bool isSynchronized, object sync)
@@ -45,7 +45,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Data
         {
         }
 
-        #endregion Constrcutors
+        #endregion Constructors (4)
 
         #region Methods (9)
 

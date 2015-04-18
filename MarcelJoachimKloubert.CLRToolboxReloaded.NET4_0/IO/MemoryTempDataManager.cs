@@ -11,7 +11,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
     /// </summary>
     public class MemoryTempDataManager : TempDataManagerBase
     {
-        #region Constrcutors (2)
+        #region Constructors (2)
 
         /// <inheriteddoc />
         public MemoryTempDataManager(object sync)
@@ -26,7 +26,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
         {
         }
 
-        #endregion Constrcutors (2)
+        #endregion Constructors (2)
 
         #region Methods (1)
 

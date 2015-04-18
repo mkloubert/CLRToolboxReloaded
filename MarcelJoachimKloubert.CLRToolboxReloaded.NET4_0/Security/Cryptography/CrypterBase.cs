@@ -21,7 +21,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
     /// </summary>
     public abstract class CrypterBase : DataTransformerBase, ICrypter
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         protected CrypterBase(bool isSynchronized, object sync)
@@ -48,7 +48,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Security.Cryptography
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Properties (6)
 

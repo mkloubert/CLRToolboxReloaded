@@ -16,7 +16,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Data
     /// <typeparam name="TParam">Type of the command parameters.</typeparam>
     public abstract class CommandValueConverterBase<TParam> : ValueConverterBase<global::MarcelJoachimKloubert.CLRToolbox.Execution.Commands.ICommand<TParam>, global::System.Windows.Input.ICommand, TParam>
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         protected CommandValueConverterBase(bool isSynchronized, object sync)
@@ -43,7 +43,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Data
         {
         }
 
-        #endregion Constrcutors
+        #endregion Constructors (4)
 
         #region Methods (2)
 

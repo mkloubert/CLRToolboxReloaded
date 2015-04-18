@@ -13,7 +13,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
     /// </summary>
     public abstract class CompressorBase : DataTransformerBase, ICompressor
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         protected CompressorBase(bool isSynchronized, object sync)
@@ -40,7 +40,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO.Compression
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Properties (2)
 

@@ -14,7 +14,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.Execution
     /// </summary>
     public abstract partial class LogCommandBase : CommandBase<ILogMessage>, ILogCommand
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         protected LogCommandBase(bool isSynchronized, object sync)
@@ -41,7 +41,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging.Execution
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Methods (5)
 

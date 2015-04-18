@@ -13,7 +13,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html.Builders
     /// </summary>
     public abstract class HtmlBuilderBase : ObjectBase, IHtmlBuilder
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         protected HtmlBuilderBase(bool isSynchronized, object sync)
@@ -41,7 +41,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Text.Html.Builders
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Methods (7)
 

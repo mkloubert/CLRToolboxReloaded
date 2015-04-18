@@ -25,9 +25,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Data
         private readonly Func<TOutput, TParam, CultureInfo, TInput> _CONVERT_BACK_FUNC;
         private readonly Func<TInput, TParam, CultureInfo, TOutput> _CONVERT_FUNC;
 
-        #endregion Fields
+        #endregion Fields (2)
 
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         protected ValueConverterBase(bool isSynchronized, object sync)
@@ -66,7 +66,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Data
         {
         }
 
-        #endregion Constrcutors
+        #endregion Constructors (4)
 
         #region Methods (7)
 
@@ -168,7 +168,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Data
     /// </remarks>
     public abstract partial class ValueConverterBase<TInput, TOutput> : ValueConverterBase<TInput, TOutput, object>
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         protected ValueConverterBase(bool isSynchronized, object sync)
@@ -195,7 +195,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Windows.Data
         {
         }
 
-        #endregion Constrcutors
+        #endregion Constructors
 
         #region Methods (6)
 

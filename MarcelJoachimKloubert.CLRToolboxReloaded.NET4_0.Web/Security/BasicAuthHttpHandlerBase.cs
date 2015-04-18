@@ -17,7 +17,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Web.Security
     /// </summary>
     public abstract class BasicAuthHttpHandlerBase : HttpHandlerBase
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         protected BasicAuthHttpHandlerBase(bool isSynchronized, object sync)
@@ -44,7 +44,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Web.Security
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Properties (1)
 

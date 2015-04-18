@@ -11,7 +11,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
     /// </summary>
     public sealed class DummyDataTransformer : DataTransformerBase
     {
-        #region Constrcutors (4)
+        #region Constructors (4)
 
         /// <inheriteddoc />
         public DummyDataTransformer(bool isSynchronized, object sync)
@@ -38,7 +38,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
         {
         }
 
-        #endregion Constrcutors (4)
+        #endregion Constructors (4)
 
         #region Properties (2)
 
