@@ -45,7 +45,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Wcf
                                  WcfHttpServer srv,
                                  IPrincipal user)
             {
-                this._TIME = AppTime.Now;
+                this._TIME = GlobalServices.Now;
 
                 this.Property = (HttpRequestMessageProperty)msg.Properties[HttpRequestMessageProperty.Name];
                 this._SERVER = srv;

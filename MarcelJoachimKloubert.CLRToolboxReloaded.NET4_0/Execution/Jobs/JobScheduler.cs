@@ -193,7 +193,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Jobs
         /// <returns>The current time.</returns>
         protected virtual DateTimeOffset GetNow()
         {
-            return AppTime.Now;
+            return GlobalServices.Now;
         }
 
         /// <summary>

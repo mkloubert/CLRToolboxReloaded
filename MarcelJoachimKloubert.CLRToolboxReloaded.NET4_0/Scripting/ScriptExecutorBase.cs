@@ -92,7 +92,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                         onExecCtx.IsDebug = result.IsDebug;
                         onExecCtx.Source = result.Source;
 
-                        onExecCtx.StartTime = AppTime.Now;
+                        onExecCtx.StartTime = GlobalServices.Now;
                         this.OnExecute(onExecCtx);
                     }
                     finally

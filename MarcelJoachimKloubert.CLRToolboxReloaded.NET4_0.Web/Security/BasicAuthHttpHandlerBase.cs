@@ -78,7 +78,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Web.Security
         /// <inheriteddoc />
         protected override sealed void OnProcessRequest(HttpContext context)
         {
-            var now = AppTime.Now;
+            var now = GlobalServices.Now;
 
             IPrincipal loggedInUser = null;
             var isLoggedIn = false;

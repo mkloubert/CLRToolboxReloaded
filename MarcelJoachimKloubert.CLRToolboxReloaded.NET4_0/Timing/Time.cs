@@ -341,7 +341,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         /// </summary>
         public static Time Now
         {
-            get { return (Time)AppTime.Now; }
+            get { return (Time)GlobalServices.Now; }
         }
 
         /// <summary>
@@ -1253,11 +1253,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         /// <param name="time">The value to convert.</param>
         /// <returns>The converted value.</returns>
         /// <remarks>
-        /// The date part from <see cref="AppTime.Now" /> is token.
+		/// The date part from <see cref="GlobalServices.Now" /> is token.
         /// </remarks>
         public static implicit operator DateTimeOffset(Time time)
         {
-            return AppTime.Now <= time;
+            return GlobalServices.Now <= time;
         }
 
         /// <summary>
@@ -1266,11 +1266,11 @@ namespace MarcelJoachimKloubert.CLRToolbox.Timing
         /// <param name="time">The value to convert.</param>
         /// <returns>The converted value.</returns>
         /// <remarks>
-        /// The date part from <see cref="AppTime.Now" /> is token.
+		/// The date part from <see cref="GlobalServices.Now" /> is token.
         /// </remarks>
         public static implicit operator DateTime(Time time)
         {
-            return AppTime.Now.DateTime <= time;
+            return GlobalServices.Now.DateTime <= time;
         }
 
         /// <summary>

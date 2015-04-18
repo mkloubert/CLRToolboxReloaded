@@ -174,7 +174,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Diagnostics.Logging
                         LogCategories categories = LogCategories.None)
         {
             var msgObj = new LogMessage();
-            msgObj.Time = AppTime.Now;
+            msgObj.Time = GlobalServices.Now;
 #if CAN_GET_ASSEMBLY_BY_METHOD
             msgObj.Assembly = global::System.Reflection.Assembly.GetCallingAssembly();
 #endif

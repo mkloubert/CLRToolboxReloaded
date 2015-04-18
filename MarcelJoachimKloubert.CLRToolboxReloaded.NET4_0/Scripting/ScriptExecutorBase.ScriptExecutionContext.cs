@@ -142,7 +142,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
             {
                 try
                 {
-                    this.StartTime = AppTime.Now;
+                    this.StartTime = GlobalServices.Now;
                     this.IsExecuting = true;
 
                     StartActionHandler action = this.StartAction;
@@ -163,7 +163,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Scripting
                 }
                 finally
                 {
-                    this.EndTime = AppTime.Now;
+                    this.EndTime = GlobalServices.Now;
                     this.IsExecuting = false;
 
                     this.RaiseEventHandler(this.Completed);

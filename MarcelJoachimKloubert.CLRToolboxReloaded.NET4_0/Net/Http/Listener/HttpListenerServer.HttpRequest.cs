@@ -44,7 +44,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                                  HttpListenerContext ctx,
                                  IPrincipal user)
             {
-                this._TIME = AppTime.Now;
+                this._TIME = GlobalServices.Now;
 
                 this._CONTEXT = ctx;
                 this._SERVER = server;
@@ -261,7 +261,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Net.Http.Listener
                                                callBehaviour: NonDisposableStream.CallBehaviour.Nothing);
             }
 
-            #endregion Methods (3)
+            #endregion Methods (2)
         }
 
         #endregion Nested classes (1)

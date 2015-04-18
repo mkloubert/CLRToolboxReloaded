@@ -288,9 +288,9 @@ namespace MarcelJoachimKloubert.CLRToolbox.Execution.Functions
         /// Returns a value that represents the current time.
         /// </summary>
         /// <returns>The current time.</returns>
-        protected virtual DateTimeOffset GetNow()
+        protected virtual DateTimeOffset GetNow() 
         {
-            return AppTime.Now;
+            return GlobalServices.Now;
         }
 
         /// <summary>
