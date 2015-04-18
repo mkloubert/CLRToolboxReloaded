@@ -44,7 +44,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Values
         #region Properties (1)
 
         /// <inheriteddoc />
-        public T Value
+        public virtual T Value
         {
             get { return this.Get<T>(() => this.Value); }
 
@@ -52,32 +52,5 @@ namespace MarcelJoachimKloubert.CLRToolbox.Values
         }
 
         #endregion Properties (1)
-
-        #region Methods (3)
-
-        /// <inheriteddoc />
-        public bool Equals(T other)
-        {
-            return object.Equals(this.Value, other);
-        }
-
-        /// <inheriteddoc />
-        public override bool Equals(object other)
-        {
-            if (other is T)
-            {
-                return this.Equals((T)other);
-            }
-
-            return base.Equals(other);
-        }
-
-        /// <inheriteddoc />
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        #endregion Methods (3)
     }
 }

@@ -670,8 +670,13 @@
     <Compile Include="Threading\ThreadOption.cs" />
     <Compile Include="Timing\Time.cs" />
     <Compile Include="Values\IState.cs" />
+    <Compile Include="Values\RoutedState.cs" />
+    <Compile Include="Values\RoutedState.Stradegy.cs">
+      <DependentUpon>RoutedState.cs</DependentUpon>
+    </Compile>
     <Compile Include="Values\StateBase.cs" />
     <Compile Include="Values\TrafficLight.cs" />
+    <Compile Include="Values\TrafficState.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyDictionary.cs" />
     <Compile Include="__Compatibility\System\Collections\Generic\IReadOnlyList.cs" />

@@ -981,6 +981,25 @@
     <Compile Include="..\marceljoachimkloubert.clrtoolboxreloaded.net4_0\timing\Time.cs">
       <Link>Timing\Time.cs</Link>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Values\IState.cs">
+      <Link>Values\IState.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Values\RoutedState.cs">
+      <Link>Values\RoutedState.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Values\RoutedState.Stradegy.cs">
+      <Link>Values\RoutedState.Stradegy.cs</Link>
+      <DependentUpon>RoutedState.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Values\StateBase.cs">
+      <Link>Values\StateBase.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Values\TrafficLight.cs">
+      <Link>Values\TrafficLight.cs</Link>
+    </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Values\TrafficState.cs">
+      <Link>Values\TrafficState.cs</Link>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs">
       <Link>__Compatibility\System\Collections\Generic\IReadOnlyCollection.cs</Link>
     </Compile>
@@ -1013,9 +1032,7 @@
     <None Include="__Libs\RestSharp.Silverlight.dll" />
     <None Include="__Libs\RestSharp.Silverlight.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Values\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

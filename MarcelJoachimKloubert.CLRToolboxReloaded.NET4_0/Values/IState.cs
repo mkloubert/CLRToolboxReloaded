@@ -11,7 +11,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Values
     /// Describes a state.
     /// </summary>
     /// <typeparam name="T">Type of the value.</typeparam>
-    public interface IState<T> : IObject, INotifiable, IEquatable<T>
+    public interface IState<out T> : IObject, INotifiable
     {
         #region Properties (1)
 
