@@ -35,7 +35,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Extensions.Drawing
                        new float[] {.59f, .59f, .59f, 0, 0},
                        new float[] {.11f, .11f, .11f, 0, 0},
                        new float[] {0, 0, 0, 1, 0},
-                       new float[] {0, 0, 0, 0, 1}
+                       new float[] {0, 0, 0, 0, 1},
                     });
 
                     using (var attributes = new ImageAttributes())

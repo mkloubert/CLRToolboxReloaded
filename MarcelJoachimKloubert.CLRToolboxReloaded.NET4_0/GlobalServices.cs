@@ -92,7 +92,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
 
         #endregion Delegates and events (5)
 
-        #region Properties (7)
+        #region Properties (8)
 
         /// <summary>
         /// Gets the object that builds collections.
@@ -127,6 +127,14 @@ namespace MarcelJoachimKloubert.CLRToolbox
         }
 
         /// <summary>
+        /// Gets the current time.
+        /// </summary>
+        public static DateTimeOffset Now
+        {
+            get { return AppTime.Now; }
+        }
+
+        /// <summary>
         /// Gets the global service locator.
         /// </summary>
         public static IServiceLocator Services
@@ -150,7 +158,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
             get { return _varProvider(); }
         }
 
-        #endregion Properties (7)
+        #endregion Properties (8)
 
         #region Methods (26)
 

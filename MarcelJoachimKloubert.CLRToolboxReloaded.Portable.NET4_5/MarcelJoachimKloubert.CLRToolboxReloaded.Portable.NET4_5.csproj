@@ -415,6 +415,10 @@
       <Link>Extensions\Collections.IsNotEmpty.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.IsNullOrEmpty.cs">
+      <Link>Extensions\Collections.IsNullOrEmpty.cs</Link>
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\MarcelJoachimKloubert.CLRToolboxReloaded.NET4_0\Extensions\Collections.PeekOrDefault.cs">
       <Link>Extensions\Collections.PeekOrDefault.cs</Link>
       <DependentUpon>Collections.cs</DependentUpon>

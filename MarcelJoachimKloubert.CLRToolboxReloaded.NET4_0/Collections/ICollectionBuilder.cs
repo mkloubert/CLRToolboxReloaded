@@ -15,21 +15,21 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections
         #region Methods (3)
 
         /// <summary>
-        /// Creates new empty dictionary.
+        /// Creates a new empty dictionary.
         /// </summary>
         /// <typeparam name="TKey">Type of the keys.</typeparam>
         /// <typeparam name="TValue">Type of the values.</typeparam>
-        /// <param name="isSynchronized">List should be thread safe or not.</param>
+        /// <param name="isSynchronized">Dictionary should be thread safe or not.</param>
         /// <returns>The new dictionary.</returns>
         IDictionary<TKey, TValue> CreateDictionary<TKey, TValue>(bool isSynchronized = false);
 
         /// <summary>
-        /// Creates new empty dictionary.
+        /// Creates a new empty dictionary.
         /// </summary>
         /// <typeparam name="TKey">Type of the keys.</typeparam>
         /// <typeparam name="TValue">Type of the values.</typeparam>
         /// <param name="keyComparer">The key comparer to use.</param>
-        /// <param name="isSynchronized">List should be thread safe or not.</param>
+        /// <param name="isSynchronized">Dictionary should be thread safe or not.</param>
         /// <returns>The new dictionary.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="keyComparer" /> is <see langword="null" />.
@@ -37,7 +37,7 @@ namespace MarcelJoachimKloubert.CLRToolbox.Collections
         IDictionary<TKey, TValue> CreateDictionary<TKey, TValue>(IEqualityComparer<TKey> keyComparer, bool isSynchronized = false);
 
         /// <summary>
-        /// Creates new empty list.
+        /// Creates a new empty list.
         /// </summary>
         /// <typeparam name="T">Type of the items.</typeparam>
         /// <param name="isSynchronized">List should be thread safe or not.</param>

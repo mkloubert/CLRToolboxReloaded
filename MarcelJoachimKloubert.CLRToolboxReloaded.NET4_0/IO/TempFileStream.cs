@@ -94,11 +94,19 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
 
         #endregion Constructors (5)
 
-        #region Methods (3)
+        #region Methods (4)
 
         /// <inheriteddoc />
         public override sealed void Close()
         {
+            var cancel = false;
+            this.OnClosing(ref cancel);
+
+            if (cancel)
+            {
+                return;
+            }
+
             base.Close();
 
             this.OnClosed();
@@ -107,6 +115,18 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
         private static string CreateTempFileAndGetPath()
         {
             return Path.GetTempFileName();
+        }
+
+        /// <summary>
+        /// Is invoked BEFIRE that stream will be closed.
+        /// </summary>
+        /// <param name="cancel">
+        /// Cancel close operation or not.
+        /// This value is <see langword="false" /> by default.
+        /// </param>
+        protected virtual void OnClosing(ref bool cancel)
+        {
+            // dummy
         }
 
         /// <summary>
@@ -124,6 +144,6 @@ namespace MarcelJoachimKloubert.CLRToolbox.IO
             }
         }
 
-        #endregion Methods (3)
+        #endregion Methods (4)
     }
 }

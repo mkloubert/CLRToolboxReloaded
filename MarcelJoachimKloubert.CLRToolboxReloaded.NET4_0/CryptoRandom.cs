@@ -6,6 +6,7 @@ using MarcelJoachimKloubert.CLRToolbox.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Security.Cryptography;
 
 namespace MarcelJoachimKloubert.CLRToolbox
@@ -70,7 +71,7 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// <paramref name="rng" /> is <see langword="null" />.
         /// </exception>
         public CryptoRandom(RNGCryptoServiceProvider rng)
-            : this(rng, GetNullSeed)
+            : this(rng, GetNoSeed)
         {
         }
 
@@ -91,14 +92,12 @@ namespace MarcelJoachimKloubert.CLRToolbox
         /// data for generating random data.
         /// </summary>
         /// <param name="rand">The underlying instance.</param>
-        /// <returns>The optional seed data.</returns>
-        public delegate IEnumerable<byte> SeedProvider(CryptoRandom rand);
+        /// <param name="seed">The stream where to write the seed to.</param>
+        public delegate void SeedProvider(CryptoRandom rand, Stream seed);
 
         #endregion Events and delegates
 
         #region Methods (15)
-
-        // Public Methods (12)
 
         /// <summary>
         /// Creates a new instance of the <see cref="CryptoRandom" /> class.
@@ -194,7 +193,65 @@ namespace MarcelJoachimKloubert.CLRToolbox
         public static CryptoRandom Create(RNGCryptoServiceProvider rng, IEnumerable<byte> binSeed)
         {
             return new CryptoRandom(rng,
-                                    provider: r => binSeed);
+                                    provider: (cr, s) =>
+                                              {
+                                                  if (binSeed == null)
+                                                  {
+                                                      return;
+                                                  }
+
+                                                  s.Write(binSeed.AsArray());
+                                              });
+        }
+
+        private static void GetNoSeed(CryptoRandom rand, Stream seed)
+        {
+            // dummy
+        }
+
+        private void GetRandomBytes(byte[] data)
+        {
+            if (data == null)
+            {
+                throw new ArgumentNullException("data");
+            }
+
+            if (data.Length < 1)
+            {
+                return;
+            }
+
+            this._RNG.GetBytes(data);
+
+            // get seed
+            byte[] seed;
+            using (var temp = new MemoryStream())
+            {
+                this._PROVIDER(this, temp);
+
+                seed = temp.ToArray();
+            }
+
+            if (seed.IsEmpty())
+            {
+                // no seed
+                return;
+            }
+
+            for (var i = 0; i < data.Length; i++)
+            {
+                try
+                {
+                    unchecked
+                    {
+                        data[i] = (byte)(data[i] ^ seed[i % seed.Length]);
+                    }
+                }
+                catch
+                {
+                    // ignore
+                }
+            }
         }
 
         /// <inheriteddoc />
@@ -284,53 +341,10 @@ namespace MarcelJoachimKloubert.CLRToolbox
             return BitConverter.ToDouble(data, 0);
         }
 
-        // Private Methods (4)
-
-        private static IEnumerable<byte> GetNullSeed(CryptoRandom rand)
-        {
-            return null;
-        }
-
-        private void GetRandomBytes(byte[] data)
-        {
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
-
-            if (data.Length < 1)
-            {
-                return;
-            }
-
-            this._RNG.GetBytes(data);
-
-            var seed = this._PROVIDER(this).AsArray();
-            if ((seed == null) ||
-                (seed.Length < 1))
-            {
-                return;
-            }
-
-            for (var i = 0; i < data.Length; i++)
-            {
-                try
-                {
-                    unchecked
-                    {
-                        data[i] = (byte)(data[i] ^ seed[i % seed.Length]);
-                    }
-                }
-                catch
-                {
-                    // ignore
-                }
-            }
-        }
-
         private static byte[] ToBinary(double? input)
         {
-            return input.HasValue ? BitConverter.GetBytes(input.Value) : null;
+            return input.HasValue ? BitConverter.GetBytes(input.Value)
+                                  : null;
         }
 
         #endregion Methods

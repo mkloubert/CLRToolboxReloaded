@@ -146,8 +146,13 @@
     <Compile Include="ComponentModel\ReceiveNotificationFromOptions.cs" />
     <Compile Include="ComponentModel\ReceiveValueFromAttribute.cs" />
     <Compile Include="ComponentModel\ReceiveValueFromOptions.cs" />
+    <Compile Include="Composition\FileSystemWatcherCatalog.cs" />
+    <Compile Include="Composition\FileSystemWatcherCatalog._AssemblyFile.cs">
+      <DependentUpon>FileSystemWatcherCatalog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Composition\MultiInstanceComposer.cs" />
     <Compile Include="Composition\SingleInstanceComposer.cs" />
+    <Compile Include="Composition\StrongNameCatalog.cs" />
     <Compile Include="Configuration\ConfigRepositoryBase.cs" />
     <Compile Include="Configuration\ConfigRepositoryWrapper.cs" />
     <Compile Include="Configuration\IConfigRepository.cs" />
@@ -254,6 +259,9 @@
       <DependentUpon>AppDomains.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\AppDomains.cs" />
+    <Compile Include="Extensions\Collections.IsNullOrEmpty.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Collections.PopAll.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
